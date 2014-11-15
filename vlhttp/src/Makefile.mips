@@ -1,0 +1,18 @@
+
+# for MIPS
+CC=/opt/toolchains/uclibc-crosstools_gcc-3.4.2_uclibc-20050502/bin/mips-linux-gcc
+#STRIP=strip
+STRIP=/opt/toolchains/uclibc-crosstools_gcc-3.4.2_uclibc-20050502/bin/mips-linux-strip
+
+#COPT=-DLIBLOG_ENABLED=1 -O -W -Wall -I liblog
+COPT=-O -W -Wall -I liblog -DLIBLOG_ENABLED -DLIBLOG_PIDCOLORS -g
+
+linux:
+	$(CC) $(COPT) -c -o log.o liblog/log.c
+	$(CC) $(COPT) -c -o base64.o base64.c
+	$(CC) $(COPT) -c -o vlhttp.o vlhttp.c
+	$(CC) $(COPT) -o vlhttp log.o vlhttp.o base64.o
+	$(STRIP) vlhttp
+
+clean:
+	-rm -f *.o vlhttp
