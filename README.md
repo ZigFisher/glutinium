@@ -25,7 +25,7 @@ Software
 * fixsum => Fix atheros ath9k chipset EEPROM checksum
 * flygps =>
 * flypeek =>
-* i2c-telemetry =>
+* i2c-telemetry => AM2321, BH1750, BMP085, DS1621, INA219, LM75, PCF8591, PCF8574
 * remserial => Bridge between a TCP/IP network and serial ports
 * vtun-lite => VPN tunneling daemon (without lzo, zlib, ssl)
 
