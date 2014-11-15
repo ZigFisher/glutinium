@@ -1,0 +1,14 @@
+--- ./accel-pppd/CMakeLists.txt.orig
++++ ./accel-pppd/CMakeLists.txt
+@@ -107,11 +107,3 @@
+ )
+ 
+ INSTALL(FILES accel-ppp.conf.5 DESTINATION share/man/man5)
+-
+-IF (NOT DEFINED CPACK_TYPE)
+-	INSTALL(FILES accel-ppp.conf DESTINATION ${CMAKE_FIND_ROOT_PATH}/etc RENAME accel-ppp.conf.dist)
+-
+-	INSTALL(CODE "EXECUTE_PROCESS(COMMAND mkdir -p ${CMAKE_FIND_ROOT_PATH}/var/log/accel-ppp)")
+-	INSTALL(CODE "EXECUTE_PROCESS(COMMAND mkdir -p ${CMAKE_FIND_ROOT_PATH}/var/lib/accel-ppp)")
+-ENDIF (NOT DEFINED CPACK_TYPE)
+-

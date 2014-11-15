@@ -1,0 +1,65 @@
+--- ./accel-pppd/accel-ppp.conf.orig
++++ ./accel-pppd/accel-ppp.conf
+@@ -30,7 +30,7 @@
+ #ipv6pool
+ 
+ [core]
+-log-error=/var/log/accel-ppp/core.log
++log-error=/opt/var/log/accel-ppp/core.log
+ thread-count=4
+ 
+ [common]
+@@ -79,7 +79,7 @@
+ 
+ [l2tp]
+ verbose=1
+-#dictionary=/usr/local/share/accel-ppp/l2tp/dictionary
++#dictionary=/opt/share/accel-ppp/l2tp/dictionary
+ #hello-interval=60
+ #timeout=60
+ #rtimeout=5
+@@ -132,7 +132,7 @@
+ #wins2=172.16.1.1
+ 
+ [radius]
+-#dictionary=/usr/local/share/accel-ppp/radius/dictionary
++#dictionary=/opt/share/accel-ppp/radius/dictionary
+ nas-identifier=accel-ppp
+ nas-ip-address=127.0.0.1
+ gw-ip-address=192.168.100.1
+@@ -163,9 +163,9 @@
+ 192.168.4.0/24
+ 
+ [log]
+-log-file=/var/log/accel-ppp/accel-ppp.log
+-log-emerg=/var/log/accel-ppp/emerg.log
+-log-fail-file=/var/log/accel-ppp/auth-fail.log
++log-file=/opt/var/log/accel-ppp/accel-ppp.log
++log-emerg=/opt/var/log/accel-ppp/emerg.log
++log-fail-file=/opt/var/log/accel-ppp/auth-fail.log
+ #log-debug=/dev/stdout
+ #syslog=accel-pppd,daemon
+ #log-tcp=127.0.0.1:3000
+@@ -181,16 +181,16 @@
+ log-table=log
+ 
+ [pppd-compat]
+-#ip-pre-up=/etc/ppp/ip-pre-up
+-ip-up=/etc/ppp/ip-up
+-ip-down=/etc/ppp/ip-down
+-ip-change=/etc/ppp/ip-change
+-radattr-prefix=/var/run/radattr
++#ip-pre-up=/opt/etc/ppp/ip-pre-up
++ip-up=/opt/etc/ppp/ip-up
++ip-down=/opt/etc/ppp/ip-down
++ip-change=/opt/etc/ppp/ip-change
++radattr-prefix=/opt/var/run/radattr
+ verbose=1
+ 
+ [chap-secrets]
+ gw-ip-address=192.168.100.1
+-#chap-secrets=/etc/ppp/chap-secrets
++#chap-secrets=/opt/etc/ppp/chap-secrets
+ #encrypted=0
+ #username-hash=md5
+ 
