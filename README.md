@@ -20,7 +20,7 @@ Software
 
 * accel-ppp =>
 * baoclone =>
-* barcode =>
+* barcode => Utility to get data from event devices
 * changemac =>
 * fixsum =>
 * flygps =>
