@@ -15,6 +15,16 @@ You should have received a copy of the GNU Lesser General Public License along w
 script; if not, please visit http://www.gnu.org/copyleft/gpl.html for more information.
 
 
+Software
+========
+
+* accel-ppp =>
+* barcode =>
+* flygps =>
+* flypeek =>
+* i2c-telemetry =>
+
+
 Usage
 =====
 	
