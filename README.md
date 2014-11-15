@@ -26,8 +26,8 @@ Software
 * flyavr => I2C protect device system
 * flygps =>
 * flypeek =>
-* i2c-telemetry => AM2321, BH1750, BMP085, DS1621, INA219, LM75, PCF8591, PCF8574
 * remserial => Bridge between a TCP/IP network and serial ports
+* telemetry => AM2321, BH1750, BMP085, DS1621, INA219, LM75, PCF8591, PCF8574
 * vtun-lite => VPN tunneling daemon (without lzo, zlib, ssl)
 
 
