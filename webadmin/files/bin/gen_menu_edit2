@@ -1,0 +1,43 @@
+#!/bin/sh
+
+dir=$1
+[ -z "$dir" ] && dir="/etc"
+last_was_dir=0
+
+
+print_item() {
+  local f="$1"
+  local n="$2"
+  echo -n "    <li> "
+  [ -L "$f" ] && echo -n "@"
+  echo "<a href='?page=edit&filename=$f'>$n</a>"
+}
+
+print_dir() {
+	local fullpath="$1"
+	local name="$2"
+	local dircontents="`ls $fullpath | sort`"
+	local i dirfiles dirdirs
+	
+	echo "<li> $name"
+	echo "<ul>"
+	for i in $dircontents; do 
+		[ -d "${fullpath}/${i}" ] && dirdirs="${dirdirs} ${i}" || dirfiles="${dirfiles} ${i}"
+	done
+
+	for i in $dirdirs; do 
+		print_dir ${fullpath}/$i $i
+	done
+
+	for i in $dirfiles; do
+		print_item $i
+	done
+
+	echo "</ul>"
+}
+
+
+echo '<ul id="treemenu1" class="treeview">'
+print_dir /etc /etc
+echo '</ul>'
+

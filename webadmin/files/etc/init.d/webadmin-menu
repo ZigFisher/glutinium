@@ -1,0 +1,40 @@
+#!/bin/sh
+#
+# Generate menu for webadmin
+#
+
+[ -x /bin/gen_menu_edit ] || exit 0
+
+test -f /bin/router_functions && . /bin/router_functions
+
+NAME=webadmin
+
+start() {
+ 	msgn "Generating webadmin menu..."
+    ( /bin/gen_menu_edit >/tmp/edit-$$.html 2>/dev/null; mv /tmp/edit-$$.html /www/menu/edit.html; ) &
+}
+stop() {
+    echo -n ""
+}
+restart() {
+	stop
+	start
+}
+
+case "$1" in
+  start)
+  	start
+	;;
+  stop)
+  	stop
+	;;
+  restart|reload)
+  	restart
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
+
+exit $?
+

@@ -1,0 +1,55 @@
+#!/bin/sh
+
+dir=$1
+[ -z "$dir" ] && dir="/etc /www"
+last_was_dir=0
+
+indent(){
+  echo -n " ";#for i in `seq 1 $level`; do echo -n "     "; done  
+}
+up(){
+  local q=$lastlevel
+  while [ "$q" != "$level" ]; do
+    indent; 
+    echo "</ul>"
+	q=$(($q-1))
+  done
+}
+down(){
+  indent;
+  echo "<ul>"
+}
+
+print_item() {
+  indent; echo -n "    <li> "
+  [ -L "$f" ] && echo -n "@"
+  [ $is_dir = 0 ] && echo "<a href='?page=edit&filename=$f'>$n</a>" || echo "$n"
+}
+
+echo '<ul id="treemenu1" class="treeview">'
+echo '<li>/'
+
+find $dir | while read f; do
+  b=`basename "$f"`
+  [ -d "$f" ] && is_dir=1 || is_dir=0
+
+  level=`echo $f | sed 's,/, ,g' | wc -w | sed 's/ //g'`
+  [ -z "$lastlevel" ] && lastlevel=$(($level-1))
+  
+  n="<b>$b</b>"
+  if [ "$level" -gt "$lastlevel" ]; then
+    down
+    print_item
+  elif [ "$level" -lt "$lastlevel" ]; then
+    up
+    print_item
+  elif [ "$level" = "$lastlevel" ]; then
+    print_item
+  fi
+  
+  last_was_dir=$is_dir
+  lastlevel=$level
+done
+
+echo '</ul>'
+

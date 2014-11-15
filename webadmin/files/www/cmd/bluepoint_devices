@@ -1,0 +1,2 @@
+#!/bin/sh
+exec cat /tmp/jacker/jackbase/*/name | sort | uniq
