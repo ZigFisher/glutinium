@@ -1,0 +1,12 @@
+Stat  Link       Type       Speed      Password             MyIP           RemoteIP         Description               Destination
+#
+#     ukrcard000 br-ukrcard 0:0        MyPassword           -              -                Testing_terminal          active
+#
+#     lift1a     brlift1    512:512    mypass2012           -              -                Opisanie_1                vboxX
+#     vbox1150   tun        512:512    mypass2012           172.xx.xx.1    172.xx.xx.yy     Opisanie_2                vboxX
+#
+#     vbox311x   tun        512:512    mypass2012           172.19.3.11x   172.19.3.1       Vtun                      vbox3
+#     point0x    br-tun1    0:0        mypass2012           -              -                Local_network             neapol
+#     wifi0x     br-tun2    1024:1024  mypass2012           -              -                WiFi_network              neapol
+
+

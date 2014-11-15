@@ -22,10 +22,12 @@ Software
 * baoclone =>
 * barcode => Utility to get data from event devices
 * changemac =>
-* fixsum =>
+* fixsum => Fix atheros ath9k chipset EEPROM checksum
 * flygps =>
 * flypeek =>
 * i2c-telemetry =>
+* remserial => Bridge between a TCP/IP network and serial ports
+* vtun-lite => VPN tunneling daemon (without lzo, zlib, ssl)
 
 
 Usage
@@ -37,5 +39,5 @@ Usage
 	./scripts/feeds update -a && ./scripts/feeds install -a
 	
 	make package/index V=99                     # Create index of packages
-	make package/bwm/{clean,compile,install}
+	make package/barcode/{clean,compile,install}
 
