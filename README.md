@@ -19,7 +19,10 @@ Software
 ========
 
 * accel-ppp =>
+* baoclone =>
 * barcode =>
+* changemac =>
+* fixsum =>
 * flygps =>
 * flypeek =>
 * i2c-telemetry =>
