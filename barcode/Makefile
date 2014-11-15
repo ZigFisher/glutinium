@@ -1,6 +1,5 @@
 #
-# Copyright (C) 2012-2013 Vlad Moskovets vlad.moskovets@gmail.com
-# Copyright (C) 2013-2014 Zig Fisher flyrouter@gmail.com
+# Copyright (C) 2006-2014 OpenWrt.org
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
