@@ -15,7 +15,6 @@ Supported devices
 * LM75    =>  Single chip
 * PCF8591 =>  YL-40  module (8-bit A/D and D/A converter)
 * PCF8574 =>  Single chip
-
 * GPS     =>  USB or Serial
 * WebCam  =>  Serial
 
