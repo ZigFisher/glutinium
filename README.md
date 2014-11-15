@@ -1,7 +1,7 @@
-FlyWRT
-======
+Glutinium
+=========
 
-OpenWRT custom packages for extends functionality
+Glutinium - OpenWRT custom packages for extends functionality
 
 
 License
@@ -32,8 +32,8 @@ Usage
 =====
 	
 	cd openwrt
-	mkdir flywrt
-	echo "src-link flywrt /var/www/builder/data/trunk/build_ng/openwrt/flywrt" >>./feeds.conf
+	mkdir glutinium
+	echo "src-link glutinium /var/www/builder/data/trunk/build_ng/openwrt/glutinium" >>./feeds.conf
 	./scripts/feeds update -a && ./scripts/feeds install -a
 	
 	make package/index V=99                     # Create index of packages
