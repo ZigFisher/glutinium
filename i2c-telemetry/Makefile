@@ -48,6 +48,7 @@ define Package/i2c-telemetry/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/lm75 $(1)/usr/sbin/
 	#$(INSTALL_BIN) $(PKG_BUILD_DIR)/pcf8591 $(1)/usr/sbin/
 	$(INSTALL_BIN) ./files/narodmon.sh $(1)/usr/sbin/
+	$(INSTALL_BIN) ./files/thingspeak.sh $(1)/usr/sbin/
 endef
 
 $(eval $(call BuildPackage,i2c-telemetry))
