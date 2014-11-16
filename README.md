@@ -36,11 +36,16 @@ Software
 Usage
 =====
 	
-	cd openwrt
+	cd OpenWRT
 	mkdir glutinium
-	echo "src-link glutinium /var/www/builder/data/trunk/build_ng/openwrt/glutinium" >>./feeds.conf
-	./scripts/feeds update -a && ./scripts/feeds install -a
+	echo "src-git glutinium https://github.com/ZigFisher/Glutinium.git" >./feeds.conf
+	./scripts/feeds update glutinium       # or ./scripts/feeds update -a
+	./scripts/feeds install i2c-telemetry  # or ./scripts/feeds install -a
 	
-	make package/index V=99                     # Create index of packages
-	make package/barcode/{clean,compile,install}
+	make menuconfig                        # select i2c-telemetry in utils dir
+	make package/i2c-telemetry/compile     # {clean,compile,install}
+	make package/i2c-telemetry/install     # {clean,compile,install}
+	
+	make package/index V=99                # Create index of packages
+
 
