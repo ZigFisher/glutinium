@@ -30,19 +30,23 @@ define Build/Prepare
 endef
 
 define Build/Compile
+	$(TARGET_CC) $(TARGET_CFLAGS) -Wall -o $(PKG_BUILD_DIR)/am2321 $(PKG_BUILD_DIR)/am2321.c
 	$(TARGET_CC) $(TARGET_CFLAGS) -Wall -o $(PKG_BUILD_DIR)/bh1750 $(PKG_BUILD_DIR)/bh1750.c $(PKG_BUILD_DIR)/smbus.c
 	$(TARGET_CC) $(TARGET_CFLAGS) -Wall -o $(PKG_BUILD_DIR)/bmp085 $(PKG_BUILD_DIR)/bmp085.c $(PKG_BUILD_DIR)/smbus.c
+	$(TARGET_CC) $(TARGET_CFLAGS) -Wall -o $(PKG_BUILD_DIR)/ds1621 $(PKG_BUILD_DIR)/ds1621.c
 	$(TARGET_CC) $(TARGET_CFLAGS) -Wall -o $(PKG_BUILD_DIR)/ina219 $(PKG_BUILD_DIR)/ina219.c
 	$(TARGET_CC) $(TARGET_CFLAGS) -Wall -o $(PKG_BUILD_DIR)/lm75 $(PKG_BUILD_DIR)/lm75.c
-	$(TARGET_CC) $(TARGET_CFLAGS) -Wall -o $(PKG_BUILD_DIR)/pcf8591 $(PKG_BUILD_DIR)/pcf8591.c
+	#$(TARGET_CC) $(TARGET_CFLAGS) -Wall -o $(PKG_BUILD_DIR)/pcf8591 $(PKG_BUILD_DIR)/pcf8591.c
 endef
 
 define Package/i2c-telemetry/install
 	$(INSTALL_DIR) $(1)/usr/sbin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/am2321 $(1)/usr/sbin/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bh1750 $(1)/usr/sbin/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bmp085 $(1)/usr/sbin/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/ds1621 $(1)/usr/sbin/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/lm75 $(1)/usr/sbin/
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/pcf8591 $(1)/usr/sbin/
+	#$(INSTALL_BIN) $(PKG_BUILD_DIR)/pcf8591 $(1)/usr/sbin/
 	$(INSTALL_BIN) ./files/narodmon.sh $(1)/usr/sbin/
 endef
 
