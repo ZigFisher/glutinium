@@ -11,6 +11,7 @@ Supported devices
 * AM2321  =>  НomeMade module (humidity + temperature)
 * BH1750  =>  GY-302 module (brightness)
 * BMP085  =>  GY-65  module (pressure + temperature)
+* DS1621  =>  Single chip
 * INA219  =>  HomeMade module (voltage + current)
 * LM75    =>  Single chip
 * PCF8591 =>  YL-40  module (8-bit A/D and D/A converter)
