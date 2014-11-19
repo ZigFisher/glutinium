@@ -25,10 +25,10 @@ int main( int argc, char **argv ) {
   int fd_i2c;
   I2C_DATA i2c_d;
   int ch;
-  
+
   printf("Reading from a PCF8591 (4 chanel A/D at 8 bits with I2C bus)\n");
 
-  fd_i2c = open( "/dev/i2c", O_RDWR );
+  fd_i2c = open( "/dev/i2c-0", O_RDWR );
   if (fd_i2c<=0)     {
     printf( "Open error on /dev/i2c\n" );
     exit( 1 );
@@ -36,23 +36,25 @@ int main( int argc, char **argv ) {
 
   // PCF8591 address scheme
   // |  1 |  0 |  0 |  1 | A2 | A1 | A0 | R/W |
-  i2c_d.slave =(0x09<<4)|(0x01<<1);
+//  i2c_d.slave =(0x09<<4)|(0x01<<1);
 
-  for (ch=0;ch<=3;ch++) {  
+  i2c_d.slave = 0x48
+
+  for (ch=0;ch<=3;ch++) {
     // Select the A/D channel
     i2c_d.wbuf[0] = ch;
     i2c_d.wlen  = 1;
     if ((rtc=ioctl(fd_i2c,_IO( ETRAXI2C_IOCTYPE, I2C_WRITE), &i2c_d))!=EI2CNOERRORS)  {
       close(fd_i2c);
       printf( "Error %d on line %d\n",rtc,__LINE__);
-      return ( -1 );   
+      return ( -1 );
     }
 
     i2c_d.rlen  = 3;
     if ((rtc=ioctl(fd_i2c,_IO( ETRAXI2C_IOCTYPE, I2C_READ), &i2c_d))!=EI2CNOERRORS)  {
       close(fd_i2c);
       printf( "Error %d on line %d\n",rtc,__LINE__);
-      return ( -1 );   
+      return ( -1 );
     }
 
     // Show the voltage level
