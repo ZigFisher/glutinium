@@ -38,7 +38,7 @@ int main( int argc, char **argv ) {
   // |  1 |  0 |  0 |  1 | A2 | A1 | A0 | R/W |
 //  i2c_d.slave =(0x09<<4)|(0x01<<1);
 
-  i2c_d.slave = 0x48
+  i2c_d.slave = 0x48;
 
   for (ch=0;ch<=3;ch++) {
     // Select the A/D channel
