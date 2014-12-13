@@ -53,12 +53,12 @@ void udelay( long us ) {
 
 /*
  *  CRC16
- */ 
+ */
 
 unsigned short crc16( unsigned char *ptr, unsigned char len ) {
   unsigned short crc = 0xFFFF;
   unsigned char i;
-  
+
   while( len-- )
   {
     crc ^= *ptr++;
@@ -71,7 +71,7 @@ unsigned short crc16( unsigned char *ptr, unsigned char len ) {
       }
     }
   }
-  
+
   return crc;
 }
 
@@ -101,7 +101,7 @@ void __check_crc16( st_am2321 measured ) {
     fprintf( stderr, "am2321: CRC16 does not match\n" );
     exit( 1 );
   }
-  
+
   return;
 }
 
@@ -169,13 +169,13 @@ st_am2321 am2321() {
     perror( "am2321(2)" );
     exit( 2 );
   }
- 
+
  retry_cnt = 0;
  retry:
-  
+
   /* wake I2C device up */
   write( fd, NULL, 0);
-  
+
   /* write measurement request */
   data[0] = 0x03; data[1] = 0x00; data[2] = 0x04;
   ret = write( fd, data, 3 );
@@ -188,10 +188,10 @@ st_am2321 am2321() {
     perror( "am2321(3)" );
     exit( 3 );
   }
-  
+
   /* wait for having measured */
   udelay( 1500 );
-  
+
   /* read measured result */
   memset( data, 0x00, 8 );
   ret = read( fd, data, 8 );
@@ -199,10 +199,10 @@ st_am2321 am2321() {
     perror( "am2321(4)" );
     exit( 4 );
   }
-  
+
   /* close I2C device */
   close( fd );
-  
+
   return __st_am2321( data );
 }
 
@@ -227,15 +227,14 @@ void print_am2321( st_am2321 measured ) {
 }
 
 void print_am2321_human_readable( st_am2321 measured ) {
-  printf( "Temperature %d.%d [C]\n",
+  printf( "Temperature (C)\t\t%d.%d\n",
           am2321_temperature_integral( measured ),
           am2321_temperature_fraction( measured ) );
-  printf( "Humidity    %d.%d [%%]\n",
+  printf( "Humidity (%%)\t\t%d.%d\n",
           am2321_humidity_integral( measured ),
           am2321_humidity_fraction( measured ) );
   return;
 }
-
 
 /*
  *  Main
@@ -256,7 +255,7 @@ int print_help() {
 int parse_options( int argc, char* argv[]) {
   int options = 0;
   int flags = 0;
-  
+
   while( 1+flags < argc && argv[1+flags][0] == '-' ) {
     switch( argv[1+flags][1] ) {
     case 'r': options |= OPT_HUMAN_READABLE; break;
@@ -268,7 +267,7 @@ int parse_options( int argc, char* argv[]) {
     }
     flags++;
   }
-  
+
   return options;
 }
 
@@ -286,7 +285,7 @@ int main( int argc, char* argv[] ) {
 
   /* parse the given options */
   options = parse_options( argc, argv );
-  
+
   /* measure temperature and humidity */
   measured = ! is_opt_stub( options ) ? am2321() : am2321_stub();
 
@@ -296,6 +295,6 @@ int main( int argc, char* argv[] ) {
   } else {
     print_am2321_human_readable( measured );
   }
-  
+
   return 0;
 }
