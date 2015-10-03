@@ -28,3 +28,6 @@ bh1750:
 
 lcdd:
 	$(CC) -o lcdd lcdd.c
+
+mcp_rw:
+	$(CC) -o mcp mcp_rw.c smbus.c
