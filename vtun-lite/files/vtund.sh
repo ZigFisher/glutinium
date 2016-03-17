@@ -18,7 +18,7 @@ rm -f $CONFDIR/$CONFIG
 ( echo "options {"
   echo "  syslog daemon;"
   echo "  timeout 60;"
-  echo "  ip /bin/ip;"
+  echo "  ip /sbin/ip;"
   echo "}"
   echo "default {"
   echo "  type tun;"
