@@ -9,7 +9,7 @@ UPDATE=`date +%G%m%d-%H%M`
 CONFDIR="/etc"
 PROFILE="vtund.dat"
 CONFIG="vtund.conf"
-
+FINDIP=`find /bin /sbin /usr/bin /usr/sbin -name ip`
 
 mkdir -p /var/lock/vtund
 
@@ -18,7 +18,7 @@ rm -f $CONFDIR/$CONFIG
 ( echo "options {"
   echo "  syslog daemon;"
   echo "  timeout 60;"
-  echo "  ip /sbin/ip;"
+  echo "  ip $FINDIP;"
   echo "}"
   echo "default {"
   echo "  type tun;"
