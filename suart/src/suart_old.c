@@ -103,14 +103,14 @@ int main(int argc, char *argv[])
       perror("Can't create  socket");
       return -1;
     }
-    
+
     optval=1;
     if (setsockopt(listener, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval)))
     {
 	perror("Can't set SO_REUSEADDR on socket");
 	return -1;
     }
-    
+
     addr.sin_family = AF_INET;
     addr.sin_port = htons(port_num);
     addr.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
     }
 
     listen(listener, 1);
-    
+
 //    printf("Listening port   :%s\n",prt);
 
 
@@ -133,10 +133,10 @@ struct termios options;
 tty_fd = open(ttyPort, O_RDWR | O_NOCTTY | O_NONBLOCK);
 if (tty_fd == -1) perror("open_port: Unable to open serial port");
 else
-{ 
+{
 fcntl(tty_fd, F_SETFL, 0);
 
-tcgetattr(tty_fd, &options); 
+tcgetattr(tty_fd, &options);
 cfmakeraw(&options);
 
 /************************************************************************/
@@ -207,9 +207,9 @@ tcflush(tty_fd, TCIOFLUSH); /**/
             printf("No data in 10 seconds.\n");
 
         }
-    
+
         close(sock_fd);
     }
-    
+
     return 0;
 }

@@ -21,7 +21,7 @@ define Package/vtun-lite
   SECTION:=net
   CATEGORY:=Network
   DEPENDS:=+kmod-tun
-  TITLE:=VPN tunneling daemon
+  TITLE:=VPN tunneling daemon (no ssl/lzo/zlib)
   URL:=http://vtun.sourceforge.net
   SUBMENU:=VPN
 endef
