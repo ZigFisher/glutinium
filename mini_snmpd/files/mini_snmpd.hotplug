@@ -1,0 +1,2 @@
+[ "$INTERFACE" == "wan" ] || return
+[ "$ACTION" == "ifup" ] && /etc/init.d/mini_snmpd restart
