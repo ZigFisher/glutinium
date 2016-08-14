@@ -1,0 +1,39 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2009-2015 OpenWrt.org
+
+START=90
+STOP=10
+
+USE_PROCD=1
+PROG=/usr/bin/uvc2http
+
+start_instance() {
+	procd_open_instance
+
+	procd_set_param command "$PROG" 
+
+	config_get device "$1" 'device' '/dev/video0'
+	procd_append_param command --device $device
+
+	config_get buffers "$1" 'buffers' '4'
+	procd_append_param command --buffers $buffers
+
+	config_get width "$1" 'width' '640'
+	procd_append_param command --width $width
+
+	config_get height "$1" 'height' '480'
+	procd_append_param command --height $height
+
+	config_get fps "$1" 'fps' '15'
+	procd_append_param command --fps $fps
+
+	config_get port "$1" 'port' '8081'
+	procd_append_param command --port $port
+
+	procd_close_instance
+}
+
+start_service() {
+	config_load 'uvc2http'
+	config_foreach start_instance 'uvc2http'
+}
