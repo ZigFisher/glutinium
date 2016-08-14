@@ -1,0 +1,46 @@
+--- a/drivers/media/usb/uvc/uvc_video.c
++++ b/drivers/media/usb/uvc/uvc_video.c
+@@ -113,6 +113,14 @@ static void uvc_fixup_video_ctrl(struct
+ 	if (frame == NULL)
+ 		return;
+ 
++	if ((format->flags & UVC_FMT_FLAG_COMPRESSED) &&
++	    (stream->dev->quirks & UVC_QUIRK_COMPRESSION_RATE)) {
++		/* It is expected that MJPEG compressed image at least 5 times less than uncompressed one */
++		ctrl->dwMaxVideoFrameSize = ((u32)(frame->wWidth) * frame->wHeight * 2U) / 5U;
++
++		uvc_printk(KERN_ERR, "dwMaxVideoFrameSize fixed to %d.\n", ctrl->dwMaxVideoFrameSize);
++	}
++
+ 	if (!(format->flags & UVC_FMT_FLAG_COMPRESSED) ||
+ 	     (ctrl->dwMaxVideoFrameSize == 0 &&
+ 	      stream->dev->uvc_version < 0x0110))
+--- a/drivers/media/usb/uvc/uvcvideo.h
++++ b/drivers/media/usb/uvc/uvcvideo.h
+@@ -148,6 +148,7 @@
+ #define UVC_QUIRK_PROBE_DEF		0x00000100
+ #define UVC_QUIRK_RESTRICT_FRAME_RATE	0x00000200
+ #define UVC_QUIRK_RESTORE_CTRLS_ON_INIT	0x00000400
++#define UVC_QUIRK_COMPRESSION_RATE	0x00000800
+ 
+ /* Format flags */
+ #define UVC_FMT_FLAG_COMPRESSED		0x00000001
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -2184,6 +2184,16 @@ static struct usb_device_id uvc_ids[] =
+ 	  .bInterfaceSubClass	= 1,
+ 	  .bInterfaceProtocol	= 0,
+ 	  .driver_info		= UVC_QUIRK_RESTORE_CTRLS_ON_INIT },
++	/* Logitech B910 HD Webcam */
++	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
++				| USB_DEVICE_ID_MATCH_INT_INFO,
++	  .idVendor		= 0x046d,
++	  .idProduct		= 0x0823,
++	  .bInterfaceClass	= USB_CLASS_VIDEO,
++	  .bInterfaceSubClass	= 1,
++	  .bInterfaceProtocol	= 0,
++	  .driver_info		= UVC_QUIRK_RESTORE_CTRLS_ON_INIT
++				| UVC_QUIRK_COMPRESSION_RATE },
+ 	/* Chicony CNF7129 (Asus EEE 100HE) */
+ 	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
+ 				| USB_DEVICE_ID_MATCH_INT_INFO,
