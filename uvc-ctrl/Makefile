@@ -23,21 +23,21 @@ define Package/uvc-ctrl
 endef
 
 define Package/uvc-ctrl/description
-<------>Utility for set and display uvc camera control option.
+	Utility for set and display uvc camera control option.
 endef
 
 define Build/Prepare
-<------>$(INSTALL_DIR) $(PKG_BUILD_DIR)
-<------>$(CP) ./src/* $(PKG_BUILD_DIR)/
+	$(INSTALL_DIR) $(PKG_BUILD_DIR)
+	$(CP) ./src/* $(PKG_BUILD_DIR)/
 endef
 
 define Build/Compile
-<------>$(TARGET_CC) $(TARGET_CFLAGS) -Os $(PKG_BUILD_DIR)/uvc-ctrl.c -o $(PKG_BUILD_DIR)/$(PKG_NAME)
+	$(TARGET_CC) $(TARGET_CFLAGS) -Os $(PKG_BUILD_DIR)/uvc-ctrl.c -o $(PKG_BUILD_DIR)/$(PKG_NAME)
 endef
 
 define Package/uvc-ctrl/install
-<------>$(INSTALL_DIR) $(1)/sbin
-<------>$(INSTALL_BIN) $(PKG_BUILD_DIR)/uvc-ctrl $(1)/sbin/
+	$(INSTALL_DIR) $(1)/sbin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/uvc-ctrl $(1)/sbin/
 endef
 
 $(eval $(call BuildPackage,uvc-ctrl))
