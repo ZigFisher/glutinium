@@ -10,19 +10,26 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=flyscripts
 PKG_VERSION:=2.0.1
 PKG_RELEASE:=1
-PKG_INSTALL:=1
+PKG_LICENSE:=GPL-2.0
 
 include $(INCLUDE_DIR)/package.mk
 
 define Package/flyscripts
   SECTION:=utils
   CATEGORY:=Utilities
+  MAINTAINER:=Zig Fisher <flyrouter@gmail.com>
   TITLE:=Some FlyRouter scripts
   URL:=https://github.com/ZigFisher/Glutinium/tree/master/flyscripts
 endef
 
-define Build/Install
-	$(call Build/Install/Default,)
+define Package/flyscripts/description
+ Some FlyRouter scripts
+endef
+
+define Build/Compile
+endef
+
+define Build/Configure
 endef
 
 define Package/flyscripts/install
