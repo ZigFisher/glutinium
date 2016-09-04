@@ -29,8 +29,13 @@ define Package/flyscripts/install
 	$(INSTALL_DIR)  $(1)/etc
 	$(INSTALL_BIN)  ./files/etc/rc.local.example $(1)/etc/rc.local.example
 	$(INSTALL_DIR)  $(1)/etc/hotplug.d/net
-	$(INSTALL_BIN)  ./files/etc/hotplug.d/net/37-vtun.example $(1)/etc/hotplug.d/net/37-vtun.example
-	$(INSTALL_CONF) ./files/vtund.dat $(1)/etc/
+	$(INSTALL_BIN)  ./files/etc/hotplug.d/net/37-vtun.example $(1)/etc/hotplug.d/net/
+	$(INSTALL_DIR)  $(1)/etc/hotplug.d/usb
+	$(INSTALL_BIN)  ./files/etc/hotplug.d/usb/30-com-* $(1)/etc/hotplug.d/usb/
+	$(INSTALL_BIN)  ./files/etc/hotplug.d/usb/30-gps-* $(1)/etc/hotplug.d/usb/
+	$(INSTALL_BIN)  ./files/etc/hotplug.d/usb/30-modem-* $(1)/etc/hotplug.d/usb/
+	$(INSTALL_DIR)  $(1)/usr/sbin
+	$(INSTALL_BIN)  ./files/usr/sbin/service_flypeek_usb_yandex.sh $(1)/usr/sbin/
 endef
 
 $(eval $(call BuildPackage,flyscripts))

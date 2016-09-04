@@ -1,0 +1,25 @@
+#!/bin/sh
+#
+# GPS receiver BU-353
+#
+MPRODID="67b/2303/300"
+SYMLINK="ttyGPS0"
+
+if [ "${PRODUCT}" = "${MPRODID}" ]; then
+  DEVICE=$(ls /sys/$DEVPATH/* | grep -e '^ttyUSB')
+  case "$ACTION" in
+    add)
+      if [ -z ${DEVICE} ]; then
+        #logger -t hotplug "Warning, device name is empty..."
+        exit 0
+      else
+        logger -t hotplug "Device name of GPS Receiver - ${DEVICE}"
+        ln -s /dev/$DEVICE /dev/${SYMLINK} && logger -t hotplug "Symlink /dev/${SYMLINK} created" 
+      fi
+      ;;
+    remove)
+      rm /dev/${SYMLINK} && logger -t hotplug "Symlink /dev/${SYMLINK} removed"
+      ;;
+    esac
+fi
+
