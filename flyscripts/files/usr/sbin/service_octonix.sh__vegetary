@@ -1,0 +1,104 @@
+#!/bin/sh
+#
+# Push data to OctoniX service
+#
+CLOUD="http://esp8266.flymon.net:81"
+
+##################
+
+get_date(){
+  DATE=`date +%G-%m-%d`
+}
+
+get_time(){
+  TIME="`date +%H:%M:%S` MSK"
+}
+
+get_name(){
+  NAME=`uci get system.@system[0].hostname`
+}
+
+get_macid(){
+  MACID=`ifconfig eth0 | grep HWaddr | awk '{FS=" "; if(NR==1) {print $5}};' | tr -d ':' | tr 'a-z' 'A-Z'`
+}
+
+get_wanif(){
+  WANIF=`route | grep default | awk '{print $8}'`
+}
+
+get_wanip(){
+  WANIP=`ifconfig $WANIF | grep 'Mask:' | tr ':' ' ' | awk '{print $3}'`
+}
+
+get_memory(){
+  MEMORY=`free | awk '/Mem:/ {print $4}' | egrep '^[-+]?[0-9]*\.?[0-9]+$'`
+}
+
+get_uptime(){
+  UPTIME=`cat /proc/uptime | cut -d '.' -f 1 | egrep '^[-+]?[0-9]*\.?[0-9]+$'`
+}
+
+get_wlmod(){
+  WLMOD=`uci get wireless.@wifi-iface[0].mode`
+}
+
+get_wlcon(){
+  WLCON=`iwinfo wlan0 assoclist | grep 'dBm' | wc -l | egrep '^[-+]?[0-9]*\.?[0-9]+$'`
+}
+
+get_rssi(){
+  RSSI=`iw wlan0 link | awk '/signal:/ {print $2}' | tail -n 1 | egrep '^[-+]?[0-9]*\.?[0-9]+$'`
+}
+
+get_method(){
+  if [ -O /usr/bin/httping ] ; then
+    PUSHCMD="httping -q -c 1 -t 5 -g"
+  else
+    PUSHCMD="wget -q -O /dev/null"
+  fi
+  METH=`echo $PUSHCMD | awk '{print $1}'`
+}
+
+##################
+
+get_sensor_amh(){
+  AMH=`am2321 -r | grep -e "Humidity" | awk '{print $2}' | egrep '^[-+]?[0-9]*\.?[0-9]+$' ; sleep 2`
+}
+
+get_sensor_amt(){
+  AMT=`am2321 -r | grep -e "Temperature" | awk '{print $2}' | egrep '^[-+]?[0-9]*\.?[0-9]+$'`
+}
+
+get_sensor_bmpp(){
+  BMPP=`bmp085 | grep -e "Pressure" | awk '{print $3}' | egrep '^[-+]?[0-9]*\.?[0-9]+$'`
+}
+
+get_sensor_bmpt(){
+  BMPT=`bmp085 | grep -e "Temperature" | awk '{print $3}' | egrep '^[-+]?[0-9]*\.?[0-9]+$'`
+}
+
+get_sensor_ds(){
+  DS=`ds1621 | awk '{print $1}' | egrep '^[-+]?[0-9]*\.?[0-9]+$'`
+}
+
+get_sensor_inac(){
+  INAC=`ina219 -b 0 -w -c | awk '{print $1}' | egrep '^[-+]?[0-9]*\.?[0-9]+$'`
+}
+
+get_sensor_inav(){
+  INAV=`ina219 -b 0 -w -v | awk '{print $1}' | egrep '^[-+]?[0-9]*\.?[0-9]+$'`
+}
+
+get_sensor_lm(){
+  LM=`lm75 72 | awk '{print $3}' | egrep '^[-+]?[0-9]*\.?[0-9]+$'`
+}
+
+##################
+
+get_date; get_time; get_name; get_macid; get_wanif; get_wanip; get_memory; get_uptime; get_wlmod; get_wlcon; get_rssi; get_method;
+get_sensor_amh; get_sensor_amt; get_sensor_bmpp; get_sensor_bmpt; get_sensor_ds; get_sensor_inac; get_sensor_inav; get_sensor_lm;
+
+SYSTEM="host=$NAME&mac=$MACID&wanif=$WANIF&wanip=$WANIP&freemem=$MEMORY&uptime=$UPTIME&wlmod=$WLMOD&wlcon=$WLCON&rssi=$RSSI&method=$METH"
+SENSOR="amh=$AMH&amt=$AMT&bmpp=$BMPP&bmpt=$BMPT&ds=$DS&lm=$LM&inac=$INAC&inav=$INAV"
+
+$PUSHCMD "$CLOUD?$SYSTEM&$SENSOR" && logger -t service_octonix "$CLOUD?$SYSTEM&$SENSOR"
