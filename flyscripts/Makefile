@@ -10,20 +10,15 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=flyscripts
 PKG_VERSION:=2.0.1
 PKG_RELEASE:=1
-
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=@SF/vtun
-PKG_MD5SUM:=d3d8bc4d58886498a1c338670eab9315
-
 PKG_INSTALL:=1
 
 include $(INCLUDE_DIR)/package.mk
 
 define Package/flyscripts
-  SECTION:=net
-  CATEGORY:=Network
-  TITLE:=VPN tunneling daemon (no ssl/lzo/zlib)
-  URL:=
+  SECTION:=utils
+  CATEGORY:=Utilities
+  TITLE:=Some FlyRouter scripts
+  URL:=https://github.com/ZigFisher/Glutinium/tree/master/flyscripts
 endef
 
 define Build/Install
