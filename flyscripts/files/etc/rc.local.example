@@ -1,16 +1,14 @@
 #!/bin/sh
 #
 # Start vtun tunnel
-(while true ; do sleep 5; /usr/sbin/vtund -n -f /etc/vtund.conf vbox4777       vbox3.flymon.net -P 5000 >/dev/null 2>&1; done) &
-(while true ; do sleep 5; /usr/sbin/vtund -n -f /etc/vtund.conf hzi-lan-voip   194.54.152.6     -P 5000 >/dev/null 2>&1; done) &
-(while true ; do sleep 5; /usr/sbin/vtund -n -f /etc/vtund.conf lan-adm-zig    194.54.152.6     -P 5000 >/dev/null 2>&1; done) &
-(while true ; do sleep 5; /usr/sbin/vtund -n -f /etc/vtund.conf all-funduk-lan 194.54.152.6     -P 5000 >/dev/null 2>&1; done) &
+#(while true ; do sleep 5; /usr/sbin/vtund -n -f /etc/vtund.conf vboxXXXX vbox3.flymon.net -P 5000 >/dev/null 2>&1; done) &
 #
-# Push data to FlyPeek service
-(while true ; do sleep 300; /usr/sbin/service_flypeek.sh >/dev/null 2>&1; done) &
+# Push data to FlyPeek service (USB & IPC versions)
+#(while true ; do sleep 300; /usr/sbin/service_flypeek_usb.sh >/dev/null 2>&1; done) &
+#(while true ; do sleep 300; /usr/sbin/service_flypeek_ipc.sh >/dev/null 2>&1; done) &
 #
 # Push data to OctoniX service
-(while true ; do sleep 300; /usr/sbin/service_octonix.sh >/dev/null 2>&1; done) &
+#(while true ; do sleep 300; /usr/sbin/service_octonix.sh >/dev/null 2>&1; done) &
 #
 # Push data to ThingSpeak service
 #(while true ; do sleep 300; /usr/sbin/service_thingspeak.sh >/dev/null 2>&1; done) &
@@ -18,21 +16,21 @@
 # Push data to Narodmon service
 #(while true ; do sleep 300; /usr/sbin/service_narodmon.sh >/dev/null 2>&1; done) &
 #
-# Disable unused ports
-swconfig dev switch0 port 1 set disable 1
-swconfig dev switch0 port 2 set disable 1
-swconfig dev switch0 port 3 set disable 1
-swconfig dev switch0 port 4 set disable 1
-swconfig dev switch0 port 5 set disable 1
-swconfig dev switch0 set apply
+# Disable unused ports  (one port bricket)
+#swconfig dev switch0 port 1 set disable 1
+#swconfig dev switch0 port 2 set disable 1
+#swconfig dev switch0 port 3 set disable 1
+#swconfig dev switch0 port 4 set disable 1
+#swconfig dev switch0 port 5 set disable 1
+#swconfig dev switch0 set apply
 #
-/usr/sbin/iptables -I FORWARD -j ACCEPT -o br-lan -i br-vlan490
-/usr/sbin/iptables -I FORWARD -j ACCEPT -i br-lan -o br-vlan490
-/usr/sbin/iptables -A POSTROUTING -t nat -s 172.17.32.0/24 -d 172.28.0.0/16 -j MASQUERADE
+# Firewall settings
+#/usr/sbin/iptables -I FORWARD -j ACCEPT -o br-lan -i br-vlan490
+#/usr/sbin/iptables -I FORWARD -j ACCEPT -i br-lan -o br-vlan490
+#/usr/sbin/iptables -A POSTROUTING -t nat -s 172.17.32.0/24 -d 172.28.0.0/16 -j MASQUERADE
 #
-/usr/sbin/iptables -I FORWARD -j ACCEPT -o br-world -i vbox4777
-/usr/sbin/iptables -I FORWARD -j ACCEPT -i br-world -o vbox4777
-/usr/sbin/iptables -A POSTROUTING -t nat -s 192.168.2.0/24 -j MASQUERADE
+#/usr/sbin/iptables -I FORWARD -j ACCEPT -o br-world -i vboxXXXX
+#/usr/sbin/iptables -I FORWARD -j ACCEPT -i br-world -o vboxXXXX
+#/usr/sbin/iptables -A POSTROUTING -t nat -s 192.168.2.0/24 -j MASQUERADE
 #
 exit 0
-
