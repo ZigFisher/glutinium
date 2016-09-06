@@ -1,0 +1,17 @@
+#!/bin/sh
+
+IFACE="wan1"
+
+
+echo "Interface $INTERFACE change status to $ACTION" | logger -t routing
+
+if [ "$INTERFACE" = "$IFACE" ]; then
+  if [ "$ACTION" = "ifdown" ]; then
+    (sleep 3; kill -s HUP `pidof vtund`) && echo "Reinitialization vtund..." | logger -t routing
+  fi
+  #
+  if [ "$ACTION" = "ifup" ]; then
+    (sleep 3; kill -s HUP `pidof vtund`) && echo "Reinitialization vtund..." | logger -t routing
+  fi
+fi
+
