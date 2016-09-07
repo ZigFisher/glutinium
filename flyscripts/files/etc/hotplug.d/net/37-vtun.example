@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# vtund change routing
+# Change routing with vtund
 #
 GATE1="172.17.32.1"
 GATE2="172.19.24.1"
@@ -9,11 +9,11 @@ TUNID="vbox4777"
 
 if [ "$INTERFACE" = "$TUNID" ]; then
   if [ "$ACTION" = "add" ]; then
-    ip r replace default via $GATE2 && echo "Set default route via $GATE2" | logger -t routing
+    ip r replace default via $GATE2 && echo "Change default route via $GATE2" | logger -t flyscript
   fi
   #
   if [ "$ACTION" = "remove" ]; then
-    ip r replace default via $GATE1 && echo "Set default route via $GATE1" | logger -t routing
+    ip r replace default via $GATE1 && echo "Change default route via $GATE1" | logger -t flyscript
   fi 
 fi
 

@@ -11,15 +11,15 @@ if [ "${PRODUCT}" = "${MPRODID}" ]; then
   case "$ACTION" in
     add)
       if [ -z ${DEVICE} ]; then
-        #logger -t hotplug "Warning, device name is empty..."
+        # logger -t flyscript "Warning, device name is empty..."
         exit 0
       else
-        logger -t hotplug "Device name of Serial Converter - ${DEVICE}"
-        ln -s /dev/$DEVICE /dev/${SYMLINK}${NUMBER} && logger -t hotplug "Symlink /dev/${SYMLINK}${NUMBER} created"
+        logger -t flyscript "Device name of serial converter - ${DEVICE}"
+        ln -s /dev/$DEVICE /dev/${SYMLINK}${NUMBER} && logger -t flyscript "Symlink /dev/${SYMLINK}${NUMBER} created"
       fi
       ;;
     remove)
-      rm /dev/${SYMLINK}${NUMBER} && logger -t hotplug "Symlink /dev/${SYMLINK}${NUMBER} removed"
+      rm /dev/${SYMLINK}${NUMBER} && logger -t flyscript "Symlink /dev/${SYMLINK}${NUMBER} removed"
       ;;
     esac
 fi
