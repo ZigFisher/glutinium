@@ -17,6 +17,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/flyscripts
   SECTION:=utils
   CATEGORY:=Utilities
+  DEPENDS:=+comgt
   MAINTAINER:=Zig Fisher <flyrouter@gmail.com>
   TITLE:=Some FlyRouter scripts
   URL:=https://github.com/ZigFisher/Glutinium/tree/master/flyscripts
@@ -45,6 +46,8 @@ define Package/flyscripts/install
 	$(INSTALL_BIN)  ./files/etc/hotplug.d/usb/30-modem-* $(1)/etc/hotplug.d/usb/
 	$(INSTALL_DIR)  $(1)/usr/sbin
 	$(INSTALL_BIN)  ./files/usr/sbin/service_flypeek_usb_yandex.sh $(1)/usr/sbin/
+	$(INSTALL_DIR)  $(1)/lib/netifd/proto
+	$(INSTALL_BIN)  ./files/lib/netifd/proto/3g.sh $(1)/lib/netifd/proto/
 endef
 
 $(eval $(call BuildPackage,flyscripts))
