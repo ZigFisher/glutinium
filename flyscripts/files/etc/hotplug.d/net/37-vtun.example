@@ -1,5 +1,7 @@
 #!/bin/sh
-
+#
+# vtund change routing
+#
 GATE1="172.17.32.1"
 GATE2="172.19.24.1"
 TUNID="vbox4777"
