@@ -1,0 +1,9 @@
+#!/bin/sh
+
+uci -q batch <<-EOF >/dev/null
+	set system.@system[0].hostname='R-Keeper'
+	set system.@system[0].timezone='EET-2EEST,M3.5.0/3,M10.5.0/4'
+	commit system
+EOF
+
+exit 0
