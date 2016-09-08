@@ -35,7 +35,8 @@ endef
 
 define Package/flyscripts/install
 	$(INSTALL_DIR)  $(1)/etc
-	$(INSTALL_BIN)  ./files/etc/rc.local.example $(1)/etc/rc.local.example
+	$(INSTALL_BIN)  ./files/etc/banner $(1)/etc/
+	$(INSTALL_BIN)  ./files/etc/rc.local.example $(1)/etc/
 	$(INSTALL_DIR)  $(1)/etc/hotplug.d/iface
 	$(INSTALL_BIN)  ./files/etc/hotplug.d/iface/12-vtun $(1)/etc/hotplug.d/iface/
 	$(INSTALL_DIR)  $(1)/etc/hotplug.d/net

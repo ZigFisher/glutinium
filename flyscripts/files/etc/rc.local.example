@@ -24,6 +24,17 @@
 #swconfig dev switch0 port 5 set disable 1
 #swconfig dev switch0 set apply
 #
+# Init GPIO and start modem's correctly
+#echo "17" >/sys/class/gpio/export
+#echo "20" >/sys/class/gpio/export
+#echo "0" >/sys/class/gpio/gpio17/value
+#echo "0" >/sys/class/gpio/gpio20/value
+#echo "out" >/sys/class/gpio/gpio17/direction
+#echo "out" >/sys/class/gpio/gpio20/direction
+#sleep 3
+#echo "1" >/sys/class/gpio/gpio17/value
+#echo "1" >/sys/class/gpio/gpio20/value
+#
 # Firewall settings
 #/usr/sbin/iptables -I FORWARD -j ACCEPT -o br-lan -i br-vlan490
 #/usr/sbin/iptables -I FORWARD -j ACCEPT -i br-lan -o br-vlan490
