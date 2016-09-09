@@ -4,6 +4,17 @@ uci -q batch <<-EOF >/dev/null
 	set system.@system[0].hostname='Octonix'
 	set system.@system[0].timezone='EET-2EEST,M3.5.0/3,M10.5.0/4'
 	commit system
+	set network.wan1=interface
+	set network.wan1.proto='3g'
+	set network.wan1.device='/dev/ttyACM0'
+	set network.wan1.service='evdo'
+	set network.wan1.username='IT'
+	set network.wan1.password='IT'
+	set network.wan1.metric='1'
+	set network.wan1.ipv6='0'
+	set network.wan1.keepalive='3'
+	set network.wan1.gpio='20'
+	commit network
 EOF
 
 exit 0
