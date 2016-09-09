@@ -4,6 +4,9 @@ uci -q batch <<-EOF >/dev/null
 	set system.@system[0].hostname='Octonix'
 	set system.@system[0].timezone='EET-2EEST,M3.5.0/3,M10.5.0/4'
 	commit system
+	delete network.globals
+	delete network.lan.ip6assign
+	commit network
 	set network.wan1=interface
 	set network.wan1.proto='3g'
 	set network.wan1.device='/dev/ttyACM0'
