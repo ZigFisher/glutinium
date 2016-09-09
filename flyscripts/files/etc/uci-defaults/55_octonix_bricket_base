@@ -18,6 +18,27 @@ uci -q batch <<-EOF >/dev/null
 	set network.wan1.keepalive='3'
 	set network.wan1.gpio='20'
 	commit network
+	set network.@switch_port[0]=switch_port
+	set network.@switch_port[0].device='switch0'
+	set network.@switch_port[0].port='1'
+	set network.@switch_port[0].disable='1'
+	set network.@switch_port[0]=switch_port
+	set network.@switch_port[0].device='switch0'
+	set network.@switch_port[0].port='2'
+	set network.@switch_port[0].disable='1'
+	set network.@switch_port[0]=switch_port
+	set network.@switch_port[0].device='switch0'
+	set network.@switch_port[0].port='3'
+	set network.@switch_port[0].disable='1'
+	set network.@switch_port[0]=switch_port
+	set network.@switch_port[0].device='switch0'
+	set network.@switch_port[0].port='4'
+	set network.@switch_port[0].disable='1'
+	set network.@switch_port[0]=switch_port
+	set network.@switch_port[0].device='switch0'
+	set network.@switch_port[0].port='5'
+	set network.@switch_port[0].disable='1'
+	commit network
 EOF
 
 exit 0
