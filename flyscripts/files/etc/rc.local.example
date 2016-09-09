@@ -48,4 +48,4 @@
 #/usr/sbin/iptables -I FORWARD -j ACCEPT -i br-world -o vboxXXXX
 #/usr/sbin/iptables -A POSTROUTING -t nat -s 192.168.2.0/24 -j MASQUERADE
 #
-exit 0
+#exit 0
