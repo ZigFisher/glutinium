@@ -16,6 +16,9 @@
 # Push data to Narodmon service
 #(while true ; do sleep 300; /usr/sbin/service_narodmon.sh >/dev/null 2>&1; done) &
 #
+# Start ser2net
+#(while true ; do sleep 5; /usr/sbin/ser2net -d -c /etc/ser2net.conf >/dev/null 2>&1; done) &
+#
 # Disable unused ports  (one port bricket)
 #swconfig dev switch0 port 1 set disable 1
 #swconfig dev switch0 port 2 set disable 1
@@ -23,6 +26,7 @@
 #swconfig dev switch0 port 4 set disable 1
 #swconfig dev switch0 port 5 set disable 1
 #swconfig dev switch0 set apply
+#swconfig dev switch0 show
 #
 # Init GPIO and start modem's correctly
 #echo "17" >/sys/class/gpio/export
