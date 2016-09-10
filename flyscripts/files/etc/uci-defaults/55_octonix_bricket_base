@@ -49,6 +49,19 @@ uci -q batch <<-EOF >/dev/null
 	set network.wan2.keepalive='3'
 	set network.wan2.gpio='17'
 	commit network
+	set network.vtun0='interface'
+	set network.vtun0.proto='vtun'
+	set network.vtun0.server='vbox3.flymon.net'
+	set network.vtun0.port='5000'
+	set network.vtun0.transport='tcp'
+	set network.vtun0.timeout='60'
+	set network.vtun0.name='vbox4700'
+	set network.vtun0.password='test2016'
+	set network.vtun0.type='tun'
+	set network.vtun0.shaper='512:512'
+	set network.vtun0.hub='172.19.24.1'
+	set network.vtun0.ipaddr='172.19.24.100'
+	commit network
 EOF
 
 exit 0
