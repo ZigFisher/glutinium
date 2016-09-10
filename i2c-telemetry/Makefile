@@ -38,6 +38,7 @@ define Build/Compile
 	$(TARGET_CC) $(TARGET_CFLAGS) -Wall -o $(PKG_BUILD_DIR)/lm75 $(PKG_BUILD_DIR)/lm75.c
 	$(TARGET_CC) $(TARGET_CFLAGS) -Wall -o $(PKG_BUILD_DIR)/pcf8591 $(PKG_BUILD_DIR)/pcf8591d.c
 	#$(TARGET_CC) $(TARGET_CFLAGS) -Wall -o $(PKG_BUILD_DIR)/pcf8591 $(PKG_BUILD_DIR)/pcf8591.c
+	$(TARGET_CC) $(TARGET_CFLAGS) -Wall -o $(PKG_BUILD_DIR)/sht21 $(PKG_BUILD_DIR)/sht21.c
 endef
 
 define Package/i2c-telemetry/install
@@ -49,6 +50,7 @@ define Package/i2c-telemetry/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/ina219 $(1)/usr/sbin/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/lm75 $(1)/usr/sbin/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/pcf8591 $(1)/usr/sbin/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/sht21 $(1)/usr/sbin/
 	#$(INSTALL_BIN) ./files/narodmon.sh $(1)/usr/sbin/
 	#$(INSTALL_BIN) ./files/thingspeak.sh $(1)/usr/sbin/
 endef
