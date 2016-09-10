@@ -1,4 +1,6 @@
 #!/bin/sh
+#
+# More info: http://cyber-place.ru/showpost.php?p=7797&postcount=82
 
 RAWTEMP=$(i2cget -y 0 0x40 0xe3 w)
 RAWHUMI=$(i2cget -y 0 0x40 0xe5 w)
