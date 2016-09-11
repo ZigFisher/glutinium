@@ -25,7 +25,7 @@ endef
 
 define Package/flyscripts_base
 $(call Package/flyscripts/default)
-  TITLE:=Some FlyRouter scripts
+  TITLE:=Base FlyRouter scripts
 endef
 
 define Package/flyscripts_octonix_bricket_base
