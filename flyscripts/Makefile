@@ -15,8 +15,8 @@ PKG_LICENSE:=GPL-2.0
 include $(INCLUDE_DIR)/package.mk
 
 define Package/flyscripts/default
-  SECTION:=utils
-  CATEGORY:=Utilities
+  SECTION:=base
+  CATEGORY:=Extra packages
   DEPENDS:=+comgt
   MAINTAINER:=Zig Fisher <flyrouter@gmail.com>
   TITLE:=Some FlyRouter scripts
