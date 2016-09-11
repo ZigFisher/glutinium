@@ -79,6 +79,13 @@ define Package/flyscripts_octonix_bricket_base/install
 	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_octonix_bricket_base $(1)/etc/uci-defaults/
 endef
 
+define Package/flyscripts_rkeeper_wr841n_base/install
+	$(INSTALL_DIR)  $(1)/etc
+	$(INSTALL_BIN)  ./files/etc/banner/banner__rkeeper_wr841n_base $(1)/etc/banner
+	$(INSTALL_DIR)  $(1)/etc/uci-defaults
+	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_rkeeper_wr841n_base $(1)/etc/uci-defaults/
+endef
+
 define Package/flyscripts_switron_rt2257_base/install
 	$(INSTALL_DIR)  $(1)/etc
 	$(INSTALL_BIN)  ./files/etc/banner/banner__switron_rt2257_base $(1)/etc/banner
