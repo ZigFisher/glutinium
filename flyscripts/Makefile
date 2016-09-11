@@ -19,7 +19,7 @@ define Package/flyscripts/default
   CATEGORY:=Extra packages
   DEPENDS:=+comgt
   MAINTAINER:=Zig Fisher <flyrouter@gmail.com>
-  TITLE:=Some FlyRouter scripts
+  TITLE:=Base FlyRouter scripts
   URL:=https://github.com/ZigFisher/Glutinium/tree/master/flyscripts
 endef
 
