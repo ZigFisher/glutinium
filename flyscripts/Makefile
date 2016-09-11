@@ -23,7 +23,7 @@ define Package/flyscripts/default
   URL:=https://github.com/ZigFisher/Glutinium/tree/master/flyscripts
 endef
 
-define Package/flyscripts_all
+define Package/flyscripts_base
 $(call Package/flyscripts/default)
   TITLE:=Some FlyRouter scripts
 endef
@@ -54,7 +54,7 @@ endef
 define Build/Configure
 endef
 
-define Package/flyscripts_all/install
+define Package/flyscripts_base/install
 	$(INSTALL_DIR)  $(1)/etc
 	$(INSTALL_BIN)  ./files/etc/rc.local.example $(1)/etc/
 	$(INSTALL_BIN)  ./files/etc/ser2net.conf $(1)/etc/
@@ -86,7 +86,7 @@ define Package/flyscripts_zftlab_bricket_base/install
 	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_zftlab_bricket_base $(1)/etc/uci-defaults/
 endef
 
-$(eval $(call BuildPackage,flyscripts_all))
+$(eval $(call BuildPackage,flyscripts_base))
 $(eval $(call BuildPackage,flyscripts_octonix_bricket_base))
 $(eval $(call BuildPackage,flyscripts_rkeeper_wr841n_base))
 $(eval $(call BuildPackage,flyscripts_switron_rt2257_base))
