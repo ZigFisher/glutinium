@@ -1,16 +1,15 @@
 #!/bin/sh
 
 uci -q batch <<-EOF >/dev/null
-	set system.@system[0].hostname='R-Keeper'
+	set system.@system[0].hostname='ZFT_Lab'
 	set system.@system[0].timezone='MSK-3'
 	commit system
 	delete network.globals
 	delete network.wan6
-	delete network.lan.ip6assign
 	commit network
 	set wireless.radio0.channel='7'
 	set wireless.radio0.disabled='0'
-	set wireless.@wifi-iface[0].ssid='FreeHotspot'
+	set wireless.@wifi-iface[0].ssid='FreeTest'
 	commit wireless
 EOF
 

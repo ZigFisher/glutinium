@@ -1,0 +1,6 @@
+#!/bin/sh
+#
+# HotPlug logger
+#
+
+logger -t flyscript "hotplug usb: action='$ACTION' product='$PRODUCT' type='$TYPE' interface='$INTERFACE' devicename='$DEVICENAME' devname='$DEVNAME' devpath='$DEVPATH'"

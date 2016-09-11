@@ -1,0 +1,22 @@
+#!/bin/sh
+
+uci -q batch <<-EOF >/dev/null
+	set system.@system[0].hostname='RT-2257'
+	set system.@system[0].timezone='MSK-3MSD,M3.5.0,M10.5.0/3'
+	commit system
+	set network.wan='interface'
+	set network.wan.ifname='ppp0'
+	set network.wan.device='/dev/ttyUSB1'
+	set network.wan.proto='3g'
+	set network.wan.service='umts'
+	set network.wan.apn='internet'
+	set network.wan.username='user'
+	set network.wan.password='user'
+	commit network
+EOF
+
+# Extra settings
+#
+echo "usbserial vendor=0x2020 product=0x2033 maxSize=2048" >/etc/modules.d/usb-serial
+
+exit 0
