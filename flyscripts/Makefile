@@ -23,26 +23,30 @@ define Package/flyscripts/default
   URL:=https://github.com/ZigFisher/Glutinium/tree/master/flyscripts
 endef
 
-define Package/octonix_bricket_base
+define Package/flyscripts_all
 $(call Package/flyscripts/default)
-  TITLE:=Custom project settings - octonix_bricket_base
+  TITLE:=Some FlyRouter scripts
 endef
 
-define Package/rkeeper_wr841n_base
+define Package/flyscripts_octonix_bricket_base
 $(call Package/flyscripts/default)
-  TITLE:=Custom project settings - rkeeper_wr841n_base
+  TITLE:=Custom project settings
 endef
 
-define Package/switron_rt2257_base
+define Package/flyscripts_rkeeper_wr841n_base
 $(call Package/flyscripts/default)
-  TITLE:=Custom project settings - switron_rt2257_base
+  TITLE:=Custom project settings
 endef
 
-define Package/zftlab_bricket_base
+define Package/flyscripts_switron_rt2257_base
 $(call Package/flyscripts/default)
-  TITLE:=Custom project settings - zftlab_bricket_base
+  TITLE:=Custom project settings
 endef
 
+define Package/flyscripts_zftlab_bricket_base
+$(call Package/flyscripts/default)
+  TITLE:=Custom project settings
+endef
 
 define Build/Compile
 endef
@@ -50,17 +54,7 @@ endef
 define Build/Configure
 endef
 
-
-define Package/octonix_bricket_base/install
-	$(INSTALL_DIR)  $(1)/etc
-	$(INSTALL_BIN)  ./files/etc/banner/banner__octonix_bricket_base $(1)/etc/banner
-	$(INSTALL_DIR)  $(1)/etc/uci-defaults
-	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_octonix_bricket_base $(1)/etc/uci-defaults/
-endef
-
-
-
-define Package/flyscripts/install
+define Package/flyscripts_all/install
 	$(INSTALL_DIR)  $(1)/etc
 	$(INSTALL_BIN)  ./files/etc/rc.local.example $(1)/etc/
 	$(INSTALL_BIN)  ./files/etc/ser2net.conf $(1)/etc/
@@ -78,8 +72,22 @@ define Package/flyscripts/install
 	$(INSTALL_BIN)  ./files/lib/netifd/proto/3g.sh $(1)/lib/netifd/proto/
 endef
 
+define Package/flyscripts_octonix_bricket_base/install
+	$(INSTALL_DIR)  $(1)/etc
+	$(INSTALL_BIN)  ./files/etc/banner/banner__octonix_bricket_base $(1)/etc/banner
+	$(INSTALL_DIR)  $(1)/etc/uci-defaults
+	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_octonix_bricket_base $(1)/etc/uci-defaults/
+endef
 
-$(eval $(call BuildPackage,octonix_bricket_base))
-$(eval $(call BuildPackage,rkeeper_wr841n_base))
-$(eval $(call BuildPackage,switron_rt2257_base))
-$(eval $(call BuildPackage,zftlab_bricket_base))
+define Package/flyscripts_zftlab_bricket_base/install
+	$(INSTALL_DIR)  $(1)/etc
+	$(INSTALL_BIN)  ./files/etc/banner/banner__zftlab_bricket_base $(1)/etc/banner
+	$(INSTALL_DIR)  $(1)/etc/uci-defaults
+	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_zftlab_bricket_base $(1)/etc/uci-defaults/
+endef
+
+$(eval $(call BuildPackage,flyscripts_all))
+$(eval $(call BuildPackage,flyscripts_octonix_bricket_base))
+$(eval $(call BuildPackage,flyscripts_rkeeper_wr841n_base))
+$(eval $(call BuildPackage,flyscripts_switron_rt2257_base))
+$(eval $(call BuildPackage,flyscripts_zftlab_bricket_base))
