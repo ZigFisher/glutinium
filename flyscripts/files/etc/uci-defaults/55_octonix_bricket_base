@@ -60,8 +60,8 @@ uci -q batch <<-EOF >/dev/null
 	commit network
 	set network.vtun1='interface'
 	set network.vtun1.proto='vtun'
-	set network.vtun1.server='195.230.153.10'
-	set network.vtun1.name='ukrn011'
+	set network.vtun1.server='127.0.0.1'
+	set network.vtun1.name='test'
 	set network.vtun1.password='test2016'
 	set network.vtun1.mode='ether'
 	set network.vtun1.bridge='br-lan'
@@ -69,7 +69,7 @@ uci -q batch <<-EOF >/dev/null
 	set network.ukrn='interface'
 	set network.ukrn.ifname='br-lan'
 	set network.ukrn.proto='static'
-	set network.ukrn.ipaddr='10.210.120.254'
+	set network.ukrn.ipaddr='10.10.10.10'
 	set network.ukrn.netmask='255.255.255.0'
 	commit network
 EOF
