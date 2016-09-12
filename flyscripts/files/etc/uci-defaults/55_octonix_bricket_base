@@ -66,6 +66,12 @@ uci -q batch <<-EOF >/dev/null
 	set network.vtun1.mode='ether'
 	set network.vtun1.bridge='br-lan'
 	commit network
+	set network.ukrn='interface'
+	set network.ukrn.ifname='br-lan'
+	set network.ukrn.proto='static'
+	set network.ukrn.ipaddr='10.210.120.254'
+	set network.ukrn.netmask='255.255.255.0'
+	commit network
 EOF
 
 exit 0
