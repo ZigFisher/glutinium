@@ -52,15 +52,19 @@ uci -q batch <<-EOF >/dev/null
 	set network.vtun0='interface'
 	set network.vtun0.proto='vtun'
 	set network.vtun0.server='vbox3.flymon.net'
-	set network.vtun0.port='5000'
-	set network.vtun0.transport='tcp'
-	set network.vtun0.timeout='60'
 	set network.vtun0.name='vbox4700'
 	set network.vtun0.password='test2016'
-	set network.vtun0.type='tun'
-	set network.vtun0.shaper='512:512'
+	set network.vtun0.mode='tun'
 	set network.vtun0.hub='172.19.24.1'
 	set network.vtun0.ipaddr='172.19.24.100'
+	commit network
+	set network.vtun1='interface'
+	set network.vtun1.proto='vtun'
+	set network.vtun1.server='195.230.153.10'
+	set network.vtun1.name='ukrn011'
+	set network.vtun1.password='test2016'
+	set network.vtun1.mode='ether'
+	set network.vtun1.bridge='br-lan'
 	commit network
 EOF
 
