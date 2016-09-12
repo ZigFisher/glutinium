@@ -91,13 +91,6 @@ proto_vtun_setup() {
   fi
 
   case "$mode" in
-    tap)
-      if [ -z "$bridge" ]; then
-        proto_notify_error "$interface" *bridge* is not defined
-        proto_block_restart "$interface"
-        return 1
-      fi
-    ;;
     tun)
       if [ -z "$hub" ]; then
         proto_notify_error "$interface" *hub* is not defined
@@ -107,6 +100,13 @@ proto_vtun_setup() {
       #
       if [ -z "$ipaddr" ]; then
         proto_notify_error "$interface" *ipaddr* is not defined
+        proto_block_restart "$interface"
+        return 1
+      fi
+    ;;
+    ether)
+      if [ -z "$bridge" ]; then
+        proto_notify_error "$interface" *bridge* is not defined
         proto_block_restart "$interface"
         return 1
       fi
