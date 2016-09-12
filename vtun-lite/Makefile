@@ -26,9 +26,9 @@ define Package/vtun-lite
   SUBMENU:=VPN
 endef
 
-define Package/vtun-lite/conffiles
-	/etc/vtund.conf
-endef
+#define Package/vtun-lite/conffiles
+#	/etc/vtund.conf
+#endef
 
 CONFIGURE_ARGS += \
 	--disable-lzo \
@@ -44,9 +44,9 @@ endef
 
 define Package/vtun-lite/install
 	$(INSTALL_DIR) $(1)/etc
-	$(INSTALL_CONF) ./files/vtund.conf $(1)/etc/
-	$(INSTALL_CONF) ./files/vtund.dat $(1)/etc/
-	$(INSTALL_BIN) ./files/vtund.sh $(1)/etc/
+	#$(INSTALL_CONF) ./files/vtund.conf $(1)/etc/
+	#$(INSTALL_CONF) ./files/vtund.dat $(1)/etc/
+	#$(INSTALL_BIN) ./files/vtund.sh $(1)/etc/
 	$(INSTALL_DIR) $(1)/usr/sbin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/vtund $(1)/usr/sbin/
 endef
