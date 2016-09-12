@@ -47,67 +47,62 @@ proto_vtun_setup() {
   json_get_var bridge bridge
 
 
-  if [ -z "$server" ]; then
-    proto_notify_error "$interface" *server* is not defined
-    proto_block_restart "$interface"
-    return 1
-  fi
 
   if [ -z "$port" ]; then
     port="5000"
-    echo "Set port = $port" | logger -t auto-set
+    # echo "Set port = $port" | logger -t vtun.autoset
   fi
 
   if [ -z "$transport" ]; then
     transport="tcp"
-    echo "Set transport = $transport" | logger -t auto-set
+    # echo "Set transport = $transport" | logger -t vtun.autoset
   fi
 
   if [ -z "$timeout" ]; then
     timeout="60"
-    echo "Set timeout = $timeout" | logger -t auto-set
+    # echo "Set timeout = $timeout" | logger -t vtun.autoset
+  fi
+
+  if [ -z "$shaper" ]; then
+    shaper="0:0"
+    # echo "Set shaper = $shaper" | logger -t vtun.autoset
+  fi
+
+  if [ -z "$server" ]; then
+    echo "Warning, on "$interface" *server* is not defined" | logger -t vtun.error
+    return 1
   fi
 
   if [ -z "$name" ]; then
-    proto_notify_error "$interface" *name* is not defined
-    proto_block_restart "$interface"
+    echo "Warning, on "$interface" *name* is not defined" | logger -t vtun.error
     return 1
   fi
 
   if [ -z "$password" ]; then
-    proto_notify_error "$interface" *password* is not defined
-    proto_block_restart "$interface"
+    echo "Warning, on "$interface" *password* is not defined" | logger -t vtun.error
     return 1
   fi
 
   if [ -z "$mode" ]; then
-    mode="tap"
-    echo "Set mode = $mode" | logger -t auto-set
+    echo "Warning, on "$interface" *mode* is not defined" | logger -t vtun.error
   fi
 
-  if [ -z "$shaper" ]; then
-    shaper="512:512"
-    echo "Set shaper = $shaper" | logger -t auto-set
-  fi
 
   case "$mode" in
     tun)
       if [ -z "$hub" ]; then
-        proto_notify_error "$interface" *hub* is not defined
-        proto_block_restart "$interface"
+        echo "Warning, on "$interface" *hub* is not defined" | logger -t vtun.error
         return 1
       fi
       #
       if [ -z "$ipaddr" ]; then
-        proto_notify_error "$interface" *ipaddr* is not defined
-        proto_block_restart "$interface"
+        echo "Warning, on "$interface" *ipaddr* is not defined" | logger -t vtun.error
         return 1
       fi
     ;;
     ether)
       if [ -z "$bridge" ]; then
-        proto_notify_error "$interface" *bridge* is not defined
-        proto_block_restart "$interface"
+        echo "Warning, on "$interface" *bridge* is not defined" | logger -t vtun.error
         return 1
       fi
     ;;
@@ -120,9 +115,9 @@ proto_vtun_setup() {
     echo "  ip $findip;"
     echo "}"
     echo "default {"
-    echo "  type $mode;"
     echo "  proto $transport;"
-    echo "  speed $speed;"
+    echo "  type $mode;"
+    echo "  speed $shaper;"
     echo "  persist yes;"
     echo "  keepalive yes;"
     echo "  compress no;"
@@ -130,15 +125,38 @@ proto_vtun_setup() {
     echo "  stat no;"
     echo "  multi killold;"
     echo "}"
+    echo "#"
+    echo "$name {"
+    echo "  password $password;"
+    echo "  device $name;"
+    echo "  up {"
+    if [ "$mode" = "tun" ]; then
+      echo "    ip \"link set %% up multicast off mtu 1500\";"
+      echo "    ip \"-family inet addr add $ipaddr peer $hub dev %%\";"
+    fi
+    if [ "$mode" = "ether" ]; then
+      echo "    ip \"link set %% up multicast off mtu 1500\";"
+      echo "    program \"brctl addif $bridge %%\";"
+      echo "    program \"iptables -I FORWARD -j ACCEPT -o $bridge -i $bridge\";"
+    fi
+    echo "  };"
+    echo "  down {"
+    if [ "$mode" = "tun" ]; then
+      echo "    ip \"link set %% down\";"
+    fi
+    if [ "$mode" = "ether" ]; then
+      echo "    program \"brctl delif $bridge %%\";"
+      echo "    ip \"link set %% down\";"
+    fi
+    echo "  };"
+    echo "}"
   ) >/tmp/$interface.conf
 
 
+  vtund -n -f /tmp/$interface.conf $name $server -P $port
 
+  sleep 5
 
-  echo "$server $port $transport $timeout $mode $shaper    $name $password $hub $ipaddr $bridge" | logger -t setup
-
-  echo "vtund -n -f /tmp/$interface.conf $name $server -P $port" | logger -t run.vtund
-  sleep 10
   return 0
 }
 
