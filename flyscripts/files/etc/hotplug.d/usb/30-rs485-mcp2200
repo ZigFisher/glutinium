@@ -1,0 +1,26 @@
+#!/bin/sh
+#
+# RS485 converter MCP2200
+#
+MPRODID="1a86/7523/254"
+SYMLINK="ttyRS485"
+
+if [ "${PRODUCT}" = "${MPRODID}" ]; then
+  DEVICE=$(ls /sys/$DEVPATH/* | grep -e '^ttyACM')
+  NUMBER=$(echo ${DEVPATH} | tr '/:.' ' ' | awk '{print $7}')
+  case "$ACTION" in
+    add)
+      if [ -z ${DEVICE} ]; then
+        # logger -t flyscript "Warning, device name is empty..."
+        exit 0
+      else
+        logger -t flyscript "Device name of RS485 converter - ${DEVICE}"
+        ln -s /dev/$DEVICE /dev/${SYMLINK} && logger -t flyscript "Symlink /dev/${SYMLINK} created"
+      fi
+      ;;
+    remove)
+      rm /dev/${SYMLINK} && logger -t flyscript "Symlink /dev/${SYMLINK} removed"
+      ;;
+    esac
+fi
+
