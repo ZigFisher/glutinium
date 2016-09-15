@@ -2,7 +2,7 @@
 #
 # RS485 converter MCP2200
 #
-MPRODID="1a86/7523/254"
+MPRODID="4d8/df/101"
 SYMLINK="ttyRS485"
 
 if [ "${PRODUCT}" = "${MPRODID}" ]; then

@@ -33,6 +33,11 @@ $(call Package/flyscripts/default)
   TITLE:=Custom project settings
 endef
 
+define Package/flyscripts_octonix_bricket_ukrn
+$(call Package/flyscripts/default)
+  TITLE:=Custom project settings
+endef
+
 define Package/flyscripts_rkeeper_wr841n_base
 $(call Package/flyscripts/default)
   TITLE:=Custom project settings
@@ -60,12 +65,11 @@ define Package/flyscripts_base/install
 	$(INSTALL_BIN)  ./files/etc/ser2net.conf $(1)/etc/
 	$(INSTALL_DIR)  $(1)/etc/hotplug.d/iface
 	$(INSTALL_BIN)  ./files/etc/hotplug.d/iface/12-vtun $(1)/etc/hotplug.d/iface/
-	$(INSTALL_DIR)  $(1)/etc/hotplug.d/net
-	$(INSTALL_BIN)  ./files/etc/hotplug.d/net/37-vtun.example $(1)/etc/hotplug.d/net/
 	$(INSTALL_DIR)  $(1)/etc/hotplug.d/usb
 	$(INSTALL_BIN)  ./files/etc/hotplug.d/usb/30-com-* $(1)/etc/hotplug.d/usb/
 	$(INSTALL_BIN)  ./files/etc/hotplug.d/usb/30-gps-* $(1)/etc/hotplug.d/usb/
 	$(INSTALL_BIN)  ./files/etc/hotplug.d/usb/30-modem-* $(1)/etc/hotplug.d/usb/
+	$(INSTALL_BIN)  ./files/etc/hotplug.d/usb/30-rs485-* $(1)/etc/hotplug.d/usb/
 	$(INSTALL_DIR)  $(1)/usr/sbin
 	$(INSTALL_BIN)  ./files/usr/sbin/license.sh $(1)/usr/sbin/
 	$(INSTALL_BIN)  ./files/usr/sbin/service_flypeek_usb_yandex.sh $(1)/usr/sbin/
@@ -79,6 +83,13 @@ define Package/flyscripts_octonix_bricket_base/install
 	$(INSTALL_BIN)  ./files/etc/banner__octonix_bricket_base $(1)/etc/banner
 	$(INSTALL_DIR)  $(1)/etc/uci-defaults
 	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_octonix_bricket_base $(1)/etc/uci-defaults/
+endef
+
+define Package/flyscripts_octonix_bricket_ukrn/install
+	$(INSTALL_DIR)  $(1)/etc
+	$(INSTALL_BIN)  ./files/etc/banner__octonix_bricket_ukrn $(1)/etc/banner
+	$(INSTALL_DIR)  $(1)/etc/uci-defaults
+	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_octonix_bricket_ukrn $(1)/etc/uci-defaults/
 endef
 
 define Package/flyscripts_rkeeper_wr841n_base/install
@@ -100,10 +111,15 @@ define Package/flyscripts_zftlab_bricket_base/install
 	$(INSTALL_BIN)  ./files/etc/banner__zftlab_bricket_base $(1)/etc/banner
 	$(INSTALL_DIR)  $(1)/etc/uci-defaults
 	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_zftlab_bricket_base $(1)/etc/uci-defaults/
+	$(INSTALL_DIR)  $(1)/etc/hotplug.d/net
+	$(INSTALL_BIN)  ./files/etc/hotplug.d/net/37-vtun $(1)/etc/hotplug.d/net/
+	$(INSTALL_DIR)  $(1)/etc/hotplug.d/usb
+	$(INSTALL_BIN)  ./files/etc/hotplug.d/usb/30-logger $(1)/etc/hotplug.d/usb/
 endef
 
 $(eval $(call BuildPackage,flyscripts_base))
 $(eval $(call BuildPackage,flyscripts_octonix_bricket_base))
+$(eval $(call BuildPackage,flyscripts_octonix_bricket_ukrn))
 $(eval $(call BuildPackage,flyscripts_rkeeper_wr841n_base))
 $(eval $(call BuildPackage,flyscripts_switron_rt2257_base))
 $(eval $(call BuildPackage,flyscripts_zftlab_bricket_base))

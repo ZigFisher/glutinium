@@ -1,7 +1,7 @@
 #!/bin/sh
 
 uci -q batch <<-EOF >/dev/null
-	set system.@system[0].hostname='Octonix'
+	set system.@system[0].hostname='Octonix_base'
 	set system.@system[0].timezone='EET-2EEST,M3.5.0/3,M10.5.0/4'
 	commit system
 	delete network.globals
@@ -39,16 +39,6 @@ uci -q batch <<-EOF >/dev/null
 	set network.wan1.keepalive='3'
 	set network.wan1.gpio='20'
 	commit network
-	set network.wan2=interface
-	set network.wan2.proto='3g'
-	set network.wan2.device='/dev/ttyACM1'
-	set network.wan2.service='umts'
-	set network.wan2.apn='www.kyivstar.net'
-	set network.wan2.metric='2'
-	set network.wan2.ipv6='0'
-	set network.wan2.keepalive='3'
-	set network.wan2.gpio='17'
-	commit network
 	set network.vtun0='interface'
 	set network.vtun0.proto='vtun'
 	set network.vtun0.server='vbox3.flymon.net'
@@ -58,20 +48,8 @@ uci -q batch <<-EOF >/dev/null
 	set network.vtun0.hub='172.19.24.1'
 	set network.vtun0.ipaddr='172.19.24.100'
 	commit network
-	set network.vtun1='interface'
-	set network.vtun1.proto='vtun'
-	set network.vtun1.server='127.0.0.1'
-	set network.vtun1.name='test'
-	set network.vtun1.password='test2016'
-	set network.vtun1.mode='ether'
-	set network.vtun1.bridge='br-lan'
-	commit network
-	set network.ukrn='interface'
-	set network.ukrn.ifname='br-lan'
-	set network.ukrn.proto='static'
-	set network.ukrn.ipaddr='10.10.10.10'
-	set network.ukrn.netmask='255.255.255.0'
-	commit network
 EOF
+
+echo -e "#\n7777:raw:0:/dev/ttyRS485:9600 8DATABITS NONE 1STOPBIT -XONXOFF -RTSCTS LOCAL\n#\n" >/etc/ser2net.conf
 
 exit 0
