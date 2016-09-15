@@ -52,4 +52,6 @@ EOF
 
 echo -e "#\n7777:raw:0:/dev/ttyRS485:9600 8DATABITS NONE 1STOPBIT -XONXOFF -RTSCTS LOCAL\n#\n" >/etc/ser2net.conf
 
+echo "#\n# Start ser2net\n(while true ; do sleep 5; /usr/sbin/ser2net -d -c /etc/ser2net.conf >/dev/null 2>&1; done) &\n#\nexit 0\n" >/etc/rc.local
+
 exit 0
