@@ -18,7 +18,7 @@ uci -q batch <<-EOF >/dev/null
 	set wireless.radio0.disabled='0'
 	set wireless.@wifi-iface[0].ssid='FreeTest'
 	commit wireless
-	set snmpd.default='mini_snmpd'
+	set snmpd.default='snmpd'
 	set snmpd.default.community='public'
 	set snmpd.default.contact='Boss'
 	set snmpd.default.location='World'

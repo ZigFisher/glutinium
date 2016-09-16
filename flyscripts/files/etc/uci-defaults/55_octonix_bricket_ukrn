@@ -80,7 +80,7 @@ uci -q batch <<-EOF >/dev/null
 	set network.vtun1.mode='ether'
 	set network.vtun1.bridge='br-lan'
 	commit network
-	set snmpd.default='mini_snmpd'
+	set snmpd.default='snmpd'
 	set snmpd.default.community='public'
 	set snmpd.default.contact='Boss'
 	set snmpd.default.location='World'

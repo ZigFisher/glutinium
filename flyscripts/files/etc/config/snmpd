@@ -1,0 +1,3 @@
+
+config snmpd 'default'
+	option community 'public'
