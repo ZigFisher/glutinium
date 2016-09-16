@@ -4,11 +4,11 @@ uci -q batch <<-EOF >/dev/null
 	set system.@system[0].hostname='Octonix_ukrn'
 	set system.@system[0].timezone='EET-2EEST,M3.5.0/3,M10.5.0/4'
 	commit system
+	delete dhcp.lan.dhcpv6
+	delete dhcp.lan.ra
 	delete dhcp.lan.start
 	delete dhcp.lan.limit
 	delete dhcp.lan.leasetime
-	delete dhcp.lan.dhcpv6
-	delete dhcp.lan.ra
 	set dhcp.lan.ignore='1'
 	commit dhcp
 	delete dhcp.lan.start
@@ -80,11 +80,19 @@ uci -q batch <<-EOF >/dev/null
 	set network.vtun1.mode='ether'
 	set network.vtun1.bridge='br-lan'
 	commit network
+	set snmpd.default='mini_snmpd'
+	set snmpd.default.community='public'
+	set snmpd.default.contact='Boss'
+	set snmpd.default.location='World'
+	set snmpd.default.interfaces='br-lan,3g-wan1,3g-wan2'
+	commit snmpd
 EOF
 
 rm /etc/hotplug.d/usb/20-usb_mode
 
 echo -e "#\n# Start checker\n(while sleep 300; do if ! ping -q -c 6 8.8.8.8; then reboot; else echo 'Link to central node - OK' | logger; fi; done) &\n" >/etc/rc.local
+echo -e "#\n# Start snmpd\n(while true ; do sleep 5; /usr/bin/mini_snmpd -n -c ukrnafta -L World -C Intertelecom -t 1 -d /overlay,/tmp -i br-lan,3g-wan1,3g-wan2 >/dev/null 2>&1; done) &\n" >>/etc/rc.local
 echo -e "#\nexit 0\n" >>/etc/rc.local
+
 
 exit 0

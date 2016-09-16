@@ -53,9 +53,9 @@ CONFIGURE_ARGS+= \
 define Package/mini_snmpd/install
 	$(INSTALL_DIR) $(1)/usr/bin $(1)/etc/config $(1)/etc/init.d/ $(1)/etc/hotplug.d/iface/
 	$(CP) $(PKG_INSTALL_DIR)/usr/bin/mini_snmpd $(1)/usr/bin/
-	$(INSTALL_CONF) ./files/mini_snmpd.config $(1)/etc/config/mini_snmpd
-	$(INSTALL_BIN) ./files/mini_snmpd.init $(1)/etc/init.d/mini_snmpd
-	$(INSTALL_BIN) ./files/mini_snmpd.hotplug $(1)/etc/hotplug.d/iface/40-mini_snmpd
+	#$(INSTALL_CONF) ./files/mini_snmpd.config $(1)/etc/config/mini_snmpd
+	#$(INSTALL_BIN) ./files/mini_snmpd.init $(1)/etc/init.d/mini_snmpd
+	#$(INSTALL_BIN) ./files/mini_snmpd.hotplug $(1)/etc/hotplug.d/iface/40-mini_snmpd
 endef
 
 define Package/mini_snmpd/conffiles
