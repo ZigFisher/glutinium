@@ -14,6 +14,7 @@ if [ "$INTERFACE" = "$IFACE" ]; then
   #
   if [ "$ACTION" = "ifup" ]; then
     (sleep 3; kill -s HUP `pidof vtund`) && echo "Reinitialization vtund..." | logger -t flyscript
+    (sleep 1; kill -s HUP `pidof ser2net`) && echo "Reinitialization ser2net..." | logger -t flyscript
   fi
 fi
 
