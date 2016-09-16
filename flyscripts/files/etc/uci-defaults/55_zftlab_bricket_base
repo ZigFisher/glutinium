@@ -4,6 +4,13 @@ uci -q batch <<-EOF >/dev/null
 	set system.@system[0].hostname='ZFT_Lab'
 	set system.@system[0].timezone='MSK-3'
 	commit system
+	delete dhcp.lan.start
+	delete dhcp.lan.limit
+	delete dhcp.lan.leasetime
+	delete dhcp.lan.dhcpv6
+	delete dhcp.lan.ra
+	set dhcp.lan.ignore='1'
+	commit dhcp
 	delete network.globals
 	delete network.wan6
 	commit network

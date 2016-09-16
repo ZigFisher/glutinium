@@ -4,6 +4,7 @@ uci -q batch <<-EOF >/dev/null
 	set system.@system[0].hostname='Octonix_base'
 	set system.@system[0].timezone='EET-2EEST,M3.5.0/3,M10.5.0/4'
 	commit system
+
 	delete network.globals
 	delete network.lan.ip6assign
 	commit network
@@ -52,6 +53,8 @@ EOF
 
 echo -e "#\n7777:raw:0:/dev/ttyRS485:9600 8DATABITS NONE 1STOPBIT -XONXOFF -RTSCTS LOCAL\n#\n" >/etc/ser2net.conf
 
-echo -e "#\n# Start ser2net\n(while true ; do sleep 5; /usr/sbin/ser2net -d -c /etc/ser2net.conf >/dev/null 2>&1; done) &\n#\nexit 0\n" >/etc/rc.local
+echo -e "#\n# Start ser2net\n(while true ; do sleep 5; /usr/sbin/ser2net -d -c /etc/ser2net.conf >/dev/null 2>&1; done) &\n" >/etc/rc.local
+echo -e "#\n# Start checker\n#(while sleep 300; do if ! ping -q -c 6 8.8.8.8; then reboot; else echo 'Link to central node - OK' | logger; fi; done) &\n" >>/etc/rc.local
+echo -e "#\nexit 0\n" >>/etc/rc.local
 
 exit 0

@@ -4,6 +4,20 @@ uci -q batch <<-EOF >/dev/null
 	set system.@system[0].hostname='Octonix_ukrn'
 	set system.@system[0].timezone='EET-2EEST,M3.5.0/3,M10.5.0/4'
 	commit system
+	delete dhcp.lan.start
+	delete dhcp.lan.limit
+	delete dhcp.lan.leasetime
+	delete dhcp.lan.dhcpv6
+	delete dhcp.lan.ra
+	set dhcp.lan.ignore='1'
+	commit dhcp
+	delete dhcp.lan.start
+	delete dhcp.lan.limit
+	delete dhcp.lan.leasetime
+	delete dhcp.lan.dhcpv6
+	delete dhcp.lan.ra
+	set dhcp.lan.ignore='1'
+	commit dhcp
 	delete network.globals
 	delete network.lan.ip6assign
 	commit network
@@ -69,5 +83,8 @@ uci -q batch <<-EOF >/dev/null
 EOF
 
 rm /etc/hotplug.d/usb/20-usb_mode
+
+echo -e "#\n# Start checker\n(while sleep 300; do if ! ping -q -c 6 8.8.8.8; then reboot; else echo 'Link to central node - OK' | logger; fi; done) &\n" >/etc/rc.local
+echo -e "#\nexit 0\n" >>/etc/rc.local
 
 exit 0
