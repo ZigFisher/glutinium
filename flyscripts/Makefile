@@ -65,6 +65,7 @@ define Package/flyscripts_base/install
 	$(INSTALL_BIN)  ./files/etc/ser2net.conf $(1)/etc/
 	$(INSTALL_DIR)  $(1)/etc/hotplug.d/iface
 	$(INSTALL_BIN)  ./files/etc/hotplug.d/iface/12-vtun $(1)/etc/hotplug.d/iface/
+	$(INSTALL_BIN)  ./files/etc/hotplug.d/iface/15-vtun $(1)/etc/hotplug.d/iface/
 	$(INSTALL_DIR)  $(1)/etc/hotplug.d/usb
 	$(INSTALL_BIN)  ./files/etc/hotplug.d/usb/30-com-* $(1)/etc/hotplug.d/usb/
 	$(INSTALL_BIN)  ./files/etc/hotplug.d/usb/30-gps-* $(1)/etc/hotplug.d/usb/
