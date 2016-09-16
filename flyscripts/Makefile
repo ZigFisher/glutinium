@@ -53,6 +53,11 @@ $(call Package/flyscripts/default)
   TITLE:=Custom project settings
 endef
 
+define Package/flyscripts_zftlab_bricket_ipcam
+$(call Package/flyscripts/default)
+  TITLE:=Custom project settings
+endef
+
 define Build/Compile
 endef
 
@@ -120,9 +125,22 @@ define Package/flyscripts_zftlab_bricket_base/install
 	$(INSTALL_BIN)  ./files/etc/hotplug.d/usb/30-logger $(1)/etc/hotplug.d/usb/
 endef
 
+define Package/flyscripts_zftlab_bricket_ipcam/install
+	$(INSTALL_DIR)  $(1)/etc
+	$(INSTALL_BIN)  ./files/etc/banner__zftlab_bricket_ipcam $(1)/etc/banner
+	$(INSTALL_DIR)  $(1)/etc/uci-defaults
+	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_zftlab_bricket_ipcam $(1)/etc/uci-defaults/
+	$(INSTALL_DIR)  $(1)/etc/hotplug.d/net
+	$(INSTALL_BIN)  ./files/etc/hotplug.d/net/37-vtun $(1)/etc/hotplug.d/net/
+	$(INSTALL_DIR)  $(1)/etc/hotplug.d/usb
+	$(INSTALL_BIN)  ./files/etc/hotplug.d/usb/30-logger $(1)/etc/hotplug.d/usb/
+endef
+
+
 $(eval $(call BuildPackage,flyscripts_base))
 $(eval $(call BuildPackage,flyscripts_octonix_bricket_base))
 $(eval $(call BuildPackage,flyscripts_octonix_bricket_ukrn))
 $(eval $(call BuildPackage,flyscripts_rkeeper_wr841n_base))
 $(eval $(call BuildPackage,flyscripts_switron_rt2257_base))
 $(eval $(call BuildPackage,flyscripts_zftlab_bricket_base))
+$(eval $(call BuildPackage,flyscripts_zftlab_bricket_ipcam))
