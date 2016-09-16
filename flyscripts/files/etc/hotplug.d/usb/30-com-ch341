@@ -16,6 +16,7 @@ if [ "${PRODUCT}" = "${MPRODID}" ]; then
       else
         logger -t flyscript "Device name of serial converter - ${DEVICE}"
         ln -s /dev/$DEVICE /dev/${SYMLINK}${NUMBER} && logger -t flyscript "Symlink /dev/${SYMLINK}${NUMBER} created"
+        (sleep 1; kill -s HUP `pidof ser2net`) && echo "Reinitialization ser2net..." | logger -t flyscript
       fi
       ;;
     remove)
