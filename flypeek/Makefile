@@ -6,14 +6,14 @@
 #
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=uvc2http
+PKG_NAME:=flypeek
 PKG_VERSION:=0.01
 PKG_RELEASE:=1
-PKG_MAINTAINER:=Oleg <legich55555@gmail.com>
+PKG_MAINTAINER:=Igor Zalatov <flyrouter@gmail.com>
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://github.com/Legich55555/uvc2http.git
-PKG_SOURCE_VERSION:=518a089136156bda72d77c5469a628fe157daa1f
+PKG_SOURCE_URL:=https://github.com/jacksonliam/mjpg-streamer.git
+#PKG_SOURCE_VERSION:=
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_SOURCE_VERSION)
@@ -24,11 +24,11 @@ PKG_LICENSE_FILES:=LICENSE
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/cmake.mk
 
-define Package/uvc2http
+define Package/flypeek
 	SECTION:=multimedia
 	CATEGORY:=Multimedia
-	TITLE:=UVC to HTTP streamer
-	DEPENDS:=+libv4l
+	TITLE:=FlyPeek - package for video monitoring and creating snapshots
+	#DEPENDS:=+libv4l
 endef
 
 define Build/Compile
@@ -36,14 +36,14 @@ define Build/Compile
 	$(STRIP) $(PKG_BUILD_DIR)/$(PKG_NAME)
 endef
 
-define Package/uvc2http/install
+define Package/flypeek/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/uvc2http $(1)/usr/bin/
-	$(INSTALL_DIR) $(1)/etc/config
-	$(CP) ./files/uvc2http.config $(1)/etc/config/uvc2http
-	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) ./files/uvc2http.init $(1)/etc/init.d/uvc2http
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/flypeek $(1)/usr/bin/
+	#$(INSTALL_DIR) $(1)/etc/config
+	#$(CP) ./files/flypeek.config $(1)/etc/config/flypeek
+	#$(INSTALL_DIR) $(1)/etc/init.d
+	#$(INSTALL_BIN) ./files/flypeek.init $(1)/etc/init.d/
 endef
 
-$(eval $(call BuildPackage,uvc2http))
+$(eval $(call BuildPackage,flypeek))
 

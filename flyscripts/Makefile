@@ -130,10 +130,6 @@ define Package/flyscripts_zftlab_bricket_flypeek/install
 	$(INSTALL_BIN)  ./files/etc/banner__zftlab_bricket_flypeek $(1)/etc/banner
 	$(INSTALL_DIR)  $(1)/etc/uci-defaults
 	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_zftlab_bricket_flypeek $(1)/etc/uci-defaults/
-	$(INSTALL_DIR)  $(1)/etc/hotplug.d/net
-	$(INSTALL_BIN)  ./files/etc/hotplug.d/net/37-vtun $(1)/etc/hotplug.d/net/
-	$(INSTALL_DIR)  $(1)/etc/hotplug.d/usb
-	$(INSTALL_BIN)  ./files/etc/hotplug.d/usb/30-logger $(1)/etc/hotplug.d/usb/
 endef
 
 
