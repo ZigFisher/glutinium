@@ -12,8 +12,8 @@ PKG_RELEASE:=1
 PKG_MAINTAINER:=Igor Zalatov <flyrouter@gmail.com>
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://github.com/jacksonliam/mjpg-streamer.git
-#PKG_SOURCE_VERSION:=
+PKG_SOURCE_URL:=https://github.com/PRINTR3D/mjpg-streamer-fixed.git
+PKG_SOURCE_VERSION:=bb4d51d0067f5ef78d2ea55a7e1723ec1502e127
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_SOURCE_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
