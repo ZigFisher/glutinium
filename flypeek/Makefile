@@ -48,7 +48,10 @@ define Package/flypeek/install
 	$(CP) $(PKG_BUILD_DIR)/plugins/output_file/output_file.so $(1)/usr/lib
 	$(CP) $(PKG_BUILD_DIR)/plugins/output_http/output_http.so $(1)/usr/lib
 	$(CP) $(PKG_BUILD_DIR)/plugins/output_rtsp/output_rtsp.so $(1)/usr/lib
-	$(CP) $(PKG_BUILD_DIR)/plugins/output_udp/output_udp.so $(1)/usr/lib
+	$(INSTALL_DIR) $(1)/www/webcam
+	#$(INSTALL_DATA) $(PKG_BUILD_DIR)/www/stream_simple.html $(1)/www/webcam/index.html
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/www/* $(1)/www/webcam/
+	$(CP) ./files/cool_girl.jpg $(1)/www/webcam/
 endef
 
 $(eval $(call BuildPackage,flypeek))
