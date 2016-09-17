@@ -24,6 +24,16 @@ uci -q batch <<-EOF >/dev/null
 	set snmpd.default.location='World'
 	set snmpd.default.interfaces='br-lan,3g-wan1'
 	commit snmpd
+	set mjpg-streamer.core.enabled='1'
+	set mjpg-streamer.core.resolution='640x480'
+	set mjpg-streamer.core.yuv='1'
+	set mjpg-streamer.core.quality='80'
+	set mjpg-streamer.core.fps='5'
+	set mjpg-streamer.core.www='/www/webcam'
+	set mjpg-streamer.core.port='8080'
+	delete mjpg-streamer.core.username='openwrt'
+	delete mjpg-streamer.core.password='openwrt'
+	commit mjpg-streamer
 EOF
 
 exit 0
