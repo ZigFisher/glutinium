@@ -28,7 +28,7 @@ include $(INCLUDE_DIR)/cmake.mk
 define Package/flypeek
 	SECTION:=multimedia
 	CATEGORY:=Multimedia
-	TITLE:=FlyPeek - application for Linux-UVC compatible webcams
+	TITLE:=Application for Linux-UVC compatible webcams
 	DEPENDS:=+libjpeg
 endef
 
