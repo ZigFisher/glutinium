@@ -40,12 +40,15 @@ define Package/flypeek/install
 	$(INSTALL_DIR) $(1)/etc/hotplug.d/usb
 	$(INSTALL_DATA) ./files/mjpg-streamer.hotplug $(1)/etc/hotplug.d/usb/20-mjpg-streamer
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/flypeek $(1)/usr/bin/
+	#$(INSTALL_BIN) $(PKG_BUILD_DIR)/flypeek $(1)/usr/bin/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/mjpg_streamer $(1)/usr/bin/
 	$(INSTALL_DIR) $(1)/usr/lib
-	$(CP) $(PKG_BUILD_DIR)/input_file.so $(1)/usr/lib
-	$(CP) $(PKG_BUILD_DIR)/input_uvc.so $(1)/usr/lib
-	$(CP) $(PKG_BUILD_DIR)/output_file.so $(1)/usr/lib
-	$(CP) $(PKG_BUILD_DIR)/output_http.so $(1)/usr/lib
+	$(CP) $(PKG_BUILD_DIR)/plugins/input_file/input_file.so $(1)/usr/lib
+	$(CP) $(PKG_BUILD_DIR)/plugins/input_uvc/input_uvc.so $(1)/usr/lib
+	$(CP) $(PKG_BUILD_DIR)/plugins/output_file/output_file.so $(1)/usr/lib
+	$(CP) $(PKG_BUILD_DIR)/plugins/output_http/output_http.so $(1)/usr/lib
+	$(CP) $(PKG_BUILD_DIR)/plugins/output_rtsp/output_rtsp.so $(1)/usr/lib
+	$(CP) $(PKG_BUILD_DIR)/plugins/output_udp/output_udp.so $(1)/usr/lib
 endef
 
 $(eval $(call BuildPackage,flypeek))
