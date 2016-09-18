@@ -1,0 +1,26 @@
+--- plugins/input_uvc/v4l2uvc.c      2015-02-06 12:12:21.791729614 +0100
++++ plugins/input_uvc/v4l2uvc.c 2015-02-06 12:05:36.571593197 +0100
+@@ -418,6 +418,7 @@
+ {
+ #define HEADERFRAME1 0xaf
+     int ret;
++    int32_t bytesused;
+
+     if(vd->streamingState == STREAMING_OFF) {
+         if(video_enable(vd))
+@@ -432,6 +433,7 @@
+         perror("Unable to dequeue buffer");
+         goto err;
+     }
++    bytesused = vd->buf.bytesused;
+
+     switch(vd->formatIn) {
+     case V4L2_PIX_FMT_MJPEG:
+@@ -468,6 +470,7 @@
+     }
+
+     ret = xioctl(vd->fd, VIDIOC_QBUF, &vd->buf);
++    vd->buf.bytesused = bytesused;
+     if(ret < 0) {
+         perror("Unable to requeue buffer");
+         goto err;
