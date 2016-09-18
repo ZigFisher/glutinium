@@ -36,7 +36,7 @@ define Package/flypeek/install
 	$(INSTALL_DIR) $(1)/etc/config
 	$(CP) ./files/mjpg-streamer.config $(1)/etc/config/mjpg-streamer
 	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) ./files/mjpg-streamer.init $(1)/etc/init.d/
+	$(INSTALL_BIN) ./files/mjpg-streamer.init $(1)/etc/init.d/mjpg-streamer
 	$(INSTALL_DIR) $(1)/etc/hotplug.d/usb
 	$(INSTALL_DATA) ./files/mjpg-streamer.hotplug $(1)/etc/hotplug.d/usb/20-mjpg-streamer
 	$(INSTALL_DIR) $(1)/usr/bin
