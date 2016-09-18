@@ -6,8 +6,8 @@
 #
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=flypeek
-PKG_VERSION:=0.01
+PKG_NAME:=mjpg-streamer-lite
+PKG_VERSION:=2.0.1a
 PKG_RELEASE:=1
 PKG_MAINTAINER:=Igor Zalatov <flyrouter@gmail.com>
 
@@ -23,16 +23,15 @@ PKG_LICENSE_FILES:=LICENSE
 
 
 include $(INCLUDE_DIR)/package.mk
-include $(INCLUDE_DIR)/cmake.mk
 
-define Package/flypeek
+define Package/mjpg-streamer-lite
 	SECTION:=multimedia
 	CATEGORY:=Multimedia
-	TITLE:=Application for Linux-UVC compatible webcams
-	DEPENDS:=+libpthread +libjpeg
+	TITLE:=ExtraLight application for Linux-UVC compatible webcams
+	DEPENDS:=+libpthread
 endef
 
-define Package/flypeek/install
+define Package/mjpg-streamer-lite/install
 	$(INSTALL_DIR) $(1)/etc/config
 	$(CP) ./files/mjpg-streamer.config $(1)/etc/config/mjpg-streamer
 	$(INSTALL_DIR) $(1)/etc/init.d
@@ -54,4 +53,4 @@ define Package/flypeek/install
 	$(CP) ./files/cool_girl.jpg $(1)/www/webcam/
 endef
 
-$(eval $(call BuildPackage,flypeek))
+$(eval $(call BuildPackage,mjpg-streamer-lite))
