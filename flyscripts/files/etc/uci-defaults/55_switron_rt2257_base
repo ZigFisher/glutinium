@@ -17,6 +17,10 @@ uci -q batch <<-EOF >/dev/null
 	set network.wan.username='user'
 	set network.wan.password='user'
 	commit network
+	set wireless.radio0.channel='7'
+	set wireless.radio0.disabled='0'
+	set wireless.@wifi-iface[0].ssid='RT-2257_LTE'
+	commit wireless
 EOF
 
 # Extra settings
