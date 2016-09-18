@@ -12,5 +12,5 @@ DEV_MAC=`ifconfig $DEV_INT | grep HWaddr | awk '{FS=" "; if(NR==1) {print $5}};'
 #
 mkdir -p $WCDIR
 #fswebcam --input 0 --fps 2 --skip 10 --resolution 640x480 --no-title --no-banner --save $WCDIR/snapshot.jpg --quiet
-wget -q -O $WCDIR/$DEV_MAC.jpg "http://127.0.0.1:8080/?action=snapshot"
+wget -q -O $WCDIR/$DEV_MAC.jpg "http://127.0.0.1:8080/?action=snapshot" || logger -t service_flypeek "Error get snapshot image"
 ftpput -u $LOGIN -p $PASSW $SERVER $DEV_MAC.jpg $WCDIR/$DEV_MAC.jpg && logger -t service_flypeek "Send snapshot from $DEV_MAC device"
