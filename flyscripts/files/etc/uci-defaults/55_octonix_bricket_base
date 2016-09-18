@@ -62,6 +62,19 @@ uci -q batch <<-EOF >/dev/null
 	set snmpd.default.location='World'
 	set snmpd.default.interfaces='br-lan,3g-wan1'
 	commit snmpd
+	add firewall zone
+	set firewall.@zone[1].name='wan1'
+	set firewall.@zone[1].network='wan1'
+	set firewall.@zone[1].input='REJECT'
+	set firewall.@zone[1].output='ACCEPT'
+	set firewall.@zone[1].forward='REJECT'
+	set firewall.@zone[1].masq='1'
+	set firewall.@zone[1].mtu_fix='1'
+	commit firewall
+	add firewall forwarding
+	set firewall.@forwarding[0].src='lan'
+	set firewall.@forwarding[0].dest='wan1'
+	commit firewall
 EOF
 
 echo -e "#\n7777:raw:0:/dev/ttyRS485:9600 8DATABITS NONE 1STOPBIT -XONXOFF -RTSCTS LOCAL\n#\n" >/etc/ser2net.conf
