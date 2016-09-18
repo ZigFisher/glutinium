@@ -13,6 +13,7 @@ uci -q batch <<-EOF >/dev/null
 	commit dhcp
 	delete network.globals
 	delete network.wan6
+	delete network.lan.ip6assign
 	commit network
 	set network.port1='switch_port'
 	set network.port1.device='switch0'

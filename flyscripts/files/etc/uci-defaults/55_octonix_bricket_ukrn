@@ -19,6 +19,7 @@ uci -q batch <<-EOF >/dev/null
 	set dhcp.lan.ignore='1'
 	commit dhcp
 	delete network.globals
+	delete network.wan6
 	delete network.lan.ip6assign
 	commit network
 	set network.port1='switch_port'
