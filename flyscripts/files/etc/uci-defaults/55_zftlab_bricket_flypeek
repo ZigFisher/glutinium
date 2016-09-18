@@ -78,4 +78,7 @@ uci -q batch <<-EOF >/dev/null
 	commit mjpg-streamer
 EOF
 
+echo -e "#\n# Push data to FlyPeek service\n(while true ; do sleep 300; /usr/sbin/service_flypeek_usb.sh >/dev/null 2>&1; done) &\n" >/etc/rc.local
+echo -e "#\nexit 0\n" >>/etc/rc.local
+
 exit 0

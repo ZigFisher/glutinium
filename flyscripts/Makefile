@@ -78,9 +78,6 @@ define Package/flyscripts_base/install
 	$(INSTALL_BIN)  ./files/etc/hotplug.d/usb/30-gps-* $(1)/etc/hotplug.d/usb/
 	$(INSTALL_BIN)  ./files/etc/hotplug.d/usb/30-modem-* $(1)/etc/hotplug.d/usb/
 	$(INSTALL_BIN)  ./files/etc/hotplug.d/usb/30-rs485-* $(1)/etc/hotplug.d/usb/
-	$(INSTALL_DIR)  $(1)/usr/sbin
-	$(INSTALL_BIN)  ./files/usr/sbin/license.sh $(1)/usr/sbin/
-	$(INSTALL_BIN)  ./files/usr/sbin/service_flypeek_usb_yandex.sh $(1)/usr/sbin/
 	$(INSTALL_DIR)  $(1)/lib/netifd/proto
 	$(INSTALL_BIN)  ./files/lib/netifd/proto/3g.sh $(1)/lib/netifd/proto/
 	$(INSTALL_BIN)  ./files/lib/netifd/proto/vtun.sh $(1)/lib/netifd/proto/
@@ -130,6 +127,10 @@ define Package/flyscripts_zftlab_bricket_flypeek/install
 	$(INSTALL_BIN)  ./files/etc/banner__zftlab_bricket_flypeek $(1)/etc/banner
 	$(INSTALL_DIR)  $(1)/etc/uci-defaults
 	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_zftlab_bricket_flypeek $(1)/etc/uci-defaults/
+	$(INSTALL_DIR)  $(1)/usr/sbin
+	$(INSTALL_BIN)  ./files/usr/sbin/license.sh $(1)/usr/sbin/
+	$(INSTALL_BIN)  ./files/usr/sbin/service_flypeek_usb_yandex.sh $(1)/usr/sbin/
+	$(INSTALL_BIN)  ./files/usr/sbin/service_flypeek_usb.sh $(1)/usr/sbin/
 endef
 
 
