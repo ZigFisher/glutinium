@@ -24,7 +24,9 @@ uci -q batch <<-EOF >/dev/null
 EOF
 
 # Extra settings
-#
 echo "usbserial vendor=0x2020 product=0x2033 maxSize=2048" >/etc/modules.d/usb-serial
+#
+# Load modules in first start
+insmod usbserial vendor=0x2020 product=0x2033 maxSize=2048
 
 exit 0
