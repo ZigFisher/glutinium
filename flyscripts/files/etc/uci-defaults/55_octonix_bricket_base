@@ -38,7 +38,7 @@ uci -q batch <<-EOF >/dev/null
 	commit network
 	set network.wan1=interface
 	set network.wan1.proto='3g'
-	set network.wan1.device='/dev/ttyACM1'
+	set network.wan1.device='/dev/ttyACM0'
 	set network.wan1.service='evdo'
 	set network.wan1.username='IT'
 	set network.wan1.password='IT'

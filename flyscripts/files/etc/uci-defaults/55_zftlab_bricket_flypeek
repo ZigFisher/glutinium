@@ -70,7 +70,7 @@ uci -q batch <<-EOF >/dev/null
 	set mjpg-streamer.core.resolution='640x480'
 	set mjpg-streamer.core.yuv='1'
 	set mjpg-streamer.core.quality='100'
-	set mjpg-streamer.core.fps='5'
+	set mjpg-streamer.core.fps='30'
 	set mjpg-streamer.core.www='/www/webcam'
 	set mjpg-streamer.core.port='8080'
 	delete mjpg-streamer.core.username
@@ -79,7 +79,7 @@ uci -q batch <<-EOF >/dev/null
 EOF
 
 echo -e "#\n# Push data to FlyPeek service\n(while true ; do sleep 300; /usr/sbin/service_flypeek_usb.sh >/dev/null 2>&1; done) &\n" >/etc/rc.local
-echo -e "#\n# Push data to Yandex.Disk service\n#(while true ; do sleep 300; /usr/sbin/service_flypeek_usb_yandex.sh >/dev/null 2>&1; done) &\n" >/etc/rc.local
+echo -e "#\n# Push data to Yandex.Disk service\n#(while true ; do sleep 300; /usr/sbin/service_flypeek_usb_yandex.sh >/dev/null 2>&1; done) &\n" >>/etc/rc.local
 echo -e "#\nexit 0\n" >>/etc/rc.local
 
 exit 0
