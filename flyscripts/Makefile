@@ -81,6 +81,8 @@ define Package/flyscripts_base/install
 	$(INSTALL_DIR)  $(1)/lib/netifd/proto
 	$(INSTALL_BIN)  ./files/lib/netifd/proto/3g.sh $(1)/lib/netifd/proto/
 	$(INSTALL_BIN)  ./files/lib/netifd/proto/vtun.sh $(1)/lib/netifd/proto/
+	$(INSTALL_DIR)  $(1)/usr/sbin
+	$(INSTALL_BIN)  ./files/usr/sbin/license.sh $(1)/usr/sbin/
 endef
 
 define Package/flyscripts_octonix_bricket_base/install
@@ -128,7 +130,6 @@ define Package/flyscripts_zftlab_bricket_flypeek/install
 	$(INSTALL_DIR)  $(1)/etc/uci-defaults
 	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_zftlab_bricket_flypeek $(1)/etc/uci-defaults/
 	$(INSTALL_DIR)  $(1)/usr/sbin
-	$(INSTALL_BIN)  ./files/usr/sbin/license.sh $(1)/usr/sbin/
 	$(INSTALL_BIN)  ./files/usr/sbin/service_flypeek_usb_yandex.sh $(1)/usr/sbin/
 	$(INSTALL_BIN)  ./files/usr/sbin/service_flypeek_usb.sh $(1)/usr/sbin/
 endef
