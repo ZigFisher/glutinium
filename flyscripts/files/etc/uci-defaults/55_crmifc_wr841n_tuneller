@@ -1,0 +1,26 @@
+#!/bin/sh
+
+uci -q batch <<-EOF >/dev/null
+	set system.@system[0].hostname='Tuneller'
+	set system.@system[0].timezone='MSK-3'
+	commit system
+	delete network.globals
+	delete network.wan6
+	delete network.lan.ip6assign
+	commit network
+	set wireless.radio0.channel='7'
+	set wireless.radio0.disabled='0'
+	set wireless.@wifi-iface[0].ssid='Tuneller'
+	commit wireless
+	set network.vtun0='interface'
+	set network.vtun0.proto='vtun'
+	set network.vtun0.server='vbox3.flymon.net'
+	set network.vtun0.name='vbox4700'
+	set network.vtun0.password='test2016'
+	set network.vtun0.mode='tun'
+	set network.vtun0.hub='172.19.24.1'
+	set network.vtun0.ipaddr='172.19.24.100'
+	commit network
+EOF
+
+exit 0
