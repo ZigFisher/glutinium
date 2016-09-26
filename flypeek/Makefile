@@ -29,7 +29,7 @@ define Package/flypeek
 	SECTION:=multimedia
 	CATEGORY:=Multimedia
 	TITLE:=Application for Linux-UVC compatible webcams
-	DEPENDS:=+libpthread +libjpeg
+	DEPENDS:=+libpthread +libjpeg +libv4l
 endef
 
 define Package/flypeek/install
