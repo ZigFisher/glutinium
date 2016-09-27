@@ -11,13 +11,6 @@ uci -q batch <<-EOF >/dev/null
 	delete dhcp.lan.leasetime
 	set dhcp.lan.ignore='1'
 	commit dhcp
-	delete dhcp.lan.start
-	delete dhcp.lan.limit
-	delete dhcp.lan.leasetime
-	delete dhcp.lan.dhcpv6
-	delete dhcp.lan.ra
-	set dhcp.lan.ignore='1'
-	commit dhcp
 	delete network.globals
 	delete network.wan6
 	delete network.lan.ip6assign

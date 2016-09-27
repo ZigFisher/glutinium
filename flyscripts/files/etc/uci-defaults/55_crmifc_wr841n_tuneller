@@ -4,6 +4,13 @@ uci -q batch <<-EOF >/dev/null
 	set system.@system[0].hostname='Tuneller'
 	set system.@system[0].timezone='MSK-3'
 	commit system
+	delete dhcp.lan.dhcpv6
+	delete dhcp.lan.ra
+	delete dhcp.lan.start
+	delete dhcp.lan.limit
+	delete dhcp.lan.leasetime
+	set dhcp.lan.ignore='1'
+	commit dhcp
 	delete network.globals
 	delete network.wan6
 	delete network.lan.ip6assign
@@ -20,6 +27,14 @@ uci -q batch <<-EOF >/dev/null
 	set network.vtun0.mode='tun'
 	set network.vtun0.hub='172.19.24.1'
 	set network.vtun0.ipaddr='172.19.24.100'
+	commit network
+	set network.vtun1='interface'
+	set network.vtun1.proto='vtun'
+	set network.vtun1.server='127.0.0.1'
+	set network.vtun1.name='test'
+	set network.vtun1.password='test2016'
+	set network.vtun1.mode='ether'
+	set network.vtun1.bridge='br-lan'
 	commit network
 EOF
 
