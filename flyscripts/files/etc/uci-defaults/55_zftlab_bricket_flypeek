@@ -79,6 +79,7 @@ uci -q batch <<-EOF >/dev/null
 EOF
 
 echo -e "#\n# Push data to FlyPeek service\n(while true ; do sleep 300; /usr/sbin/service_flypeek_usb.sh >/dev/null 2>&1; done) &\n" >/etc/rc.local
+echo -e "#\n# Push data from local IPcam\n#(while true ; do sleep 300; /usr/sbin/service_flypeek_ipc.sh >/dev/null 2>&1; done) &\n" >>/etc/rc.local
 echo -e "#\n# Push data to Yandex.Disk service\n#(while true ; do sleep 300; /usr/sbin/service_flypeek_usb_yandex.sh >/dev/null 2>&1; done) &\n" >>/etc/rc.local
 echo -e "#\nexit 0\n" >>/etc/rc.local
 

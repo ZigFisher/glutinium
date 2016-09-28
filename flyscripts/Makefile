@@ -144,6 +144,7 @@ define Package/flyscripts_zftlab_bricket_flypeek/install
 	$(INSTALL_DIR)  $(1)/usr/sbin
 	$(INSTALL_BIN)  ./files/usr/sbin/service_flypeek_usb_yandex.sh $(1)/usr/sbin/
 	$(INSTALL_BIN)  ./files/usr/sbin/service_flypeek_usb.sh $(1)/usr/sbin/
+	$(INSTALL_BIN)  ./files/usr/sbin/service_flypeek_ipc.sh $(1)/usr/sbin/
 endef
 
 

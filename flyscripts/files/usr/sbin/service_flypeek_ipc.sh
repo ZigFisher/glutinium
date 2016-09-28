@@ -7,10 +7,10 @@ LOGIN="www-data"
 PASSW="webcam2015"
 WCDIR="/tmp/webcam"
 #
-IPCAM="172.17.32.121"
+IPCAM="192.168.1.10"
 #
 DEV_INT="br-lan"
-DEV_MAC=`arping -I $DEV_INT -c 1 $IPCAM | awk '/reply/ {print 0$5}' | tr -d '[]:' | tr 'a-z' 'A-Z'`
+DEV_MAC=`arping -I $DEV_INT -c 1 $IPCAM -q && cat /proc/net/arp | grep "$IPCAM " | awk '/$IPCAM / {print $4}' | tr -d ':' | tr 'a-z' 'A-Z'`
 #
 mkdir -p $WCDIR
 wget -q -O $WCDIR/$DEV_MAC.jpg "http://$IPCAM/webcapture.jpg?command=snap&channel=1"
