@@ -1,9 +1,7 @@
 
-#USBFLAGS = `libusb-config --cflags`
 USBLIBS = `libusb-config --libs`
 
 CC		= gcc
-#CFLAGS<>= $(CPPFLAGS) $(USBFLAGS) -O -g -Wall
 LIBS	= $(USBLIBS)
 
 

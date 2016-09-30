@@ -30,8 +30,8 @@ define Build/Prepare
 endef
 
 define Build/Compile
-	$(TARGET_CC) $(TARGET_CFLAGS) -Wall -o $(PKG_BUILD_DIR)/usbgpio $(PKG_BUILD_DIR)/usbgpio.c $(PKG_BUILD_DIR)/opendevice.c
-	$(TARGET_CC) $(TARGET_CFLAGS) -Wall -o $(PKG_BUILD_DIR)/usbtemp $(PKG_BUILD_DIR)/usbtemp.c
+	$(TARGET_CC) $(TARGET_CFLAGS) -Wall -lusb-1.0 -o $(PKG_BUILD_DIR)/usbgpio $(PKG_BUILD_DIR)/usbgpio.c $(PKG_BUILD_DIR)/opendevice.c
+	$(TARGET_CC) $(TARGET_CFLAGS) -Wall -lusb-1.0 -o $(PKG_BUILD_DIR)/usbtemp $(PKG_BUILD_DIR)/usbtemp.c
 endef
 
 define Package/homes-smart/install
@@ -41,4 +41,3 @@ define Package/homes-smart/install
 endef
 
 $(eval $(call BuildPackage,homes-smart))
-
