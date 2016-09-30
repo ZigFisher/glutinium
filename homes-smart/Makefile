@@ -26,17 +26,12 @@ endef
 
 define Build/Prepare
 	$(INSTALL_DIR) $(PKG_BUILD_DIR)
-	#$(INSTALL_DATA) ./src/*.c ./src/*.h $(PKG_BUILD_DIR)/
-	$(INSTALL_DATA) ./src/* $(PKG_BUILD_DIR)/
+	$(INSTALL_DATA) ./src/*.c ./src/*.h $(PKG_BUILD_DIR)/
 endef
 
 define Build/Compile
-	#$(TARGET_CC) $(TARGET_CFLAGS) -Wall -lusb-1.0 -o $(PKG_BUILD_DIR)/usbgpio $(PKG_BUILD_DIR)/usbgpio.c $(PKG_BUILD_DIR)/opendevice.c
-	#$(TARGET_CC) $(TARGET_CFLAGS) -Wall -lusb-1.0 -o $(PKG_BUILD_DIR)/usbtemp $(PKG_BUILD_DIR)/usbtemp.c
-	CFLAGS="$(TARGET_CPPFLAGS) $(TARGET_CFLAGS)" \
-	$(MAKE) -C $(PKG_BUILD_DIR) \
-		$(TARGET_CONFIGURE_OPTS) \
-		LIBS="$(TARGET_LDFLAGS) -lusb"
+	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_CPPFLAGS) $(TARGET_LDFLAGS) -Wall -lusb -o $(PKG_BUILD_DIR)/usbgpio $(PKG_BUILD_DIR)/usbgpio.c $(PKG_BUILD_DIR)/opendevice.c
+	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_CPPFLAGS) $(TARGET_LDFLAGS) -Wall -lusb -o $(PKG_BUILD_DIR)/usbtemp $(PKG_BUILD_DIR)/usbtemp.c
 endef
 
 define Package/homes-smart/install
