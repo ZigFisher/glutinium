@@ -22,17 +22,26 @@ Software
 * usbtemp =>
 
 
-Flashing bootloader
-===================
+
+
+Flashing direct
+===============
+	
+	avrdude -c usbasp -p m8 -U flash:w:usbgpio_m8.hex -U hfuse:w:0xc9:m -U lfuse:w:0xef:m
+	or
+	avrdude -c usbasp -p m8 -U flash:w:usbtemp_m8.hex -U hfuse:w:0xc9:m -U lfuse:w:0xef:m
+
+
+Flashing with bootloader
+========================
 	
 	avrdude -c usbasp -p m8 -U flash:w:boot_m8.hex -U hfuse:w:0xc0:m -U lfuse:w:0x9f:m -U lock:w:0x2f:m
-
-
-Flashing firmware
-=================
 	
+	and in flashed device
 	avrdude -c usbasp -p m8 -U flash:w:usbgpio_m8.hex
+	or
 	avrdude -c usbasp -p m8 -U flash:w:usbtemp_m8.hex
+
 
 Usage
 =====

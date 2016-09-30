@@ -1,15 +1,14 @@
 
 #USBLIBS = `libusb-config --libs`
 #LIBS	= $(USBLIBS)
-#LIBS	= -L/usr/lib/i386-linux-gnu -lusb
 
 all: usbtemp usbgpio
 
 usbgpio:
-	$(CC) $(LIBS) -o usbgpio usbgpio.c opendevice.c
+	$(CC) $(LIBS) -lusb -o usbgpio usbgpio.c opendevice.c
 
 usbtemp:
-	$(CC) $(LIBS) -o usbtemp usbtemp.c
+	$(CC) $(LIBS) -lusb -o usbtemp usbtemp.c
 
 strip: $(PROGRAM)
 	strip usbgpio
