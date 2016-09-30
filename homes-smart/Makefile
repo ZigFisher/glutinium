@@ -15,7 +15,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/homes-smart
   SECTION:=utils
   CATEGORY:=Utilities
-  DEPENDS:=+libusb
+  DEPENDS:=+libusb-1.0
   TITLE:=Some utils for Homes-smarT project based on USBasp device
   MAINTAINER:=http://zftlab.org
 endef
