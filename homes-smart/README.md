@@ -1,11 +1,7 @@
-HOMES-SMART
+Homes-smarT
 ===========
 
 Homes-smarT - some utils (author MaksMS) for SmartHome based on USBasp device.
-
-![Image of USBasp](./hardware/usbasp_board.jpg)
-
-![Image of USBasp](https://raw.githubusercontent.com/ZigFisher/Glutinium/master/homes-smart/hardware/usbasp_board.jpg)
 
 
 License
@@ -19,13 +15,19 @@ You should have received a copy of the GNU Lesser General Public License along w
 script; if not, please visit http://www.gnu.org/copyleft/gpl.html for more information.
 
 
+Hardware
+========
+
+![Image of USBasp](./hardware/usbasp_board.jpg)
+
+![Image of USBasp](./hardware/usbasp_pinout.jpg)
+
+
 Software
 ========
 
 * usbgpio =>
 * usbtemp =>
-
-
 
 
 Flashing direct
