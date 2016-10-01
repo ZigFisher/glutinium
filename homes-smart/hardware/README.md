@@ -20,4 +20,4 @@ LED2 | 2    | GPIO only
 4    | 8    | GPIO only
 
 
-![Image of DHT22](./hardware/dht22_pinout.jpg)
+![Image of DHT22](./dht22_pinout.jpg)

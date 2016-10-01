@@ -18,7 +18,7 @@ script; if not, please visit http://www.gnu.org/copyleft/gpl.html for more infor
 Hardware
 ========
 
-You can see hardware help page: 
+Hardware help here: https://github.com/ZigFisher/Glutinium/blob/master/homes-smart/hardware/README.md
 
 
 Software
