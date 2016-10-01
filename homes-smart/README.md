@@ -22,6 +22,8 @@ Hardware
 
 ![Image of USBasp](./hardware/usbasp_pinout.jpg)
 
+![Image of DHT22](./hardware/dht22_pinout.jpg)
+
 
 Software
 ========
@@ -44,6 +46,7 @@ Flashing with bootloader
 	avrdude -c usbasp -p m8 -U flash:w:boot_m8.hex -U hfuse:w:0xc0:m -U lfuse:w:0x9f:m -U lock:w:0x2f:m
 	
 	and in flashed device
+	
 	avrdude -c usbasp -p m8 -U flash:w:usbgpio_m8.hex
 	or
 	avrdude -c usbasp -p m8 -U flash:w:usbtemp_m8.hex
@@ -77,3 +80,4 @@ Links
 * http://homes-smart.ru/index.php/oborudovanie/uroki-i-primery/41-usb-kontroller-umnogo-doma
 * http://homes-smart.ru/index.php/oborudovanie/uroki-i-primery/podklyuchaem-datchik-ds18b20-k-kompyuteru
 * https://ruessel.in-chemnitz.de/usbtemp/
+* https://tosiek.pl/usbasp-v2-0-warning-cannot-set-sck-period/
