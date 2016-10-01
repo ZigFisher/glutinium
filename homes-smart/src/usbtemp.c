@@ -425,33 +425,33 @@ int main(int argc, char **argv) {
 	  fprintf(stderr, "Permanent problem querying USBTemp device. Giving up.\n");
 	  exit(1);
 	}
-	
+
 	// ------------------------------------
 	 } else if (strcmp(argv[1], "ledoff") == 0) {
 	    int                 nBytes;
-  nBytes = usb_control_msg(handle, 
-      USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_IN, 
-      5,		  // Command ID
-      0,							  // Value 
-      0,							  // Index 
-      (char *) buffer, 
-      sizeof(buffer), 
+  nBytes = usb_control_msg(handle,
+      USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_IN,
+      5,   // Command ID
+      0,   // Value
+      0,   // Index
+      (char *) buffer,
+      sizeof(buffer),
       5000);
 	printf("len6:%d \n%d\n", nBytes,buffer[0]);
+
 	 } else if (strcmp(argv[1], "ledon") == 0) {
 	  int                 nBytes;
   nBytes = usb_control_msg(handle, 
-      USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_IN, 
-      6,		  // Command ID
-      0,							  // Value 
-      0,							  // Index 
-      (char *) buffer, 
-      sizeof(buffer), 
+      USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_IN,
+      6,   // Command ID
+      0,   // Value
+      0,   // Index
+      (char *) buffer,
+      sizeof(buffer),
       5000);
 	printf("len5:%d \n%d\n", nBytes,buffer[0]);
-	
-	
-  } else if (strcmp(argv[1], "temp") == 0) {
+
+   } else if (strcmp(argv[1], "temp") == 0) {
 	if (argc < 3 || strlen(argv[2]) != 2*DS18X20_ID_LENGTH) {
 	  fprintf(stderr, "usage: usbtemp temp <SensorID>\n");
 	  exit(-1);
