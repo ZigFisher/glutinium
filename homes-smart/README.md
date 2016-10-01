@@ -1,11 +1,9 @@
 HOMES-SMART
 ===========
 
-Homes-smarT - some utils for SmartHome based on USBasp device.
+Homes-smarT - some utils (author MaksMS) for SmartHome based on USBasp device.
 
-If you want to embed images, this is how you do it:
-
-![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
+![Image of USBasp](/hardware/usbasp_board.jpg)
 
 
 License
