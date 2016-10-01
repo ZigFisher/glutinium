@@ -3,7 +3,9 @@ HOMES-SMART
 
 Homes-smarT - some utils (author MaksMS) for SmartHome based on USBasp device.
 
-![Image of USBasp](/hardware/usbasp_board.jpg)
+![Image of USBasp](./hardware/usbasp_board.jpg)
+
+![Image of USBasp](https://raw.githubusercontent.com/ZigFisher/Glutinium/master/homes-smart/hardware/usbasp_board.jpg)
 
 
 License
