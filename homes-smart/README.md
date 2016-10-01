@@ -22,6 +22,13 @@ Hardware
 
 ![Image of USBasp](./hardware/usbasp_pinout.jpg)
 
+PIN          | GPIO | Functions
+------------ | ---  | ---
+Content from | 1
+Content in t | 2
+
+DHT22 pinout:
+
 ![Image of DHT22](./hardware/dht22_pinout.jpg)
 
 
