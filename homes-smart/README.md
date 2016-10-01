@@ -1,7 +1,7 @@
 Homes-smarT
 ===========
 
-Homes-smarT - some utils (author MaksMS) for SmartHome based on USBasp device.
+Homes-smarT - some utils (author MaksMS) for simple experimental SmartHome project based on USBasp device.
 
 
 License
