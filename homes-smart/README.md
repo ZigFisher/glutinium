@@ -22,12 +22,17 @@ Hardware
 
 ![Image of USBasp](./hardware/usbasp_pinout.jpg)
 
-PIN          | GPIO | Functions
------------- | ---  | ---
-Content from | 1
-Content in t | 2
+PIN  | GPIO | Functions
+---  | ---  | ---
+LED1 | 1    | -
+LED2 | 2    | -
+5    | 3    | PWM
+1    | 4    | PWM
+9    | 5    | DHT/1-Wire
+7    | 6    | RCremote
+6    | 7    | -
+4    | 8    | -
 
-DHT22 pinout:
 
 ![Image of DHT22](./hardware/dht22_pinout.jpg)
 
