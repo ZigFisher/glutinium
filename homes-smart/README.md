@@ -66,6 +66,8 @@ Usage
 Links
 =====
 
+* https://habrahabr.ru/post/208470/
 * http://homes-smart.ru/index.php/oborudovanie/uroki-i-primery/ustanovka-usbasploader-na-platu-usbasp
 * http://homes-smart.ru/index.php/oborudovanie/uroki-i-primery/41-usb-kontroller-umnogo-doma
 * http://homes-smart.ru/index.php/oborudovanie/uroki-i-primery/podklyuchaem-datchik-ds18b20-k-kompyuteru
+* https://ruessel.in-chemnitz.de/usbtemp/
