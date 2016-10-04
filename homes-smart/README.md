@@ -24,28 +24,33 @@ Hardware help here: https://github.com/ZigFisher/Glutinium/blob/master/homes-sma
 Software
 ========
 
-* usbgpio =>
-* usbtemp =>
+* usb-gpio =>
+* usb-nrf =>
+* usb-temp =>
 
 
 Flashing direct
 ===============
 	
-	avrdude -c usbasp -p m8 -U flash:w:usbgpio_m8.hex -U hfuse:w:0xc9:m -U lfuse:w:0xef:m
+	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_usb-gpio.hex -U hfuse:w:0xc9:m -U lfuse:w:0xef:m
 	or
-	avrdude -c usbasp -p m8 -U flash:w:usbtemp_m8.hex -U hfuse:w:0xc9:m -U lfuse:w:0xef:m
+	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_usb-nrf.hex -U hfuse:w:0xc9:m -U lfuse:w:0xef:m
+	or
+	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_usb-temp.hex -U hfuse:w:0xc9:m -U lfuse:w:0xef:m
 
 
 Flashing with bootloader
 ========================
 	
-	avrdude -c usbasp -p m8 -U flash:w:boot_m8.hex -U hfuse:w:0xc0:m -U lfuse:w:0x9f:m -U lock:w:0x2f:m
+	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_boot.hex -U hfuse:w:0xc0:m -U lfuse:w:0x9f:m -U lock:w:0x2f:m
 	
-	and in flashed device
+	and in flashed device exec
 	
-	avrdude -c usbasp -p m8 -U flash:w:usbgpio_m8.hex
+	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_usb-gpio.hex
 	or
-	avrdude -c usbasp -p m8 -U flash:w:usbtemp_m8.hex
+	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_usb-nrf.hex
+	or
+	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_usb-temp.hex
 
 
 Usage
@@ -55,6 +60,8 @@ Usage
 	usbtemp temp <address>
 	usbtemp ledon
 	usbtemp ledoff
+	
+	usbnrf ALL
 	
 	usbgpio on <num gpio>
 	usbgpio off <num gpio>
