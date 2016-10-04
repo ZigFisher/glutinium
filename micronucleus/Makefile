@@ -17,6 +17,7 @@ define Package/micronucleus
 	CATEGORY:=Utilities
 	DEPENDS:=+libusb-compat
 	TITLE:=Commandline util for Micronucleus bootloader
+	URL:=https://github.com/micronucleus/micronucleus
 	MAINTAINER:=http://zftlab.org
 endef
 
