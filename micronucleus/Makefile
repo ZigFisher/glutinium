@@ -8,20 +8,20 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=micronucleus
-PKG_RELEASE:=2.03
+PKG_RELEASE:=1
 
 include $(INCLUDE_DIR)/package.mk
 
 define Package/micronucleus
-  SECTION:=utils
-  CATEGORY:=Utilities
-  DEPENDS:=+libusb-compat
-  TITLE:=This commandline application for the Micronucleus bootloader
-  MAINTAINER:=http://zftlab.org
+	SECTION:=utils
+	CATEGORY:=Utilities
+	DEPENDS:=+libusb-compat
+	TITLE:=Commandline util for Micronucleus bootloader
+	MAINTAINER:=http://zftlab.org
 endef
 
 define Package/micronucleus/description
-  This commandline application for the Micronucleus bootloader
+	Commandline util for Micronucleus bootloader
 endef
 
 define Build/Prepare
