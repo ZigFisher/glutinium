@@ -12,11 +12,9 @@
 #include "usbconfig.h"
 
 
-
 usb_dev_handle      *handle = NULL;
 char                buffer[8];
 int                 cnt;
-
 
 // 1,2,3,21,24,25
 
@@ -49,15 +47,13 @@ int digitalread(int pin) // чтение статуса порта.
 		return -1;
             }
         }else return (buffer[0]);
-	
-  
-  
+
 }
 
 int digitalwrite(int pin,int data) // запись порта.
 {
       if (pin>0 && pin<9) {
-	
+
         cnt = usb_control_msg(handle, USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_OUT, 1, data*256+pin, 0, buffer, sizeof(buffer), 5000); // CUSTOM_RQ_SET_STATUS
         if(cnt < 0){
             fprintf(stderr, "USB error: %s\n", usb_strerror());
@@ -139,17 +135,14 @@ int                  vid, pid, isOn;
             }
         }else{
 //	  printf("%d байт: %d %d %d %d %d\n",cnt,(unsigned char)(buffer[0]),(unsigned char)(buffer[1]),(unsigned char)(buffer[2]),(unsigned char)(buffer[3]),(unsigned char)(buffer[4]));
-	 
+
 //	  printf("%d байт: %u %u %u %u %u\n",cnt,(unsigned char)(buffer[0]),(unsigned char)(buffer[1]),(unsigned char)(buffer[2]),(unsigned char)(buffer[3]),(unsigned char)(buffer[4]));
-	 
-	  
-	  
+
+
 	  if (buffer[0]==0 && buffer[1]==0 && buffer[2]==0 && buffer[3]==0) {
 	    printf("DHT датчик не найден или не включен командой dhtsetup.\n");
 	  } else if ((((unsigned char)buffer[0] + (unsigned char)buffer[1] +(unsigned char) buffer[2] + (unsigned char)buffer[3] )& 0xFF) == (unsigned char)buffer[4]) { 
-	  
-	  
-	  
+
 	  if (buffer[1]==0 && buffer[3]==0) printf("DHT11:%d %% %d C\n",(buffer[0]),(buffer[2])); // dht11
 	 else  { // dht22
 	     float f, h;
@@ -160,11 +153,9 @@ int                  vid, pid, isOn;
        f /= 10.0;
        if ((unsigned char)buffer[2] & 0x80)  f *= -1;
        printf("DHT22: %.1f °C  %.1f %%\n", f, h);
-	    
-	    
+
 	  }
-	  
-	  
+
 	  } else printf("DHT Ошибка\n");
 	}
     }else if(strcasecmp(argv[1], "status") == 0){
@@ -183,19 +174,17 @@ int                  vid, pid, isOn;
 
 	  }
         }
-        
-        
+
      }else if(strcasecmp(argv[1], "statusin") == 0){ // вывод статусов портов при режиме инпут
-       
+
        if(argc > 2) {
 	    int pin= atoi(argv[2]);
 
 	    printf("MODE PIN %d is %d\n",pin, digitalread(pin));
 
-        
        } else {
 	 printf("all pins:\n");
-	  
+
                cnt = usb_control_msg(handle, USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_IN, 25, 0, 0, buffer, sizeof(buffer), 5000);
         if(cnt < 1){
             if(cnt < 0){
@@ -204,16 +193,16 @@ int                  vid, pid, isOn;
                 fprintf(stderr, "only %d bytes received.\n", cnt);
             }
         }else{
- 
+
 	  int f;
 	  for(f = 0; f < 8; f++){
 	   printf("LED %d is %d\n",f+1, (int)(buffer[f]));
 	  }
         }
-	 
+
       }
      }else if(strcasecmp(argv[1], "mode") == 0){ // режимы портов
-        
+
        if(argc < 4) { // вывод режимов портов
                cnt = usb_control_msg(handle, USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_IN, 21, 0, 0, buffer, sizeof(buffer), 5000);
         if(cnt < 1){
@@ -223,7 +212,7 @@ int                  vid, pid, isOn;
                 fprintf(stderr, "only %d bytes received.\n", cnt);
             }
         }else{
-     
+
 	  int f;
 	  for(f = 0; f < cnt; f++){
 	    if ((unsigned char)(buffer[f])!=1) printf("LED %d mode output (%d)\n",f+1,(unsigned char)(buffer[f]));
@@ -241,78 +230,76 @@ int                  vid, pid, isOn;
 	 if (key<531441) {
 	 int per=3;
 	if(argc > 3) per=atoi(argv[3]); // период вручную.
-	  
-      
+
+
       unsigned int keyh = (unsigned long)key >> 16;
      // printf(" %d %d)\n",keyh,key);
       cnt = usb_control_msg(handle, USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_IN, 4,key, keyh+256*per, buffer, sizeof(buffer), 5000);
-      
+
        } else printf("Код не может быть больше 531440\n");
        } else printf("Не указан обязательный параметр:число от 0 до 531440\n");
-       
-     
+
      //-----------------------pwm start
      }else if(strcasecmp(argv[1], "pwm3") == 0){
        if(argc > 2) {
         int pin= atoi(argv[2]);
 	// int val= atoi(argv[3]);
-       
+
        cnt = usb_control_msg(handle, USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_IN, 23,pin, 0, buffer, sizeof(buffer), 5000);
         if(cnt < 0){
             fprintf(stderr, "USB error: %s\n", usb_strerror());
-        } 
+        }
        } else printf("Не указан обязательный параметр:число от 0 до 255\n");
-       
+
             }else if(strcasecmp(argv[1], "pwm4") == 0){
        if(argc > 2) {
         int pin= atoi(argv[2]);
 	// int val= atoi(argv[3]);
-       
+
        cnt = usb_control_msg(handle, USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_IN, 24,pin, 0, buffer, sizeof(buffer), 5000);
         if(cnt < 0){
             fprintf(stderr, "USB error: %s\n", usb_strerror());
         } 
        } else printf("Не указан обязательный параметр:число от 0 до 255\n");
        //-----------------------pwm end
-       
+
        }else if(strcasecmp(argv[1], "dhtsetup") == 0){ // вкл/выкл чтение датчиков dht
        if(argc > 2) {
 	 int mode= atoi(argv[2]);
-	 
 	  cnt = usb_control_msg(handle, USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_IN, 6, mode, 0, buffer, sizeof(buffer), 5000);
 	  if (mode==1) printf("Установка:Датчик DHT включен,обновление произойдет в течении минуты.\n");
 	  else printf("Установка:Датчик DHT выключен\n");
-	  
+
        } else {
-	 
+
 	 cnt = usb_control_msg(handle, USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_IN, 5, 0, 0, buffer, sizeof(buffer), 5000);
 	  if (buffer[0]==1) printf("Статус:Датчик DHT включен (%u)\n",(unsigned char)buffer[0]);
 	  else printf("Статус:Датчик DHT выключен (%u)\n",(unsigned char)buffer[0]);
 	  printf("Установка:%s dhtsetup 1 или 0 чтобы включить или выключить опрос датчиков\n",argv[0]);
        }
-       
+
      }else if(strcasecmp(argv[1], "analog") == 0){ // аналог порт
 
      cnt = usb_control_msg(handle, USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_IN, 17, 0, 0, buffer, sizeof(buffer), 5000);
-     
+
            if(cnt < 1){
             if(cnt < 0){
                 fprintf(stderr, "USB error: %s\n", usb_strerror());
             }else{
                 fprintf(stderr, "only %d bytes received.\n", cnt);
             }
-        }else{    
+        }else{
      printf("analog:%u (%i %i)\n",((unsigned char)buffer[0]+(unsigned char)buffer[1]*256),(unsigned char)buffer[0],(unsigned char)buffer[1]);
-	}
-     
+        }
+
     }else if((isOn = (strcasecmp(argv[1], "on") == 0)) || strcasecmp(argv[1], "off") == 0){
 
       if(argc > 2) {
    if (atoi(argv[2])>0 && atoi(argv[2])<9 )digitalwrite (atoi(argv[2]),isOn);
 else printf("Возможный диапазон портов от 1 до 8\n");
       } else printf("Установка:%s on <номер GPIO> или off для выключения\n",argv[0]);
-      
-      
+
+
 #if ENABLE_TEST
     }else if(strcasecmp(argv[1], "test") == 0){
         int i;

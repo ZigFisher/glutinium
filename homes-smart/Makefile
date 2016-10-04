@@ -31,12 +31,14 @@ endef
 
 define Build/Compile
 	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -Wall -lusb -o $(PKG_BUILD_DIR)/usbgpio $(PKG_BUILD_DIR)/usbgpio.c $(PKG_BUILD_DIR)/opendevice.c
+	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -Wall -lusb -o $(PKG_BUILD_DIR)/usbnrf $(PKG_BUILD_DIR)/usbnrf.c $(PKG_BUILD_DIR)/opendevice.c
 	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -Wall -lusb -o $(PKG_BUILD_DIR)/usbtemp $(PKG_BUILD_DIR)/usbtemp.c
 endef
 
 define Package/homes-smart/install
 	$(INSTALL_DIR) $(1)/usr/sbin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/usbgpio $(1)/usr/sbin/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/usbnrf  $(1)/usr/sbin/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/usbtemp $(1)/usr/sbin/
 endef
 

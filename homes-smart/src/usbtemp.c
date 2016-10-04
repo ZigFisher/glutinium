@@ -441,7 +441,7 @@ int main(int argc, char **argv) {
 
 	 } else if (strcmp(argv[1], "ledon") == 0) {
 	  int                 nBytes;
-  nBytes = usb_control_msg(handle, 
+  nBytes = usb_control_msg(handle,
       USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_IN,
       6,   // Command ID
       0,   // Value
