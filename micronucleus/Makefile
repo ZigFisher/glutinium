@@ -31,7 +31,10 @@ define Build/Prepare
 endef
 
 define Build/Compile
-	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -Wall -lusb -o $(PKG_BUILD_DIR)/micronucleus $(PKG_BUILD_DIR)/micronucleus.c $(PKG_BUILD_DIR)/micronucleus_lib.c $(PKG_BUILD_DIR)/littleWire_util.c
+	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -Wall -lusb -o $(PKG_BUILD_DIR)/micronucleus \
+		$(PKG_BUILD_DIR)/micronucleus.c \
+		$(PKG_BUILD_DIR)/micronucleus_lib.c \
+		$(PKG_BUILD_DIR)/littleWire_util.c
 endef
 
 define Package/homes-smart/install
