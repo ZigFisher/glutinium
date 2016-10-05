@@ -27,6 +27,7 @@ endef
 define Build/Prepare
 	$(INSTALL_DIR) $(PKG_BUILD_DIR)
 	$(INSTALL_DATA) ./src/* $(PKG_BUILD_DIR)/
+	$(INSTALL_DATA) ./firmware/digispark_t85_littlewire_v13.hex $(PKG_BUILD_DIR)/
 endef
 
 define Build/Compile
@@ -43,6 +44,8 @@ endef
 define Package/little-wire/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/micronucleus $(1)/usr/bin/
+	$(INSTALL_DIR) $(1)/usr/share/little-wire
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/digispark_t85_littlewire_v13.hex $(1)/usr/share/little-wire/
 #	$(INSTALL_BIN) $(PKG_BUILD_DIR)/adc $(1)/usr/bin/
 #	$(INSTALL_BIN) $(PKG_BUILD_DIR)/onewire $(1)/usr/bin/
 endef
