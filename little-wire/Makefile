@@ -30,13 +30,19 @@ define Build/Prepare
 endef
 
 define Build/Compile
-	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -Wall -lusb -O -g -D LINUX -o $(PKG_BUILD_DIR)/micronucleus $(PKG_BUILD_DIR)/micronucleus.c $(PKG_BUILD_DIR)/micronucleus_lib.c $(PKG_BUILD_DIR)/littleWire_util.c
-	$(TARGET_CC) $(TARGET_CFLAGS) -Wall -lusb -O -g -D LINUX -o adc $(PKG_BUILD_DIR)/adc.c $(PKG_BUILD_DIR)/littleWire.c $(PKG_BUILD_DIR)/opendevice.c $(PKG_BUILD_DIR)/littleWire_util.c
-	$(TARGET_CC) $(TARGET_CFLAGS) -Wall -lusb -O -g -D LINUX -o onewire $(PKG_BUILD_DIR)/onewire.c $(PKG_BUILD_DIR)/littleWire.c $(PKG_BUILD_DIR)/opendevice.c $(PKG_BUILD_DIR)/littleWire_util.c
+	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -Wall -lusb -O -g -D LINUX \
+		-o $(PKG_BUILD_DIR)/micronucleus $(PKG_BUILD_DIR)/micronucleus.c $(PKG_BUILD_DIR)/micronucleus_lib.c $(PKG_BUILD_DIR)/littleWire_util.c
+	
+	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -Wall -lusb -O -g -D LINUX \
+		-o adc $(PKG_BUILD_DIR)/adc.c $(PKG_BUILD_DIR)/littleWire.c $(PKG_BUILD_DIR)/opendevice.c $(PKG_BUILD_DIR)/littleWire_util.c
+	
+	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -Wall -lusb -O -g -D LINUX \
+		-o onewire $(PKG_BUILD_DIR)/onewire.c $(PKG_BUILD_DIR)/littleWire.c $(PKG_BUILD_DIR)/opendevice.c $(PKG_BUILD_DIR)/littleWire_util.c
 endef
 
 define Package/little-wire/install
 	$(INSTALL_DIR) $(1)/usr/bin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/micronucleus $(1)/usr/bin/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/adc $(1)/usr/bin/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/onewire $(1)/usr/bin/
 endef
