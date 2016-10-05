@@ -7,7 +7,7 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=litte-wire
+PKG_NAME:=little-wire
 PKG_RELEASE:=2
 
 include $(INCLUDE_DIR)/package.mk
