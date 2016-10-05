@@ -43,8 +43,8 @@ endef
 define Package/little-wire/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/micronucleus $(1)/usr/bin/
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/adc $(1)/usr/bin/
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/onewire $(1)/usr/bin/
+#	$(INSTALL_BIN) $(PKG_BUILD_DIR)/adc $(1)/usr/bin/
+#	$(INSTALL_BIN) $(PKG_BUILD_DIR)/onewire $(1)/usr/bin/
 endef
 
 $(eval $(call BuildPackage,little-wire))
