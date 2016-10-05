@@ -1,7 +1,7 @@
-micronucleus
-============
+little-wire
+===========
 
-This commandline application for the Micronucleus bootloader
+Little-Wire bootloader, firmware and example utils for attiny45 USB Digispark
 
 
 License
@@ -17,8 +17,8 @@ script; if not, please visit http://www.gnu.org/copyleft/gpl.html for more infor
 
 Usage
 =====
-	
-	micronucleus --run name_of_the_file.hex
+
+	micronucleus --run --type intel-hex digispark_t85_micronucleus-v2.03.hex
 
 
 Links
