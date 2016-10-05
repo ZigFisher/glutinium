@@ -1,5 +1,5 @@
 
-#include <littleWire_util.h>
+#include "littleWire_util.h"
 
 /* Delay in miliseconds */
 void delay(unsigned int duration)
