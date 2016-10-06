@@ -33,9 +33,7 @@ define Package/littlewire
 endef
 
 define Build/Compile
-	$(MAKE) -C $(PKG_BUILD_DIR)/software \
-	CC="$(TARGET_CC)" CFLAGS="$(TARGET_CFLAGS) LDFLAGS="$(TARGET_LDFLAGS)" \
-	-DLINUX=1" -I$(STAGING_DIR)/usr/include -I$(PKG_BUILD_DIR)/software/library
+	$(MAKE) -C $(PKG_BUILD_DIR)/software CC="$(TARGET_CC)" CFLAGS="$(TARGET_CFLAGS) LDFLAGS="$(TARGET_LDFLAGS)" -DLINUX=1" -I$(STAGING_DIR)/usr/include -I$(PKG_BUILD_DIR)/software/library
 endef
 
 define Package/littlewire/install
