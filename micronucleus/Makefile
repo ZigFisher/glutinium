@@ -33,7 +33,7 @@ define Package/micronucleus
 endef
 
 define Build/Compile
-	$(MAKE) -C $(PKG_BUILD_DIR)/software \
+	$(MAKE) -C $(PKG_BUILD_DIR)/commandline \
 	CC="$(TARGET_CC)" \
 	CFLAGS="$(TARGET_CFLAGS) -I$(STAGING_DIR)/usr/include -I$(PKG_BUILD_DIR)/software/library -DLINUX=1" \
 	LDFLAGS="$(TARGET_LDFLAGS)"
