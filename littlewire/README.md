@@ -1,7 +1,7 @@
 littlewire
 ==========
 
-Little-Wire utilites for attiny45 USB Digispark
+Little-Wire example utilites for attiny45 USB Digispark
 
 
 License
@@ -18,7 +18,7 @@ script; if not, please visit http://www.gnu.org/copyleft/gpl.html for more infor
 Usage
 =====
 
-	micronucleus --run --type intel-hex digispark_t85_littlewire_v13.hex
+	.
 
 
 Links

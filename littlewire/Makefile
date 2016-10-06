@@ -27,7 +27,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/littlewire
 	SECTION:=utils
 	CATEGORY:=Utilities
-	TITLE:=Little-Wire components for attiny45 USB Digispark
+	TITLE:=Little-Wire example utilites for attiny45 USB Digispark
 	MAINTAINER:=http://eko.one.pl
 	DEPENDS:=+libusb-compat
 endef
@@ -48,3 +48,4 @@ define Package/littlewire/install
 endef
 
 $(eval $(call BuildPackage,littlewire))
+
