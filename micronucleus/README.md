@@ -1,7 +1,7 @@
-little-wire
-===========
+micronucleus
+============
 
-Little-Wire bootloader, firmware and example utils for attiny45 USB Digispark
+Micronucleus - ATTiny usb bootloader
 
 
 License

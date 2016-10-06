@@ -7,14 +7,14 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=littlewire
-PKG_VERSION:=2014-11-30
+PKG_NAME:=micronucleus
+PKG_VERSION:=2015-07-29
 PKG_RELEASE:=1
-PKG_MAINTAINER:=Cezary Jackiewicz <cezary@eko.one.pl>
+PKG_MAINTAINER:=Igor Zalatov <flyrouter@gmail.com>
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://github.com/littlewire/Little-Wire.git
-PKG_SOURCE_VERSION:=86dcd06a6aaaa4d90657b1ae5976812140be5c61
+PKG_SOURCE_URL:=https://github.com/micronucleus/micronucleus.git
+PKG_SOURCE_VERSION:=0fb6c10fa92b3bc3b5e217f1369d7325faba145c
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION)
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION)
@@ -27,8 +27,8 @@ include $(INCLUDE_DIR)/package.mk
 define Package/littlewire
 	SECTION:=utils
 	CATEGORY:=Utilities
-	TITLE:=Little-Wire example utilites for attiny45 USB Digispark
-	MAINTAINER:=http://eko.one.pl
+	TITLE:=Micronucleus - ATTiny usb bootloader
+	MAINTAINER:=https://github.com/micronucleus/micronucleus
 	DEPENDS:=+libusb-compat
 endef
 
@@ -41,12 +41,7 @@ endef
 
 define Package/littlewire/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/software/{adc,blink,blink_ws2812} $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/software/{button,debugConsole,fade_ws2812,hardwarePWM} $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/software/{i2c_blinkM,i2c_nunchuck,lwbuttond,onewire} $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/software/{rgb_cycle_ws2812,servo,softPWM,spi_LTC1448} $(1)/usr/bin
-	$(INSTALL_DIR) $(1)/usr/share/little-wire
-	$(INSTALL_BIN) ./firmware/digispark_t85_littlewire_v13.hex $(1)/usr/share/little-wire/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/software/{micronucleus} $(1)/usr/bin
 endef
 
 $(eval $(call BuildPackage,littlewire))
