@@ -20,7 +20,7 @@ define Package/little-wire
 	DEPENDS:=+libusb-compat
 endef
 
-define Package/barcode/description
+define Package/little-wire/description
 	Little-Wire bootloader, firmware and example utils for attiny45 USB Digispark
 endef
 
@@ -35,7 +35,7 @@ define Build/Compile
 		-o $(PKG_BUILD_DIR)/micronucleus $(PKG_BUILD_DIR)/micronucleus.c $(PKG_BUILD_DIR)/micronucleus_lib.c $(PKG_BUILD_DIR)/littleWire_util.c
 #	
 #	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -lusb -O -g -D LINUX \
-#		-o adc $(PKG_BUILD_DIR)/littleWire_util.c $(PKG_BUILD_DIR)/littleWire.c $(PKG_BUILD_DIR)/opendevice.c $(PKG_BUILD_DIR)/adc.c 
+#		-o adc $(PKG_BUILD_DIR)/littleWire_util.c $(PKG_BUILD_DIR)/littleWire.c $(PKG_BUILD_DIR)/opendevice.c $(PKG_BUILD_DIR)/adc.c
 #	
 #	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -lusb -O -g -D LINUX \
 #		-o onewire $(PKG_BUILD_DIR)/littleWire_util.c $(PKG_BUILD_DIR)/littleWire.c $(PKG_BUILD_DIR)/opendevice.c $(PKG_BUILD_DIR)/onewire.c
