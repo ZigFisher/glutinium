@@ -35,13 +35,13 @@ endef
 define Build/Compile
 	$(MAKE) -C $(PKG_BUILD_DIR)/commandline \
 	CC="$(TARGET_CC)" \
-	CFLAGS="$(TARGET_CFLAGS) -I$(STAGING_DIR)/usr/include -I$(PKG_BUILD_DIR)/software/library -DLINUX=1" \
+	CFLAGS="$(TARGET_CFLAGS) -I$(STAGING_DIR)/usr/include -I$(PKG_BUILD_DIR)/commandline/library -DLINUX=1" \
 	LDFLAGS="$(TARGET_LDFLAGS)"
 endef
 
 define Package/micronucleus/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/software/{micronucleus} $(1)/usr/bin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/commandline/{micronucleus} $(1)/usr/bin
 endef
 
 $(eval $(call BuildPackage,micronucleus))
