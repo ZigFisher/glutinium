@@ -93,9 +93,9 @@
 #define MOSI_PIN PIN4
 #define RESET_PIN PIN3
 
-extern unsigned char rxBuffer[RX_BUFFER_SIZE]; /* This has to be unsigned for the data's sake */
-extern unsigned char ROM_NO[8];
-extern int lwStatus;
+unsigned char rxBuffer[RX_BUFFER_SIZE]; /* This has to be unsigned for the data's sake */
+unsigned char ROM_NO[8];
+int lwStatus;
 
 /*! \addtogroup General
 *  @brief General library functions
@@ -108,11 +108,11 @@ typedef struct lwCollection
 {
   struct usb_device* lw_device;
   int serialNumber;  
-} lwCollection;
+}lwCollection;
 
-extern lwCollection lwResults[16];
+lwCollection lwResults[16];
 
-extern int lw_totalDevices;
+int lw_totalDevices;
 
 /**
   * Tries to cache all the littleWire devices and stores them in lwResults array. \n

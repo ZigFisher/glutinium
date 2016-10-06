@@ -30,13 +30,6 @@
 /*****************************************************************************/
 #include "littleWire.h"
 
-// external variables
-lwCollection lwResults[16];
-int lw_totalDevices;
-unsigned char rxBuffer[RX_BUFFER_SIZE]; /* This has to be unsigned for the data's sake */
-unsigned char ROM_NO[8];
-int lwStatus;
-
 unsigned char	crc8;
 int		LastDiscrepancy;
 int 	LastFamilyDiscrepancy;
@@ -96,12 +89,10 @@ int littlewire_search()
             {
               lwResults[lw_totalDevices].serialNumber = atoi(string);
               lwResults[lw_totalDevices].lw_device = dev;
-              lw_totalDevices++;
-            } else {
-              printf("Connection error! Try creating a udev rule or running with sudo.\n");
             }
           }
-          usb_close(udev);
+          usb_close(dev);
+          lw_totalDevices++;        
         }
       }
     }
@@ -314,13 +305,11 @@ void i2c_read(littleWire* lwHandle, unsigned char* readBuffer, unsigned char len
 	int i=0;
 	
 	if(endWithStop)
-		lwStatus=usb_control_msg(lwHandle, 0xC0, 46, (length<<8) + 1, 1, rxBuffer, 8, USB_TIMEOUT);
-	else
 		lwStatus=usb_control_msg(lwHandle, 0xC0, 46, (length<<8) + 0, 0, rxBuffer, 8, USB_TIMEOUT);
+	else
+		lwStatus=usb_control_msg(lwHandle, 0xC0, 46, (length<<8) + 1, 1, rxBuffer, 8, USB_TIMEOUT);
 	
-	delay(3);
-
-  lwStatus=usb_control_msg(lwHandle, 0xC0, 40, 0, 0, rxBuffer, 8, USB_TIMEOUT);
+	lwStatus=usb_control_msg(lwHandle, 0xC0, 40, 0, 0, rxBuffer, 8, USB_TIMEOUT);
 	
 	for(i=0;i<length;i++)
 		readBuffer[i]=rxBuffer[i];

@@ -14,7 +14,7 @@
 #include "littleWire.h"
 #include "littleWire_util.h"
 
-#define LED	PIN2		// LED is connected to the pin2
+#define LED		PIN2		// LED is connected to the pin2
 #define DELAY	500 		// Delay, in miliseconds
 
 unsigned char version;
@@ -78,8 +78,7 @@ int main(void)
 
 	/* In order to change the serial number of the current connected device, use the following function. */
 	/* You need to unplug-plug to see the change. */
-	/* Serial numbers have to be between 100-999 */
-	// changeSerialNumber(lw,152);
+	// changeSerialNumber(lw,752);
 
 	/*------------------------------------------------------------------------------------------------------*/
 

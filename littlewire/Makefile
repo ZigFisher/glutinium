@@ -48,3 +48,4 @@ define Package/littlewire/install
 endef
 
 $(eval $(call BuildPackage,littlewire))
+
