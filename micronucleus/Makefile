@@ -24,7 +24,7 @@ PKG_LICENSE_FILES:=LICENSE
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/littlewire
+define Package/micronucleus
 	SECTION:=utils
 	CATEGORY:=Utilities
 	TITLE:=Micronucleus - ATTiny usb bootloader
@@ -39,10 +39,10 @@ define Build/Compile
 	LDFLAGS="$(TARGET_LDFLAGS)"
 endef
 
-define Package/littlewire/install
+define Package/micronucleus/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/software/{micronucleus} $(1)/usr/bin
 endef
 
-$(eval $(call BuildPackage,littlewire))
+$(eval $(call BuildPackage,micronucleus))
 
