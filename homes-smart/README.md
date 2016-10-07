@@ -36,13 +36,13 @@ Flashing direct
 	or
 	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_usb-nrf.hex -U hfuse:w:0xc9:m -U lfuse:w:0xef:m
 	or
-	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_usb-temp.hex -U hfuse:w:0xc9:m -U lfuse:w:0xef:m
+	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_usb-nrf.hex -U hfuse:w:0xc9:m -U lfuse:w:0xef:m
 
 
 Flashing with bootloader
 ========================
 	
-	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_boot.hex -U hfuse:w:0xc0:m -U lfuse:w:0x9f:m -U lock:w:0x2f:m
+	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_bootloader.hex -U hfuse:w:0xc0:m -U lfuse:w:0x9f:m -U lock:w:0x2f:m
 	
 	and in flashed device exec
 	
@@ -85,22 +85,23 @@ Links
 * http://homes-smart.ru/index.php/oborudovanie/uroki-i-primery/podklyuchaem-datchik-ds18b20-k-kompyuteru
 * https://ruessel.in-chemnitz.de/usbtemp/
 * https://tosiek.pl/usbasp-v2-0-warning-cannot-set-sck-period/
-
+* -
 * http://homes-smart.ru/index.php/oborudovanie/prochee/radiopult
 * http://homes-smart.ru/index.php/oborudovanie/bez-provodov-433-315mgts/opisanie-radiomodulej-433mgts-i-315mgts
 * http://homes-smart.ru/index.php/oborudovanie/bez-provodov-433-315mgts/algoritm-peredachi-dannykh-v-vide-tsifrovogo-koda-na-radiomodulyakh
 * http://homes-smart.ru/index.php/oborudovanie/bez-provodov-433-315mgts/58-besprovodnoj-datchik-temperatury-vlazhnosti-na-attiny13-integratsiya-v-sistemu-umnogo-doma
 * http://homes-smart.ru/index.php/oborudovanie/bez-provodov-433-315mgts/besprovodnoj-datchik-temperatury-i-vlazhnosti-na-baze-radiomodulej-433-315
-
+* -
 * http://homes-smart.ru/index.php/oborudovanie/bez-provodov-2-4-ggts/opisanie-radiomodulya-nrf24l01
+* http://homes-smart.ru/index.php/oborudovanie/bez-provodov-2-4-ggts/nrf24l01-usb-iz-usbasp
 * http://homes-smart.ru/index.php/oborudovanie/bez-provodov-2-4-ggts/klient-dlya-usb-nrf24l01-besprovodnoj-datchik-vlazhnosti-arduino
 * http://homes-smart.ru/index.php/oborudovanie/bez-provodov-2-4-ggts/klient-dlya-usb-nrf24l01-besprovodnoj-datchik-vlazhnosti-si
 * http://homes-smart.ru/index.php/oborudovanie/bez-provodov-2-4-ggts/shlyuz-ethernet-nrf24l01-w5100-na-baze-arduino-dlya-obmena-dannymi-s-nrf24l01-i-nrf24le1
 * http://homes-smart.ru/index.php/oborudovanie/bez-provodov-2-4-ggts/60-deshevyj-usb-priemnik-dlya-nrf24l01-i-nrf24le1-fz0769
 * http://homes-smart.ru/index.php/oborudovanie/bez-provodov-2-4-ggts/63-shlyuz-wi-fi-nrf24l01-na-baze-esp8266-dlya-obmena-dannymi-s-nrf24l01-i-nrf24le1
-
 * http://homes-smart.ru/index.php/oborudovanie/bez-provodov-2-4-ggts/nrf24le1-nrf24l01-mikrokontroller
 * http://homes-smart.ru/index.php/oborudovanie/bez-provodov-2-4-ggts/54-programmirovanie-nrf24le1-cherez-raspberry-pi
 * http://homes-smart.ru/index.php/oborudovanie/bez-provodov-2-4-ggts/55-programmirovanie-nrf24le1-cherez-usbasp
 * http://homes-smart.ru/index.php/oborudovanie/bez-provodov-2-4-ggts/konstruktor-besprovodnogo-klienta-na-nrf24le1
+* http://homes-smart.ru/fusecalc/?prog=avrstudio&part=ATmega8A
 

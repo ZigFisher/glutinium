@@ -76,7 +76,7 @@ static void usage(char *name)
     fprintf(stderr, "  %s rcsend <key>......Отправить ключ RCremote\n", name);
     fprintf(stderr, "  %s dhtread...........Чтение датчика DHT11 или DHT22\n", name);
     fprintf(stderr, "  %s dhtsetup..........Запрос статуса и вкл/выкл датчиков DHT\n", name);
-    
+
 #if ENABLE_TEST
     fprintf(stderr, "  %s test ..... run driver reliability test\n", name);
 #endif /* ENABLE_TEST */
