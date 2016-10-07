@@ -18,7 +18,7 @@ script; if not, please visit http://www.gnu.org/copyleft/gpl.html for more infor
 Usage
 =====
 
-	.
+	micronucleus --run --type intel-hex /usr/share/little-wire/digispark_t85_littlewire_v13.hex
 
 
 Links
