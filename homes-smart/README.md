@@ -29,28 +29,30 @@ Software
 * usb-temp =>
 
 
-Flashing direct
-===============
-	
-	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_usb-gpio.hex -U hfuse:w:0xc9:m -U lfuse:w:0xef:m
-	or
-	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_usb-nrf.hex -U hfuse:w:0xc9:m -U lfuse:w:0xef:m
-	or
-	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_usb-nrf.hex -U hfuse:w:0xc9:m -U lfuse:w:0xef:m
-
-
 Flashing with bootloader
 ========================
 	
 	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_bootloader.hex -U hfuse:w:0xc0:m -U lfuse:w:0x9f:m -U lock:w:0x2f:m
+
+
+Flashing firmware
+=================
 	
-	and in flashed device exec
-	
+	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_i2c-tiny-usb
+	or
+	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_usb-asp.hex
+	or
 	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_usb-gpio.hex
 	or
 	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_usb-nrf.hex
 	or
-	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_usb-temp.hex
+	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_usb-spi.hex
+
+
+Flashing direct (without bootloader)
+====================================
+	
+	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_usb-temp.hex -U hfuse:w:0xc9:m -U lfuse:w:0xef:m
 
 
 Usage
