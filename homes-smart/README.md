@@ -29,14 +29,14 @@ Software
 * usb-temp =>
 
 
-Flashing with bootloader
-========================
+Flashing bootloader
+===================
 	
 	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_bootloader.hex -U hfuse:w:0xc0:m -U lfuse:w:0x9f:m -U lock:w:0x2f:m
 
 
-Flashing firmware
-=================
+Flashing firmware (need bootloader)
+===================================
 	
 	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_i2c-tiny-usb
 	or
