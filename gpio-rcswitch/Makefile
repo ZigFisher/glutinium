@@ -11,6 +11,9 @@ include $(INCLUDE_DIR)/kernel.mk
 PKG_NAME:=gpio-rcswitch
 PKG_VERSION:=0.1
 PKG_RELEASE:=1
+PKG_MAINTAINER:=Igor Zalatov <flyrouter@gmail.com>
+PKG_LICENSE:=GPL-2.0
+PKG_LICENSE_FILES:=LICENSE
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -19,7 +22,7 @@ define KernelPackage/gpio-rcswitch
   TITLE:=Kernel module for control 433Mhz based RC switches
   FILES:=$(PKG_BUILD_DIR)/gpio-rcswitch.ko
   AUTOLOAD:=$(call AutoLoad,50,gpio-rcswitch)
-  DEPENDS:=@GPIO_SUPPORT
+  DEPENDS:=@GPIO_SUPPORT @BUILD_PATENTED
 endef
 
 define KernelPackage/gpio-rcswitch/description
