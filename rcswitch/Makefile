@@ -21,13 +21,13 @@ include $(INCLUDE_DIR)/package.mk
 define Package/homes-smart
 	SECTION:=utils
 	CATEGORY:=Utilities
-	TITLE:=Port of RCswitch for any kind of GPIO module
+	TITLE:=Some utils for control RCswitch devices
 	MAINTAINER:=https://github.com/apiel/rcswitch
 	DEPENDS:=+libpthread
 endef
 
 define Package/rcswitch/description
-	Port of RCswitch for any kind of GPIO module
+	Some utils for control RCswitch devices
 endef
 
 define Build/Prepare
