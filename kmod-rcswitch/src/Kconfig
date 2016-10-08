@@ -1,0 +1,6 @@
+config GPIO_RCSWITCH
+	tristate "Kernel module for control 433Mhz based RC switches"
+	depends on GENERIC_GPIO
+	help
+	  Linux kernel module to control 433Mhz based RC switches through sysfs
+	  https://github.com/wendlers/rcswitch-kmod
