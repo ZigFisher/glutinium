@@ -354,7 +354,6 @@ lw_usb_disconnect(struct usb_interface *interface)
 
        dev_dbg(&interface->dev, "disconnected\n");
 }
- */
 
 static struct usb_driver lw_usb_driver = {
        .name = "gpio-lw-usb",
@@ -362,6 +361,7 @@ static struct usb_driver lw_usb_driver = {
        .disconnect = lw_usb_disconnect,
        .id_table = lw_usb_table,
 };
+ */
 
 module_usb_driver(lw_usb_driver);
 /* ----- end of usb layer ------------------------------------------------ */
