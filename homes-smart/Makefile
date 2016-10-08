@@ -29,8 +29,6 @@ define Build/Prepare
 	$(INSTALL_DATA) ./src/*.c ./src/*.h $(PKG_BUILD_DIR)/
 endef
 
-nrf24le1
-
 define Build/Compile
 	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -Wall -lusb -o $(PKG_BUILD_DIR)/nrf24le1 $(PKG_BUILD_DIR)/nrf24le1_main.c $(PKG_BUILD_DIR)/opendevice.c
 	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -Wall -lusb -o $(PKG_BUILD_DIR)/usbgpio $(PKG_BUILD_DIR)/usbgpio.c $(PKG_BUILD_DIR)/opendevice.c
