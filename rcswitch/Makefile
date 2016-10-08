@@ -34,7 +34,7 @@ define Build/Prepare
 endef
 
 define Build/Compile
-	$(TARGET_CXX) $(TARGET_CXXFLAGS) $(TARGET_LDFLAGS) -o rc $(PKG_BUILD_DIR)/rc.cpp $(PKG_BUILD_DIR)/RCSwitch.cpp $(PKG_BUILD_DIR)/WProgram.cpp -std=c++0x -pthread
+	$(TARGET_CXX) $(TARGET_CXXFLAGS) $(TARGET_LDFLAGS) -o rc $(PKG_BUILD_DIR)/rc.cpp $(PKG_BUILD_DIR)/RCSwitch.cpp $(PKG_BUILD_DIR)/WProgram.cpp -std=c++0x -pthread -Wwrite-strings
 endef
 
 define Package/rcswitch/install
