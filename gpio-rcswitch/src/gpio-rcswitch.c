@@ -124,7 +124,7 @@ static ssize_t sysfs_power_store(struct kobject *kobj, struct kobj_attribute *at
     return count;
 }
 
-static struct kobj_attribute power_attribute = __ATTR(power, 0666, sysfs_power_show ,sysfs_power_store);
+static struct kobj_attribute power_attribute = __ATTR(power, 0660, sysfs_power_show ,sysfs_power_store);
 
 /* SYSFS: List of all attributes exported to sysfs */
 static struct attribute *attrs[] = {
