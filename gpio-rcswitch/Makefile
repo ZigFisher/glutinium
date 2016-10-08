@@ -20,8 +20,9 @@ include $(INCLUDE_DIR)/package.mk
 define KernelPackage/gpio-rcswitch
 	SUBMENU:=Other modules
 	TITLE:=Kernel module for control 433Mhz based RC switches
+	MAINTAINER:=https://github.com/wendlers/rcswitch-kmod
 	FILES:=$(PKG_BUILD_DIR)/gpio-rcswitch.ko
-	AUTOLOAD:=$(call AutoLoad,50,gpio-rcswitch)
+	AUTOLOAD:=$(call AutoLoad,50,gpio-rcswitch,tx_gpio=17,en_gpio=-1)
 	DEPENDS:=@GPIO_SUPPORT
 	#@BUILD_PATENTED
 endef
