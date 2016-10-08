@@ -18,11 +18,12 @@ PKG_LICENSE_FILES:=LICENSE
 include $(INCLUDE_DIR)/package.mk
 
 define KernelPackage/gpio-rcswitch
-  SUBMENU:=Other modules
-  TITLE:=Kernel module for control 433Mhz based RC switches
-  FILES:=$(PKG_BUILD_DIR)/gpio-rcswitch.ko
-  AUTOLOAD:=$(call AutoLoad,50,gpio-rcswitch)
-  DEPENDS:=@GPIO_SUPPORT @BUILD_PATENTED
+	SUBMENU:=Other modules
+	TITLE:=Kernel module for control 433Mhz based RC switches
+	FILES:=$(PKG_BUILD_DIR)/gpio-rcswitch.ko
+	AUTOLOAD:=$(call AutoLoad,50,gpio-rcswitch)
+	DEPENDS:=@GPIO_SUPPORT
+	#@BUILD_PATENTED
 endef
 
 define KernelPackage/gpio-rcswitch/description
@@ -47,3 +48,4 @@ define KernelPackage/gpio-rcswitch/install
 endef
 
 $(eval $(call KernelPackage,gpio-rcswitch))
+

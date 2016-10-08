@@ -2,7 +2,7 @@
  * Linux Kernel module for controlling a RCSwitch.
  *
  * Author:
- * 	Stefan Wendler (devnull@kaltpost.de)
+ *      Stefan Wendler (devnull@kaltpost.de)
  *
  * Credits:
  *
@@ -93,7 +93,7 @@ static ssize_t sysfs_command_store(struct kobject *kobj, struct kobj_attribute *
     return count;
 }
 
-static struct kobj_attribute command_attribute = __ATTR(command, 0222, NULL, sysfs_command_store);
+static struct kobj_attribute command_attribute = __ATTR(command, 0222, sysfs_command_store, sysfs_command_store);
 
 /* SYSFS: get power state: on (1)/off (0)/disabled (-1) */
 static ssize_t sysfs_power_show(struct kobject *kobj, struct kobj_attribute *attr, char *buf)
@@ -102,7 +102,7 @@ static ssize_t sysfs_power_show(struct kobject *kobj, struct kobj_attribute *att
     {
         return sprintf(buf, "%d\n", gpio_get_value(en_gpio));
     }
-    
+
     return sprintf(buf, "%d\n", -1);
 }
 
