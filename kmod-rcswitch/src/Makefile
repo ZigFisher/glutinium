@@ -1,1 +1,1 @@
-obj-${CONFIG_GPIO_RCSWITCH}	+= gpio-rcswitch.o
+obj-m   := gpio-rcswitch.o
