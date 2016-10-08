@@ -11,17 +11,18 @@ PKG_NAME:=rcswitch
 PKG_VERSION:=2016-10-08
 PKG_RELEASE:=2
 PKG_MAINTAINER:=Igor Zalatov <flyrouter@gmail.com>
-#PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
+PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 
 PKG_LICENSE:=GPL-2.0
 PKG_LICENSE_FILES:=LICENSE
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/homes-smart
+define Package/rcswitch
 	SECTION:=utils
 	CATEGORY:=Utilities
-	TITLE:=NcFTP Client
+	TITLE:=Some utils for control RCswitch devices
+	MAINTAINER:=https://github.com/apiel/rcswitch
 	DEPENDS:=+libpthread
 endef
 
