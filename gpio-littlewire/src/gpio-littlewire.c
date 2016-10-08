@@ -333,7 +333,6 @@ lw_usb_probe(struct usb_interface *interface, const struct usb_device_id *id)
  * @interface:        USB interface being disconnected from
  *
  * Return: none
- */
 static void
 lw_usb_disconnect(struct usb_interface *interface)
 {
@@ -355,6 +354,7 @@ lw_usb_disconnect(struct usb_interface *interface)
 
        dev_dbg(&interface->dev, "disconnected\n");
 }
+ */
 
 static struct usb_driver lw_usb_driver = {
        .name = "gpio-lw-usb",
