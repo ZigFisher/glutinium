@@ -93,7 +93,7 @@ static ssize_t sysfs_command_store(struct kobject *kobj, struct kobj_attribute *
     return count;
 }
 
-static struct kobj_attribute command_attribute = __ATTR(command, 0666, NULL, sysfs_command_store);
+static struct kobj_attribute command_attribute = __ATTR(command, 0660, NULL, sysfs_command_store);
 
 /* SYSFS: get power state: on (1)/off (0)/disabled (-1) */
 static ssize_t sysfs_power_show(struct kobject *kobj, struct kobj_attribute *attr, char *buf)
