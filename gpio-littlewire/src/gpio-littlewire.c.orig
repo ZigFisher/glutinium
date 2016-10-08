@@ -343,7 +343,7 @@ lw_usb_disconnect(struct usb_interface *interface)
        if (lwgc == NULL)
                return;
 
-//       rc = gpiochip_remove(&lwgc->gpio_chip);
+       rc = gpiochip_remove(&lwgc->gpio_chip);
        if (!rc)
                mutex_destroy(&lwgc->lock);
        else
