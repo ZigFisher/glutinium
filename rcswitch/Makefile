@@ -19,11 +19,11 @@ PKG_LICENSE_FILES:=LICENSE
 include $(INCLUDE_DIR)/package.mk
 
 define Package/homes-smart
-	SECTION:=utils
-	CATEGORY:=Utilities
-	TITLE:=Some utils for control RCswitch devices
-	MAINTAINER:=https://github.com/apiel/rcswitch
-	DEPENDS:=+libpthread
+  SECTION:=utils
+  CATEGORY:=Utilities
+  TITLE:=Some utils for control RCswitch devices
+  MAINTAINER:=https://github.com/apiel/rcswitch
+  DEPENDS:=+libpthread
 endef
 
 define Package/rcswitch/description
