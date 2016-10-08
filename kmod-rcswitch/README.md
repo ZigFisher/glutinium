@@ -1,5 +1,5 @@
-RCSwitch Linux Kernel module - operates 434MHz RCSwitches
-=========================================================
+RCSwitch Linux Kernel module for 433MHz devices
+===============================================
 18.07.2014 Stefan Wendler
 sw@kaltpost.de
 
