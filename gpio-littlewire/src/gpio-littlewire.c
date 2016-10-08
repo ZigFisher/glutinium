@@ -361,9 +361,9 @@ static struct usb_driver lw_usb_driver = {
        .disconnect = lw_usb_disconnect,
        .id_table = lw_usb_table,
 };
- */
 
 module_usb_driver(lw_usb_driver);
+ */
 /* ----- end of usb layer ------------------------------------------------ */
 
 MODULE_AUTHOR("David Lynch");
