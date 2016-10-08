@@ -141,8 +141,19 @@ Complete command string examples:
 
 Commands are send to through the kernel modules sysfs entry at: /sys/kernel/rcswitch/command
 
-Examples: 
+Examples:
 
 	echo "11111A0" > /sys/kernel/rcswitch/command
 	echo "11111A1" > /sys/kernel/rcswitch/command
- 
+
+
+OpenWRT
+-------
+2016.10.08
+flyrouter@gmail.com
+
+	-static struct kobj_attribute command_attribute = __ATTR(command, 0222, NULL, sysfs_command_store);
+	+static struct kobj_attribute command_attribute = __ATTR(command, 0220, NULL, sysfs_command_store);
+
+	-static struct kobj_attribute power_attribute = __ATTR(power, 0666, sysfs_power_show ,sysfs_power_store);
+	+static struct kobj_attribute power_attribute = __ATTR(power, 0660, sysfs_power_show ,sysfs_power_store);
