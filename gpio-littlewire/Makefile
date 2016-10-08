@@ -23,7 +23,7 @@ define KernelPackage/gpio-littlewire
 	MAINTAINER:=https://www.mail-archive.com/linux-gpio@vger.kernel.org/msg01353.html
 	FILES:=$(PKG_BUILD_DIR)/gpio-littlewire.ko
 	AUTOLOAD:=$(call AutoLoad,90,gpio-littlewire)
-	DEPENDS:=@GPIO_SUPPORT
+	DEPENDS:=@GPIO_SUPPORT +kmod-usb-core
 endef
 
 define KernelPackage/gpio-littlewire/description
@@ -42,7 +42,7 @@ define Build/Compile
 endef
 
 define KernelPackage/gpio-littlewire/install
-	$(INSTALL_DIR) $(1)/usr/bin
+	#$(INSTALL_DIR) $(1)/usr/bin
 	#$(INSTALL_DATA) ./files/littlewire.sh $(1)/usr/bin/littlewire.sh
 	#$(INSTALL_BIN) ./files/littlewire.init $(1)/etc/init.d/littlewire
 endef
