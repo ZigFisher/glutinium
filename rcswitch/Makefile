@@ -8,16 +8,22 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=rcswitch
+PKG_VERSION:=2016-10-08
 PKG_RELEASE:=2
+PKG_MAINTAINER:=Igor Zalatov <flyrouter@gmail.com>
+#PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
+
+PKG_LICENSE:=GPL-2.0
+PKG_LICENSE_FILES:=LICENSE
 
 include $(INCLUDE_DIR)/package.mk
 
 define Package/homes-smart
 	SECTION:=utils
 	CATEGORY:=Utilities
-	DEPENDS:=+libpthread
 	TITLE:=Port of RCswitch for any kind of GPIO module
 	MAINTAINER:=https://github.com/apiel/rcswitch
+	DEPENDS:=+libpthread
 endef
 
 define Package/rcswitch/description
