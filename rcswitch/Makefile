@@ -34,8 +34,8 @@ define Build/Prepare
 endef
 
 define Build/Compile
-	$(TARGET_CXX) $(TARGET_CXXFLAGS) $(TARGET_LDFLAGS) -std=c++0x -pthread \
-		-o $(PKG_BUILD_DIR)/rc $(PKG_BUILD_DIR)/rc.cpp $(PKG_BUILD_DIR)/RCSwitch.cpp $(PKG_BUILD_DIR)/WProgram.cpp
+	$(TARGET_CXX) $(TARGET_CXXFLAGS) $(TARGET_LDFLAGS) \
+		-o $(PKG_BUILD_DIR)/rc $(PKG_BUILD_DIR)/rc.cpp $(PKG_BUILD_DIR)/RCSwitch.cpp $(PKG_BUILD_DIR)/WProgram.cpp -std=c++0x -pthread
 #	$(MAKE) -C $(PKG_BUILD_DIR) \
 #	LIBS="-nodefaultlibs -lgcc -lc -luClibc++" \
 #	LDFLAGS="$(EXTRA_LDFLAGS)" \
