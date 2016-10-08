@@ -1,16 +1,7 @@
 # RCswitch
 Port of RCswitch for any kind of GPIO module (without WiringPi).
 
-* https://github.com/apiel/rcswitch
-
-## Test
-
-To compile the test example run:
-```
-g++ -o  test test.cpp RCSwitch.cpp WProgram.cpp -std=c++0x -pthread
-```
-
-You can change the path of the gpio with setPathGpioData and setPathGpioPinMode.
+* General link: https://github.com/apiel/rcswitch
 
 ## RC app
 
