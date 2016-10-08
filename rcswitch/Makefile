@@ -16,12 +16,12 @@ define Package/homes-smart
 	SECTION:=utils
 	CATEGORY:=Utilities
 	DEPENDS:=+libpthread
-	TITLE:=Port of RCswitch for any kind of GPIO module (without WiringPi)
+	TITLE:=Port of RCswitch for any kind of GPIO module
 	MAINTAINER:=https://github.com/apiel/rcswitch
 endef
 
 define Package/rcswitch/description
-	Port of RCswitch for any kind of GPIO module (without WiringPi)
+	Port of RCswitch for any kind of GPIO module
 endef
 
 define Build/Prepare
