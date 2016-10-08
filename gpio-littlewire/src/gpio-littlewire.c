@@ -302,12 +302,12 @@ lw_usb_probe(struct usb_interface *interface, const struct usb_device_id *id)
        lwgc->gpio_chip.ngpio = GEN_LW_NUMBER_GPIOS;
        lwgc->gpio_chip.names = lw_gpio_names, lwgc->gpio_chip.can_sleep = 1;
        lwgc->gpio_chip.owner = THIS_MODULE;
-/*       rc = gpiochip_add(&lwgc->gpio_chip);
+       rc = gpiochip_add(&lwgc->gpio_chip);
 
        if (rc) {
                dev_err(&interface->dev, "Failed writing: %d\n", rc);
                goto error;
-       } */
+       }
 
        /* this should be get little wire version */
        rc = lw_usb_read(&lwgc->gpio_chip, 0, 34);
@@ -343,12 +343,12 @@ lw_usb_disconnect(struct usb_interface *interface)
        if (lwgc == NULL)
                return;
 
-/*       rc = gpiochip_remove(&lwgc->gpio_chip);
+       rc = gpiochip_remove(&lwgc->gpio_chip);
        if (!rc)
                mutex_destroy(&lwgc->lock);
        else
                dev_err(&interface->dev,
-                       "Failed to remove the GPIO controller: %d\n", rc); */
+                       "Failed to remove the GPIO controller: %d\n", rc);
 
        usb_set_intfdata(interface, NULL);
        lw_usb_free(lwgc);
