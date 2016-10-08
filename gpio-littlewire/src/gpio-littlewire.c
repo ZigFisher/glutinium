@@ -302,7 +302,7 @@ lw_usb_probe(struct usb_interface *interface, const struct usb_device_id *id)
        lwgc->gpio_chip.ngpio = GEN_LW_NUMBER_GPIOS;
        lwgc->gpio_chip.names = lw_gpio_names, lwgc->gpio_chip.can_sleep = 1;
        lwgc->gpio_chip.owner = THIS_MODULE;
-       rc = gpiochip_add(&lwgc->gpio_chip);
+//       rc = gpiochip_add(&lwgc->gpio_chip);
 
        if (rc) {
                dev_err(&interface->dev, "Failed writing: %d\n", rc);
