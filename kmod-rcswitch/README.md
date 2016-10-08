@@ -1,5 +1,5 @@
-RCSwitch Linux Kernel module for 433MHz devices
-===============================================
+RCSwitch Linux Kernel module for control devices
+================================================
 18.07.2014 Stefan Wendler
 sw@kaltpost.de
 
