@@ -24,7 +24,7 @@ Flashing
 Usage
 =====
 
-You can run this command on "Bricket" router:
+You can run this command on router (Bricket, etc.):
 
 	micronucleus --run --type intel-hex /usr/share/little-wire/digispark_t85_littlewire_v13.hex
 
