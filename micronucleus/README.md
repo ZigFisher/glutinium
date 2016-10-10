@@ -24,7 +24,7 @@ Standart Flashing
 NoLock Flashing
 ===============
 
-So, this flshing option no lock Reset pin (experimental)
+So, this flashing option no lock Reset pin (experimental, tnx Umka)
 
 	avrdude -c usbasp -p t85 -U flash:w:digispark_t85_micronucleus-v2.03.hex -U lfuse:w:0xe1:m -U hfuse:w:0xdd:m -U efuse:w:0xfe:m
 
