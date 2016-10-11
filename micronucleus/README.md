@@ -1,7 +1,7 @@
 micronucleus
 ============
 
-Micronucleus - ATTiny usb bootloader
+Micronucleus - bootloader for Digispark tiny85 USB modul
 
 
 License
@@ -24,7 +24,7 @@ Standart Flashing
 NoLock Flashing
 ===============
 
-So, this flashing option no lock Reset pin (experimental, tnx Umka)
+So, this flashing option no lock Reset pin (experimental, tnx mr.Umka)
 
 	avrdude -c usbasp -p t85 -U flash:w:digispark_t85_micronucleus-v2.03.hex -U lfuse:w:0xe1:m -U hfuse:w:0xdd:m -U efuse:w:0xfe:m
 

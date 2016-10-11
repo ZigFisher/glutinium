@@ -1,7 +1,7 @@
 littlewire
 ==========
 
-Little-Wire example utilites for attiny45 USB Digispark
+Little-Wire example utilites for Digispark tiny85 USB modul
 
 
 License
@@ -18,10 +18,14 @@ script; if not, please visit http://www.gnu.org/copyleft/gpl.html for more infor
 Usage
 =====
 
+You can run this command on router (Bricket, etc.):
+
 	micronucleus --run --type intel-hex /usr/share/little-wire/digispark_t85_littlewire_v13.hex
 
 
 Links
 =====
 
-* Need add links
+* https://github.com/littlewire/Little-Wire
+
+
