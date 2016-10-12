@@ -1,7 +1,7 @@
 micronucleus
 ============
 
-Micronucleus - bootloader for Digispark tiny85 USB modul
+Micronucleus - bootloader for Digispark (tiny85 USB)
 
 
 License
@@ -15,16 +15,10 @@ You should have received a copy of the GNU Lesser General Public License along w
 script; if not, please visit http://www.gnu.org/copyleft/gpl.html for more information.
 
 
-Standart Flashing
-=================
+Flashing
+========
 
-	avrdude -c usbasp -p t85 -U flash:w:digispark_t85_micronucleus-v2.03.hex -U lfuse:w:0xe1:m -U hfuse:w:0x5d:m -U efuse:w:0xfe:m
-
-
-NoLock Flashing
-===============
-
-So, this flashing option no lock Reset pin (experimental, tnx mr.Umka)
+Warning, if you use hfuse:w:0x5d:m you LOCK Digispark !
 
 	avrdude -c usbasp -p t85 -U flash:w:digispark_t85_micronucleus-v2.03.hex -U lfuse:w:0xe1:m -U hfuse:w:0xdd:m -U efuse:w:0xfe:m
 
@@ -40,4 +34,5 @@ You can run this command on router (Bricket, etc.):
 Links
 =====
 
-* https://github.com/micronucleus/micronucleus
+* [GitHub - Micronucleus](https://github.com/micronucleus/micronucleus)
+* [Use Micronucleus on OpenWRT routers (Russian)](http://zftlab.org/pages/2016100400.html)

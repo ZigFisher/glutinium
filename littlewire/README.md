@@ -1,7 +1,7 @@
 littlewire
 ==========
 
-Little-Wire firmware and example utilites for Digispark (tiny85 USB modul)
+Little-Wire firmware and example utilites for Digispark (tiny85 USB)
 
 
 License
@@ -29,4 +29,4 @@ Links
 * [Homepage of Little Wire](http://littlewire.cc)
 * [GitHub - Little Wire (new structure)](https://github.com/kehribar/Little-Wire/tree/newStructure)
 * [GitHub - Little Wire](https://github.com/littlewire/Little-Wire)
-* [Use Little Wiro in OpenWRT routers (Russian)](http://zftlab.org/pages/2016100400.html)
+* [Use Little Wire on OpenWRT routers (Russian)](http://zftlab.org/pages/2016100400.html)
