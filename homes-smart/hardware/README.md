@@ -5,5 +5,4 @@ Hardware
 
 ---
 
-![Image of USBasp](./usbasp_pinout.jpg)
-
+![Image of USBasp](./usbasp_schematics.pdf)
