@@ -1,7 +1,7 @@
 littlewire
 ==========
 
-Little-Wire firmware and example utilites for Digispark (tiny85 USB)
+Little Wire firmware and example utilites for Digispark (tiny85 with USB interface)
 
 
 License
@@ -18,15 +18,11 @@ script; if not, please visit http://www.gnu.org/copyleft/gpl.html for more infor
 Usage
 =====
 
-You can run this command for flash Digispark on router (Bricket, etc.):
-
-	micronucleus --run --type intel-hex /usr/share/little-wire/digispark_t85_littlewire_v13.hex
+More info for use Little Wire on OpenWRT routers you can see [here (Russian)](http://zftlab.org/pages/2016100400.html)
 
 
 Links
 =====
 
 * [Homepage of Little Wire](http://littlewire.cc)
-* [GitHub - Little Wire (new structure)](https://github.com/kehribar/Little-Wire/tree/newStructure)
-* [GitHub - Little Wire](https://github.com/littlewire/Little-Wire)
-* [Use Little Wire on OpenWRT routers (Russian)](http://zftlab.org/pages/2016100400.html)
+* [Little Wire sources on GitHub](https://github.com/littlewire/Little-Wire)

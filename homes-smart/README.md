@@ -1,7 +1,7 @@
 Homes-smarT
 ===========
 
-Homes-smarT - some utils (author MaksMS) for simple experimental SmartHome project based on USBasp device.
+Homes-smarT - some utils (author MaksMS) for SmartHome project based on USBasp device.
 
 
 License
@@ -15,40 +15,20 @@ You should have received a copy of the GNU Lesser General Public License along w
 script; if not, please visit http://www.gnu.org/copyleft/gpl.html for more information.
 
 
+Usage
+=====
+
+More info for use Homes-smarT utils on OpenWRT routers you can see [here (Russian)](http://zftlab.org/pages/2016100500.html)
+
+
 Hardware
 ========
 
-Hardware help here: https://github.com/ZigFisher/Glutinium/blob/master/homes-smart/hardware/README.md
-
-
-Flashing bootloader
-===================
-	
-	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_bootloader.hex -U hfuse:w:0xc0:m -U lfuse:w:0x9f:m -U lock:w:0x2f:m
-
-
-Flashing firmware (need bootloader)
-===================================
-	
-	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_i2c-tiny-usb
-	or
-	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_usb-asp.hex
-	or
-	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_usb-gpio.hex
-	or
-	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_usb-nrf.hex
-	or
-	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_usb-spi.hex
-
-
-Flashing direct (without bootloader)
-====================================
-	
-	avrdude -c usbasp -p m8 -U flash:w:usbasp_m8_usb-temp.hex -U hfuse:w:0xc9:m -U lfuse:w:0xef:m
+![Image of USBasp](../hardware/usbasp_board.jpg)
 
 
 Links
 =====
 
-* [Homepage of Homes-smarT (Russian)](http://homes-smart.ru)
+* [Homepage of Homes-smarT project (Russian)](http://homes-smart.ru)
 
