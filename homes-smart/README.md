@@ -24,7 +24,7 @@ More info for use Homes-smarT utils on OpenWRT routers you can see [here (Russia
 Hardware
 ========
 
-![Image of USBasp](../hardware/usbasp_board.jpg)
+![Image of USBasp](./hardware/usbasp_board.jpg)
 
 
 Links
