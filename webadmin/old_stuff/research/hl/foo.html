@@ -1,0 +1,169 @@
+<!-- Syntax highlighting demo
+     multiline comment -->
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="style.css" media="all" />
+    <script src="highlight.js"></script>
+    <script src="lang-js.js"></script>
+    <script src="lang-xml.js"></script>
+    <script src="lang-html.js"></script>
+    <script src="lang-css.js"></script>
+    <script src="helpers.js"></script>
+
+    <script>
+        function doIt() {
+          var args = {
+            showWhitespace : document.getElementById("f_showWhitespace").checked,
+            lineNumbers    : document.getElementById("f_lineNumbers").checked
+          };
+          DlHighlight.HELPERS.highlightByName('dlhl', "pre", args);
+        };
+    </script>
+  </head>
+  <body>
+
+    <h1>DlHighlight</h1>
+
+    <p>A JavaScript-based syntax highlighting engine.</p>
+
+    <p>
+      <button
+      onclick="doIt()">Highlight
+      all</button>
+
+      |
+
+      <label><input id="f_lineNumbers" type="checkbox" /> Line
+      numbers</label>
+
+      |
+
+      <label><input id="f_showWhitespace" type="checkbox" /> Show whitespace
+      in strings</label>
+    </p>
+
+    <h2>JavaScript</h2>
+    <pre name="dlhl" class="js">// single line comment
+
+/*************
+ **
+ *  multi-line
+ *  comment containing
+ *  an url: http://www.dynarch.com/
+ **
+ *************/
+
+// ** Some code
+
+// whitespace in strings can be displayed (check "Show whitespace
+// in strings")
+var str = "This string has some whitespace:    foo   bar  baz";
+
+// function names are bolded (gets "defun" class)
+function Foo(name, age) {
+	this.name = name;
+	this.age = age;
+};
+
+// works also in this case:
+Foo.prototype.getName = function() {
+	return this.name;
+};
+
+var f = new Foo("John", 20);
+
+// ** Literal regexps
+
+// regexp quotes (/) and modifiers (mg) are highlighted with a different style
+test(/(^foo|bar)/mg, "foo");
+
+// supports ", ', \ and / inside the regexp -- even Emacs messes this out ;)
+if (/'foo\/bar"baz/.test("foo")) {
+	alert("match");
+}
+
+// ** Hashes
+
+/**
+ * Hash keys are colored with a &lt;span class="hashkey"&gt;different style&lt;/span&gt;.
+ * They also can get additional styles depending on the context--for example,
+ * when the value is a function, the key name is bolded (gets "defun" class).
+ **/
+var hash = {
+	foo	    : "bar",
+	five	    : 5,
+	word_regexp : /\b(\$?[a-z][a-z0-9]*)\b/ig,
+	doSomething : function () {
+		alert("blah");
+	}
+};</pre>
+
+    <h2>CSS</h2>
+    <pre name="dlhl" class="css">/* General style */
+
+.DlHighlight {
+  background-color: #eee;
+  border-left: 2px solid #0c0;
+  font: 10pt monospace;
+  padding: 10px;
+  margin-left: 3em;
+}
+
+.DlHighlight .keyword { color: #00f; font-weight: bold; }
+
+.DlHighlight .builtin { color: #22c; }
+
+.DlHighlight .string { color: #282; }
+.DlHighlight .string .before, .DlHighlight .string .after { color: #040; }
+
+.DlHighlight .regexp { color: #b2c; }
+.DlHighlight .regexp .before, .DlHighlight .regexp .after { color: #509; font-weight: bold; }
+
+.DlHighlight .comment { color: #c22; }
+.DlHighlight .comment .before, .DlHighlight .comment .after { color: #baa; }
+
+.DlHighlight .hashkey { color: #a51; }
+
+.DlHighlight .hasharrow { color: #f00; }
+
+.DlHighlight .paren { font-weight: bold; }
+
+.DlHighlight .operator { color: #077; }
+
+.DlHighlight .error { background-color: #c00; color: #fff; }
+
+.DlHighlight .defun { font-weight: bold; }
+
+.DlHighlight .line-numbers {
+  float: left;
+  margin-left: -4.5em;
+  width: 3em;
+  text-align: right;
+  color: #999;
+  font: 0.8em tahoma,verdana,sans-serif;
+  padding-top: 0.1em;
+}
+.DlHighlight .line-numbers:after { content: "." }
+
+/* XML */
+
+.DlHighlight .xml-tag-close .before { color: #52a; }
+
+.DlHighlight .xml-entity { color: #b2a; }
+.DlHighlight .xml-entity .before, .DlHighlight .xml-entity .after { color: #607; }
+
+/* CSS */
+
+.DlHighlight .css-class { color: #000; font-style: italic; }
+.DlHighlight .css-pseudo-class { color: #777; }
+.DlHighlight .css-id { font-weight: bold; }
+.DlHighlight .css-color-spec { color: #a51; }
+.DlHighlight .css-length { color: #a19; }
+.DlHighlight .css-length .after { font-weight: bold; }
+.DlHighlight .css-declaration-kw { font-weight: bold; }
+.DlHighlight .css-comma { color: red; }</pre>
+
+    <h2>HTML</h2>
+    <pre name="dlhl" class="html"></pre>
+  </body>
+</html>

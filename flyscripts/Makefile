@@ -63,10 +63,10 @@ $(call Package/flyscripts/default)
   TITLE:=Custom project settings
 endef
 
-define Build/Compile
+define Build/Configure
 endef
 
-define Build/Configure
+define Build/Compile
 endef
 
 define Package/flyscripts_base/install

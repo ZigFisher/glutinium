@@ -27,7 +27,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/littlewire
 	SECTION:=utils
 	CATEGORY:=Utilities
-	TITLE:=Little-Wire example utilites for attiny45 USB Digispark
+	TITLE:=Little Wire example utilites for for Digispark - tiny85 with USB
 	MAINTAINER:=http://eko.one.pl
 	DEPENDS:=+libusb-compat
 endef
@@ -45,8 +45,8 @@ define Package/littlewire/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/software/{button,debugConsole,fade_ws2812,hardwarePWM} $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/software/{i2c_blinkM,i2c_nunchuck,lwbuttond,onewire} $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/software/{rgb_cycle_ws2812,servo,softPWM,spi_LTC1448} $(1)/usr/bin
-	$(INSTALL_DIR) $(1)/usr/share/little-wire
-	$(INSTALL_BIN) ./firmware/digispark_t85_littlewire_v13.hex $(1)/usr/share/little-wire/
+	$(INSTALL_DIR) $(1)/usr/share/littlewire
+	$(INSTALL_BIN) ./firmware/digispark_t85_littlewire_v13.hex $(1)/usr/share/littlewire/
 endef
 
 $(eval $(call BuildPackage,littlewire))

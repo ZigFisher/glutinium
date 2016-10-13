@@ -35,7 +35,7 @@ find $dir | while read f; do
 
   level=`echo $f | sed 's,/, ,g' | wc -w | sed 's/ //g'`
   [ -z "$lastlevel" ] && lastlevel=$(($level-1))
-  
+
   n="<b>$b</b>"
   if [ "$level" -gt "$lastlevel" ]; then
     down
@@ -46,10 +46,9 @@ find $dir | while read f; do
   elif [ "$level" = "$lastlevel" ]; then
     print_item
   fi
-  
+
   last_was_dir=$is_dir
   lastlevel=$level
 done
 
 echo '</ul>'
-

@@ -1,0 +1,98 @@
+// (C) Andrea Giammarchi - JSHighLighter 0.2 - http://www.devpro.it/jshighlighter/
+
+/* public constructor,
+ *	new JSHighLighter(theme:Object[, fullHighlight:Boolean])
+ * @param	Object		theme object with these keys:
+ * 					comments	// single or multiline comments span class name
+ *					strings		// strings span class name
+ *					numbers		// numbers span class name
+ *					operators	// operators span class name
+ *					globals		// OPTIONAL: global top level functions or some reserved words name
+ *					properties	// OPTIONAL: Objects properties (i.e. str.length ) name
+ *					methods		// OPTIONAL: Objects methods (i.e. str.charAt(... )
+ * @param	Boolean		if true, use full highlight
+ */
+function JSHighLighter(	// requires SourceMap.js
+	theme,
+	fullHighlight
+) {
+	/* public method,
+	 *	self.parse(source:String[, withHtml:Mixed]):String
+	 * @param	String		javascript source code to parse
+	 * @param	Mixed		Optional,
+	 * 					use <br /> and &nbsp; instead of \n, \r or \t chars
+	 * 				Boolean			use 8 &nbsp; chars for each tab
+	 *                              Unsigned Integer	use N &nbsp; chars
+	 * @return	String		Highlighted javascript source code
+	 */
+	this.parse = function(str, moreHtml) {
+		var 	len = 0, span = "", highlightSource = [], map = [];
+		str = str.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+		len = str.length;
+		map = sourceMap.getMap(str, jsRules);
+		for(var a = 0, b = map.length; a < b; a++) {
+			span = str.substr(map[a].start, map[a].end - map[a].start);
+			switch(map[a].name) {
+				case "singlelinecomment":
+				case "multilinecomment":
+					span = "<span class=\"" + theme.comments + "\">" + span + "</span>";
+					break;
+				case "singlequote":
+				case "doublequote":	
+					span = "<span class=\"" + theme.strings + "\">" + span + "</span>";
+					break;
+				case "code":
+					span = highlightSintax(span);
+					break;
+				
+			};
+			highlightSource.push(span);
+		};
+		if(highlightSource.length === 0)
+			highlightSource.push(highlightSintax(str));
+		str = highlightSource.join("");
+		return !moreHtml ? str : addHtml(str, moreHtml);
+	};
+	
+	/** list of all private methods */
+	function addHtml(str, tabs) {
+		var tabchar = "";
+		if(!tabs || tabs.constructor !== Number)
+			tabs = 8;
+		for(var a = 0; a < tabs; a++)
+			tabchar += "&nbsp;";
+		if(/\r\n/.test(str))
+			str = str.replace(/\r\n/g, "\n");
+		else if(/\r/.test(str))
+			str = str.replace(/\r/g, "\n");
+		return str.replace(/\n/g, "<br />").replace(/\t/g, tabchar);
+	};
+	function highlightSintax(str) {
+		str = str.replace(/([\+\-\*\/=\?!]{1,3}|[\-\+]{1,2})/g, "<span class=\"" + theme.operators + "\">$1</span>").replace(/\b([0-9]+)\b/g, "<span class=\"" + theme.numbers + "\">$1</span>");
+		if(fullHighlight) {
+			for(var a = 0, b = jsColors.length; a < b; a++)
+				str = str.replace(new RegExp(jsSyntax[a], "g"), "<span class=\"" + jsColors[a] + "\">$1</span>");
+		};
+		return str;
+	};
+	
+	/** list of all private variables */
+	var 	jsColors = [theme.globals, theme.properties, theme.methods],
+		jsRules = [
+			{name:'doublequote', start:'"', end:'"', noslash:true},
+			{name:'singlequote', start:"'", end:"'", noslash:true},
+			{name:'singlelinecomment', start:'//', end:['\n', '\r']},
+			{name:'multilinecomment', start:'/*', end:'*/'},
+			{name:'regexp', start:'/', end:'/', match:/^\/[^\n\r]+\/$/, noslash:true}
+		],
+		jsSyntax = [
+			"Infinity|NaN|undefined|decodeURI|decodeURIComponent|encodeURI|encodeURIComponent|eval|isFinite|isNaN|parseFloat|parseInt|delete|function|in|instanceof|new|this|typeof|void|block|break|const|continue|do|while|export|for|if|else|import|label|return|switch|throw|try|catch|var|with|RegExp|Packages|Math|Error|Date|Array|Boolean|Number|Object|Function|String",
+			"constructor|global|ignoreCase|lastIndex|multiline|prototype|source|className|java|netscape|sun|E|LN2|LN10|LOG2E|LOG10E|PI|SQRT1_2|SQRT2|description|fileName|lineNumber|message|name|number|stack|index|input|length|MAX_VALUE|MIN_VALUE|NaN|NEGATIVE_INFINITY|POSITIVE_INFINITY|arguments|arity|caller",
+			"exec|test|toSource|toString|abs|acos|asin|atan|atan2|ceil|cos|exp|floor|log|max|min|pow|random|round|sin|sqrt|tan|now|parse|UTC|getDate|getDay|getFullYear|getHours|getMilliseconds|getMinutes|getMonth|getSeconds|getTime|getTimezoneOffset|getUTCDate|getUTCDay|getUTCFullYear|getUTCHours|getUTCMilliseconds|getUTCMinutes|getUTCMonth|getUTCSeconds|getYear|setDate|setFullYear|setHours|setMilliseconds|setMinutes|setMonth|setSeconds|setTime|setUTCDate|setUTCFullYear|setUTCHours|setUTCMilliseconds|setUTCMinutes|setUTCMonth|setUTCSeconds|setYear|toGMTString|toLocaleString|toLocaleDateString|toLocaleTimeString|toUTCString|valueOf|pop|push|reverse|shift|sort|splice|unshift|concat|indexOf|join|lastIndexOf|slice|filter|forEach|every|map|some|toExponential|toFixed|toPrecision|__defineGetter__|__defineSetter__|eval|hasOwnProperty|isPrototypeOf|__lookupGetter__|__lookupSetter__|propertyIsEnumerable|unwatch|watch|apply|call|fromCharCode|charAt|charCodeAt|match|replace|search|split|substr|substring|toLowerCase|toUpperCase|anchor|big|blink|bold|fixed|fontcolor|fontsize|italics|link|small|strike|sub|sup"
+		],
+		reminder = [],
+		sourceMap = new SourceMap();
+	
+	if(jsColors.some(function(str){return str === undefined})) jsColors = [];
+	jsSyntax = jsSyntax.map(function(str){return str.split("|").map(function(str){return "\\b" + str + "\\b"})}).map(function(str){return  "(" + str.join("|") + ")"});
+};
