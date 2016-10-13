@@ -36,16 +36,13 @@ endef
 
 define Build/Compile
 	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -lusb -O -g -D LINUX \
-		-o octonix_gpio0 $(PKG_BUILD_DIR)/littleWire_util.c $(PKG_BUILD_DIR)/littleWire.c $(PKG_BUILD_DIR)/opendevice.c $(PKG_BUILD_DIR)/octonix_gpio5.c
+		-o octonix_gpio0 $(PKG_BUILD_DIR)/littleWire_util.c $(PKG_BUILD_DIR)/littleWire.c $(PKG_BUILD_DIR)/opendevice.c $(PKG_BUILD_DIR)/octonix_gpio0.c
 	
-	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -lusb -O -g -D LINUX \
-		-o octonix_gpio5 $(PKG_BUILD_DIR)/littleWire_util.c $(PKG_BUILD_DIR)/littleWire.c $(PKG_BUILD_DIR)/opendevice.c $(PKG_BUILD_DIR)/octonix_gpio5.c
 endef
 
 define Package/littlewire-extra/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/octonix_gpio0 $(1)/usr/bin/
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/octonix_gpio5 $(1)/usr/bin/
 endef
 
 $(eval $(call BuildPackage,littlewire-extra))
