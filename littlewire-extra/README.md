@@ -1,7 +1,7 @@
 littlewire-extra
 ================
 
-Little-Wire extra utilites for Digispark tiny85 USB modul
+Little Wire experimental utilites for Digispark (tiny85 with USB interface)
 
 
 License
@@ -18,12 +18,11 @@ script; if not, please visit http://www.gnu.org/copyleft/gpl.html for more infor
 Usage
 =====
 
-	.
+More info for use Little Wire on OpenWRT routers you can see [here (Russian)](http://zftlab.org/pages/2016100400.html)
 
 
 Links
 =====
 
-* https://github.com/littlewire/Little-Wire
-
-
+* [Homepage of Little Wire](http://littlewire.cc)
+* [Little Wire sources on GitHub](https://github.com/littlewire/Little-Wire)
