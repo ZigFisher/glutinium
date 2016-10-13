@@ -14,7 +14,7 @@
 #include "littleWire.h"
 #include "littleWire_util.h"
 
-#define LED	PIN0		// LED is connected to the pin0
+#define LED	PIN4		// LED is connected to the pin0
 #define DELAY	500		// Delay, in miliseconds
 
 unsigned char version;
@@ -88,7 +88,7 @@ int main(void)
 	/* Main loop! */
 	for(;;)
 	{
-		printf("Blink!\n");
+		printf("Start Blink!\n");
 		digitalWrite(lw, LED, HIGH);
 		printf("HI...\n");
 		delay(DELAY);
@@ -107,6 +107,9 @@ int main(void)
 		digitalWrite(lw, LED, LOW);
 		printf("LO...\n");
 		delay(DELAY);
+		digitalWrite(lw, LED, HIGH);
+		printf("HI...\n");
+		printf("Exit. Bye!\n");
 		return 0;
 	}
 	
