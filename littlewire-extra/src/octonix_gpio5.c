@@ -15,6 +15,7 @@
 #include "littleWire_util.h"
 
 #define LED	PIN5		// LED is connected to the pin5
+#define DELAY	500		// Delay, in miliseconds
 
 unsigned char version;
 int total_lwCount;
