@@ -42,7 +42,7 @@ endef
 
 define Package/littlewire-extra/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/octonix_gpio0 $(1)/usr/bin/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/octonix_gpio $(1)/usr/bin/
 endef
 
 $(eval $(call BuildPackage,littlewire-extra))
