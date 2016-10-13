@@ -86,7 +86,7 @@ int main(void)
 	pinMode(lw, LED, OUTPUT);
 
 	/* Main loop! */
-	for(;;)
+/*	for(;;)
 	{
 		printf("Start Blink!\n");
 		digitalWrite(lw, LED, HIGH);
@@ -96,7 +96,7 @@ int main(void)
 		printf("LO...\n");
 		printf("Exit. Bye!\n");
 		return 0;
-	}
+	} */
 	
 	return 0;
 }
