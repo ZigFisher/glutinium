@@ -15,7 +15,7 @@
 #include "littleWire_util.h"
 
 #define LED	PIN4		// LED is connected to the pin0
-#define DELAY	500		// Delay, in miliseconds
+#define DELAY	5000		// Delay, in miliseconds
 
 unsigned char version;
 int total_lwCount;
@@ -86,6 +86,7 @@ int main(void)
 
 	pinMode(lw, LED, OUTPUT);
 	digitalWrite(lw, LED, HIGH);
+	delay(DELAY);
 
 	/* Main loop! */
 /*
