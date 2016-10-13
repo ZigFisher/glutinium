@@ -69,7 +69,7 @@ int main(void)
 	}
 	
 	version = readFirmwareVersion(lw);
-	printf("> Little Wire firmware version: %d.%d\n",((version & 0xF0)>>4),(version&0x0F));	
+	printf("> Little Wire firmware version: %d.%d\n",((version & 0xF0)>>4),(version&0x0F));
 	if(version < 0x12)
 	{
 		printf("> This example requires the new 1.2 version firmware. Please update soon.\n");
@@ -94,21 +94,6 @@ int main(void)
 		delay(DELAY);
 		digitalWrite(lw, LED, LOW);
 		printf("LO...\n");
-		delay(DELAY);
-		digitalWrite(lw, LED, HIGH);
-		printf("HI...\n");
-		delay(DELAY);
-		digitalWrite(lw, LED, LOW);
-		printf("LO...\n");
-		delay(DELAY);
-		digitalWrite(lw, LED, HIGH);
-		printf("HI...\n");
-		delay(DELAY);
-		digitalWrite(lw, LED, LOW);
-		printf("LO...\n");
-		delay(DELAY);
-		digitalWrite(lw, LED, HIGH);
-		printf("HI...\n");
 		printf("Exit. Bye!\n");
 		return 0;
 	}
