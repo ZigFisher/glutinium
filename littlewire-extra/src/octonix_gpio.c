@@ -14,8 +14,8 @@
 #include "littleWire.h"
 #include "littleWire_util.h"
 
-#define LED	PIN2		// LED is connected to the pin2
-#define DELAY	500 		// Delay, in miliseconds
+#define LED	PIN0		// LED is connected to the pin0
+#define DELAY	500		// Delay, in miliseconds
 
 unsigned char version;
 int total_lwCount;
@@ -90,18 +90,24 @@ int main(void)
 	{
 		printf("Blink!\n");
 		digitalWrite(lw, LED, HIGH);
+		printf("HI...\n");
 		delay(DELAY);
-		printf("...\n");
 		digitalWrite(lw, LED, LOW);
+		printf("LO...\n");
 		delay(DELAY);
-	
-		if(lwStatus<0)
-		{
-			printf("> lwStatus: %d\n",lwStatus);
-			printf("> Connection error: ");
-			printf("%s\n",littleWire_errorName());
-			return 0;
-		}
+		digitalWrite(lw, LED, HIGH);
+		printf("HI...\n");
+		delay(DELAY);
+		digitalWrite(lw, LED, LOW);
+		printf("LO...\n");
+		delay(DELAY);
+		digitalWrite(lw, LED, HIGH);
+		printf("HI...\n");
+		delay(DELAY);
+		digitalWrite(lw, LED, LOW);
+		printf("LO...\n");
+		delay(DELAY);
+		return 0;
 	}
 	
 	return 0;
