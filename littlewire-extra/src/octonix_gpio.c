@@ -24,7 +24,7 @@ int i;
 int main(void)
 {
 	littleWire *lw = NULL;
-	
+
 	total_lwCount = littlewire_search();
 
 	if(total_lwCount == 1)
@@ -51,7 +51,7 @@ int main(void)
 		printf("> Little Wire could not be found!\n");
 		printf("----------------------------------------------------------\n");
 		exit(EXIT_FAILURE);
-	}	
+	}
 
 	/* Connects to the first littleWire device the computer can find. */
 	// lw = littleWire_connect();
@@ -67,14 +67,15 @@ int main(void)
 		printf("> Little Wire connection problem!\n");
 		exit(EXIT_FAILURE);
 	}
-	
+/*
 	version = readFirmwareVersion(lw);
 	printf("> Little Wire firmware version: %d.%d\n",((version & 0xF0)>>4),(version&0x0F));
 	if(version < 0x12)
 	{
 		printf("> This example requires the new 1.2 version firmware. Please update soon.\n");
 		return 0;
-	}	
+	}
+*/
 
 	/* In order to change the serial number of the current connected device, use the following function. */
 	/* You need to unplug-plug to see the change. */
@@ -86,7 +87,8 @@ int main(void)
 	pinMode(lw, LED, OUTPUT);
 
 	/* Main loop! */
-/*	for(;;)
+/*
+	for(;;)
 	{
 		printf("Start Blink!\n");
 		digitalWrite(lw, LED, HIGH);
@@ -96,7 +98,7 @@ int main(void)
 		printf("LO...\n");
 		printf("Exit. Bye!\n");
 		return 0;
-	} */
-	
-	return 0;
+	}
+        return 0;
+*/
 }
