@@ -36,7 +36,7 @@ endef
 
 define Build/Compile
 	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -lusb -O -g -D LINUX \
-		-o octonix_gpio $(PKG_BUILD_DIR)/littleWire_util.c $(PKG_BUILD_DIR)/littleWire.c $(PKG_BUILD_DIR)/opendevice.c $(PKG_BUILD_DIR)/octonix_gpio.c
+		-o $(PKG_BUILD_DIR)/octonix_gpio $(PKG_BUILD_DIR)/littleWire_util.c $(PKG_BUILD_DIR)/littleWire.c $(PKG_BUILD_DIR)/opendevice.c $(PKG_BUILD_DIR)/octonix_gpio.c
 	
 endef
 
