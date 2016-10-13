@@ -27,9 +27,13 @@ include $(INCLUDE_DIR)/package.mk
 define Package/littlewire
 	SECTION:=utils
 	CATEGORY:=Utilities
-	TITLE:=Little Wire example utilites for for Digispark - tiny85 with USB
+	TITLE:=Little Wire example utilites for for Digispark (tiny85 with USB)
 	MAINTAINER:=http://eko.one.pl
 	DEPENDS:=+libusb-compat
+endef
+
+define Package/littlewire-extra/description
+	Little Wire example utilites for for Digispark (tiny85 with USB)
 endef
 
 define Build/Compile

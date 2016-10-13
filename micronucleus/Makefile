@@ -32,6 +32,10 @@ define Package/micronucleus
 	DEPENDS:=+libusb-compat
 endef
 
+define Package/littlewire-extra/description
+	Micronucleus - ATTiny usb bootloader
+endef
+
 define Build/Compile
 	$(MAKE) -C $(PKG_BUILD_DIR)/commandline \
 	CC="$(TARGET_CC)" \
