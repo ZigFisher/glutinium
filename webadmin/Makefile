@@ -20,7 +20,7 @@ define Package/webadmin
 	CATEGORY:=Administration
 	TITLE:=FlyRouter v.2 WEB administration interface
 	MAINTAINER:=http://flyrouter.net
-	#DEPENDS:=
+	DEPENDS:=haserl
 endef
 
 define Build/Configure
@@ -30,9 +30,11 @@ define Build/Compile
 endef
 
 define Package/webadmin/install
+	$(INSTALL_DIR)  $(1)/etc
+	$(CP) ./files/etc/* $(1)/etc/
 	$(INSTALL_DIR)  $(1)/www
-	#$(INSTALL_BIN)  ./files/www/* $(1)/www/
 	$(CP) ./files/www/* $(1)/www/
+	#$(INSTALL_BIN)  ./files/www/* $(1)/www/
 endef
 
 $(eval $(call BuildPackage,webadmin))
