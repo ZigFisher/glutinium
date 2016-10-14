@@ -1,5 +1,5 @@
 /*
-	
+	Experimental
 */
 
 #include <stdio.h>
@@ -7,7 +7,7 @@
 #include "littleWire.h"
 #include "littleWire_util.h"
 
-#define LED	PIN4		// LED is connected to the pin0
+#define LED	PIN1		// LED is connected to the pinX
 #define DELAY	5000		// Delay, in miliseconds
 
 unsigned char version;
