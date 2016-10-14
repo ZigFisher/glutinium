@@ -30,8 +30,8 @@ define Build/Compile
 endef
 
 define Package/webadmin/install
-	#$(INSTALL_DIR)  $(1)/www
-	#$(INSTALL_BIN)  ./files/www/* $(1)/www/
+	$(INSTALL_DIR)  $(1)/www
+	$(INSTALL_BIN)  ./files/www/* $(1)/www/
 endef
 
 $(eval $(call BuildPackage,webadmin))
