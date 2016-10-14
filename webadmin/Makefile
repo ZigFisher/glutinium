@@ -36,4 +36,3 @@ define Package/webadmin/install
 endef
 
 $(eval $(call BuildPackage,webadmin))
-
