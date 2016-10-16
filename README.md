@@ -43,6 +43,7 @@ Software
 * mini_snmpd =>
 * mjpg-streamer-lite =>
 * ncftp =>
+* pzem004t => A simple util to read/write data PZEM-004T
 * rcswitch =>
 * remserial => Bridge between a TCP/IP network and serial ports
 * sshpass =>
