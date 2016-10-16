@@ -17,4 +17,3 @@ if [ "$REQUEST_METHOD = POST" -a -n "$cmd" ]; then
 fi
 echo '</pre>'
 echo "<script language=\"javascript\">setTimeout(\"cmdfocus()\",500);</script>"
-

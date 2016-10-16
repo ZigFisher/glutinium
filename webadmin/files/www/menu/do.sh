@@ -7,18 +7,23 @@ item() { echo "  <li><a href=\"javascript:cmdset('$2')\">$1</a>"; };
 
 echo '<ul id="treemenu1" class="treeview">'
 
-menu "system"
-menu "ipkg"
-item "ipkg update" "/usr/bin/ipkg update"
-item "ipkg list" "/usr/bin/ipkg list"
-item "ipkg install" "/usr/bin/ipkg install PACKAGE"
-endmenu
-item "flash save" "/sbin/flash save"
+menu "Extra"
 item "helpdesk" "/sbin/helpdesk"
-item "nslookup" "/usr/bin/nslookup "
-item "reboot" "/sbin/reboot"
-item "upgrade" "/sbin/upgrade URL"
+item "vtun" "/sbin/tunnel update"
 endmenu
+
+menu "system"
+#item "flash save" "/sbin/flash save"
+item "nslookup" "/usr/bin/nslookup 127.0.0.1"
+item "reboot" "/sbin/reboot"
+item "upgrade" "/sbin/upgrade http://"
+endmenu
+
+#menu "ipkg"
+#item "ipkg update" "/usr/bin/ipkg update"
+#item "ipkg list" "/usr/bin/ipkg list"
+#item "ipkg install" "/usr/bin/ipkg install PACKAGE"
+#endmenu
 
 menu "network"
 item "arping" "/usr/bin/arping -I eth0 -c 3 127.0.0.1"

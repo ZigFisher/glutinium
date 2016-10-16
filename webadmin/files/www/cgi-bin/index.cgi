@@ -4,7 +4,7 @@
 		basedir=/www
 	page=${FORM_page:-info}
 	export PATH=/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin
-	export hostname=`hostname`
+	export hostname=`uci get system.@system[0].hostname`
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">

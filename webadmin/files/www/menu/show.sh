@@ -8,31 +8,30 @@ item() { echo "  <li><a href=\"#\" onclick=\"runcmd('$2')\">$1</a>"; };
 echo '<ul id="treemenu1" class="treeview">'
 
 menu "system"
+  menu "log"
+    item "main log" "/sbin/logread"
+    item "kernel log" "/bin/dmesg"
+  endmenu
+  item "date" "/bin/date"
+  item "df" "/bin/df -h"
+  item "free" "/usr/bin/free"
+  #item "ipkg list" "/usr/bin/ipkg list"
+  #item "ipkg list_installed" "/usr/bin/ipkg list_installed"
+  item "lsmod [TEST]" "/usr/sbin/lsmod"
+  item "mount" "/bin/mount"
+  item "ps" "/bin/ps"
+  item "sysctl" "/sbin/sysctl -a"
+  item "uname -a" "/bin/uname -a"
+endmenu
 
-menu "log"
-item "main log" "/sbin/logread"
-item "kernel log" "/bin/dmesg"
-endmenu
-item "date" "/bin/date"
-item "df" "/bin/df -h"
-item "free" "/usr/bin/free"
-item "ipkg list" "/usr/bin/ipkg list"
-item "ipkg list_installed" "/usr/bin/ipkg list_installed"
-item "lsmod" "/sbin/lsmod"
-item "mount" "/bin/mount"
-item "ps" "/bin/ps"
-item "sysctl" "/sbin/sysctl -a"
-item "uname -a" "/bin/uname -a"
-endmenu
 
 menu "network"
-
-item "switch" "cat /proc/sys/net/adm5120sw/status"
-item "active interfaces" "/sbin/ifconfig"
-item "all interfaces" "/sbin/ifconfig -a"
-item "connection tracking" "cat /proc/net/ip_conntrack"
-item "interface usage" "/usr/bin/bwm --one"
-menu "fw"
+  item "active interfaces [OK]" "/sbin/ifconfig"
+  item "hostname" "uci get system.@system[0].hostname"
+  item "all interfaces [OK]" "/sbin/ifconfig -a"
+  #item "connection tracking" "cat /proc/net/ip_conntrack"
+  #item "interface usage" "/usr/bin/bwm --one"
+  menu "fw"
 
 i="/usr/sbin/iptables -nvxL"
 menu "filter"
@@ -65,24 +64,24 @@ endmenu
 endmenu
 
 menu "ip"
-item "addr" "/bin/ip addr"
-item "link" "/bin/ip -s link"
-item "route" "/bin/ip route"
-item "rule" "/bin/ip rule"
-item "neigh" "/bin/ip -s neigh"
-item "tunnel" "/bin/ip -s tunnel"
-item "maddr" "/bin/ip -s maddr"
-item "mroute" "/bin/ip -s mroute"
+  item "addr" "/sbin/ip address"
+  item "link" "/sbin/ip link"
+  item "route" "/sbin/ip route"
+  #item "rule" "/sbin/ip rule"
+  #item "neigh" "/sbin/ip -s neigh"
+  #item "tunnel" "/sbin/ip -s tunnel"
+  #item "maddr" "/sbin/ip -s maddr"
+  #item "mroute" "/sbin/ip -s mroute"
 endmenu
 
 menu "netstat"
-item "all sockets" "/bin/netstat -an"
-item "listening sockets" "/bin/netstat -ln"
-item "routing" "/bin/netstat -rn"
+  item "all sockets" "/bin/netstat -an"
+  item "listening sockets" "/bin/netstat -ln"
+  item "routing" "/bin/netstat -rn"
 endmenu
 
 menu "bridge"
-item "show" "/usr/sbin/brctl show"
+    item "show" "brctl show"
 endmenu
 
 endmenu

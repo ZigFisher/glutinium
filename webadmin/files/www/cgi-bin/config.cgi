@@ -6,7 +6,7 @@ export PATH=/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin
 action=$FORM_action
 uploadfile=$FORM_uploadfile
 
-. /etc/midge.conf
+#. /etc/midge.conf
 case $action in
 	backup_*)
 	echo "Content-type: application/octet-stream"

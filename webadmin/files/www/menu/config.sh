@@ -14,5 +14,9 @@ item "backup running" "backup_running"
 item "restore" "restore"
 endmenu
 
+menu "uci"
+item "dhcp" "uci show dhcp"
+endmenu
+
 echo "</ul>"
 
