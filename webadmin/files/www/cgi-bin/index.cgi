@@ -58,7 +58,7 @@
 		</div>
 	</div>
 	<div id="footer">
-		<div id="copy_r"><a href='http://flyrouter.net' target="_blank">http://flyrouter.net</a></div>
+		<div id="copy_r"><a href='http://flyhub.org' target="_blank">http://flyhub.org</a></div>
 	</div>
 </div>
 </body>

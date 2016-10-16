@@ -11,12 +11,11 @@ echo "<li><a href=\"http://kitty.9bis.com/\">Download KiTTy</a>";
 echo "<li><a href=\"http://the.earth.li/~sgtatham/putty/latest/x86/putty.exe\">Download PuTTY</a>";
 endmenu
 menu "help"
-echo "<li><a href=\"http://flyrouter.net/flyrouter:news\">News</a>"; 
-echo "<li><a href=\"http://flyrouter.net/flyrouter:help\">FAQ</a>"; 
+echo "<li><a href=\"http://zftlab.org/pages/2016031400.html\">Router on SoC Ralink for Home IoT</a>";
 endmenu
 menu "links"
-echo "<li><a href=\"http://flyrouter.net/downloads/software/flyrouter/packages/\">Available packages</a>"; 
-echo "<li><a href=\"http://flyrouter.net/downloads/software/flyrouter/upgrade/\">Available firmware</a>"; 
+echo "<li><a href=\"http://flyrouter.net/downloads/software/flyrouter/packages/\">Available packages</a>";
+echo "<li><a href=\"http://flyrouter.net/downloads/software/flyrouter/upgrade/\">Available firmware</a>";
 endmenu
 
 echo "</ul>"
