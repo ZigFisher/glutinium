@@ -46,6 +46,7 @@ uci -q batch <<-EOF >/dev/null
 	set network.wan1.ipv6='0'
 	set network.wan1.keepalive='3'
 	set network.wan1.gpio='20'
+	set network.wan1.indicator='1'
 	commit network
 	set network.wan2=interface
 	set network.wan2.proto='3g'
@@ -56,6 +57,7 @@ uci -q batch <<-EOF >/dev/null
 	set network.wan2.ipv6='0'
 	set network.wan2.keepalive='3'
 	set network.wan2.gpio='17'
+	set network.wan2.indicator='2'
 	commit network
 	set network.vtun0='interface'
 	set network.vtun0.proto='vtun'
