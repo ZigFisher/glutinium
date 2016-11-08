@@ -63,6 +63,11 @@ $(call Package/flyscripts/default)
   TITLE:=Custom project settings
 endef
 
+define Package/flyscripts_zftlab_bricket_mywifi
+$(call Package/flyscripts/default)
+  TITLE:=Custom project settings
+endef
+
 define Build/Configure
 endef
 
@@ -147,6 +152,13 @@ define Package/flyscripts_zftlab_bricket_flypeek/install
 	$(INSTALL_BIN)  ./files/usr/sbin/service_flypeek_ipc.sh $(1)/usr/sbin/
 endef
 
+define Package/flyscripts_zftlab_bricket_mywifi/install
+	$(INSTALL_DIR)  $(1)/etc
+	$(INSTALL_BIN)  ./files/etc/banner__zftlab_bricket_mywifi $(1)/etc/banner
+	$(INSTALL_DIR)  $(1)/etc/uci-defaults
+	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_zftlab_bricket_mywifi $(1)/etc/uci-defaults/
+endef
+
 
 $(eval $(call BuildPackage,flyscripts_base))
 $(eval $(call BuildPackage,flyscripts_octonix_bricket_base))
@@ -156,3 +168,4 @@ $(eval $(call BuildPackage,flyscripts_crmifc_wr841n_tuneller))
 $(eval $(call BuildPackage,flyscripts_switron_rt2257_base))
 $(eval $(call BuildPackage,flyscripts_zftlab_bricket_base))
 $(eval $(call BuildPackage,flyscripts_zftlab_bricket_flypeek))
+$(eval $(call BuildPackage,flyscripts_zftlab_bricket_mywifi))
