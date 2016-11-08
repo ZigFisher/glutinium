@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+# PPP LED script
+
+
+if [ "$ACTION" = "ifdown" ]; then
+  indicator=`uci -q get network.$INTERFACE.indicator`
+  usbgpio off $indicator && echo "Probe indicator OFF for $INTERFACE modem on USBasp gpio$indicator" | logger -t flyscript
+fi
+#
+if [ "$ACTION" = "ifup" ]; then
+  indicator=`uci -q get network.$INTERFACE.indicator`
+  usbgpio on $indicator && echo "Probe indicator ON for $INTERFACE modem on USBasp gpio$indicator" | logger -t flyscript
+fi

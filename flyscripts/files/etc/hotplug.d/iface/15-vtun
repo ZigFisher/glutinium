@@ -4,9 +4,6 @@
 #
 IFACE="wan2"
 
-
-echo "Interface $INTERFACE change status to $ACTION" | logger -t flyscript
-
 if [ "$INTERFACE" = "$IFACE" ]; then
   if [ "$ACTION" = "ifdown" ]; then
     (sleep 3; kill -s HUP `pidof vtund`) && echo "Reinitialization vtund..." | logger -t flyscript

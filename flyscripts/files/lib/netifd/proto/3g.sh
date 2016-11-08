@@ -100,13 +100,6 @@ proto_3g_setup() {
 		lock \
 		crtscts \
 		115200 "$device"
-	#
-	local indicator=`uci -q get network.$interface.indicator`
-	if [ -n "$indicator" ]; then
-	  echo "Indicator ON for $interface modem on USBasp gpio$indicator" | logger -t flyscript
-	  /usr/sbin/usbgpio on 1
-	fi
-	#
 	return 0
 }
 
@@ -117,12 +110,6 @@ proto_3g_teardown() {
 	  echo "Reset $interface modem on gpio$gpio" | logger -t flyscript
 	  echo "0" >/sys/class/gpio/gpio$gpio/value; sleep 3; echo "1" >/sys/class/gpio/gpio$gpio/value
 	fi
-	local indicator=`uci -q get network.$interface.indicator`
-	if [ -n "$indicator" ]; then
-	  echo "Indicator OFF for $interface modem on USBasp gpio$indicator" | logger -t flyscript
-	  /usr/sbin/usbgpio off 1
-	fi
-
 }
 
 [ -z "NOT_INCLUDED" ] || add_protocol 3g
