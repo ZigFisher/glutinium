@@ -81,6 +81,7 @@ define Package/flyscripts_base/install
 	$(INSTALL_DIR)  $(1)/etc/config
 	$(INSTALL_BIN)  ./files/etc/config/snmpd $(1)/etc/config/
 	$(INSTALL_DIR)  $(1)/etc/hotplug.d/iface
+	$(INSTALL_BIN)  ./files/etc/hotplug.d/iface/10-indicator $(1)/etc/hotplug.d/iface/
 	$(INSTALL_BIN)  ./files/etc/hotplug.d/iface/12-vtun $(1)/etc/hotplug.d/iface/
 	$(INSTALL_BIN)  ./files/etc/hotplug.d/iface/15-vtun $(1)/etc/hotplug.d/iface/
 	$(INSTALL_DIR)  $(1)/etc/hotplug.d/usb

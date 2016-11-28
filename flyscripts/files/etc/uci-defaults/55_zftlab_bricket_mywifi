@@ -6,10 +6,6 @@ uci -q batch <<-EOF >/dev/null
 	commit system
 	delete dhcp.lan.dhcpv6
 	delete dhcp.lan.ra
-	delete dhcp.lan.start
-	delete dhcp.lan.limit
-	delete dhcp.lan.leasetime
-	set dhcp.lan.ignore='1'
 	commit dhcp
 	delete network.globals
 	delete network.wan6
@@ -36,9 +32,9 @@ uci -q batch <<-EOF >/dev/null
 	set network.port5.port='5'
 	set network.port5.disable='1'
 	commit network
-	set network.wan1=interface
-	set network.wan1.type='bridge'
-	set network.wan1.proto='dhcp'
+	set network.wan=interface
+	set network.wan.type='bridge'
+	set network.wan.proto='dhcp'
 	commit network
 	set network.vtun0='interface'
 	set network.vtun0.proto='vtun'
