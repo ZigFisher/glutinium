@@ -33,6 +33,11 @@ $(call Package/flyscripts/default)
   TITLE:=Custom project settings
 endef
 
+define Package/flyscripts_octonix_bricket_msl
+$(call Package/flyscripts/default)
+  TITLE:=Custom project settings
+endef
+
 define Package/flyscripts_octonix_bricket_ukrn
 $(call Package/flyscripts/default)
   TITLE:=Custom project settings
@@ -103,6 +108,13 @@ define Package/flyscripts_octonix_bricket_base/install
 	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_octonix_bricket_base $(1)/etc/uci-defaults/
 endef
 
+define Package/flyscripts_octonix_bricket_msl/install
+	$(INSTALL_DIR)  $(1)/etc
+	$(INSTALL_BIN)  ./files/etc/banner__octonix_bricket_msl $(1)/etc/banner
+	$(INSTALL_DIR)  $(1)/etc/uci-defaults
+	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_octonix_bricket_msl $(1)/etc/uci-defaults/
+endef
+
 define Package/flyscripts_octonix_bricket_ukrn/install
 	$(INSTALL_DIR)  $(1)/etc
 	$(INSTALL_BIN)  ./files/etc/banner__octonix_bricket_ukrn $(1)/etc/banner
@@ -163,6 +175,7 @@ endef
 
 $(eval $(call BuildPackage,flyscripts_base))
 $(eval $(call BuildPackage,flyscripts_octonix_bricket_base))
+$(eval $(call BuildPackage,flyscripts_octonix_bricket_msl))
 $(eval $(call BuildPackage,flyscripts_octonix_bricket_ukrn))
 $(eval $(call BuildPackage,flyscripts_rkeeper_wr841n_base))
 $(eval $(call BuildPackage,flyscripts_crmifc_wr841n_tuneller))
