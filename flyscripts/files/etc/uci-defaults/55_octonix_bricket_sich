@@ -1,7 +1,7 @@
 #!/bin/sh
 
 uci -q batch <<-EOF >/dev/null
-	set system.@system[0].hostname='Octonix_msl'
+	set system.@system[0].hostname='Sich-011'
 	set system.@system[0].timezone='EET-2EEST,M3.5.0/3,M10.5.0/4'
 	commit system
 	delete dhcp.lan.dhcpv6
@@ -14,6 +14,9 @@ uci -q batch <<-EOF >/dev/null
 	delete network.globals
 	delete network.wan6
 	delete network.lan.ip6assign
+	commit network
+	set network.lan.ipaddr='10.101.202.11'
+	set network.lan.netmask='255.255.255.0'
 	commit network
 	set network.port1='switch_port'
 	set network.port1.device='switch0'
@@ -42,22 +45,10 @@ uci -q batch <<-EOF >/dev/null
 	set network.wan1.service='evdo'
 	set network.wan1.username='IT'
 	set network.wan1.password='IT'
-	set network.wan1.metric='1'
 	set network.wan1.ipv6='0'
 	set network.wan1.keepalive='3'
 	set network.wan1.gpio='20'
 	set network.wan1.indicator='1'
-	commit network
-	set network.wan2=interface
-	set network.wan2.proto='3g'
-	set network.wan2.device='/dev/ttyACM1'
-	set network.wan2.service='umts'
-	set network.wan2.apn='www.kyivstar.net'
-	set network.wan2.metric='2'
-	set network.wan2.ipv6='0'
-	set network.wan2.keepalive='3'
-	set network.wan2.gpio='17'
-	set network.wan2.indicator='2'
 	commit network
 	set network.vtun0='interface'
 	set network.vtun0.proto='vtun'
@@ -70,24 +61,25 @@ uci -q batch <<-EOF >/dev/null
 	commit network
 	set network.vtun1='interface'
 	set network.vtun1.proto='vtun'
-	set network.vtun1.server='127.0.0.1'
-	set network.vtun1.name='test'
-	set network.vtun1.password='test2016'
+	set network.vtun1.server='A.B.C.D'
+	set network.vtun1.name='sich011'
+	set network.vtun1.password='SicH2017pAsS'
 	set network.vtun1.mode='ether'
 	set network.vtun1.bridge='br-lan'
 	commit network
 	set snmpd.default='snmpd'
-	set snmpd.default.community='msl'
+	set snmpd.default.community='Sich'
 	set snmpd.default.contact='Octonix'
 	set snmpd.default.location='World'
-	set snmpd.default.interfaces='br-lan,3g-wan1,3g-wan2'
+	set snmpd.default.interfaces='br-lan,3g-wan1'
 	commit snmpd
 EOF
 
 echo -e "#\n# Reset USBgpio\n(for n in 'seq 1 8'; do usbgpio off $n; done) >/dev/null 2>&1\n" >/etc/rc.local
 echo -e "#\n# Start checker\n(while sleep 300; do if ! ping -q -c 6 8.8.8.8; then reboot; else echo 'Link to central node - OK' | logger; fi; done) &\n" >>/etc/rc.local
-echo -e "#\n# Start snmpd\n(while true ; do sleep 5; /usr/bin/mini_snmpd -n -c msl -L World -C Intertelecom -t 1 -d /overlay,/tmp -i br-lan,3g-wan1,3g-wan2 >/dev/null 2>&1; done) &\n" >>/etc/rc.local
+echo -e "#\n# Start snmpd\n(while true ; do sleep 5; /usr/bin/mini_snmpd -n -c Sich -L World -C Octonix -t 1 -d /overlay,/tmp -i br-lan,3g-wan1 >/dev/null 2>&1; done) &\n" >>/etc/rc.local
 echo -e "#\nexit 0\n" >>/etc/rc.local
 
 
 exit 0
+
