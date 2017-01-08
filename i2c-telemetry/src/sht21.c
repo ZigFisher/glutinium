@@ -4,6 +4,9 @@
 #include <linux/i2c-dev.h>
 #include <linux/i2c.h>
 
+#include <unistd.h>             /* add by paulerr*/
+
+
 #define CHIP			"/dev/i2c-0"
 #define CHIP_ADDR		0x40			//HTU21D地址
 #define READ_TEMP		0XE3			//温度转换命令

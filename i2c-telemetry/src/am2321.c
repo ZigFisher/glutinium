@@ -20,6 +20,9 @@
 #include <string.h>             /* for memcpy */
 #include <linux/i2c-dev.h>      /* for I2C_SLAVE */
 
+#include <unistd.h>             /* add by paulerr*/
+#include <sys/time.h>           /* add by paulerr*/
+
 
 /* I2C character device */
 #define I2C_DEVICE "/dev/i2c-0"
