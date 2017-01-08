@@ -15,9 +15,6 @@ uci -q batch <<-EOF >/dev/null
 	delete network.wan6
 	delete network.lan.ip6assign
 	commit network
-	set network.lan.ipaddr='10.101.202.11'
-	set network.lan.netmask='255.255.255.0'
-	commit network
 	set network.port1='switch_port'
 	set network.port1.device='switch0'
 	set network.port1.port='1'
