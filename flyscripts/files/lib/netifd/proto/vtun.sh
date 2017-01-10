@@ -126,9 +126,10 @@ proto_vtun_setup() {
     echo "  multi killold;"
     echo "}"
     echo "#"
-    echo "$name {"
+  for multiname in `echo $name`; do
+    echo "$multiname {"
     echo "  password $password;"
-    echo "  device $name;"
+    echo "  device $multiname;"
     echo "  up {"
     if [ "$mode" = "tun" ]; then
       echo "    ip \"link set %% up multicast off mtu 1500\";"
@@ -150,6 +151,7 @@ proto_vtun_setup() {
     fi
     echo "  };"
     echo "}"
+  done
   ) >/tmp/$interface.conf
 
 
