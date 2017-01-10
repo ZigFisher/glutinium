@@ -153,7 +153,12 @@ proto_vtun_setup() {
   ) >/tmp/$interface.conf
 
 
-  vtund -n -f /tmp/$interface.conf $name $server -P $port
+  if [ "$server" = "true" ]; then
+    mkdir -p /var/lock/vtund
+    vtund -n -f /tmp/$interface.conf -s -P $port
+  else
+    vtund -n -f /tmp/$interface.conf $name $server -P $port
+  fi
 
   sleep 5
 
