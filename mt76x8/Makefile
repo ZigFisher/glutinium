@@ -17,6 +17,7 @@ define Package/mt76x8
   SECTION:=net
   CATEGORY:=Network
   TITLE:=Ralink APSoC WiFi SoftAP driver
+  DEPENDS:=@TARGET_ramips_mt7628 +wireless-tools +maccalc
 endef
 
 define Build/Compile
