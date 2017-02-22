@@ -1,0 +1,17 @@
+#!/bin/sh
+
+uci -q batch <<-EOF >/dev/null
+	set system.@system[0].hostname='RT-7628'
+	set system.@system[0].timezone='MSK-3MSD,M3.5.0,M10.5.0/3'
+	commit system
+	delete network.globals
+	delete network.wan6
+	delete network.lan.ip6assign
+	commit network
+	set wireless.radio0.channel='7'
+	set wireless.radio0.disabled='0'
+	set wireless.@wifi-iface[0].ssid='RT-7628'
+	commit wireless
+EOF
+
+exit 0

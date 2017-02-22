@@ -63,6 +63,11 @@ $(call Package/flyscripts/default)
   TITLE:=Custom project settings
 endef
 
+define Package/flyscripts_switron_k4700_base
+$(call Package/flyscripts/default)
+  TITLE:=Custom project settings
+endef
+
 define Package/flyscripts_zftlab_bricket_base
 $(call Package/flyscripts/default)
   TITLE:=Custom project settings
@@ -155,6 +160,13 @@ define Package/flyscripts_switron_rt2257_base/install
 	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_switron_rt2257_base $(1)/etc/uci-defaults/
 endef
 
+define Package/flyscripts_switron_k4700_base/install
+	$(INSTALL_DIR)  $(1)/etc
+	$(INSTALL_BIN)  ./files/etc/banner__switron_k4700_base $(1)/etc/banner
+	$(INSTALL_DIR)  $(1)/etc/uci-defaults
+	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_switron_k4700_base $(1)/etc/uci-defaults/
+endef
+
 define Package/flyscripts_zftlab_bricket_base/install
 	$(INSTALL_DIR)  $(1)/etc
 	$(INSTALL_BIN)  ./files/etc/banner__zftlab_bricket_base $(1)/etc/banner
@@ -193,6 +205,7 @@ $(eval $(call BuildPackage,flyscripts_octonix_bricket_ukrn))
 $(eval $(call BuildPackage,flyscripts_rkeeper_wr841n_base))
 $(eval $(call BuildPackage,flyscripts_crmifc_wr841n_tuneller))
 $(eval $(call BuildPackage,flyscripts_switron_rt2257_base))
+$(eval $(call BuildPackage,flyscripts_switron_k4700_base))
 $(eval $(call BuildPackage,flyscripts_zftlab_bricket_base))
 $(eval $(call BuildPackage,flyscripts_zftlab_bricket_flypeek))
 $(eval $(call BuildPackage,flyscripts_zftlab_bricket_mywifi))
