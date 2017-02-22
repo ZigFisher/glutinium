@@ -8,7 +8,9 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=ralink-wifi-mt76x8
+PKG_VERSION:=2.0.1
 PKG_RELEASE:=1
+PKG_LICENSE:=GPL-2.0
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -36,7 +38,6 @@ define Package/ralink-wifi-mt76x8/install
 	$(CP) -rf ./files/* $(1)/
 	$(CP) ./modules/* $(1)/lib/modules/$(LINUX_VERSION)
 endef
-
 
 $(eval $(call BuildPackage,ralink-wifi-mt76x8))
 
