@@ -16,20 +16,20 @@ scan_ralink() {
 	local ifname="$1"
 
 	ralink_phy_if=0
-	
+
 #	reload_ralink
 
 	local i=-1
-	
+
 	while grep -qs "^ *ra$((++i)):" /proc/net/dev; do
 	let ralink_phy_if+=1
 	done
 
 	ralink_ap_num=0
 	ralink_wds_num=0
-	
+
 	config_get vifs "$device" vifs
-	
+
 	for vif in $vifs; do
 		config_get_bool disabled "$vif" disabled 0
 		[ $disabled -eq 0 ] || continue
@@ -89,16 +89,16 @@ ralink_prepare_config() {
 for vif in $vifs; do
 	config_get_bool disabled "$vif" disabled 0
 	config_get mode "$vif" mode 0
-	
+
 	[ "$disabled" == "1" ]&& {
 	set_wifi_down $vif
 	continue
 	}
-	
+
 	[ "$hidessid" == "0" ] && {
 	config_get hidessid $vif hidden 0
 	}
-	
+
 	[ "$mode" == "sta" ] || [ "$mode" == "wds" ] && {
 	continue
 	}
@@ -139,14 +139,14 @@ done
       HT=0
       HT_CE=1
     fi
-	
+
 	EXTCHA=1
-	
+
 	[ "$channel" != "auto" ] && [ "$channel" -lt "5" ] && EXTCHA=0
 
     [ "$channel" == "auto" ] && {
         channel=11
-        AutoChannelSelect=2 
+        AutoChannelSelect=2
     }
 
     case "$macpolicy" in
@@ -160,7 +160,7 @@ done
 	ra_macfilter=0;
 	;;
     esac
-					
+
 	cat > /tmp/RT2860.dat<<EOF
 #The word of "Default" must not be removed
 Default
@@ -322,7 +322,7 @@ disable_ralink() {
 }
 
 enable_ralink_wps_pbc() {
-#iwpriv $1 set WscConfMode=7 
+#iwpriv $1 set WscConfMode=7
 #iwpriv $1 set WscConfStatus=2
 #iwpriv $1 set WscMode=2
 #iwpriv $1 set WscV2Support=1
@@ -341,28 +341,28 @@ ralink_start_vif() {
 }
 
 enable_ralink() {
-	
+
 	local device="$1" dmode if_num=-1;
-	
+
 	[ -f /etc/Wireless/RT2860/RT2860.dat ] || {
 	mkdir -p /etc/Wireless/RT2860/ 2>/dev/null
 	ln -s /tmp/RT2860.dat /etc/Wireless/RT2860/RT2860.dat 2>/dev/null
-	}	
-	
+	}
+
 	reload_ralink
-	config_get_bool disabled "$device" disabled 0	
+	config_get_bool disabled "$device" disabled 0
 	if [ "$disabled" = "1" ] ;then
 	return
 	fi
-	
+
 	ralink_prepare_config $device
 	config_get dmode $device mode
 	config_get vifs "$device" vifs
 	config_get maxassoc $device maxassoc 0
 	config_get channel $device channel 0
-	
+
 	local ralink_vifs ralink_ap_vifs ralink_wds_vifs
-	
+
 	for vif in $vifs; do
 		config_get mode "$vif" mode
 		[ "$mode" == "ap" ] && {
@@ -372,40 +372,40 @@ enable_ralink() {
 			ralink_wds_vifs="$ralink_ap_vifs $vif"
 		}
 	done
-	
+
 	ralink_vifs="$ralink_vifs $ralink_ap_vifs $ralink_wds_vifs "
-	
+
 #	for vif in $vifs; do
 	for vif in $ralink_vifs; do
 		config_get_bool disabled $vif disabled 0
 		[ "$disabled" == "1" ] && {
 			continue
 		}
-		
+
 		local ifname encryption key ssid mode
-		
-#		config_get ifname $vif device			
+
+#		config_get ifname $vif device
 		config_get encryption $vif encryption
 		config_get key $vif key
 		config_get ssid $vif ssid
 		config_get mode $vif mode
-		
+
 		local wps pin
 		config_get wps $vif wps 
 		config_get pin $vif pin
-		
+
 		config_get isolate $vif isolate 0
 		config_get hidessid $vif hidden 0
 		config_get doth $vif doth 0
 
-#		config_get hidessid $vif hidden 0	
+#		config_get hidessid $vif hidden 0
 
 		[ "$mode" != "sta" ] && [ "$mode" != "wds" ] && {
 		let if_num+=1
-		
+
 		ifname="ra$if_num"
 		}
-		
+
 
 		[ "$mode" == "ap" ] && {
 			[ "$key" = "" -a "$vif" = "private" ] && {
@@ -438,13 +438,13 @@ enable_ralink() {
 					*aes*|*ccmp*)
 						crypto="AES"
 						;;
-					*tkip*) 
+					*tkip*)
 						crypto="TKIP"
 						echo Warring!!! TKIP not support in 802.11n 40Mhz!!!
 						;;
 					*)
 						crypto="TKIPAES"
-						;;	
+						;;
 					esac
 					echo "$enc" >>/tmp/wifi_encryption_${ifname}.dat
 					echo "$crypto" >>/tmp/wifi_encryption_${ifname}.dat
@@ -456,7 +456,7 @@ enable_ralink() {
 					iwpriv $ifname set DefaultKeyID=1
 					iwpriv $ifname set "SSID=${ssid}"
 					;;
-					
+
 				WEP|wep|wep-open|wep-shared)
 					echo "WEP" >>/tmp/wifi_encryption_${ifname}.dat
 					iwpriv $ifname set AuthMode=WEPAUTO
@@ -468,7 +468,7 @@ enable_ralink() {
 					done
 					iwpriv $ifname set DefaultKeyID=${key}
 					iwpriv $ifname set "SSID=${ssid}"
-					echo 
+					echo
 					#iwpriv $ifname set WscConfMode=0
 					;;
 				none|open)
@@ -479,8 +479,7 @@ enable_ralink() {
 					;;
 			esac
                         iwpriv $ifname set HideSSID="$hidessid"
-						
-						
+
 		config_get ApCliEnable "$vif" ApCliEnable 0
 		config_get ApCliSsid "$vif" ApCliSsid
 		config_get ApCliBssid "$vif" ApCliBssid 0
@@ -490,11 +489,11 @@ enable_ralink() {
 		ifconfig apcli0 down
 		[ "$ApCliEnable" != "0" ] && {
 		ifconfig apcli0 up
-		
-		iwpriv ra0 set SiteSurvey=1 
+
+		iwpriv ra0 set SiteSurvey=1
 
 		sleep 1
-			
+
 		apcli_channel=0
 		now_rssi=0
 		tmp_rssi=0
@@ -505,8 +504,8 @@ enable_ralink() {
 			tmp_rssi=`echo "${line:80:3}" | sed 's/[[:space:]]*$//'`
 			if [ "$ApCliSsid"x = "$tmp_ssid2"x ]; then
 				if [ $tmp_rssi -gt $now_rssi ]; then
-				apcli_channel=`echo $line | awk '{print $1}'`	
-				now_rssi=$tmp_rssi			
+				apcli_channel=`echo $line | awk '{print $1}'`
+				now_rssi=$tmp_rssi
 				fi
 			fi
 		done <<EOF
@@ -516,15 +515,14 @@ EOF
 			channel="$apcli_channel"
 		fi
 
-		
 		echo "setting apcli"
 
 		iwpriv apcli0 set ApCliEnable=0
 
 		case "$ApCliAuthMode" in
 			none*|NONE*)
-				iwpriv apcli0 set ApCliAuthMode=OPEN 
-				iwpriv apcli0 set ApCliEncrypType=NONE 
+				iwpriv apcli0 set ApCliAuthMode=OPEN
+				iwpriv apcli0 set ApCliEncrypType=NONE
 				;;
 			WEP|wep|*wep*|*WEP*)
 				iwpriv apcli0 set ApCliAuthMode=OPEN
@@ -547,8 +545,8 @@ EOF
 		}
 
 		}
-		
-		iwpriv apcli0 set ApCliEnable=$ApCliEnable						
+
+		iwpriv apcli0 set ApCliEnable=$ApCliEnable
 		}
 		
 		if [ $disabled == 1 ]; then
@@ -557,15 +555,15 @@ EOF
 		else
 		 iwpriv $ifname set RadioOn=1
 		fi
-		
+
 		[ $isolate == "1" ]&&{
 			iwpriv $ifname set NoForwarding=1
 		}
-		
+
 		[ $doth == "1" ]&&{
 			iwpriv $ifname set IEEE80211H=1
-		}	
-		
+		}
+
 		ifconfig "$ifname" up
 		if [ "$mode" == "sta" ];then {
 			net_cfg="$(find_net_config "$vif")"
@@ -586,17 +584,13 @@ EOF
 				[ -z `brctl show |grep $ifname` ] && {
 				brctl addif $(bridge_interface "$net_cfg") $ifname
 				}
-				
 			}
-
-
-
 		}
 		fi;
-		
+
 		set_wifi_up "$vif" "$ifname"
 	done
-	
+
 	[ "$channel" != "auto" ] && iwpriv $device set Channel=$channel
 	iwpriv $device set MaxStaNum=$maxassoc
 }
@@ -615,12 +609,12 @@ detect_ralink() {
 	while grep -qs "^ *ra$((++i)):" /proc/net/dev; do
 		config_get type ra${i} type
 		[ "$type" = ralink ] && continue
-		
+
 	[ -f /etc/Wireless/RT2860/RT2860.dat ] || {
 	mkdir -p /etc/Wireless/RT2860/ 2>/dev/null
 	ln -s /tmp/RT2860.dat /etc/Wireless/RT2860/RT2860.dat 2>/dev/null
 	}
-	
+
 	mach=$(cat /proc/cpuinfo | grep machine | awk '{ print $3}')
 
 	if [ "$mach"x = "WRTnode2R"x ] ;then
@@ -636,10 +630,10 @@ config wifi-device  ra${i}
 	option txpower 100
 	option ht 	20
 	option country US
-	
+
 # REMOVE THIS LINE TO ENABLE WIFI:
-	option disabled 0	
-	
+	option disabled 0
+
 config wifi-iface
 	option device   ra${i}
 	option network	lan
@@ -652,11 +646,9 @@ config wifi-iface
 	option ApCliAuthMode 'WPA2PSK'
 	option ApCliEncrypType 'AES'
 	option ApCliPassWord '87654321'
-	
 EOF
 
 	done
-	
 }
 
 
