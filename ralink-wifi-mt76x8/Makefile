@@ -14,7 +14,7 @@ PKG_LICENSE:=GPL-2.0
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/ralink-wifi-mt76x8
+define Package/ralink-wifi-mt76x8/default
   SECTION:=base
   CATEGORY:=Extra packages
   DEPENDS:=+wireless-tools +maccalc
@@ -23,8 +23,9 @@ define Package/ralink-wifi-mt76x8
   URL:=https://github.com/ZigFisher/Glutinium
 endef
 
-define Package/ralink-wifi-mt76x8/description
-	Ralink APSoC WiFi driver (binary)
+define Package/ralink-wifi-mt76x8
+$(call Package/ralink-wifi-mt76x8/default)
+  TITLE:=Ralink APSoC WiFi driver (binary)
 endef
 
 define Build/Configure
