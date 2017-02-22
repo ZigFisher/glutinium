@@ -10,7 +10,6 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=ralink-wifi-mt76x8
 PKG_RELEASE:=1
 
-include $(INCLUDE_DIR)/kernel.mk
 include $(INCLUDE_DIR)/package.mk
 
 define Package/ralink-wifi-mt76x8
@@ -23,7 +22,7 @@ define Package/ralink-wifi-mt76x8
 endef
 
 define Package/ralink-wifi-mt76x8/description
-	Ralink APSoC WiFi driver for DreamBox
+	Ralink APSoC WiFi driver (binary)
 endef
 
 define Build/Configure
