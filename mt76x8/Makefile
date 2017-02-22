@@ -11,6 +11,7 @@ PKG_NAME:=mt76x8
 PKG_VERSION:=1
 PKG_RELEASE:=1
 
+include $(INCLUDE_DIR)/kernel.mk
 include $(INCLUDE_DIR)/package.mk
 
 define Package/mt76x8
