@@ -16,7 +16,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/ralink-wifi-mt76x8
   SECTION:=base
   CATEGORY:=Extra packages
-  DEPENDS:=@TARGET_ramips_mt7628 +wireless-tools +maccalc
+  DEPENDS:=+wireless-tools +maccalc
   MAINTAINER:=Zig Fisher <flyrouter@gmail.com>
   TITLE:=Ralink APSoC WiFi SoftAP driver
   URL:=https://github.com/ZigFisher/Glutinium
