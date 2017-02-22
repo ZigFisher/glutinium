@@ -5,33 +5,18 @@
 # See /LICENSE for more information.
 #
 
-
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=mt76x8
 PKG_VERSION:=1
 PKG_RELEASE:=1
-PKG_LICENSE:=GPL-2.0
 
 include $(INCLUDE_DIR)/package.mk
 
 define Package/mt76x8
-  SECTION:=base
+  SECTION:=extra
   CATEGORY:=Extra packages
-  DEPENDS:=+wireless-tools +maccalc
-  MAINTAINER:=Zig Fisher <flyrouter@gmail.com>
   TITLE:=Ralink APSoC WiFi SoftAP driver
-  URL:=https://github.com/ZigFisher/Glutinium
-endef
-
-define Package/mt76x8/description
-  Ralink APSoC WiFi SoftAP driver
-endef
-
-define Build/Prepare
-endef
-
-define Build/Configure
 endef
 
 define Build/Compile
