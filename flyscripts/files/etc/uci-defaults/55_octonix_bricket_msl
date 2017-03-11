@@ -82,8 +82,14 @@ uci -q batch <<-EOF >/dev/null
 	set snmpd.default.location='World'
 	set snmpd.default.interfaces='br-lan,3g-wan1,3g-wan2'
 	commit snmpd
+	set network.vpncs=route
+	set network.vpncs.interface='vpn'
+	set network.vpncs.target='10.100.0.0'
+	set network.vpncs.netmask='255.255.255.248'
+	commit network
 EOF
 
+echo "root:1234" | chpasswd
 
 echo -e "#\n# Reset USBgpio\n(for n in '1' '2' '3' '4' '5' '6' '7' '8'; do usbgpio off $n; done) >/dev/null 2>&1\n" >/etc/rc.local
 echo -e "#\n# Start checker\n(while sleep 300; do if ! ping -q -c 6 8.8.8.8; then reboot; else echo 'Link to central node - OK' | logger; fi; done) &\n" >>/etc/rc.local
