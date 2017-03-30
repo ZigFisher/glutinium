@@ -1,0 +1,74 @@
+
+
+
+               elhttp : the extra-light http proxy server
+
+
+
+    Compiling elhttp
+    ----------------
+
+        . under Linux or *BSD, run "make linux"
+
+        . under SunOS (Solaris), run "make sunos"
+
+        . under OSF / HP-UX / IRIX, run "make unix"
+
+        . under Windows, open elhttp.dsp with VC++
+          and select Build->Rebuild All. You can
+          also use the pre-compiled binary.
+
+
+    Program usage
+    -------------
+
+        [+] Inetd  mode : add in /etc/inetd.conf
+
+        webcache stream tcp nowait nobody /usr/local/bin/elhttp
+        elhttp 0 0.0.0.0 0.0.0.0 /var/tmp/elhttp.log 1
+
+        [+] Daemon mode (default) :
+
+            elhttp [proxy port] [authorized ip] [network mask]
+                   [logfile] [CONNECT method flag]
+
+        Example:
+
+        elhttp  3128  192.168.1.0  255.255.255.0  proxy_log.txt  1
+
+        Default parameters:
+
+                port = 8208
+             auth_ip = 0.0.0.0
+             netmask = 0.0.0.0
+             logfile = ""
+             connect = 2
+
+            * if connect = 0 : CONNECT method not allowed.
+
+            * if connect = 1 : CONNECT method allowed to remote
+                               port 443 (https) only.
+
+            * if connect > 1 : CONNECT method allowed to any
+                               port without restrictions.
+
+        These default parameters are not secure: everyone has access
+        to the proxy, no logging is done and the http CONNECT method
+        is enabled. It is thus highly recommended to setup more res-
+        trictive parameters when starting elhttp.
+
+
+    Reporting bugs, asking for features
+    -----------------------------------
+
+        My email address can be found at:
+
+        http://www.cr0.net:8040/about/
+
+
+    Special thanks to
+    -----------------
+
+        * Le Hong Anh <anhlh.dvkh@gpc.com.vn> for discovering the
+          child thread handle bug
+
