@@ -109,6 +109,7 @@ define Package/flyscripts_base/install
 	$(INSTALL_BIN)  ./files/lib/netifd/proto/vtun.sh $(1)/lib/netifd/proto/
 	$(INSTALL_DIR)  $(1)/usr/sbin
 	$(INSTALL_BIN)  ./files/usr/sbin/license.sh $(1)/usr/sbin/
+	$(INSTALL_BIN)  ./files/usr/sbin/checklink.sh $(1)/usr/sbin/
 endef
 
 define Package/flyscripts_octonix_bricket_base/install
