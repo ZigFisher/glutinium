@@ -11,3 +11,6 @@ ROUTE=`ip r | awk -F ' ' '/default/ {print $3}' | awk -F 'wan' '/3g/ {print $2}'
 
 httping -q -G -c 1 -t 5 -g "$CLOUD?host=$NAME&mac=$MACID&wanip=$WANIP&freemem=$MEMORY&uptime=$UPTIME&price=$ROUTE"
 
+logger -t monitor "$CLOUD?host=$NAME&mac=$MACID&wanip=$WANIP&freemem=$MEMORY&uptime=$UPTIME&price=$ROUTE"
+
+
