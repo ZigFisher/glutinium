@@ -6,11 +6,11 @@
 if [ "$ACTION" = "ifdown" ]; then
   indicator=`uci -q get network.$INTERFACE.indicator`
   usbgpio off $indicator && echo "Probe indicator OFF for $INTERFACE modem on USBasp gpio$indicator" | logger -t flyscript
-  #echo "0" >/sys/devices/platform/leds-gpio/leds/tp-link\:green\:$indicator/brightness     $indicator && echo "Probe indicator OFF for $INTERFACE modem" | logger -t flyscript
+  #echo "0" >/sys/devices/platform/leds-gpio/leds/tp-link\:green\:$indicator/brightness && echo "Probe indicator OFF for $INTERFACE modem" | logger -t flyscript
 fi
 #
 if [ "$ACTION" = "ifup" ]; then
   indicator=`uci -q get network.$INTERFACE.indicator`
   usbgpio on $indicator && echo "Probe indicator ON for $INTERFACE modem on USBasp gpio$indicator" | logger -t flyscript
-  #echo "1" >/sys/devices/platform/leds-gpio/leds/tp-link\:green\:$indicator/brightness     $indicator && echo "Probe indicator OFF for $INTERFACE modem" | logger -t flyscript
+  #echo "1" >/sys/devices/platform/leds-gpio/leds/tp-link\:green\:$indicator/brightness && echo "Probe indicator OFF for $INTERFACE modem" | logger -t flyscript
 fi
