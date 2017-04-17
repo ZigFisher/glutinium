@@ -9,4 +9,4 @@ MEMORY=`free | awk '/Mem:/ {print $4}' | egrep '^[-+]?[0-9]*\.?[0-9]+$'`
 UPTIME=`cat /proc/uptime | cut -d '.' -f 1 | egrep '^[-+]?[0-9]*\.?[0-9]+$'`
 ROUTE=`ip r | awk -F ' ' '/default/ {print $3}' | awk -F 'wan' '/3g/ {print $2}'`
 
-httping -q -G -c 1 -t 5 -g "$CLOUD?host=$NAME&mac=$MACID&wanip=$WANIP&freemem=$MEMORY&uptime=$UPTIME&gpio0=$ROUTE"
+httping -q -G -c 1 -t 5 -g "$CLOUD?host=$NAME&mac=$MACID&wanip=$WANIP&freemem=$MEMORY&uptime=$UPTIME&price=$ROUTE"
