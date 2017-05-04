@@ -17,7 +17,6 @@ include $(INCLUDE_DIR)/package.mk
 define Package/flyscripts/default
   SECTION:=base
   CATEGORY:=Extra packages
-  DEPENDS:=+comgt
   MAINTAINER:=Zig Fisher <flyrouter@gmail.com>
   TITLE:=Base FlyRouter scripts
   URL:=https://github.com/ZigFisher/Glutinium/tree/master/flyscripts
