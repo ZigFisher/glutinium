@@ -139,6 +139,13 @@ define Package/flyscripts_octonix_bricket_sich/install
 	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_octonix_bricket_sich $(1)/etc/uci-defaults/
 endef
 
+define Package/flyscripts_octonix_bricket_ugb/install
+	$(INSTALL_DIR)  $(1)/etc
+	$(INSTALL_BIN)  ./files/etc/banner__octonix_bricket_ugb $(1)/etc/banner
+	$(INSTALL_DIR)  $(1)/etc/uci-defaults
+	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_octonix_bricket_ugb $(1)/etc/uci-defaults/
+endef
+
 define Package/flyscripts_octonix_bricket_ukrn/install
 	$(INSTALL_DIR)  $(1)/etc
 	$(INSTALL_BIN)  ./files/etc/banner__octonix_bricket_ukrn $(1)/etc/banner
@@ -215,6 +222,7 @@ $(eval $(call BuildPackage,flyscripts_base))
 $(eval $(call BuildPackage,flyscripts_octonix_bricket_base))
 $(eval $(call BuildPackage,flyscripts_octonix_bricket_msl))
 $(eval $(call BuildPackage,flyscripts_octonix_bricket_sich))
+$(eval $(call BuildPackage,flyscripts_octonix_bricket_ugb))
 $(eval $(call BuildPackage,flyscripts_octonix_bricket_ukrn))
 $(eval $(call BuildPackage,flyscripts_octonix_mr3220_ugb))
 $(eval $(call BuildPackage,flyscripts_rkeeper_wr841n_base))
