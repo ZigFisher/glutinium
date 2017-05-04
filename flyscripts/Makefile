@@ -48,6 +48,11 @@ $(call Package/flyscripts/default)
   TITLE:=Custom project settings
 endef
 
+define Package/flyscripts_octonix_bricket_ugb
+$(call Package/flyscripts/default)
+  TITLE:=Custom project settings
+endef
+
 define Package/flyscripts_octonix_mr3220_ugb
 $(call Package/flyscripts/default)
   TITLE:=Custom project settings
