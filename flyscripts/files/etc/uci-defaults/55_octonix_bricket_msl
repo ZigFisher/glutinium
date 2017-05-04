@@ -42,7 +42,6 @@ uci -q batch <<-EOF >/dev/null
 	set network.wan1.service='evdo'
 	set network.wan1.username='IT'
 	set network.wan1.password='IT'
-	set network.wan1.metric='1'
 	set network.wan1.ipv6='0'
 	set network.wan1.keepalive='3'
 	set network.wan1.gpio='20'
@@ -53,7 +52,6 @@ uci -q batch <<-EOF >/dev/null
 	set network.wan2.device='/dev/ttyACM1'
 	set network.wan2.service='umts'
 	set network.wan2.apn='www.kyivstar.net'
-	set network.wan2.metric='2'
 	set network.wan2.ipv6='0'
 	set network.wan2.keepalive='3'
 	set network.wan2.gpio='17'
@@ -77,7 +75,8 @@ EOF
 echo "root:NLqqG9Nu" | chpasswd
 
 echo -e "#\n# Reset USBgpio\n(for n in '1' '2' '3' '4' '5' '6' '7' '8'; do usbgpio off $n; done) >/dev/null 2>&1\n" >/etc/rc.local
-echo -e "#\n# Start checker\n(while sleep 300; do if ! ping -q -c 6 8.8.8.8; then reboot; else echo 'Link to central node - OK' | logger; fi; done) &\n" >>/etc/rc.local
+echo -e "#\n# Start dual routing\n/usr/sbin/checklink.sh >/dev/null 2>&1 &\n" >>/etc/rc.local
+echo -e "#\n# Start checker\n#(while sleep 300; do if ! ping -q -c 6 8.8.8.8; then reboot; else echo 'Link to central node - OK' | logger; fi; done) &\n" >>/etc/rc.local
 echo -e "#\n# Start VPN\n(while sleep 120; do /opt/vpn/vpn_check.sh; done) &\n" >>/etc/rc.local
 echo -e "#\n# Start snmpd\n(while true ; do sleep 5; /usr/bin/mini_snmpd -n -c msl -L World -C Intertelecom -t 1 -d /overlay,/tmp -i br-lan,3g-wan1,3g-wan2 >/dev/null 2>&1; done) &\n" >>/etc/rc.local
 echo -e "#\nexit 0\n" >>/etc/rc.local
