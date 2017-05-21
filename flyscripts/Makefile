@@ -32,6 +32,11 @@ $(call Package/flyscripts/default)
   TITLE:=Custom project settings
 endef
 
+define Package/flyscripts_octonix_bricket_ipcam
+$(call Package/flyscripts/default)
+  TITLE:=Custom project settings
+endef
+
 define Package/flyscripts_octonix_bricket_msl
 $(call Package/flyscripts/default)
   TITLE:=Custom project settings
@@ -120,6 +125,7 @@ define Package/flyscripts_base/install
 	$(INSTALL_BIN)  ./files/usr/sbin/checklink.sh $(1)/usr/sbin/
 	$(INSTALL_BIN)  ./files/usr/sbin/license.sh $(1)/usr/sbin/
 	$(INSTALL_BIN)  ./files/usr/sbin/monitor.sh $(1)/usr/sbin/
+	$(INSTALL_BIN)  ./files/usr/sbin/oko.sh $(1)/usr/sbin/
 endef
 
 define Package/flyscripts_octonix_bricket_base/install
@@ -127,6 +133,13 @@ define Package/flyscripts_octonix_bricket_base/install
 	$(INSTALL_BIN)  ./files/etc/banner__octonix_bricket_base $(1)/etc/banner
 	$(INSTALL_DIR)  $(1)/etc/uci-defaults
 	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_octonix_bricket_base $(1)/etc/uci-defaults/
+endef
+
+define Package/flyscripts_octonix_bricket_ipcam/install
+	$(INSTALL_DIR)  $(1)/etc
+	$(INSTALL_BIN)  ./files/etc/banner__octonix_bricket_ipcam $(1)/etc/banner
+	$(INSTALL_DIR)  $(1)/etc/uci-defaults
+	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_octonix_bricket_ipcam $(1)/etc/uci-defaults/
 endef
 
 define Package/flyscripts_octonix_bricket_msl/install
@@ -224,6 +237,7 @@ endef
 
 $(eval $(call BuildPackage,flyscripts_base))
 $(eval $(call BuildPackage,flyscripts_octonix_bricket_base))
+$(eval $(call BuildPackage,flyscripts_octonix_bricket_ipcam))
 $(eval $(call BuildPackage,flyscripts_octonix_bricket_msl))
 $(eval $(call BuildPackage,flyscripts_octonix_bricket_sich))
 $(eval $(call BuildPackage,flyscripts_octonix_bricket_ugb))
