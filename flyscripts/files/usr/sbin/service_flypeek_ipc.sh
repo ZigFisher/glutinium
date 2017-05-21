@@ -16,4 +16,5 @@ DEV_MAC=`arping -I $DEV_INT -c 1 $IPCAM -q && cat /proc/net/arp | grep "$IPCAM "
 mkdir -p $WCDIR
 wget -q -O $WCDIR/$DEV_MAC.jpg "http://$IPCAM/webcapture.jpg?command=snap&channel=1"
 #ftpput -u $LOGIN -p $PASSW $SERVER mouse/$DATE.jpg $WCDIR/$DEV_MAC.jpg && logger -t service_flypeek "Send snapshot from $DEV_MAC device"
-curl -u Octonix:mypass -T $WCDIR/$DEV_MAC.jpg https://webdav.4shared.com/vbox4628/$DATE.jpg
+#curl -u Octonix:mypass -T $WCDIR/$DEV_MAC.jpg https://webdav.yandex.ru/Public/$DATE.jpg
+#curl -u Octonix:mypass -T $WCDIR/$DEV_MAC.jpg https://webdav.4shared.com/Public/$DATE.jpg
