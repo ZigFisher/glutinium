@@ -32,7 +32,7 @@ proto_vtun_init_config() {
 
 proto_vtun_setup() {
   local interface="$1"
-  local findip=`find /bin /sbin /usr/bin /usr/sbin -name ip`
+  local findip=`find /bin /sbin /usr/bin /usr/sbin -name ip | head -n 1`
 
   json_get_var server server
   json_get_var port port
