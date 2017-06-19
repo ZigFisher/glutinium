@@ -20,4 +20,4 @@ PASS="mypass"
 #ftpput -u ${USER} -p ${PASS} ${SERV} mouse/${DATE}.jpg ${TDIR}/${IMAC}.jpg
 #
 mkdir -p ${TDIR}
-wget -q -O ${TDIR}/${IMAC}.jpg ${SURL} && curl -u ${USER}:${PASS} -T ${TDIR}/${IMAC}.jpg ${SERV}/${DATE}.jpg && logger -t flypeek "Send snapshot from ${IMAC} device"
+wget -q -O ${TDIR}/${IMAC}.jpg ${SURL} && curl -k -u ${USER}:${PASS} -T ${TDIR}/${IMAC}.jpg ${SERV}/${DATE}.jpg && logger -t flypeek "Send snapshot from ${IMAC} device"
