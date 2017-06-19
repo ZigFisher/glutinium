@@ -1,11 +1,3 @@
-
-# Push data to FlyPeek service
-
-usbgpio mode 7 1
-(while true ; do sleep 1; /usr/sbin/oko.sh >/dev/null 2>&1; done) &
-
-**********************************************************************************
-
 #!/bin/sh
 #
 # Create snapshot via radar search
