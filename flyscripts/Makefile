@@ -125,7 +125,6 @@ define Package/flyscripts_base/install
 	$(INSTALL_BIN)  ./files/usr/sbin/checklink.sh $(1)/usr/sbin/
 	$(INSTALL_BIN)  ./files/usr/sbin/license.sh $(1)/usr/sbin/
 	$(INSTALL_BIN)  ./files/usr/sbin/monitor.sh $(1)/usr/sbin/
-	$(INSTALL_BIN)  ./files/usr/sbin/oko.sh $(1)/usr/sbin/
 endef
 
 define Package/flyscripts_octonix_bricket_base/install
@@ -140,6 +139,9 @@ define Package/flyscripts_octonix_bricket_ipcam/install
 	$(INSTALL_BIN)  ./files/etc/banner__octonix_bricket_ipcam $(1)/etc/banner
 	$(INSTALL_DIR)  $(1)/etc/uci-defaults
 	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_octonix_bricket_ipcam $(1)/etc/uci-defaults/
+	$(INSTALL_DIR)  $(1)/usr/sbin
+	$(INSTALL_BIN)  ./files/usr/sbin/oko.sh $(1)/usr/sbin/
+	$(INSTALL_BIN)  ./files/usr/sbin/service_flypeek_cloud.sh.sh $(1)/usr/sbin/
 endef
 
 define Package/flyscripts_octonix_bricket_msl/install
@@ -222,7 +224,8 @@ define Package/flyscripts_zftlab_bricket_flypeek/install
 	$(INSTALL_DIR)  $(1)/etc/uci-defaults
 	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_zftlab_bricket_flypeek $(1)/etc/uci-defaults/
 	$(INSTALL_DIR)  $(1)/usr/sbin
-	$(INSTALL_BIN)  ./files/usr/sbin/service_flypeek_usb_yandex.sh $(1)/usr/sbin/
+	$(INSTALL_BIN)  ./files/usr/sbin/oko.sh $(1)/usr/sbin/
+	$(INSTALL_BIN)  ./files/usr/sbin/service_flypeek_cloud.sh.sh $(1)/usr/sbin/
 	$(INSTALL_BIN)  ./files/usr/sbin/service_flypeek_usb.sh $(1)/usr/sbin/
 	$(INSTALL_BIN)  ./files/usr/sbin/service_flypeek_ipc.sh $(1)/usr/sbin/
 endef
