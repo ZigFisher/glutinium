@@ -1,6 +1,7 @@
 #!/bin/sh
 #
 DATE=`date '+%Y%m%d%H%M%S'`
+HOST=`uci get system.@system[0].hostname`
 TDIR="/tmp/webcam"
 #
 #IMAC=`arping -I ${PORT} -c 1 ${ICAM} -q && cat /proc/net/arp | grep "${ICAM} " | awk '{print $4}' | tr -d ':' | tr 'a-z' 'A-Z'`
@@ -9,8 +10,8 @@ IMAC=`ifconfig eth0 | grep HWaddr | awk '{FS=" "; if(NR==1) {print $5}};' | tr -
 #SURL="http://127.0.0.1:8080/?action=snapshot"
 SURL="http://192.168.1.10/webcapture.jpg?command=snap&channel=1"
 #
-#SERV="https://webdav.yandex.ru/Public"
-SERV="https://webdav.4shared.com/Public"
+#SERV="https://webdav.yandex.ru/${HOST}"
+SERV="https://webdav.4shared.com/${HOST}"
 #
 USER="octonix"
 PASS="mypass"
