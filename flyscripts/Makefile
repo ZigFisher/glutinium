@@ -141,7 +141,7 @@ define Package/flyscripts_octonix_bricket_ipcam/install
 	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_octonix_bricket_ipcam $(1)/etc/uci-defaults/
 	$(INSTALL_DIR)  $(1)/usr/sbin
 	$(INSTALL_BIN)  ./files/usr/sbin/oko.sh $(1)/usr/sbin/
-	$(INSTALL_BIN)  ./files/usr/sbin/service_flypeek_cloud.sh.sh $(1)/usr/sbin/
+	$(INSTALL_BIN)  ./files/usr/sbin/service_flypeek.sh $(1)/usr/sbin/
 endef
 
 define Package/flyscripts_octonix_bricket_msl/install
@@ -225,9 +225,7 @@ define Package/flyscripts_zftlab_bricket_flypeek/install
 	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_zftlab_bricket_flypeek $(1)/etc/uci-defaults/
 	$(INSTALL_DIR)  $(1)/usr/sbin
 	$(INSTALL_BIN)  ./files/usr/sbin/oko.sh $(1)/usr/sbin/
-	$(INSTALL_BIN)  ./files/usr/sbin/service_flypeek_cloud.sh.sh $(1)/usr/sbin/
-	$(INSTALL_BIN)  ./files/usr/sbin/service_flypeek_usb.sh $(1)/usr/sbin/
-	$(INSTALL_BIN)  ./files/usr/sbin/service_flypeek_ipc.sh $(1)/usr/sbin/
+	$(INSTALL_BIN)  ./files/usr/sbin/service_flypeek.sh $(1)/usr/sbin/
 endef
 
 define Package/flyscripts_zftlab_bricket_mywifi/install
