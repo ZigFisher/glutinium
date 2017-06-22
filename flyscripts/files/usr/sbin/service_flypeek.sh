@@ -9,7 +9,8 @@
 # option folder   'device'                                                     # Название папки на сервисе, если указан device, то будет использовано имя устройства
 # option snapshot 'http://192.168.1.10/webcapture.jpg?command=snap&channel=1'  # Где брать снапшот с IP камеры
 # option snapshot 'http://127.0.0.1:8080/?action=snapshot'                     # Где брать снапшот с USB камеры
-#
+# option sms...
+# option buffer...
 #
 DATE=`date '+%Y%m%d%H%M%S'`
 HOST=`uci get system.@system[0].hostname`
@@ -21,7 +22,7 @@ IMAC=`ifconfig eth0 | grep HWaddr | awk '{FS=" "; if(NR==1) {print $5}};' | tr -
 SURL="http://192.168.1.10/webcapture.jpg?command=snap&channel=1"
 #
 #SERV="https://webdav.yandex.ru/${HOST}"
-SERV="https://webdav.4shared.com/${HOST}"
+SERV="https://webdav.4shared.com/FlyPeek/${HOST}"
 #
 USER="octonix"
 PASS="mypass"
