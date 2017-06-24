@@ -11,8 +11,10 @@
 # option snapshot 'http://127.0.0.1:8080/?action=snapshot'                     # Где брать снапшот с USB камеры
 # option sms...
 # option buffer...
+# option check..                                                               # Проверка, доступна-ли камера
 #
-DATE=`date '+%Y%m%d%H%M%S'`
+DATE=`date '+%Y.%m.%d'`
+TIME=`date '+%Y%m%d%H%M%S'`
 HOST=`uci get system.@system[0].hostname`
 TDIR="/tmp/webcam"
 #
@@ -22,14 +24,14 @@ IMAC=`ifconfig eth0 | grep HWaddr | awk '{FS=" "; if(NR==1) {print $5}};' | tr -
 SURL="http://192.168.1.10/webcapture.jpg?command=snap&channel=1"
 #
 #SERV="https://webdav.yandex.ru/${HOST}"
-SERV="https://webdav.4shared.com/FlyPeek/${HOST}"
+SERV="https://webdav.4shared.com/FlyPeek/${HOST}/${DATE}"
 #
 USER="octonix"
 PASS="mypass"
 #
 #
 #fswebcam --input 0 --fps 2 --skip 10 --resolution 640x480 --no-title --no-banner --save ${TDIR}/${IMAC}.jpg --quiet
-#ftpput -u ${USER} -p ${PASS} ${SERV} mouse/${DATE}.jpg ${TDIR}/${IMAC}.jpg
+#ftpput -u ${USER} -p ${PASS} ${SERV} mouse/${TIME}.jpg ${TDIR}/${IMAC}.jpg
 #
 mkdir -p ${TDIR}
-wget -q -O ${TDIR}/${IMAC}.jpg ${SURL} && curl -k -u ${USER}:${PASS} -T ${TDIR}/${IMAC}.jpg ${SERV}/${DATE}.jpg && logger -t flypeek "Send snapshot from ${IMAC} device"
+wget -q -O ${TDIR}/${IMAC}.jpg ${SURL} && curl -k -u ${USER}:${PASS} -T ${TDIR}/${IMAC}.jpg ${SERV}/${TIME}.jpg && logger -t flypeek "Send snapshot from ${IMAC} device"
