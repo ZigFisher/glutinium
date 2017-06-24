@@ -5,7 +5,7 @@
 # Create snapshot from IPCam
 
 SERVICE="https://alphasms.ua/api/http.php?version=http&command=send"
-LOGIN= "+380670000000"
+LOGIN="+380670000000"
 PASSWORD="mypass"
 FROM="Test"
 CLIENT="+380500000000"
