@@ -82,6 +82,31 @@ uci -q batch <<-EOF >/dev/null
 	set snmpd.default.location='World'
 	set snmpd.default.interfaces='br-lan,3g-wan1,3g-wan2'
 	commit snmpd
+	del openvpn.custom_config
+	del openvpn.sample_server
+	del openvpn.sample_client
+	commit openvpn
+	set openvpn.vpn1='openvpn'
+	set openvpn.vpn1.enabled='1'
+	set openvpn.vpn1.client='1'
+	set openvpn.vpn1.remote='77.88.8.8'
+	set openvpn.vpn1.port='1194'
+	set openvpn.vpn1.proto='tcp-client'
+	set openvpn.vpn1.dev='tun1'
+	set openvpn.vpn1.mode='p2p'
+	set openvpn.vpn1.route-delay='3'
+	set openvpn.vpn1.verb='3'
+	set openvpn.vpn1.keepalive='10 120'
+	set openvpn.vpn1.ca='/etc/openvpn/ca.crt'
+	set openvpn.vpn1.cert='/etc/openvpn/cert.crt'
+	set openvpn.vpn1.key='/etc/openvpn/cert.key'
+	set openvpn.vpn1.dh='/etc/openvpn/dh2048.pem'
+	set openvpn.vpn1.auth-user-pass='/etc/openvpn/password.txt'
+	set openvpn.vpn1.remote-cert-tls='server'
+	set openvpn.vpn1.remote-cert-ku='b6'
+	set openvpn.vpn1.auth='SHA1'
+	set openvpn.vpn1.cipher='AES-128-CBC'
+	commit openvpn
 EOF
 
 rm /etc/hotplug.d/usb/20-usb_mode
