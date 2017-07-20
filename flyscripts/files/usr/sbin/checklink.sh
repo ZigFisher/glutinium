@@ -13,10 +13,12 @@ export backup="3g-wan2"
     if ping -q -c 6 -I 3g-wan1 ${pinger} ; then
       [ "${curent}" != ${normal} ] && ip route replace default dev ${normal} && logger -t routing "Now link via normal channel"
       [ "${curent}" != ${normal} ] && kill -s HUP `pidof vtund`
+      [ "${curent}" != ${normal} ] && kill -s HUP `pidof openvpn`
       [ "${curent}" != ${normal} ] && /etc/init.d/ipsec restart
     else
       [ "${curent}" != ${backup} ] && ip route replace default dev ${backup} && logger -t routing "Now link via backup channel"
       [ "${curent}" != ${backup} ] && kill -s HUP `pidof vtund`
+      [ "${curent}" != ${backup} ] && kill -s HUP `pidof openvpn`
       [ "${curent}" != ${backup} ] && /etc/init.d/ipsec restart
     fi
   done

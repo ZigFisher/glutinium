@@ -10,12 +10,14 @@ echo "Interface $INTERFACE change status to $ACTION" | logger -t flyscript
 if [ "$INTERFACE" = "$IFACE" ]; then
   if [ "$ACTION" = "ifdown" ]; then
     (sleep 3; kill -s HUP `pidof vtund`) && echo "Reinitialization vtund..." | logger -t flyscript
+    (sleep 3; kill -s HUP `pidof openvpn`) && echo "Reinitialization openvpn..." | logger -t flyscript
   fi
   #
   if [ "$ACTION" = "ifup" ]; then
     (sleep 3; kill -s HUP `pidof vtund`) && echo "Reinitialization vtund..." | logger -t flyscript
+    (sleep 3; kill -s HUP `pidof openvpn`) && echo "Reinitialization openvpn..." | logger -t flyscript
     (sleep 1; kill -s HUP `pidof ser2net`) && echo "Reinitialization ser2net..." | logger -t flyscript
-    (sleep 1; kill -s HUP `pidof mini_snmpd`) && echo "Restart mini_snmpd..." | logger -t flyscript
+    (sleep 1; kill -s HUP `pidof mini_snmpd`) && echo "Reinitialization mini_snmpd..." | logger -t flyscript
   fi
 fi
 
