@@ -32,6 +32,11 @@ $(call Package/flyscripts/default)
   TITLE:=Custom project settings
 endef
 
+define Package/flyscripts_octonix_bricket_energy
+$(call Package/flyscripts/default)
+  TITLE:=Custom project settings
+endef
+
 define Package/flyscripts_octonix_bricket_ipcam
 $(call Package/flyscripts/default)
   TITLE:=Custom project settings
@@ -132,6 +137,13 @@ define Package/flyscripts_octonix_bricket_base/install
 	$(INSTALL_BIN)  ./files/etc/banner__octonix_bricket_base $(1)/etc/banner
 	$(INSTALL_DIR)  $(1)/etc/uci-defaults
 	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_octonix_bricket_base $(1)/etc/uci-defaults/
+endef
+
+define Package/flyscripts_octonix_bricket_energy/install
+	$(INSTALL_DIR)  $(1)/etc
+	$(INSTALL_BIN)  ./files/etc/banner__octonix_bricket_energy $(1)/etc/banner
+	$(INSTALL_DIR)  $(1)/etc/uci-defaults
+	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_octonix_bricket_energy $(1)/etc/uci-defaults/
 endef
 
 define Package/flyscripts_octonix_bricket_ipcam/install
@@ -238,6 +250,7 @@ endef
 
 $(eval $(call BuildPackage,flyscripts_base))
 $(eval $(call BuildPackage,flyscripts_octonix_bricket_base))
+$(eval $(call BuildPackage,flyscripts_octonix_bricket_energy))
 $(eval $(call BuildPackage,flyscripts_octonix_bricket_ipcam))
 $(eval $(call BuildPackage,flyscripts_octonix_bricket_msl))
 $(eval $(call BuildPackage,flyscripts_octonix_bricket_sich))

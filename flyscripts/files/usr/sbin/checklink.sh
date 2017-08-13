@@ -9,7 +9,7 @@ export backup="3g-wan2"
 ( \
   while sleep 5s; do
     curent=`ip r | awk -F ' ' '/default/ {print $3}'`
-    logger -t routing "Current: ${curent}"
+    #logger -t routing "Current: ${curent}"
     if ping -q -c 6 -I 3g-wan1 ${pinger} ; then
       [ "${curent}" != ${normal} ] && ip route replace default dev ${normal} && logger -t routing "Now link via normal channel"
       [ "${curent}" != ${normal} ] && kill -s HUP `pidof vtund`
