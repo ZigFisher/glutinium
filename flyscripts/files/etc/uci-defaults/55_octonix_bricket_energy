@@ -47,23 +47,6 @@ uci -q batch <<-EOF >/dev/null
 	set network.wan1.gpio='20'
 	set network.wan1.indicator='1'
 	commit network
-	set network.vtun0='interface'
-	set network.vtun0.proto='vtun'
-	set network.vtun0.server='vbox3.flymon.net'
-	set network.vtun0.name='vbox4700'
-	set network.vtun0.password='test2016'
-	set network.vtun0.mode='tun'
-	set network.vtun0.hub='172.19.24.1'
-	set network.vtun0.ipaddr='172.19.24.100'
-	commit network
-	set network.vtun1='interface'
-	set network.vtun1.proto='vtun'
-	set network.vtun1.server='A.B.C.D'
-	set network.vtun1.name='energy011'
-	set network.vtun1.password='eNeRGy2017pAsS'
-	set network.vtun1.mode='ether'
-	set network.vtun1.bridge='br-lan'
-	commit network
 	set snmpd.default='snmpd'
 	set snmpd.default.community='Energy'
 	set snmpd.default.contact='Octonix'
