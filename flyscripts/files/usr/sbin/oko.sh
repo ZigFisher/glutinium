@@ -5,7 +5,6 @@
 # Create snapshot from IPCam
 # Send Photo via Telegram
 
-
 IPCAM='http://172.28.158.102/webcapture.jpg?command=snap&channel=1'
 TOKEN='367706172:AAHqXLtPAUExiF_CUPe42SvrK9b7csi953A'
 RUPOR='@Bricket1'

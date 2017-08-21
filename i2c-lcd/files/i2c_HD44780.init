@@ -1,0 +1,27 @@
+#!/bin/sh /etc/rc.common
+#
+# Fork from http://www.cyber-place.ru/showthread.php?t=2164
+# Copyright (C) 2017 ZFTLab.org
+
+START=98
+
+start() {
+        killall -9 i2c_HD44780 >/dev/null 2>&1
+        #
+        device=$(uci get i2c_HD44780.@display[0].device)
+        address=$(uci get i2c_HD44780.@display[0].address)
+        file=$(uci get i2c_HD44780.@display[0].file)
+        banner=$(uci get i2c_HD44780.@display[0].banner)
+        clock=$(uci get i2c_HD44780.@display[0].clock)
+        led=$(uci get i2c_HD44780.@display[0].led)
+        while=$(uci get i2c_HD44780.@display[0].while)
+        read=$(uci get i2c_HD44780.@display[0].read)
+        #
+        i2c_HD44780 -n $banner -d $device -a $address -f $file -u $while$clock$led$read &
+        (sleep 5; echo -e "Octonix for You\nChto zhelaete ?\n" >/tmp/$file) &
+}
+
+stop() {
+        killall -9 i2c_HD44780 >/dev/null 2>&1
+}
+

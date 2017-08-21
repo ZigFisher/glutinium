@@ -1,0 +1,10 @@
+
+config display
+    option device  '0'
+    option address '0x27'
+    option banner  '0'
+    option file    'LCD'
+    option read    '1'
+    option while   '1'
+    option led     '1'
+    option clock   '0'

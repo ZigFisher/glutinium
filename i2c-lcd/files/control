@@ -1,0 +1,15 @@
+Package: i2c_HD44780
+Version: 0.3.1-read-file+ds18b20_gpio+USB-UART_digitemp+clock_Web_Cyberwrt+Err_i2c_hd44780.log
+Depends: libc, i2c-tools, kmod-i2c-gpio-custom
+Provides: 
+Source: package/i2c_HD44780
+Section: utils
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ramips
+Installed-Size: 14855
+Description:  LCD monitor for HD44780 over I2C by PCF8574 bus expander.
+ W1-gpio thermostat-thermometer 4-sensors or digitemp-usb thermometer.
+ help(RU) http://www.cyber-place.ru/showthread.php?t=2164
