@@ -1,25 +1,31 @@
 #!/bin/sh
 #
 # Scan home via Radar detector
-# Send SMS via AlphaSMS service
+# Send Message via Telegram
 # Create snapshot from IPCam
+# Send Photo via Telegram
 
-SERVICE="https://alphasms.ua/api/http.php?version=http&command=send"
-LOGIN="+380670000000"
-PASSWORD="mypass"
-FROM="Test"
-CLIENT="+380500000000"
-MESSAGE="AlarmVision"
-DELAY="60"
+
+IPCAM='http://172.28.158.102/webcapture.jpg?command=snap&channel=1'
+TOKEN='367706172:AAHqXLtPAUExiF_CUPe42SvrK9b7csi953A'
+RUPOR='@Bricket1'
+ALARM='RadarDetect!'
+MEDIA='Content-Type: multipart/form-data'
+DELAY='60'
+SLEEP='1'
 
 
 if [ "`usbgpio statusin | awk -F ' ' '/LED 7/ {print $4}'`" = "1" ] ; then
-  logger -t flypeek "RadarDetect !"
+  logger -t flypeek "${ALARM}"
   #
-  last=`cat /tmp/.smsdelay`
+  last=`cat /tmp/.delay`
   curr=`date +%s`
   [ $(($curr-$last)) -gt ${DELAY} ] && \
-    curl -k "${SERVICE}&login=${LOGIN}&password=${PASSWORD}&from=${FROM}&to=${CLIENT}&message=${MESSAGE}" | logger -t alphasms && date +%s >/tmp/.smsdelay
+    curl -s -k -X POST "https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${RUPOR}&text=${ALARM}" && date +%s >/tmp/.delay
   #
-  /usr/sbin/service_flypeek.sh
+  ( STAMP=`date +%Y%m%d%H%M%S` && \
+    curl -s -k ${IPCAM} -o /tmp/${STAMP}.jpg && \
+    curl -s -k -X POST "https://api.telegram.org/bot${TOKEN}/sendPhoto?chat_id=${RUPOR}" -H "${MEDIA}" -F "photo=@${PHOTO}" -F "caption=TimeStamp: ${STAMP}" && \
+    rm -f /tmp/${STAMP}.jpg \
+  ) &
 fi
