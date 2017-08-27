@@ -23,7 +23,7 @@ if [ "`usbgpio statusin | awk -F ' ' '/LED 7/ {print $4}'`" = "1" ] ; then
   last=`cat /tmp/.delay`
   curr=`date +%s`
   [ $(($curr-$last)) -gt ${DELAY} ] && \
-    curl -s -k -X POST "https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${RUPOR}&text=${ALARM}${STAMP}" && date +%s >/tmp/.delay
+    curl -s -k -X POST "https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${RUPOR}&text=${SYSID}_${ALARM}_${STAMP}" && date +%s >/tmp/.delay
   #
   # Send photo to Telegram channel
   if [ "${FILES}" -lt "${LIMIT}" ]; then
