@@ -15,7 +15,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/i2c-lcd
   SECTION:=utils
   CATEGORY:=Utilities
-  DEPENDS:=@GPIO_SUPPORT +kmod-i2c-core
+  DEPENDS:=@TARGET_ramips @GPIO_SUPPORT +kmod-i2c-core
   TITLE:=LCD monitor for HD44780 over I2C by PCF8574 bus expander
   MAINTAINER:=http://flymon.net
 endef

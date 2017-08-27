@@ -5,8 +5,8 @@
 # Send Message and Photo via Telegram
 
 IPCAM='http://192.168.1.10/webcapture.jpg?command=snap&channel=1'
-TOKEN='367706172:AAHqXLtPAUExiF_CUPe42SvrK9b7csi953A'
-RUPOR='@Bricket1'
+TOKEN='YOU:TOKEN'
+RUPOR='YouChannel_-ID_or_@Name'
 ALARM='RadarDetect:'
 YPASS='user:pass'
 DELAY='60'
