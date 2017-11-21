@@ -3,6 +3,7 @@
 # Scan home via Radar detector
 # Grab snapshot from connected IPCam
 # Send Message and Photo via Telegram
+# Push picture with text via command line
 
 IPCAM='http://192.168.1.10/webcapture.jpg?command=snap&channel=1'
 TOKEN='YOU:TOKEN'
@@ -13,7 +14,7 @@ SYSID=`uci get system.@system[0].hostname`
 DELAY='60'
 SLEEP='1'
 LIMIT='3'
-
+EXTRA='--connect-timeout 60 --max-time 60'
 
 if [ "`usbgpio statusin | awk -F ' ' '/LED 7/ {print $4}'`" = "1" ] ; then
   STAMP=`date +%Y%m%d%H%M%S`
@@ -28,7 +29,7 @@ if [ "`usbgpio statusin | awk -F ' ' '/LED 7/ {print $4}'`" = "1" ] ; then
   # Send photo to Telegram channel
   if [ "${FILES}" -lt "${LIMIT}" ]; then
     ( curl -s -k ${IPCAM} -o /tmp/${STAMP}.jpg && \
-      curl -s -k -X POST "https://api.telegram.org/bot${TOKEN}/sendPhoto?chat_id=${RUPOR}" -H "Content-Type: multipart/form-data" -F "photo=@/tmp/${STAMP}.jpg" -F "caption=${SYSID} TimeStamp: ${STAMP}" && \
+      curl -s -k ${EXTRA} -X POST "https://api.telegram.org/bot${TOKEN}/sendPhoto?chat_id=${RUPOR}" -H "Content-Type: multipart/form-data" -F "photo=@/tmp/${STAMP}.jpg" -F "caption=${SYSID} TimeStamp: ${STAMP}" && \
       logger -t oko "TX to Telegram OK" && \
       rm -f /tmp/${STAMP}.jpg \
     ) &
@@ -45,4 +46,10 @@ if [ "`usbgpio statusin | awk -F ' ' '/LED 7/ {print $4}'`" = "1" ] ; then
   #
   sleep ${SLEEP}
   #
+fi
+
+
+if [ -n "${1}" ] ; then
+  NOTES=`busybox echo -e "${1}"`
+  curl -s -k -X POST "https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${RUPOR}&text=${NOTES}+${2}"
 fi
