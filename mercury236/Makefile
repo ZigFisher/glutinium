@@ -34,7 +34,7 @@ define Build/Prepare
 endef
 
 define Build/Compile
-	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -O -g -D LINUX \
+	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -std=c99 -O -g -D LINUX \
 		-o $(PKG_BUILD_DIR)/mercury236 $(PKG_BUILD_DIR)/mercury236.c
 endef
 
