@@ -22,7 +22,6 @@ define Package/mercury236
 	CATEGORY:=Utilities
 	TITLE:=Mercury 236 power meter RS485 communication utility
 	MAINTAINER:=https://github.com/Shden/mercury236
-	DEPENDS:=+libcurl
 endef
 
 define Package/mercury236/description
