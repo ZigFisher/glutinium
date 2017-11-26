@@ -1,4 +1,6 @@
 #!/bin/sh
+#
+# Exec /relay command
 
 STATUS=`cat /sys/class/gpio/gpio20/value`
 

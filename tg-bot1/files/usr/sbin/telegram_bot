@@ -5,13 +5,9 @@ PATH='/usr/bin:/usr/sbin:/bin:/sbin'
 source /root/variables
 
 sleep 10
-
 keyboard='{"keyboard": [["/snap \uD83D\uDCF7","/guard \uD83D\uDC6E","/relay \uD83D\uDCA1"],["/system \uD83D\uDCCA","/reboot \uD83D\uDCA9","/fixes \uD83D\uDD25"]],"resize_keyboard":true,"one_time_keyboard":false}'
-
 curl -k -s -X POST $api/sendMessage -d chat_id=$my_chat_id -d parse_mode=Markdown --data-urlencode text="Router started." &> $telegram_log_file
-
 curl -k -s -X POST -H "Charset: UTF-8"  $api/sendMessage -d chat_id=$my_chat_id -d "reply_markup=${keyboard}" -d "text=Please insert command:" &> $telegram_log_file
-
 
 offset=0
 if [ -f "$offset_file" ] ; then
@@ -55,16 +51,13 @@ do
 					case "$cmd" in
 						("/reboot")
 							echo "[ $DATE ] reboot!" >> $cmd_log_file
-							RETURN_TEXT="Reboot process started!"
-							reply_to_msg $msg_id $origin "\${RETURN_TEXT}" && sleep 5 && reboot
+							informex_reboot=$("tg_reboot.sh")
+							reply_to_msg $msg_id $origin "\${informex_reboot}"
 							;;
 						("/relay")
 							echo "[ $DATE ] relay!" >> $cmd_log_file
-							informex_relay=$("/root/functions/tg_gpio.sh")
+							informex_relay=$("tg_relay.sh")
 							reply_to_msg $msg_id $origin "\${informex_relay}"
-							#
-							#RETURN_TEXT="$(printf "Reply: \n$informex_relay")"
-							#reply_to_msg $msg_id $origin "\${RETURN_TEXT}"
                                                         ;;
 						("/system")
 							echo "[ $DATE ] system!" >> $cmd_log_file

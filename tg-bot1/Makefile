@@ -40,6 +40,7 @@ define Package/tg-bot1/install
 	$(INSTALL_BIN)  ./files/etc/init.d/telegram $(1)/etc/init.d/
 	$(INSTALL_DIR)  $(1)/usr/bin
 	$(INSTALL_BIN)  ./files/usr/bin/tg_relay.sh $(1)/usr/bin/
+	$(INSTALL_BIN)  ./files/usr/bin/tg_reboot.sh $(1)/usr/bin/
 	$(INSTALL_DIR)  $(1)/usr/sbin
 	$(INSTALL_BIN)  ./files/usr/sbin/telegram_bot $(1)/usr/sbin/
 endef
