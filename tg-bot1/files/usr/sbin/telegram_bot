@@ -1,1 +1,94 @@
+#!/bin/sh
+#
+PATH='/usr/bin:/usr/sbin:/bin:/sbin'
 
+source /root/variables
+
+sleep 10
+
+keyboard='{"keyboard": [["/snap \uD83D\uDCF7","/guard \uD83D\uDC6E","/relay \uD83D\uDCA1"],["/system \uD83D\uDCCA","/reboot \uD83D\uDCA9","/fixes \uD83D\uDD25"]],"resize_keyboard":true,"one_time_keyboard":false}'
+
+curl -k -s -X POST $api/sendMessage -d chat_id=$my_chat_id -d parse_mode=Markdown --data-urlencode text="Router started." &> $telegram_log_file
+
+curl -k -s -X POST -H "Charset: UTF-8"  $api/sendMessage -d chat_id=$my_chat_id -d "reply_markup=${keyboard}" -d "text=Please insert command:" &> $telegram_log_file
+
+
+offset=0
+if [ -f "$offset_file" ] ; then
+	offset=$( cat $offset_file )
+else
+	echo $offset > $offset_file
+fi
+
+reply_to_msg () {
+	msg_id=$1
+	origin=$2
+	eval toReturn="$3"
+        curl -k -s -X POST $api/sendMessage -d reply_to_message_id=$msg_id -d chat_id=$origin -d parse_mode=HTML --data-urlencode text="$toReturn" &> $telegram_log_file
+}
+
+while [ true ]
+do
+	updates=$(curl -s -k -X GET $api/getUpdates?offset=$offset)
+	status=$(jsonfilter -s "$updates" -e $.ok)
+	if [ $status = 'true' ]; then
+		update_ids=$(jsonfilter -s "$updates" -e $.result[*].update_id)
+		for update_id in $update_ids
+		do
+			offset=$((update_id+1))
+			echo $offset > $offset_file
+			origin=$(jsonfilter -s "$updates"  -e "$.result[@.update_id=$update_id].message.chat.id")
+			msg_id=$(jsonfilter -s "$updates"  -e "$.result[@.update_id=$update_id].message.message_id")
+			command=$(jsonfilter -s "$updates" -e "$.result[@.update_id=$update_id].message.text")
+			is_a_cmd=$(jsonfilter -s "$updates" -e "$.result[@.update_id=$update_id].message.entities[*].type")
+			query_ans=$(jsonfilter -s "$updates" -e "$.result[@.update_id=$update_id].callback_query.id")
+			origin_ans=$(jsonfilter -s "$updates"  -e "$.result[@.update_id=$update_id].callback_query.message.chat.id")
+			if [[ "$origin" != "$my_chat_id" && "$origin_ans" != "$my_chat_id" ]];then
+				curl -k -s -X POST $api/sendMessage -d reply_to_message_id=$msg_id -d chat_id=$origin -d parse_mode=Markdown --data-urlencode text="This is a Private bot." &> $telegram_log_file
+				curl -k -s -X POST $api/leaveChat -d chat_id=$origin  &> $telegram_log_file
+			else
+				if [ "$is_a_cmd" ==  "bot_command" ]; then
+					
+					cmd=$(echo $command |  awk '{print $1}')
+					DATE=`date +%Y-%m-%d_%H:%M:%S`
+					RETURN_TEXT=""
+					case "$cmd" in
+						("/reboot")
+							echo "[ $DATE ] reboot!" >> $cmd_log_file
+							RETURN_TEXT="Reboot process started!"
+							reply_to_msg $msg_id $origin "\${RETURN_TEXT}" && sleep 5 && reboot
+							;;
+						("/relay")
+							echo "[ $DATE ] relay!" >> $cmd_log_file
+							informex_relay=$("/root/functions/tg_gpio.sh")
+							reply_to_msg $msg_id $origin "\${informex_relay}"
+							#
+							#RETURN_TEXT="$(printf "Reply: \n$informex_relay")"
+							#reply_to_msg $msg_id $origin "\${RETURN_TEXT}"
+                                                        ;;
+						("/system")
+							echo "[ $DATE ] system!" >> $cmd_log_file
+							clients=$("./functions/memory_info.sh")
+							RETURN_TEXT="$(printf "Memory informations: \n$clients")"
+							reply_to_msg $msg_id $origin "\${RETURN_TEXT}"
+                                                        ;;
+						("/guard")
+							echo "[ $DATE ] guard!" >> $cmd_log_file
+							text="Нету денег - нет охраны !"
+							RETURN_TEXT="$(printf "Informex: \n$text")"
+							reply_to_msg $msg_id $origin "\${RETURN_TEXT}"
+                                                        ;;
+						(*)
+							echo "[ $DATE ] $cmd command not enabled" >> $cmd_log_file
+							RETURN_TEXT="This command is not enabled."
+							reply_to_msg $msg_id $origin "\${RETURN_TEXT}"
+							;;
+					esac
+				else
+					curl -k -s -X POST $api/sendMessage -d reply_to_message_id=$msg_id -d chat_id=$origin -d parse_mode=Markdown --data-urlencode text="Is not a command." &> $telegram_log_file
+				fi
+			fi
+		done
+	fi
+	sleep 1
+done &
