@@ -20,7 +20,7 @@ define Package/tg-bot1
 	MAINTAINER:=Zig Fisher <flyrouter@gmail.com>
 	TITLE:=TG-Bot1 - simple Telegram bot for OpenWrt based devices
 	URL:=https://github.com/ZigFisher/Glutinium/tree/master/tg-bot1
-	DEPENDS:=+libcurl
+	DEPENDS:=+curl
 endef
 
 define Package/tg-bot1/description
