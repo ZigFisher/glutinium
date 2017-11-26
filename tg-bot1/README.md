@@ -1,7 +1,7 @@
 tg-bot1
 =======
 
-TG-Bot1 for OpenWrt based devices
+TG-Bot1 - simple Telegram bot for OpenWrt based devices
 
 
 License
