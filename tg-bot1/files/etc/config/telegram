@@ -1,6 +1,6 @@
 
-config telegram 'default'
+config telegram 'bot'
 	option token '0:A'
 	option rupor '-0'
-	option start '1'
+	option start '0'
 

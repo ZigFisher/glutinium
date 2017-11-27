@@ -14,4 +14,3 @@ if [ "${STATUS}" == "0" ]; then
   echo "Relay current OFF => turn it to ON"
   echo "1" >/sys/class/gpio/gpio20/value
 fi
-
