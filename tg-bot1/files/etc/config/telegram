@@ -1,1 +1,5 @@
 
+config telegram 'default'
+	option token '0:A'
+	option group '-0'
+
