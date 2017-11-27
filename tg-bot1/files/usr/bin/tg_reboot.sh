@@ -4,4 +4,4 @@
 
 echo "Reboot process started!"
 #
-(sleep 5; reboot) &
+(sleep 10; reboot) &

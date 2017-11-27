@@ -7,4 +7,3 @@ uptime
 echo ""
 echo "Memory:"
 free
-
