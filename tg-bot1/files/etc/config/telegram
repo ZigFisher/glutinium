@@ -1,5 +1,6 @@
 
 config telegram 'default'
 	option token '0:A'
-	option group '-0'
+	option rupor '-0'
+	option start '1'
 
