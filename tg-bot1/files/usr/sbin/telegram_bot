@@ -56,7 +56,6 @@ do
 				if [ "$is_a_cmd" ==  "bot_command" ]; then
 					cmd=$(echo $command |  awk '{print $1}')
 					DATE=`date +%Y-%m-%d_%H:%M:%S`
-					RETURN_TEXT=""
 					case "$cmd" in
 						("/guard")
 							echo "[ $DATE ] Run /guard command !" | logger -t "telegram_bot" -p daemon.info
@@ -89,8 +88,8 @@ do
 							reply_to_msg $msg_id $origin "\${informex_unknown}"
 							;;
 					esac
-				else
-					curl -k -s -X POST -H "Charset: UTF-8" $api/sendMessage -d reply_to_message_id=$msg_id -d chat_id=$origin -d parse_mode=Markdown --data-urlencode text="Is not a command." >/dev/null 2>&1
+				#else
+				#	curl -k -s -X POST -H "Charset: UTF-8" $api/sendMessage -d reply_to_message_id=$msg_id -d chat_id=$origin -d parse_mode=Markdown --data-urlencode text="Is not a command." >/dev/null 2>&1
 				fi
 			fi
 		done
