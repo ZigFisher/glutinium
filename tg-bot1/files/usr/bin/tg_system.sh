@@ -6,4 +6,4 @@ echo "Uptime:"
 uptime
 echo ""
 echo "Memory:"
-free
+free | awk '/Mem/ {print "Total: "$2" |","Used: "$3" |","Free: "$4}'

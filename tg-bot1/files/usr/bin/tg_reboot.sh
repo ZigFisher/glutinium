@@ -2,6 +2,5 @@
 #
 # Exec /reboot command
 
+#reboot
 echo "Reboot process started!"
-#
-(sleep 10; reboot) &

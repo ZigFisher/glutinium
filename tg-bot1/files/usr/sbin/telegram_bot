@@ -15,7 +15,7 @@ if [ "$start" == "0" ]; then
 fi
 
 sleep 10
-keyboard='{"keyboard": [["/snap \uD83D\uDCF7","/guard \uD83D\uDC6E","/relay \uD83D\uDCA1"],["/system \uD83D\uDCCA","/reboot \uD83D\uDCA9","/fixes \uD83D\uDD25"]],"resize_keyboard":true,"one_time_keyboard":false}'
+keyboard='{"keyboard": [["/snap \uD83D\uDCF7","/guard \uD83D\uDC6E","/relay \uD83D\uDCA1"],["/system \uD83D\uDCCA","/reboot \uD83D\uDCA9","/menu \uD83D\uDD25"]],"resize_keyboard":true,"one_time_keyboard":false}'
 curl -k -s -X POST -H "Charset: UTF-8" $api/sendMessage -d chat_id=$rupor -d parse_mode=Markdown --data-urlencode text="Router started." >/dev/null 2>&1
 curl -k -s -X POST -H "Charset: UTF-8" $api/sendMessage -d chat_id=$rupor -d "reply_markup=${keyboard}" -d "text=Please insert command:" >/dev/null 2>&1
 
@@ -30,7 +30,7 @@ reply_to_msg () {
 	msg_id=$1
 	origin=$2
 	eval toReturn="$3"
-        curl -k -s -X POST -H "Charset: UTF-8" $api/sendMessage -d reply_to_message_id=$msg_id -d chat_id=$origin -d parse_mode=HTML --data-urlencode text="$toReturn" >/dev/null 2>&1
+	curl -k -s -X POST -H "Charset: UTF-8" $api/sendMessage -d reply_to_message_id=$msg_id -d chat_id=$origin -d parse_mode=HTML --data-urlencode text="$toReturn" >/dev/null 2>&1
 }
 
 while [ true ]
@@ -61,7 +61,11 @@ do
 							echo "[ $DATE ] Run /guard command !" | logger -t "telegram_bot" -p daemon.info
 							informex_guard=$("tg_guard.sh")
 							reply_to_msg $msg_id $origin "\${informex_guard}"
-                                                        ;;
+							;;
+						("/menu")
+							echo "[ $DATE ] Run /menu command !" | logger -t "telegram_bot" -p daemon.info
+							curl -k -s -X POST -H "Charset: UTF-8" $api/sendMessage -d chat_id=$rupor -d "reply_markup=${keyboard}" -d "text=Please insert command:" >/dev/null 2>&1
+							;;
 						("/reboot")
 							echo "[ $DATE ] Run /reboot command !" | logger -t "telegram_bot" -p daemon.info
 							informex_reboot=$("tg_reboot.sh")
@@ -71,17 +75,17 @@ do
 							echo "[ $DATE ] Run /relay command !" | logger -t "telegram_bot" -p daemon.info
 							informex_relay=$("tg_relay.sh")
 							reply_to_msg $msg_id $origin "\${informex_relay}"
-                                                        ;;
+							;;
 						("/snap")
 							echo "[ $DATE ] Run /snap command !" | logger -t "telegram_bot" -p daemon.info
 							informex_system=$("tg_snap.sh")
 							reply_to_msg $msg_id $origin "\${informex_system}"
-                                                        ;;
+							;;
 						("/system")
 							echo "[ $DATE ] Run /system command !" | logger -t "telegram_bot" -p daemon.info
 							informex_system=$("tg_system.sh")
 							reply_to_msg $msg_id $origin "\${informex_system}"
-                                                        ;;
+							;;
 						(*)
 							echo "[ $DATE ] $cmd command not enabled" | logger -t "telegram_bot" -p daemon.info
 							informex_unknown="This command is not enabled."
