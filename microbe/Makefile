@@ -7,24 +7,24 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=tg-web
+PKG_NAME:=microbe
 PKG_VERSION:=2017-11-30
 PKG_RELEASE:=1
 PKG_LICENSE:=GPL-2.0
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/tg-web
+define Package/microbe
 	SECTION:=net
 	CATEGORY:=Network
 	MAINTAINER:=Zig Fisher <flyrouter@gmail.com>
-	TITLE:=TG-Web - a minimalistic web interface for bots and automation systems
-	URL:=https://github.com/ZigFisher/Glutinium/tree/master/tg-web
+	TITLE:=Microbe - a selection of scripts for routers with a small amount of flash memory
+	URL:=https://github.com/ZigFisher/Glutinium/tree/master/microbe
 	DEPENDS:=+busybox
 endef
 
-define Package/tg-web/description
-	TG-Web - a minimalistic web interface for bots and automation systems
+define Package/microbe/description
+	Microbe - a selection of scripts for routers with a small amount of flash memory
 endef
 
 define Build/Configure
@@ -33,7 +33,7 @@ endef
 define Build/Compile
 endef
 
-define Package/tg-web/install
+define Package/microbe/install
 	$(INSTALL_DIR)  $(1)/etc/config
 	$(INSTALL_BIN)  ./files/etc/config/test $(1)/etc/config/
 	$(INSTALL_DIR)  $(1)/etc/init.d
@@ -44,7 +44,7 @@ define Package/tg-web/install
 	$(INSTALL_BIN)  ./files/usr/sbin/test $(1)/usr/sbin/
 endef
 
-$(eval $(call BuildPackage,tg-web))
+$(eval $(call BuildPackage,microbe))
 
 
 
