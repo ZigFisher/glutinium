@@ -1,0 +1,85 @@
+.b-error-message, .b-success-message, .b-info-message {
+	padding: 10px;
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 5px 0;
+	width: 40em;
+	margin: 0 auto 1.5em;
+}
+
+.b-error-message {
+	color: #665652;
+	border-color: #DFA08F;
+	background-color: #FFD8CE;
+	}
+
+.b-success-message {
+	color: #556652;
+	border-color: #9ADF8F;
+	background-color: #D5FFCE;
+	}
+
+.b-info-message {
+	color: #666452;
+	border-color: #DFD98F;
+	background-color: #FFFBCE;
+	}
+
+.b-uin {
+	font-weight: bold;
+}
+
+.b-fieldset-inline {
+	border: none;
+	border-top: 1px solid #999;
+	padding: 10px 1.5em;
+}
+
+.b-fieldset-inline legend {
+	font-weight: bold;
+	border: 1px solid #999;
+	border-radius: 7px;
+	background: white;
+	padding: 5px 10px;
+	margin: 0 10px;
+}
+
+.b-base-logo {
+	margin: 3em 0;
+	text-align: center;
+}
+
+.b-info {
+}
+
+.b-base_server_status {
+	position: absolute;
+	top: 0;
+	right: 0;
+	font-size: 10px;
+	padding: 1em;
+	background: #ececec;
+}
+
+.b-base_server_status.m-running {
+	background-color: #c7e8be;
+	}
+
+.b-base_server_status.m-stopped {
+	background-color: #eabebe;
+	}
+
+.b-base-server-start_stop.m-running {
+	background-color: #eabebe;
+}
+
+.b-base-server-start_stop.m-stopped {
+	background-color: #c7e8be;
+}
+
+.butt {
+	font-family: Verdana, Arial, Helvetica;
+	font-size: 9pt;
+	background: 
+	#DFDFDF;
+}
