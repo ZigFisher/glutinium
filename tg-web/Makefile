@@ -20,7 +20,7 @@ define Package/tg-web
 	MAINTAINER:=Zig Fisher <flyrouter@gmail.com>
 	TITLE:=TG-Web - a minimalistic web interface for bots and automation systems
 	URL:=https://github.com/ZigFisher/Glutinium/tree/master/tg-web
-	DEPENDS:=+busybox
+	DEPENDS:=+haserl
 endef
 
 define Package/tg-web/description
