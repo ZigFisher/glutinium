@@ -7,7 +7,7 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=
+PKG_NAME:=tg-bot2
 PKG_VERSION:=2015-08-07
 PKG_RELEASE:=1
 PKG_MAINTAINER:=shinmai-rookie
@@ -25,22 +25,22 @@ define Package/tg-bot2
 	DEPENDS:=+libcurl
 endef
 
-define Package/tg-bot2/description
+define Package/$(PKG_NAME)/description
 	TG-Bot2 - simple Telegram bot for OpenWrt based devices
 endef
 
-define Build/Prepare
+define Package/$(PKG_NAME)/Build/Prepare
 	$(INSTALL_DIR) $(PKG_BUILD_DIR)
 	$(INSTALL_DATA) ./src/* $(PKG_BUILD_DIR)/
 endef
 
-define Build/Compile
+define Package/$(PKG_NAME)/Build/Compile
 	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -O -g -D LINUX -lcurl \
 		-o $(PKG_BUILD_DIR)/tg-bot2 $(PKG_BUILD_DIR)/rousbot.c $(PKG_BUILD_DIR)/message.c
 	#CFLAGS=-ansi -Wall -Wextra -pedantic -Wno-unused-parameter `curl-config --cflags`
 endef
 
-define Package/tg-bot2/install
+define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/tg-bot2 $(1)/usr/bin/
 endef
