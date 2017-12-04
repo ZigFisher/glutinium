@@ -10,7 +10,7 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=pzem004t
 PKG_VERSION:=2016-10-14
 PKG_RELEASE:=1
-PKG_MAINTAINER:=Armand Huqi
+PKG_MAINTAINER:=Igor Zalatov <flyrouter@gmail.com>
 
 PKG_LICENSE:=GPL-2.0
 PKG_LICENSE_FILES:=LICENSE

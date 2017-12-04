@@ -24,7 +24,7 @@ define KernelPackage/$(PKG_NAME)
   URL:=https://github.com/lucidm/lcdi2c
   FILES:=$(PKG_BUILD_DIR)/lcdi2c.$(LINUX_KMOD_SUFFIX)
   VERSION:=$(LINUX_VERSION)+$(PKG_VERSION)-$(PKG_RELEASE)
-  AUTOLOAD:=$(call AutoLoad,80,hd44780)
+  AUTOLOAD:=$(call AutoLoad,80,lcdi2c)
 endef
 
 define KernelPackage/$(PKG_NAME)/description
