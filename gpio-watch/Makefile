@@ -6,6 +6,7 @@
 #
 
 include $(TOPDIR)/rules.mk
+include $(INCLUDE_DIR)/kernel.mk
 
 PKG_NAME:=gpio-watch
 PKG_VERSION:=2017-06-08
@@ -20,7 +21,7 @@ define Package/$(PKG_NAME)
 	CATEGORY:=Utilities
 	TITLE:=GPIO monitoring tool
 	MAINTAINER:=https://github.com/larsks/gpio-watch
-	DEPENDS:=+librt
+	DEPENDS:=@GPIO_SUPPORT +librt
 endef
 
 define Package/$(PKG_NAME)/description
@@ -43,3 +44,4 @@ define Package/$(PKG_NAME)/install
 endef
 
 $(eval $(call BuildPackage,gpio-watch))
+

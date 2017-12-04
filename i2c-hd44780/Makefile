@@ -17,15 +17,9 @@ PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 
 include $(INCLUDE_DIR)/package.mk
 
-MAKEFLAGS_KMOD:= -C "$(LINUX_DIR)" \
-  CROSS_COMPILE="$(TARGET_CROSS)" \
-  ARCH="$(LINUX_KARCH)" \
-  PATH="$(TARGET_PATH)" \
-  SUBDIRS="$(PKG_BUILD_DIR)"
-
 define KernelPackage/$(PKG_NAME)
   SUBMENU:=Other modules
-  DEPENDS:=
+  DEPENDS:=+kmod-i2c-core
   TITLE:=Kernel driver for hd44780-based LCD display
   URL:=https://github.com/lucidm/lcdi2c
   FILES:=$(PKG_BUILD_DIR)/lcdi2c.$(LINUX_KMOD_SUFFIX)
@@ -37,6 +31,11 @@ define KernelPackage/$(PKG_NAME)/description
 	Kernel driver for access to hd44780-based display via i2c
 endef
 
+MAKE_OPTS:= \
+	ARCH="$(LINUX_KARCH)" \
+	CROSS_COMPILE="$(TARGET_CROSS)" \
+	SUBDIRS="$(PKG_BUILD_DIR)"
+	#PATH="$(TARGET_PATH)"
 
 define Build/Prepare
 	mkdir -p $(PKG_BUILD_DIR)
@@ -44,8 +43,10 @@ define Build/Prepare
 endef
 
 define Build/Compile
-	$(MAKE) $(MAKEFLAGS_KMOD) \
+	$(MAKE) -C "$(LINUX_DIR)" \
+		$(MAKE_OPTS) \
 		modules
 endef
 
 $(eval $(call KernelPackage,i2c-hd44780))
+
