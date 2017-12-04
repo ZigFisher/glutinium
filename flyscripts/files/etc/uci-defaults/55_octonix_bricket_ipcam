@@ -18,7 +18,7 @@ uci -q batch <<-EOF >/dev/null
 	set network.relay='interface'
 	set network.relay.proto='relay'
 	set network.relay.network='lan wwan'
-	set network.relay.ipaddr=192.168.0.1'
+	set network.relay.ipaddr='192.168.0.1'
 	commit network
 	set network.port1='switch_port'
 	set network.port1.device='switch0'
