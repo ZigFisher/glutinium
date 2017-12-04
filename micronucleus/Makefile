@@ -24,7 +24,7 @@ PKG_LICENSE_FILES:=LICENSE
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/micronucleus
+define Package/$(PKG_NAME)
 	SECTION:=utils
 	CATEGORY:=Utilities
 	TITLE:=Micronucleus - ATTiny usb bootloader
@@ -32,7 +32,7 @@ define Package/micronucleus
 	DEPENDS:=+libusb-compat
 endef
 
-define Package/littlewire-extra/description
+define Package/$(PKG_NAME)/description
 	Micronucleus - ATTiny usb bootloader
 endef
 
@@ -43,7 +43,7 @@ define Build/Compile
 	LDFLAGS="$(TARGET_LDFLAGS)"
 endef
 
-define Package/micronucleus/install
+define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/commandline/micronucleus $(1)/usr/bin
 endef

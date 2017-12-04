@@ -18,12 +18,12 @@ PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 include $(INCLUDE_DIR)/package.mk
 
 MAKEFLAGS_KMOD:= -C "$(LINUX_DIR)" \
-                CROSS_COMPILE="$(TARGET_CROSS)" \
-                ARCH="$(LINUX_KARCH)" \
-                PATH="$(TARGET_PATH)" \
-                SUBDIRS="$(PKG_BUILD_DIR)"
+  CROSS_COMPILE="$(TARGET_CROSS)" \
+  ARCH="$(LINUX_KARCH)" \
+  PATH="$(TARGET_PATH)" \
+  SUBDIRS="$(PKG_BUILD_DIR)"
 
-define KernelPackage/i2c-hd44780
+define KernelPackage/$(PKG_NAME)
   SUBMENU:=Other modules
   DEPENDS:=
   TITLE:=Kernel driver for hd44780-based LCD display
@@ -33,7 +33,7 @@ define KernelPackage/i2c-hd44780
   AUTOLOAD:=$(call AutoLoad,80,hd44780)
 endef
 
-define KernelPackage/i2c-hd44780/description
+define KernelPackage/$(PKG_NAME)/description
 	Kernel driver for access to hd44780-based display via i2c
 endef
 

@@ -15,7 +15,7 @@ PKG_LICENSE:=GPL-2.0
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/gpio-watch
+define Package/$(PKG_NAME)
 	SECTION:=utils
 	CATEGORY:=Utilities
 	TITLE:=GPIO monitoring tool
@@ -27,12 +27,12 @@ define Package/$(PKG_NAME)/description
 	GPIO monitoring tool
 endef
 
-define Package/$(PKG_NAME)/Build/Prepare
+define Build/Prepare
 	$(INSTALL_DIR) $(PKG_BUILD_DIR)
 	$(INSTALL_DATA) ./src/* $(PKG_BUILD_DIR)/
 endef
 
-define Package/$(PKG_NAME)/Build/Compile
+define Build/Compile
 	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -O -g -D LINUX \
 		-o $(PKG_BUILD_DIR)/gpio-watch $(PKG_BUILD_DIR)/gpio-watch.c $(PKG_BUILD_DIR)/gpio.c $(PKG_BUILD_DIR)/fileutil.c
 endef

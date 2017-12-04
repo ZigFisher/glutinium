@@ -7,7 +7,7 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=
+PKG_NAME:=mercury236
 PKG_VERSION:=2017-08-10
 PKG_RELEASE:=1
 PKG_MAINTAINER:=Shden
@@ -17,14 +17,14 @@ PKG_LICENSE_FILES:=LICENSE
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/mercury236
+define Package/$(PKG_NAME)
 	SECTION:=utils
 	CATEGORY:=Utilities
 	TITLE:=Mercury 236 power meter RS485 communication utility
 	MAINTAINER:=https://github.com/Shden/mercury236
 endef
 
-define Package/mercury236/description
+define Package/$(PKG_NAME)/description
 	Mercury 236 power meter RS485 communication utility
 endef
 
@@ -38,7 +38,7 @@ define Build/Compile
 		-o $(PKG_BUILD_DIR)/mercury236 $(PKG_BUILD_DIR)/mercury236.c
 endef
 
-define Package/mercury236/install
+define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/mercury236 $(1)/usr/bin/
 endef

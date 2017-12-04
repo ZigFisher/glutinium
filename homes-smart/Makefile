@@ -20,7 +20,7 @@ define Package/homes-smart
   MAINTAINER:=http://zftlab.org
 endef
 
-define Package/homes-smart/description
+define Package/$(PKG_NAME)/description
   Some utils for Homes-smarT project based on USBasp device.
 endef
 
@@ -36,7 +36,7 @@ define Build/Compile
 	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -Wall -lusb -o $(PKG_BUILD_DIR)/usbtemp $(PKG_BUILD_DIR)/usbtemp.c
 endef
 
-define Package/homes-smart/install
+define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/sbin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/nrf24le1 $(1)/usr/sbin/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/usbgpio $(1)/usr/sbin/

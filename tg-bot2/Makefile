@@ -17,7 +17,7 @@ PKG_LICENSE_FILES:=LICENSE
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/tg-bot2
+define Package/$(PKG_NAME)
 	SECTION:=net
 	CATEGORY:=Network
 	TITLE:=TG-Bot2 - simple Telegram bot for OpenWrt based devices
@@ -29,12 +29,12 @@ define Package/$(PKG_NAME)/description
 	TG-Bot2 - simple Telegram bot for OpenWrt based devices
 endef
 
-define Package/$(PKG_NAME)/Build/Prepare
+define Build/Prepare
 	$(INSTALL_DIR) $(PKG_BUILD_DIR)
 	$(INSTALL_DATA) ./src/* $(PKG_BUILD_DIR)/
 endef
 
-define Package/$(PKG_NAME)/Build/Compile
+define Build/Compile
 	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -O -g -D LINUX -lcurl \
 		-o $(PKG_BUILD_DIR)/tg-bot2 $(PKG_BUILD_DIR)/rousbot.c $(PKG_BUILD_DIR)/message.c
 	#CFLAGS=-ansi -Wall -Wextra -pedantic -Wno-unused-parameter `curl-config --cflags`
