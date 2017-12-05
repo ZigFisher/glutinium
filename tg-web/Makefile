@@ -34,17 +34,18 @@ define Build/Compile
 endef
 
 define Package/tg-web/install
-	$(INSTALL_DIR)  $(1)/etc/config
-	#$(INSTALL_BIN)  ./files/etc/config/test $(1)/etc/config/
-	$(INSTALL_DIR)  $(1)/etc/init.d
+	$(INSTALL_DIR)  $(1)/etc
+	$(CP) ./files/etc/* $(1)/etc/
+<------>$(INSTALL_DIR)  $(1)/www
+<------>$(CP) ./files/www/* $(1)/www/
+	#
+	#$(INSTALL_DIR)  $(1)/etc/init.d
 	#$(INSTALL_BIN)  ./files/etc/init.d/test $(1)/etc/init.d/
-	$(INSTALL_DIR)  $(1)/usr/bin
+	#$(INSTALL_DIR)  $(1)/usr/bin
 	#$(INSTALL_BIN)  ./files/usr/bin/test $(1)/usr/bin/
-	$(INSTALL_DIR)  $(1)/usr/sbin
+	3$(INSTALL_DIR)  $(1)/usr/sbin
 	#$(INSTALL_BIN)  ./files/usr/sbin/test $(1)/usr/sbin/
 endef
 
 $(eval $(call BuildPackage,tg-web))
-
-
 
