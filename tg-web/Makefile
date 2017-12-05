@@ -14,7 +14,7 @@ PKG_LICENSE:=GPL-2.0
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/tg-web
+define Package/$(PKG_NAME)
 	SECTION:=net
 	CATEGORY:=Network
 	MAINTAINER:=Zig Fisher <flyrouter@gmail.com>
@@ -23,7 +23,7 @@ define Package/tg-web
 	DEPENDS:=+haserl
 endef
 
-define Package/tg-web/description
+define Package/$(PKG_NAME)/description
 	TG-Web - a minimalistic web interface for bots and automation systems
 endef
 
@@ -33,17 +33,16 @@ endef
 define Build/Compile
 endef
 
-define Package/tg-web/install
+define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR)  $(1)/etc
 	$(CP) ./files/etc/* $(1)/etc/
-<------>$(INSTALL_DIR)  $(1)/www
-<------>$(CP) ./files/www/* $(1)/www/
-	#
+	$(INSTALL_DIR)  $(1)/www
+	$(CP) ./files/www/* $(1)/www/
 	#$(INSTALL_DIR)  $(1)/etc/init.d
 	#$(INSTALL_BIN)  ./files/etc/init.d/test $(1)/etc/init.d/
 	#$(INSTALL_DIR)  $(1)/usr/bin
 	#$(INSTALL_BIN)  ./files/usr/bin/test $(1)/usr/bin/
-	3$(INSTALL_DIR)  $(1)/usr/sbin
+	#$(INSTALL_DIR)  $(1)/usr/sbin
 	#$(INSTALL_BIN)  ./files/usr/sbin/test $(1)/usr/sbin/
 endef
 
