@@ -1,6 +1,8 @@
 
 config telegram 'bot'
-	option token '0:A'
-	option rupor '-0'
 	option start '0'
-
+	option token '0123:ABCDEF'
+	option rupor '-0123456789'
+	option relay '/sys/class/gpio/gpio20/value'
+	option ipcam 'http://192.168.1.10/webcapture.jpg?command=snap&channel=1'
+	option password 'mypassword'
