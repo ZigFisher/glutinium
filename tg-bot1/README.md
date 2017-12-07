@@ -20,4 +20,4 @@ Usage
 
 More info for use TG-Bot1 on OpenWRT routers you can see [here (Russian)](http://zftlab.org)
 
-![Example 1](/example.png)
+![Example 1](./example.png)
