@@ -20,3 +20,6 @@ Usage
 
 More info for use TG-Web on OpenWRT routers you can see [here (Russian)](http://zftlab.org)
 
+![Example 1](./example1.png)
+
+![Example 2](./example2.png)
