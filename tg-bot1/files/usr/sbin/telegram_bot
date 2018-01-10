@@ -19,6 +19,7 @@ keyboard='{"keyboard": [["/snap \uD83D\uDCF7","/guard \uD83D\uDC6E","/relay \uD8
 curl -k -s -X POST -H "Charset: UTF-8" $api/sendMessage -d chat_id=$rupor -d parse_mode=Markdown --data-urlencode text="Router started." >/dev/null 2>&1
 curl -k -s -X POST -H "Charset: UTF-8" $api/sendMessage -d chat_id=$rupor -d "reply_markup=${keyboard}" -d "text=Please insert command:" >/dev/null 2>&1
 
+polling_timeout=30
 offset=0
 if [ -f "$offset_file" ]; then
 	offset=$( cat $offset_file )
@@ -35,7 +36,7 @@ reply_to_msg () {
 
 while [ true ]
 do
-	updates=$(curl -s -k -X GET $api/getUpdates?offset=$offset)
+	updates=$(curl -s -k -X GET ${api}/getUpdates?offset=${offset}&timeout=${polling_timeout})
 	status=$(jsonfilter -s "$updates" -e $.ok)
 	if [ $status = 'true' ]; then
 		update_ids=$(jsonfilter -s "$updates" -e $.result[*].update_id)
