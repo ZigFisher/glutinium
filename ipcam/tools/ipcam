@@ -1,0 +1,38 @@
+#!/usr/bin/expect -f
+#
+# ZFT Lab. 2018 | http://zftlab.org/pages/2018010700.html
+# Simple script for connect to XM IPCam
+#
+#
+if {[llength $argv] < 1} {
+    puts "Usage: ipcam <hostname or ip>";
+    exit 1;
+}
+#
+set timeout 10
+set host [lindex $argv 0]
+set user "root"
+set pass "xmhdipc"
+#
+spawn telnet -l $user $host
+#
+expect {
+    "?ogin*" {
+        send "$user\n"
+        exp_continue
+    }
+    "?name*" {
+        send "$user\n"
+        exp_continue
+    }
+    "?word*" {
+        send "$pass\n"
+        exp_continue
+    }
+    "?#" {
+        interact
+        exit 0;
+    }
+}
+#
+exit 1

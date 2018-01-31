@@ -1,0 +1,43 @@
+# /etc/profile: system-wide .profile file for the Bourne shells
+#
+#
+
+set_path_before()
+{
+  [ -d $1 ] && PATH="$1:$PATH"
+}
+
+PATH="/usr/bin:/usr/sbin:/bin:/sbin"
+set_path_before /usr/local/sbin
+set_path_before /usr/local/bin
+
+LD_LIBRARY_PATH="./:/usr/local/lib:/usr/lib"
+
+export PATH
+export LD_LIBRARY_PATH
+
+# ANSI COLORS
+CRE="
+[K"
+NORMAL="[0;39m"
+RED="[1;31m"
+GREEN="[1;32m"
+YELLOW="[1;33m"
+BLUE="[1;34m"
+MAGENTA="[1;35m"
+CYAN="[1;36m"
+WHITE="[1;37m"
+
+umask 022
+
+clear
+echo ""
+echo "${YELLOW}Welcome to the IPCam firmware modified in ZFT Lab.${NORMAL}"
+echo ""
+echo "${MAGENTA}You can edit /etc/ipcam.conf or enter 'menu' command.${NORMAL}"
+echo "${MAGENTA}Also you can edit /etc/crontabs/root for scheduling.${NORMAL}"
+echo ""
+echo "${RED}Attention, the 'menu' command does not work correctly, it's a demonstration.${NORMAL}"
+echo ""
+
+ulimit -s 4096

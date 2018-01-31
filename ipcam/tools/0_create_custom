@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# ZFT Lab. 2018 | http://zftlab.org/pages/2018010700.html
+# Script for create custom-x.cramfs.img
+
+
+DATE=`date +%G%m%d`
+HARD="IPC_HI3518E_50H10L_S39"
+ARCH="custom"
+LOAD="0x00770000"
+ENTR="0x007B0000"
+
+
+clear
+rm -fv ${ARCH}-x.cramfs.img
+mkcramfs ./$ARCH ./${ARCH}-x.cramfs && \
+mkimage -A arm -O linux -T ramdisk -n "${ARCH}" -a "${LOAD}" -e "${ENTR}" -d ./${ARCH}-x.cramfs ./${ARCH}-x.cramfs.img && \
+zip -D -X ${HARD}_${ARCH}_ZFTLAB-${DATE}.bin Install InstallDesc ${ARCH}-x.cramfs.img && \
+mv ${HARD}_${ARCH}_ZFTLAB-${DATE}.bin ../ZFT_Lab/ && \
+rm -fv ${ARCH}-x.cramfs

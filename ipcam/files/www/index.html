@@ -1,0 +1,55 @@
+<html>
+<head>
+  <title>Experiment</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8">
+  <script type="text/javascript" language="javascript">
+    var img = new Image();
+    var imgObj;
+    var webcam = "http://192.168.1.10/webcapture.jpg?command=snap&channel=1?"
+    function preload()
+    {
+      img.src= webcam + new Date;
+    }
+    function changesrc()
+    {
+      img1.src=img.src;
+      preload();
+      setTimeout(changesrc,3500);
+    }
+    function update()
+    {
+      imgObj = document.getElementById('img1');
+      imgObj.src = img.src;
+      img.src = webcam + (new Date()).getTime();
+    }
+    function takeError()
+    {
+      img.src = webcam + (new Date()).getTime();
+    }
+    function startonload()
+    {
+      img.src = webcam + (new Date()).getTime();
+      img.onerror=takeError;
+      img.onload=update;
+    }
+    function load()
+    {
+      if (navigator.appName.indexOf("Microsoft IE Mobile") != -1)
+        {
+          preload();
+          changesrc();
+          return;
+        }
+      startonload();
+    }
+  </script>
+</head>
+<body onLoad="load()">
+  <center>
+    <h2>-= Experiment =-</h2>
+    <p><img id="img1" border="" width="640px" height="360px" src="http://zftlab.org/images/2017102801.jpg"></p>
+    <br><br>
+    <a href="/octonix.html">For OCTONIX only</a>
+  </center>
+</body>
+</html>

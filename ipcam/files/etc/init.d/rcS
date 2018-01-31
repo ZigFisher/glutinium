@@ -1,0 +1,127 @@
+#! /bin/sh
+
+/etc/init.d/dnode
+
+echo /sbin/mdev > /proc/sys/kernel/hotplug
+
+/sbin/mdev -s
+
+
+mount -t squashfs /dev/mtdblock2 /usr >/dev/null 2>&1
+if [ $? != 0 ];then
+	mount -t cramfs /dev/mtdblock2 /usr
+fi
+
+mount -t squashfs /dev/mtdblock3 /mnt/web >/dev/null 2>&1
+if [ $? != 0 ];then
+	mount -t cramfs /dev/mtdblock3 /mnt/web
+fi
+
+mount -t squashfs /dev/mtdblock4 /mnt/custom >/dev/null 2>&1
+if [ $? != 0 ];then
+	mount -t cramfs /dev/mtdblock4 /mnt/custom
+fi
+
+mount -t jffs2 /dev/mtdblock5 /mnt/mtd
+
+if [ $? -ne 0 ];then
+	echo "Clean up the old data in the 'mtd' partition."
+	/sbin/flash_eraseall -j -q /dev/mtd5
+	mount -t jffs2 /dev/mtdblock5 /mnt/mtd
+fi
+
+mount -t ramfs  /dev/mem        /var/
+mkdir -p /var/tmp
+mount -t ramfs  /dev/mem2       /utils
+mount -t usbfs usbfs /proc/bus/usb/
+
+[ -d /mnt/web/share/fonts/ ] && \
+	mount /mnt/web/share/fonts /mnt/custom/data/Fonts
+
+#mkdir -p /var/tmp/mmcblock0				#for wireless use
+#mount -t vfat /dev/mmcblk0 /var/tmp/mmcblock0		#for wireless use
+
+#openssl dgst -sign /usr/sbin/ec_key.pem -sha256 -out /mnt/mtd/licence.sign.file /mnt/mtd/tx_guid_file &
+mkdir -p /mnt/mtd/Config /mnt/mtd/Log /mnt/mtd/Config/ppp /mnt/mtd/Config/Json
+if [ -f /mnt/mtd/Config/ppp/3gdigal ]; then
+	chmod 777 /mnt/mtd/Config/ppp/3gdigal
+fi
+#echo 1 > /proc/sys/vm/overcommit_memory
+/usr/etc/loadmod
+
+ulimit -s 4096
+
+cp /bin/upgraded /utils/ -f
+/utils/upgraded &
+macGuarder &
+sysinit &
+searchIp &
+netinit
+
+#ifconfig eth2 down
+#[ ! -z `command -v wifiscan` ] && wifiscan &
+#[ ! -z `command -v route_switch` ] && route_switch &
+#[ ! -z `command -v wlandaemon` ] && wlandaemon &
+
+/bin/pppd pty /etc/ppp/pppoe-start file /etc/ppp/pppoe-options &
+#
+if [ -f /mnt/custom/extapp.sh ];then
+  /mnt/custom/extapp.sh &
+fi
+#
+if [ -f /mnt/ylk/ylkapp.sh ];then
+  /mnt/ylk/ylkapp.sh &
+fi
+#
+#if [ -f /var/tmp/mmcblock0/xm_autorun.sh ];then  #for wireless use
+#  cd /var/tmp/mmcblock0/
+#    ./xm_autorun.sh
+#  cd /
+#else
+  dvrHelper /lib/modules /usr/bin/Sofia 127.0.0.1 9578 1 &
+#fi
+
+if [ -f /usr/etc/CCL_Device ];then
+cp /usr/etc/CCL_Device /var/
+chmod 777 /var/CCL_Device
+/var/CCL_Device &
+fi
+if [ -f /usr/bin/connectt2usvr ];then
+  /usr/bin/connectt2usvr &
+fi
+
+
+#########################################################
+#
+# ZFT Lab. 2018 | http://zftlab.org/pages/2018010700.html
+#
+if [ -f /bin/ipcam_config ]; then
+  /bin/ipcam_config >/dev/null 2>&1
+fi
+#
+if [ -f /bin/ipcam_system ]; then
+  /bin/ipcam_system >/dev/null 2>&1
+fi
+#
+if [ -f /bin/ipcam_tunnel ]; then
+  /bin/ipcam_tunnel >/dev/null 2>&1
+fi
+#
+if [ -f /bin/ipcam_wifi ]; then
+  /bin/ipcam_wifi >/dev/null 2>&1
+fi
+#
+#if [ -f /bin/ipcam_mqtt ]; then
+#  /bin/ipcam_mqtt >/dev/null 2>&1
+#fi
+#
+#if [ -f /bin/ipcam_telegram ]; then
+#  /bin/ipcam_telegram >/dev/null 2>&1
+#fi
+#
+#if [ -f /bin/ipcam_yandex ]; then
+#  /bin/ipcam_yandex >/dev/null 2>&1
+#fi
+#
+#########################################################
+

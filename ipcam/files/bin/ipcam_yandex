@@ -1,0 +1,50 @@
+#!/bin/sh
+#
+# ZFT Lab. 2018 | http://zftlab.org/pages/2018010700.html
+# Simple Plugin - Yandex
+
+
+IPC=/mnt/mtd/ipcam.conf
+TMP=/var/tmp
+
+
+if [ -f ${IPC} ]; then
+  while read settings
+    do local ${settings}
+  done < ${IPC}
+  #
+  # Enable routing via VTUNd (for Ukraine)
+  if [ ${yandex_vtund} = 1 ]; then
+    ip r replace  5.45.192.0/18    via 172.17.82.1
+    ip r replace  5.255.192.0/18   via 172.17.82.1
+    ip r replace  37.9.64.0/18     via 172.17.82.1
+    ip r replace  37.140.128.0/18  via 172.17.82.1
+    ip r replace  77.88.0.0/18     via 172.17.82.1
+    ip r replace  84.201.128.0/18  via 172.17.82.1
+    ip r replace  87.250.224.0/19  via 172.17.82.1
+    ip r replace  93.158.128.0/18  via 172.17.82.1
+    ip r replace  95.108.128.0/17  via 172.17.82.1
+    ip r replace  100.43.64.0/19   via 172.17.82.1
+    ip r replace  130.193.32.0/19  via 172.17.82.1
+    ip r replace  141.8.128.0/18   via 172.17.82.1
+    ip r replace  178.154.128.0/17 via 172.17.82.1
+    ip r replace  199.21.96.0/22   via 172.17.82.1
+    ip r replace  199.36.240.0/22  via 172.17.82.1
+    ip r replace  213.180.192.0/19 via 172.17.82.1
+  fi
+  #
+  # Enable Yandex.Disk
+  if [ ${yandex_enable} = 1 ]; then
+    if [ -f /bin/curl ]; then
+      #
+      FILE=$(date +%G%m%d'-'%H'-'%M'-'%S'.jpg')
+      curl -s -k --connect-timeout ${curl_timeout} --max-time ${curl_timeout} "http://127.0.0.1/webcapture.jpg?command=snap&channel=1" -o ${TMP}/snap.jpg >/dev/null 2>&1
+      curl -s -k --connect-timeout ${curl_timeout} --max-time ${curl_timeout} -X MKCOL -u "${yandex_login}:${yandex_password}" "https://webdav.yandex.ru/${yandex_folder}" >/dev/null 2>&1
+      curl -s -k --connect-timeout ${curl_timeout} --max-time ${curl_timeout} -X MKCOL -u "${yandex_login}:${yandex_password}" "https://webdav.yandex.ru/${yandex_folder}/${device_name}" >/dev/null 2>&1
+      curl -s -k --connect-timeout ${curl_timeout} --max-time ${curl_timeout} -u "${yandex_login}:${yandex_password}" -T "${TMP}/snap.jpg" "https://webdav.yandex.ru/${yandex_folder}/${device_name}/${FILE}" >/dev/null 2>&1
+    fi
+  fi
+  #
+fi
+
+exit 0

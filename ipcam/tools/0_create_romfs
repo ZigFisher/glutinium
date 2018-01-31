@@ -1,0 +1,109 @@
+#!/bin/sh
+#
+# ZFT Lab. 2018 | http://zftlab.org/pages/2018010700.html
+# Script for create romfs-x.cramfs.img
+
+
+DATE=`date +%G%m%d`
+HARD="IPC_HI3518E_50H10L_S39"
+ARCH="romfs"
+LOAD="0x00040000"
+ENTR="0x003B0000"
+
+BUSYBOX="/mnt/web/zftlab/bin/busybox2"
+
+
+clear
+#
+# Configs
+ln -sfv /mnt/mtd/dropbear                  ./romfs/etc/dropbear
+ln -sfv /mnt/mtd/crontabs                  ./romfs/etc/crontabs
+ln -sfv /mnt/mtd/ipcam.conf                ./romfs/etc/ipcam.conf
+#ln -sfv /mnt/mtd/passwd                   ./romfs/etc/passwd
+#ln -sfv /mnt/mtd/passwd-                  ./romfs/etc/passwd-
+#
+# Scripts
+#
+ln -sfv /mnt/web/zftlab/bin/ipcam_config   ./romfs/bin/ipcam_config
+ln -sfv /mnt/web/zftlab/bin/ipcam_mqtt     ./romfs/bin/ipcam_mqtt
+ln -sfv /mnt/web/zftlab/bin/ipcam_menu     ./romfs/bin/ipcam_menu
+ln -sfv /mnt/web/zftlab/bin/ipcam_menu     ./romfs/bin/menu
+ln -sfv /mnt/web/zftlab/bin/ipcam_system   ./romfs/bin/ipcam_system
+ln -sfv /mnt/web/zftlab/bin/ipcam_telegram ./romfs/bin/ipcam_telegram
+ln -sfv /mnt/web/zftlab/bin/ipcam_tunnel   ./romfs/bin/ipcam_tunnel
+ln -sfv /mnt/web/zftlab/bin/ipcam_wifi     ./romfs/bin/ipcam_wifi
+ln -sfv /mnt/web/zftlab/bin/ipcam_yandex   ./romfs/bin/ipcam_yandex
+ln -sfv /mnt/web/zftlab/bin/tapip          ./romfs/bin/tapip
+#
+# Binary
+ln -sfv /mnt/web/zftlab/bin/dropbear       ./romfs/sbin/dropbear
+ln -sfv /mnt/web/zftlab/bin/dropbear       ./romfs/sbin/dropbearkey
+ln -sfv /mnt/web/zftlab/bin/dropbear       ./romfs/bin/scp
+ln -sfv /mnt/web/zftlab/bin/dropbear       ./romfs/bin/ssh
+ln -sfv /mnt/web/zftlab/bin/bwm-ng         ./romfs/bin/bwm-ng
+ln -sfv /mnt/web/zftlab/bin/curl           ./romfs/bin/curl
+ln -sfv /mnt/web/zftlab/bin/haserl         ./romfs/bin/haserl
+ln -sfv /mnt/web/zftlab/bin/iwconfig       ./romfs/bin/iwconfig
+ln -sfv /mnt/web/zftlab/bin/iwlist         ./romfs/bin/iwlist
+ln -sfv /mnt/web/zftlab/bin/iwpriv         ./romfs/bin/iwpriv
+ln -sfv /mnt/web/zftlab/bin/mosquitto_pub  ./romfs/bin/mosquitto_pub
+ln -sfv /mnt/web/zftlab/bin/mosquitto_sub  ./romfs/bin/mosquitto_sub
+ln -sfv /mnt/web/zftlab/bin/pppd           ./romfs/bin/pppd
+ln -sfv /mnt/web/zftlab/bin/pppoe          ./romfs/bin/pppoe
+ln -sfv /mnt/web/zftlab/bin/vtund          ./romfs/sbin/vtund
+ln -sfv /mnt/web/zftlab/bin/wpa_passphrase ./romfs/bin/wpa_passphrase
+ln -sfv /mnt/web/zftlab/bin/wpa_supplicant ./romfs/bin/wpa_supplicant
+#ln -sfv /mnt/web/zftlab/bin/dropbear      ./romfs/bin/dbclient
+#ln -sfv /mnt/web/zftlab/bin/dropbear      ./romfs/sbin/dropbearconvert
+#
+# Busybox
+ln -sfv ${BUSYBOX} ./romfs/bin/clear
+ln -sfv ${BUSYBOX} ./romfs/bin/brctl
+ln -sfv ${BUSYBOX} ./romfs/bin/busybox2
+ln -sfv ${BUSYBOX} ./romfs/bin/cut
+ln -sfv ${BUSYBOX} ./romfs/bin/df
+ln -sfv ${BUSYBOX} ./romfs/bin/dmesg
+ln -sfv ${BUSYBOX} ./romfs/bin/ftpput
+ln -sfv ${BUSYBOX} ./romfs/bin/hostname
+ln -sfv ${BUSYBOX} ./romfs/bin/logger
+ln -sfv ${BUSYBOX} ./romfs/bin/microcom
+ln -sfv ${BUSYBOX} ./romfs/bin/nc
+ln -sfv ${BUSYBOX} ./romfs/bin/nice
+ln -sfv ${BUSYBOX} ./romfs/bin/rdate
+ln -sfv ${BUSYBOX} ./romfs/bin/sha1sum
+ln -sfv ${BUSYBOX} ./romfs/bin/sort
+ln -sfv ${BUSYBOX} ./romfs/bin/telnet
+ln -sfv ${BUSYBOX} ./romfs/bin/tail
+ln -sfv ${BUSYBOX} ./romfs/bin/timeout
+ln -sfv ${BUSYBOX} ./romfs/bin/tr
+ln -sfv ${BUSYBOX} ./romfs/bin/traceroute
+ln -sfv ${BUSYBOX} ./romfs/bin/uniq
+ln -sfv ${BUSYBOX} ./romfs/bin/uptime
+ln -sfv ${BUSYBOX} ./romfs/bin/vi
+ln -sfv ${BUSYBOX} ./romfs/bin/wget
+#
+ln -sfv ${BUSYBOX} ./romfs/sbin/crond
+ln -sfv ${BUSYBOX} ./romfs/sbin/ftpd
+ln -sfv ${BUSYBOX} ./romfs/sbin/httpd
+ln -sfv ${BUSYBOX} ./romfs/sbin/klogd
+ln -sfv ${BUSYBOX} ./romfs/sbin/logread
+ln -sfv ${BUSYBOX} ./romfs/sbin/lsusb
+ln -sfv ${BUSYBOX} ./romfs/sbin/mkfs.vfat
+ln -sfv ${BUSYBOX} ./romfs/sbin/ntpd
+ln -sfv ${BUSYBOX} ./romfs/sbin/sendmail
+ln -sfv ${BUSYBOX} ./romfs/sbin/syslogd
+ln -sfv ${BUSYBOX} ./romfs/sbin/tcpsvd
+#
+echo ""
+#
+rm -fv ${ARCH}-x.cramfs.img ${ARCH}-x.cramfs
+#mksquashfs ./${ARCH} ./${ARCH}-x.cramfs -noappend -no-progress -b 256k -comp xz && \
+mkcramfs ./$ARCH ./${ARCH}-x.cramfs && \
+mkimage -A arm -O linux -T kernel -n linux -a "${LOAD}" -e "${ENTR}" -d ./${ARCH}-x.cramfs ./${ARCH}-x.cramfs.img && \
+zip -D -X ${HARD}_${ARCH}_ZFTLAB-${DATE}.bin Install InstallDesc ${ARCH}-x.cramfs.img && \
+mv ${HARD}_${ARCH}_ZFTLAB-${DATE}.bin ../ZFT_Lab/
+echo ""
+file ${ARCH}-x.cramfs ${ARCH}-x.cramfs.orig
+echo ""
+file ${ARCH}-x.cramfs.img*
+

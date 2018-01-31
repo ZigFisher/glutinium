@@ -1,0 +1,19 @@
+#!/bin/sh
+#
+# ZFT Lab. 2018 | http://zftlab.org/pages/2018010700.html
+# Simple script for get IP via UDHCPC on VTUN TAP interface
+
+
+case "$1" in
+
+  deconfig)
+    ip a flush dev $interface
+    ;;
+
+  renew|bound)
+    ip a add $ip/$subnet dev $interface
+    ;;
+
+esac
+
+exit 0

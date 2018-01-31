@@ -1,0 +1,28 @@
+#!/bin/sh
+#
+# ZFT Lab. 2018 | http://zftlab.org/pages/2018010700.html
+# Simple Plugin - Telegram
+
+
+IPC=/mnt/mtd/ipcam.conf
+TMP=/var/tmp
+
+
+if [ -f ${IPC} ]; then
+  while read settings
+    do local ${settings}
+  done < ${IPC}
+  #
+  # Enable Telegram
+  if [ ${telegram_enable} = 1 ]; then
+    if [ -f /bin/curl ]; then
+      #
+      STAMP=$(date +%G'.'%m'.'%d'_'%H':'%M':'%S)
+      curl -s -k --connect-timeout ${curl_timeout} --max-time ${curl_timeout} "http://127.0.0.1/webcapture.jpg?command=snap&channel=1" -o ${TMP}/snap.jpg >/dev/null 2>&1
+      curl -s -k --connect-timeout ${curl_timeout} --max-time ${curl_timeout} -X POST https://api.telegram.org/bot${telegram_token}/sendPhoto?chat_id=${telegram_group} -H "Content-Type: multipart/form-data" -F "photo=@${TMP}/snap.jpg" -F "caption=TimeStamp: ${STAMP}" >/dev/null 2>&1
+    fi
+  fi
+  #
+fi
+
+exit 0

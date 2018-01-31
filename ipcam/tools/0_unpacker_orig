@@ -1,0 +1,39 @@
+#!/bin/sh
+#
+# ZFT Lab. 2018 | http://zftlab.org/pages/2018010700.html
+# Script for unpack original firmware
+# sudo apt-get install cramfsprogs u-boot-tools
+
+
+SOURCE="General_HZXM_IPC_HI3518E_50H10L_S38_V4.02.R12.Nat.OnvifS.20170727_ALL.bin"
+
+
+clear
+#
+mkdir -p ./unziped ./extracted ./unpacked
+unzip -o -d ./unziped ./Firmware_original/$SOURCE
+echo ""
+file ./unziped/*.img
+#
+echo ""
+dd bs=1 skip=64 if=./unziped/custom-x.cramfs.img of=./unpacked/custom-x.cramfs
+dd bs=1 skip=64 if=./unziped/romfs-x.cramfs.img of=./unpacked/romfs-x.cramfs
+dd bs=1 skip=64 if=./unziped/user-x.cramfs.img of=./unpacked/user-x.cramfs
+dd bs=1 skip=64 if=./unziped/web-x.cramfs.img of=./unpacked/web-x.cramfs
+dd bs=1 skip=64 if=./unziped/u-boot.bin.img of=./unpacked/u-boot.bin
+dd bs=1 skip=64 if=./unziped/u-boot.env.img of=./unpacked/u-boot.env
+echo ""
+file ./unpacked/*
+#
+echo ""
+cramfsck -x ./extracted/custom ./unpacked/custom-x.cramfs
+cramfsck -x ./extracted/romfs ./unpacked/romfs-x.cramfs
+cramfsck -x ./extracted/web ./unpacked/web-x.cramfs
+#
+echo ""
+mkdir -p ./extracted/user && sudo mount -o looop -t squashfs ./unpacked/user-x.cramfs ./extracted/user
+#
+echo ""
+sleep 2
+rm -rf custom-x.cramfs romfs-x.cramfs user-x.cramfs web-x.cramfs custom romfs user web
+file *.cramfs

@@ -92,6 +92,8 @@ echo -e "#\n# Reset USBgpio\n(for n in '1' '2' '3' '4' '5' '6' '7' '8'; do usbgp
 echo -e "#\n# Start dual routing\n#/usr/sbin/checklink.sh >/dev/null 2>&1 &\n" >>/etc/rc.local
 echo -e "#\n# Start ser2net\n#(while true ; do sleep 5; stty -F /dev/ttyUSB0 hup; /usr/sbin/ser2net -d -p 2000 -c /etc/ser2net.conf >/dev/null 2>&1; done) &\n" >>/etc/rc.local
 echo -e "#\n# Start checker\n#(while sleep 300; do if ! ping -q -c 6 8.8.8.8; then reboot; else echo 'Link to central node - OK' | logger; fi; done) &\n" >>/etc/rc.local
+echo -e "#\n# Start anti-fuck\n#(while true ; do sleep 60; logread | tail -n 20 | grep 't bind to the socket' >/dev/null 2>&1 && killall vtund ; done) &\n" >>/etc/rc.local
+echo -e "#\n# Start anti-sleep\n#(while true ; do sleep 60; ping -c 3 8.8.8.8 -I 3g-wan2 >/dev/null 2>&1; done) &\n" >>/etc/rc.local
 echo -e "#\n# Start snmpd\n#(while true ; do sleep 5; /usr/bin/mini_snmpd -n -c ipcam -L World -C Octonix -t 1 -d /overlay,/tmp -i br-lan,3g-wan1 >/dev/null 2>&1; done) &\n" >>/etc/rc.local
 echo -e "#\n# Start httpd\n(while true ; do sleep 5; /usr/sbin/httpd -f -h /www >/dev/null 2>&1; done) &\n" >>/etc/rc.local
 echo -e "#\n# Push data to FlyPeek service\nusbgpio mode 7 1; echo 0 >/tmp/.delay; (while true ; do sleep 1; /usr/sbin/oko.sh >/dev/null 2>&1; done) &\n" >>/etc/rc.local

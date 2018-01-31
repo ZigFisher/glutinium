@@ -1,0 +1,72 @@
+#!/bin/sh
+#
+# ZFT Lab. 2018 | http://zftlab.org/pages/2018010700.html
+# Simple Plugin - Config
+
+
+MAC=$(ifconfig eth0 | awk '/HWaddr/ {print $5}')
+PAS=$(echo ${MAC} | sha1sum | awk '{print $1}')
+TID=$(echo ${MAC} | tr -d ':')
+IPC=/mnt/mtd/ipcam.conf
+
+
+#if [ -f /mnt/mtd/passwd ]; then
+#  echo "File found" >/dev/null
+#else
+#  echo "root:$1$RYIwEiRA$d5iRRVQ5ZeRTrJwGjRy.B0:0:0:root:/:/bin/sh" >/mnt/mtd/passwd
+#fi
+
+if [ -f ${IPC} ]; then
+  while read settings
+    do local ${settings}
+  done < ${IPC}
+  #
+  hostname ${device_name}
+else
+  ( echo "crond_enable=1"
+    echo "curl_timeout=30"
+    echo "device_name=IPCam"
+    echo "device_tid=${TID}"
+    echo "ftpd_enable=0"
+    echo "getty_enable=0"
+    echo "mqtt_enable=1"
+    echo "mqtt_server=mqtt.flymon.net"
+    echo "mqtt_port=1883"
+    echo "mqtt_login=ipcam@flymon.net"
+    echo "mqtt_password=test2018"
+    echo "sshd_enable=X"
+    echo "sshd_port=22"
+    echo "storage_enable=0"
+    echo "syslogd_enable=1"
+    echo "telegram_enable=0"
+    echo "telegram_group=-283722443"
+    echo "telegram_token=123:XYZ"
+    echo "telnetd_enable=1"
+    echo "telnetd_port=23"
+    echo "vtund_enable=1"
+    echo "vtund_server=ipcam.flymon.net"
+    echo "vtund_port=5000"
+    echo "vtund_password=${PAS}"
+    echo "webface_enable=1"
+    echo "webface_port=81"
+    echo "wifi_enable=1"
+    echo "wifi_ssid=MyWiFi"
+    echo "wifi_password=test2018"
+    echo "wifi_type=auto"
+    echo "wifi_iface=auto"
+    echo "wifi_psk=auto"
+    echo "wifi_proto=auto"
+    echo "wifi_auth=auto"
+    echo "wifi_network=dhcp"
+    echo "yandex_enable=0"
+    echo "yandex_folder=Public"
+    echo "yandex_login=ipcam"
+    echo "yandex_password=test2018"
+    echo "yandex_vtund=0"
+    echo "zftlab_version=20180129a"
+  ) >${IPC}
+  #
+  hostname IPCam
+fi
+
+exit 0
