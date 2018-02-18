@@ -15,7 +15,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/i2c-telemetry
   SECTION:=utils
   CATEGORY:=Utilities
-  DEPENDS:=@GPIO_SUPPORT +kmod-i2c-core
+  DEPENDS:=kmod-i2c-core
   TITLE:=Simple I2C telemetry system
   MAINTAINER:=http://flymon.net
 endef
