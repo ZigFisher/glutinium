@@ -12,9 +12,12 @@ PKG_VERSION:=2017-11-30
 PKG_RELEASE:=1
 PKG_LICENSE:=GPL-2.0
 
+PKG_LICENSE:=GPL-2.0
+PKG_LICENSE_FILES:=LICENSE
+
 include $(INCLUDE_DIR)/package.mk
 
-define Package/microbe
+define Package/$(PKG_NAME)
 	SECTION:=net
 	CATEGORY:=Network
 	MAINTAINER:=Zig Fisher <flyrouter@gmail.com>
@@ -23,7 +26,7 @@ define Package/microbe
 	DEPENDS:=+busybox
 endef
 
-define Package/microbe/description
+define Package/$(PKG_NAME)/description
 	Microbe - a selection of scripts for routers with a small amount of flash memory
 endef
 
@@ -33,7 +36,7 @@ endef
 define Build/Compile
 endef
 
-define Package/microbe/install
+define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR)  $(1)/etc
 	$(INSTALL_BIN)  ./files/etc/inittab $(1)/etc/inittab
 	#$(INSTALL_DIR)  $(1)/etc/config
@@ -47,6 +50,4 @@ define Package/microbe/install
 endef
 
 $(eval $(call BuildPackage,microbe))
-
-
 
