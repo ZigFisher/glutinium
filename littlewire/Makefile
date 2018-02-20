@@ -45,10 +45,16 @@ endef
 
 define Package/littlewire/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/software/{adc,blink,blink_ws2812} $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/software/{button,debugConsole,fade_ws2812,hardwarePWM} $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/software/{i2c_blinkM,i2c_nunchuck,lwbuttond,onewire} $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/software/{rgb_cycle_ws2812,servo,softPWM,spi_LTC1448} $(1)/usr/bin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/software/adc $(1)/usr/bin/lw_adc
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/software/button $(1)/usr/bin/lw_button
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/software/lwbuttond $(1)/usr/bin/lw_buttond
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/software/onewire $(1)/usr/bin/lw_onewire
+	#
+	#$(INSTALL_BIN) $(PKG_BUILD_DIR)/software/{adc,blink,blink_ws2812} $(1)/usr/bin
+	#$(INSTALL_BIN) $(PKG_BUILD_DIR)/software/{button,debugConsole,fade_ws2812,hardwarePWM} $(1)/usr/bin
+	#$(INSTALL_BIN) $(PKG_BUILD_DIR)/software/{i2c_blinkM,i2c_nunchuck,lwbuttond,onewire} $(1)/usr/bin
+	#$(INSTALL_BIN) $(PKG_BUILD_DIR)/software/{rgb_cycle_ws2812,servo,softPWM,spi_LTC1448} $(1)/usr/bin
+	#
 	$(INSTALL_DIR) $(1)/usr/share/littlewire
 	$(INSTALL_BIN) ./firmware/digispark_t85_littlewire_v13.hex $(1)/usr/share/littlewire/
 endef
