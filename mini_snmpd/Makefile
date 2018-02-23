@@ -9,8 +9,8 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=mini_snmpd
 PKG_VERSION:=1.4-rc1
-PKG_RELEASE:=1
-PKG_MAINTAINER:=Luke McKee <hojuruku@gmail.com>
+PKG_RELEASE:=3
+PKG_MAINTAINER:=Marcin Jurkowski <marcin1j@gmail.com>
 PKG_LICENSE:=GPL-2.0
 PKG_LICENSE_FILES:=COPYING
 
@@ -19,6 +19,7 @@ PKG_SOURCE_URL:=https://github.com/troglobit/mini-snmpd.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 PKG_SOURCE_VERSION:=203d92e60ed09466d6676c6ad20ad6cb2ce08a5d
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
+PKG_MIRROR_HASH:=175d4d9b69c3195ef850eaffd8ac63d012a052089b4a9d074b4d3aef96888b8f
 
 PKG_FIXUP:=autoreconf
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
@@ -51,11 +52,12 @@ CONFIGURE_ARGS+= \
 #	--disable-demo - Upstream Github Issue #4 Fixed 20160707
 
 define Package/mini_snmpd/install
-	$(INSTALL_DIR) $(1)/usr/bin $(1)/etc/config $(1)/etc/init.d/ $(1)/etc/hotplug.d/iface/
+	$(INSTALL_DIR) $(1)/usr/bin
 	$(CP) $(PKG_INSTALL_DIR)/usr/bin/mini_snmpd $(1)/usr/bin/
-	#$(INSTALL_CONF) ./files/mini_snmpd.config $(1)/etc/config/mini_snmpd
-	#$(INSTALL_BIN) ./files/mini_snmpd.init $(1)/etc/init.d/mini_snmpd
-	#$(INSTALL_BIN) ./files/mini_snmpd.hotplug $(1)/etc/hotplug.d/iface/40-mini_snmpd
+	$(INSTALL_DIR) $(1)/etc/config
+	$(INSTALL_CONF) ./files/mini_snmpd.config $(1)/etc/config/mini_snmpd
+	$(INSTALL_DIR) $(1)/etc/init.d
+	$(INSTALL_BIN) ./files/mini_snmpd.init $(1)/etc/init.d/mini_snmpd
 endef
 
 define Package/mini_snmpd/conffiles
