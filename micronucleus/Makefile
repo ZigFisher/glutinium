@@ -45,7 +45,11 @@ endef
 
 define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/bin
+	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/commandline/micronucleus $(1)/usr/bin
+	#
+	$(INSTALL_DIR) $(1)/usr/lib/micronucleus
+	$(INSTALL_BIN) ./firmware/*.hex $(1)/usr/share/micronucleus/
 endef
 
 $(eval $(call BuildPackage,micronucleus))
