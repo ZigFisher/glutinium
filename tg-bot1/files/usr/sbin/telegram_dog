@@ -1,0 +1,51 @@
+#!/bin/sh
+#
+# Scan home via Radar detector, Grab snapshot from connected IPCam, Send Message and Photo via Telegram
+
+ipcam=$(uci get telegram.bot.ipcam)
+rupor=$(uci get telegram.bot.rupor)
+sysid=$(uci get system.@system[0].hostname)
+token=$(uci get telegram.bot.token)
+
+alarm=$(busybox echo -e "\xF0\x9F\x95\xB7 Alarm: unknown Bobbik detected !")
+cname='IPCam-1'
+delay='60'
+extra='--connect-timeout 60 --max-time 60'
+limit='10'
+sleep='0'
+super=$(busybox echo -e "\xF0\x9F\x93\xA2")
+
+
+if [ "`usbgpio statusin | awk -F ' ' '/LED 7/ {print $4}'`" = "1" ] ; then
+  #
+  stamp=$(date +%Y.%m.%d_%H:%M:%S)
+  files=$(ls -l /tmp/*.jpg 2>/dev/null | wc -l)
+  logger -t oko "${alarm}"
+  #
+  last=$(cat /tmp/.delay1)
+  curr=$(date +%s)
+  [ $(($curr-$last)) -gt ${delay} ] && \
+    (curl -s -k ${extra} -X POST "https://api.telegram.org/bot${token}/sendMessage?chat_id=${rupor}&text=${super} ${sysid} ${cname} ${stamp}+%0A${alarm}" && date +%s >/tmp/.delay1) &
+  #
+  if [ "${files}" -lt "${limit}" ]; then
+    ( curl -s -k ${ipcam} -o /tmp/${stamp}_${cname}.jpg && \
+      curl -s -k ${extra} -X POST "https://api.telegram.org/bot${token}/sendPhoto?chat_id=${rupor}" -H "Content-Type: multipart/form-data" -F "photo=@/tmp/${stamp}_${cname}.jpg" -F "caption=${super} ${sysid} ${cname} ${stamp}" && \
+      logger -t oko "Transmit to Telegram OK" && \
+      rm -f /tmp/${stamp}_${cname}.jpg \
+    ) &
+  else
+    curl -s -k ${extra} -X POST "https://api.telegram.org/bot${token}/sendMessage?chat_id=${rupor}&text=${super} ${sysid} ${cname} ${stamp}+%0AWarning: Limit of files buffer - ${files}/${limit}" &
+    logger -t oko "Limit of files buffer - ${files}/${limit}"
+  fi
+  #
+  sleep ${sleep}
+  #
+fi
+
+if [ -n "${1}" ] ; then
+  notes=$(busybox echo -e "${1}")
+  stamp=$(date +%Y.%m.%d_%H:%M:%S)
+  curl -s -k ${extra} -X POST "https://api.telegram.org/bot${token}/sendMessage?chat_id=${rupor}&text=${super} ${sysid} ${cname} ${stamp}+%0AMessage: ${notes}+${2}" &
+  logger -t oko "Message: ${notes}"
+fi
+
