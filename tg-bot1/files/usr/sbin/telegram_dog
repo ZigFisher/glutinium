@@ -7,7 +7,7 @@ rupor=$(uci get telegram.bot.rupor)
 sysid=$(uci get system.@system[0].hostname)
 token=$(uci get telegram.bot.token)
 
-alarm=$(busybox echo -e "\xF0\x9F\x95\xB7 Alarm: unknown Bobbik detected !")
+alarm=$(busybox echo -e "\xF0\x9F\x98\xA0 Alarm: Unknown Bobbik detected !")
 cname='IPCam-1'
 delay='60'
 extra='--connect-timeout 60 --max-time 60'

@@ -46,6 +46,7 @@ define Package/tg-bot1/install
 	$(INSTALL_BIN)  ./files/usr/bin/tg_system.sh $(1)/usr/bin/
 	$(INSTALL_DIR)  $(1)/usr/sbin
 	$(INSTALL_BIN)  ./files/usr/sbin/telegram_bot $(1)/usr/sbin/
+	$(INSTALL_BIN)  ./files/usr/sbin/telegram_dog $(1)/usr/sbin/
 endef
 
 $(eval $(call BuildPackage,tg-bot1))
