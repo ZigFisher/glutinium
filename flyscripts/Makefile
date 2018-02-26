@@ -152,7 +152,6 @@ define Package/flyscripts_octonix_bricket_ipcam/install
 	$(INSTALL_DIR)  $(1)/etc/uci-defaults
 	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_octonix_bricket_ipcam $(1)/etc/uci-defaults/
 	$(INSTALL_DIR)  $(1)/usr/sbin
-	$(INSTALL_BIN)  ./files/usr/sbin/oko.sh $(1)/usr/sbin/
 	$(INSTALL_BIN)  ./files/usr/sbin/service_flypeek.sh $(1)/usr/sbin/
 endef
 
