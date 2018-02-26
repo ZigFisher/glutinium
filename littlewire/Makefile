@@ -54,9 +54,6 @@ define Package/littlewire/install
 	#$(INSTALL_BIN) $(PKG_BUILD_DIR)/software/{button,debugConsole,fade_ws2812,hardwarePWM} $(1)/usr/bin
 	#$(INSTALL_BIN) $(PKG_BUILD_DIR)/software/{i2c_blinkM,i2c_nunchuck,lwbuttond,onewire} $(1)/usr/bin
 	#$(INSTALL_BIN) $(PKG_BUILD_DIR)/software/{rgb_cycle_ws2812,servo,softPWM,spi_LTC1448} $(1)/usr/bin
-	#
-	$(INSTALL_DIR) $(1)/usr/share/micronucleus
-	$(INSTALL_BIN) ./firmware/*.hex $(1)/usr/share/micronucleus
 endef
 
 $(eval $(call BuildPackage,littlewire))
