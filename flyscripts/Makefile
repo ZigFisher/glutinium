@@ -235,7 +235,6 @@ define Package/flyscripts_zftlab_bricket_flypeek/install
 	$(INSTALL_DIR)  $(1)/etc/uci-defaults
 	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_zftlab_bricket_flypeek $(1)/etc/uci-defaults/
 	$(INSTALL_DIR)  $(1)/usr/sbin
-	$(INSTALL_BIN)  ./files/usr/sbin/oko.sh $(1)/usr/sbin/
 	$(INSTALL_BIN)  ./files/usr/sbin/service_flypeek.sh $(1)/usr/sbin/
 endef
 
