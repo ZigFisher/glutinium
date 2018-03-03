@@ -98,7 +98,7 @@ echo -e "#\n# Start anti-sleep2\n#(while sleep 300; do if ! ping -q -c 5 8.8.8.8
 echo -e "#\n# Start anti-sleep2\n#(while sleep 300; do if ! ping -q -c 5 8.8.8.8 -I 3g-wan2; then ifdown wan2; sleep 3; ifup wan2; else logger -t modem '3G-WAN2 health - OK'; fi; done) &\n" >>/etc/rc.local
 echo -e "#\n# Start snmpd\n#(while true ; do sleep 5; /usr/bin/mini_snmpd -n -c ipcam -L World -C Octonix -t 1 -d /overlay,/tmp -i br-lan,3g-wan1 >/dev/null 2>&1; done) &\n" >>/etc/rc.local
 echo -e "#\n# Start httpd\n(while true ; do sleep 5; /usr/sbin/httpd -f -h /www >/dev/null 2>&1; done) &\n" >>/etc/rc.local
-echo -e "#\n# Push data to FlyPeek service\nusbgpio mode 7 1; echo 0 >/tmp/.delay; (while true ; do sleep 1; /usr/sbin/oko.sh >/dev/null 2>&1; done) &\n" >>/etc/rc.local
+echo -e "#\n# Push data to FlyPeek service\nusbgpio mode 7 1; echo 0 >/tmp/.delay; echo 0 >/tmp/guard.lock; (while true ; do sleep 1; /usr/sbin/telegram_dog >/dev/null 2>&1; done) &\n" >>/etc/rc.local
 echo -e "#\nexit 0\n" >>/etc/rc.local
 
 

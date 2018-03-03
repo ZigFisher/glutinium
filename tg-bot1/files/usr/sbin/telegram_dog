@@ -10,9 +10,10 @@ token=$(uci get telegram.bot.token)
 alarm=$(busybox echo -e "\xF0\x9F\x98\xA0 Alarm: Unknown Bobbik detected !")
 cname='IPCam-1'
 delay='60'
-extra='--connect-timeout 60 --max-time 60'
+guard='300'
+extra='--connect-timeout 30 --max-time 30'
 limit='10'
-sleep='0'
+sleep='3'
 super=$(busybox echo -e "\xF0\x9F\x93\xA2")
 
 
@@ -23,7 +24,12 @@ if [ "`usbgpio statusin | awk -F ' ' '/LED 7/ {print $4}'`" = "1" ] ; then
   logger -t oko "${alarm}"
   #
   last=$(cat /tmp/.delay1)
+  lock=$(cat /tmp/guard.lock)
   curr=$(date +%s)
+  #
+  if [ $(($curr-$lock)) -gt ${guard} ] ; then
+    #
+    #
   [ $(($curr-$last)) -gt ${delay} ] && \
     (curl -s -k ${extra} -X POST "https://api.telegram.org/bot${token}/sendMessage?chat_id=${rupor}&text=${super} ${sysid} ${cname} ${stamp}+%0A${alarm}" && date +%s >/tmp/.delay1) &
   #
@@ -39,7 +45,9 @@ if [ "`usbgpio statusin | awk -F ' ' '/LED 7/ {print $4}'`" = "1" ] ; then
   fi
   #
   sleep ${sleep}
-  #
+    #
+    #
+  fi
 fi
 
 if [ -n "${1}" ] ; then

@@ -2,4 +2,5 @@
 #
 # Exec /guard command
 
-echo "Нет денег - нет охраны, мсье..."
+echo $(date +%s) >/tmp/guard.lock
+echo "Guard alert timeout activated"
