@@ -20,12 +20,12 @@ include $(INCLUDE_DIR)/package.mk
 define Package/$(PKG_NAME)
 	SECTION:=utils
 	CATEGORY:=Utilities
-	TITLE:=mii-diag - Network adapter control and monitoring
+	TITLE:=Network adapter control and monitoring
 	MAINTAINER:=https://github.com/oe-lite/base/tree/master/recipes/net-tools/files
 endef
 
 define Package/$(PKG_NAME)/description
-	mii-diag - Network adapter control and monitoring
+	Network adapter control and monitoring
 endef
 
 define Build/Prepare
