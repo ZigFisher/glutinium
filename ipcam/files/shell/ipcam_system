@@ -38,7 +38,7 @@ if [ -f ${IPC} ]; then
   fi
   #
   # Enable SSH server
-  if [ ${sshd_enable} = Z ]; then
+  if [ ${sshd_enable} = 1 ]; then
     if [ -f /sbin/dropbear ]; then
       #
       [ -d /mnt/mtd/dropbear ] || (mkdir -p /mnt/mtd/dropbear; chown root /etc/dropbear ; chmod 0700 /etc/dropbear)
@@ -87,6 +87,26 @@ if [ -f ${IPC} ]; then
       /sbin/httpd -p ${webface_port} -h /mnt/web/zftlab/www
     fi
   fi
+  #
+  # Telegram
+  if [ ${telegram_enable} = 1 ]; then
+    if [ -f /bin/ipcam_tgbot ]; then
+      (while true ; do sleep 5; /bin/ipcam_tgbot >/dev/null 2>&1; done) &
+    fi
+  fi
+  #
+  # OSD test
+  if [ -f /etc/fVideo ]; then
+    MD5SUM1=$(md5sum /mnt/mtd/Config/Json/fVideo | awk '{print $1}')
+    MD5SUM2=$(md5sum /etc/fVideo | awk '{print $1}')
+    if [ ${MD5SUM1} = ${MD5SUM2} ]; then
+      logger -s test 'No OSD update'
+    else
+      cp /etc/fVideo /mnt/mtd/Config/Json/fVideo >/dev/null 2>&1
+      logger -s test 'Update file with OSD setting'
+    fi
+  fi
+  #
 fi
 
 exit 0

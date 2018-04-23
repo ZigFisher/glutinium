@@ -1,0 +1,227 @@
+#!/bin/sh
+#
+# ZFT Lab. 2018 | http://zftlab.org/pages/2018010700.html
+# Simple Plugin - Menu
+#
+# Ver. 20180131a - Init project
+
+
+IPC=/mnt/mtd/ipcam.conf
+TMP=/var/tmp
+
+
+status() {
+  if [ -f ${IPC} ]; then
+    while read settings
+      do export ${settings}
+    done < ${IPC}
+  fi
+}
+
+
+help() {
+  echo -e "\nPlease select letter for configure XM IPCam (ver.${zftlab_version})"
+  echo ""
+  echo "General options:"
+  echo "  h - Print hardware info (X)"
+  echo "  o - Print crontab"
+  echo "  p - Print config"
+  echo "  q - Quit"
+  echo "  r - Reset config (!)"
+  echo "  z - Test access to Internet"
+  echo ""
+  echo "System setup:"
+  echo "  c - CRONd (${crond_enable})"
+  echo "  f - FTPd (${ftpd_enable})"
+  echo "  l - SYSLOGd (${syslogd_enable})"
+  echo "  n - TELNETd (${telnetd_enable})"
+  echo "  s - SSHd (${sshd_enable})"
+  echo ""
+  echo "Communication setup:"
+  echo "  g - 3G/4G (X)"
+  echo "  v - VTUNd (${vtund_enable})"
+  echo "  w - WiFi (${wifi_ssid})"
+  echo ""
+  echo "Services setup:"
+  echo "  e - Email (X)"
+  echo "  k - FTP (X)"
+  echo "  m - MQTT (${mqtt_enable})"
+  echo "  t - Telegram (${telegram_enable})"
+  echo "  y - Yandex.Disk (${yandex_enable})"
+}
+
+
+ask_var() {
+  var="$1"
+  prompt="$2"
+  default="$3"
+  echo -n "$prompt [$default]: "
+  read val
+  if [ "$val" = '' ] ; then
+    val="$default"
+  fi
+  export "$var"="$val"
+}
+
+
+clear
+status
+help
+
+
+while true ; do
+  echo -n -e "\n[${device_name} $(date +%H:%M)] =>"
+  read command
+  answer=$(echo ${command})
+    case ${answer} in
+
+
+      #-------
+      c)
+        clear
+        echo ""
+        echo -e "Setup CRONd system\n"
+        ask_var 'crond_enable_set' 'Enable CRONd ? (0 - no, 1 - yes):' "${crond_enable}"
+        echo ""
+        sed -i "s/crond_enable=.*/crond_enable=${crond_enable_set}/" ${IPC} && \
+          echo "Maybe done..."
+        ;;
+
+      #-------
+      l)
+        clear
+        echo ""
+        echo -e "Setup SYSLOGd system\n"
+        ask_var 'syslogd_enable_set' 'Enable SYSLOGd ? (0 - no, 1 - yes):' "${syslogd_enable}"
+        echo ""
+        sed -i "s/syslogd_enable=.*/syslogd_enable=${syslogd_enable_set}/" ${IPC} && \
+          echo "Maybe done..."
+        ;;
+
+      #-------
+      m)
+        clear
+        echo ""
+        echo -e "Configure MQTT service\n"
+        ask_var 'mqtt_enable_set' 'Enable MQTT ? (0 - no, 1 - yes):' "${mqtt_enable}"
+        echo ""
+        sed -i "s/mqtt_enable=.*/mqtt_enable=${mqtt_enable_set}/" ${IPC} && \
+          echo "Maybe done..."
+        ;;
+
+      #-------
+      n)
+        clear
+        echo ""
+        echo -e "Setup TELNETd system\n"
+        ask_var 'telnetd_enable_set' 'Enable TELNETd ? (0 - no, 1 - yes):' "${telnetd_enable}"
+        echo ""
+        sed -i "s/telnetd_enable=.*/telnetd_enable=${telnetd_enable_set}/" ${IPC} && \
+          echo "Maybe done..."
+        ;;
+
+      #-------
+      o)
+        clear
+        echo ""
+        echo -e "Current crontab file\n"
+        cat /etc/crontabs/root
+        ;;
+
+      #-------
+      p)
+        clear
+        echo ""
+        echo -e "Current config file\n"
+        cat ${IPC}
+        ;;
+
+      #-------
+      q)
+        clear
+        echo ""
+        echo -e "\nGood bye, exiting..."
+        exit 0
+        ;;
+
+      #-------
+      r)
+        clear
+        echo ""
+        rm -f /mnt/mtd/ipcam.conf
+        echo -e "\nConfig erased, rebooting..."
+        reboot
+        ;;
+
+      #-------
+      t)
+        clear
+        echo ""
+        echo -e "Setup Telegram service\n"
+        ask_var 'telegram_enable_set' 'Enable Telegram ? (0 - no, 1 - yes):' "${telegram_enable}"
+        ask_var 'telegram_token_set' 'Please insert telegram token:' "${telegram_token}"
+        ask_var 'telegram_group_set' 'Please insert telegram group:' "${telegram_group}"
+        echo ""
+        sed -i "s/telegram_enable=.*/telegram_enable=${telegram_enable_set}/" ${IPC} && \
+          sed -i "s/telegram_token=.*/telegram_token=${telegram_token_set}/" ${IPC} && \
+          sed -i "s/telegram_group=.*/telegram_group=${telegram_group_set}/" ${IPC} && \
+          echo "Maybe done..."
+        ;;
+
+      #-------
+      v)
+        clear
+        echo ""
+        echo -e "Setup VTUNDd communication\n"
+        ask_var 'vtund_enable_set' 'Enable VTUNDd ? (0 - no, 1 - yes):' "${vtund_enable}"
+        echo ""
+        sed -i "s/vtund_enable=.*/vtund_enable=${vtund_enable_set}/" ${IPC} && \
+          echo "Maybe done..."
+        ;;
+
+      #-------
+      w)
+        clear
+        echo ""
+        echo -e "Setup WiFi communication\n"
+        echo -e "Start scanning.. \n"
+        iwlist wlan0 scan | awk '/SSID/ {print $1}'
+        ask_var 'wifi_enable_set' 'Enable WiFi ? (0 - no, 1 - yes):' "${wifi_enable}"
+        ask_var 'wifi_ssid_set' 'Please insert WiFi SSID:' "${wifi_ssid}"
+        ask_var 'wifi_password_set' 'Please insert WiFi password:' "${wifi_password}"
+        echo ""
+        sed -i "s/wifi_enable=.*/wifi_enable=${wifi_enable_set}/" ${IPC} && \
+          sed -i "s/wifi_ssid=.*/wifi_ssid=${wifi_ssid_set}/" ${IPC} && \
+          sed -i "s/wifi_password=.*/wifi_password=${wifi_password_set}/" ${IPC} && \
+          echo "Maybe done..."
+        ;;
+
+      #-------
+
+      z)
+        clear
+        echo ""
+        echo -e "Start check access to Internet\n"
+        ask_var 'test_internet' 'Remote hostname or ip for test:' '8.8.8.8'
+        echo ""
+        echo -e "Probe ping remote host, please wait...\n"
+        if ! ping -q -c 3 ${test_internet} > /dev/null ; then
+          echo "Remote host ${test_internet} not alive... Error"
+        else
+          echo "Remote host ${test_internet} is alive... OK"
+        fi
+        ;;
+
+      #-------
+      *)
+        clear
+        status
+        help
+        ;;
+
+  esac
+
+done
+
+exit 0
+

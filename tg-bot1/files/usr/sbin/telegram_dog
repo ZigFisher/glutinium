@@ -23,7 +23,7 @@ if [ "`usbgpio statusin | awk -F ' ' '/LED 7/ {print $4}'`" = "1" ] ; then
   files=$(ls -l /tmp/*.jpg 2>/dev/null | wc -l)
   logger -t oko "${alarm}"
   #
-  last=$(cat /tmp/.delay1)
+  last=$(cat /tmp/.delay)
   lock=$(cat /tmp/guard.lock)
   curr=$(date +%s)
   #

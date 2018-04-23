@@ -34,6 +34,8 @@ clear
 echo ""
 echo "${YELLOW}Welcome to the IPCam firmware modified in ZFT Lab.${NORMAL}"
 echo ""
+echo "${YELLOW}Project page: http://zftlab.org/pages/2018010700.html${NORMAL}"
+echo ""
 echo "${MAGENTA}You can edit /etc/ipcam.conf or enter 'menu' command.${NORMAL}"
 echo "${MAGENTA}Also you can edit /etc/crontabs/root for scheduling.${NORMAL}"
 echo ""

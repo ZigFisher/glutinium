@@ -10,12 +10,6 @@ TID=$(echo ${MAC} | tr -d ':')
 IPC=/mnt/mtd/ipcam.conf
 
 
-#if [ -f /mnt/mtd/passwd ]; then
-#  echo "File found" >/dev/null
-#else
-#  echo "root:$1$RYIwEiRA$d5iRRVQ5ZeRTrJwGjRy.B0:0:0:root:/:/bin/sh" >/mnt/mtd/passwd
-#fi
-
 if [ -f ${IPC} ]; then
   while read settings
     do local ${settings}
@@ -34,7 +28,9 @@ else
     echo "mqtt_port=1883"
     echo "mqtt_login=ipcam@flymon.net"
     echo "mqtt_password=test2018"
-    echo "sshd_enable=X"
+    echo "osd_text=zftlab.org"
+    echo "osd_color=FFFFFF"
+    echo "sshd_enable=0"
     echo "sshd_port=22"
     echo "storage_enable=0"
     echo "syslogd_enable=1"
@@ -63,7 +59,7 @@ else
     echo "yandex_login=ipcam"
     echo "yandex_password=test2018"
     echo "yandex_vtund=0"
-    echo "zftlab_version=20180129a"
+    echo "zftlab_version=20180308a"
   ) >${IPC}
   #
   hostname IPCam

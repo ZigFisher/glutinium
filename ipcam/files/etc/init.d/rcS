@@ -6,28 +6,27 @@ echo /sbin/mdev > /proc/sys/kernel/hotplug
 
 /sbin/mdev -s
 
-
 mount -t squashfs /dev/mtdblock2 /usr >/dev/null 2>&1
 if [ $? != 0 ];then
-	mount -t cramfs /dev/mtdblock2 /usr
+  mount -t cramfs /dev/mtdblock2 /usr
 fi
 
 mount -t squashfs /dev/mtdblock3 /mnt/web >/dev/null 2>&1
 if [ $? != 0 ];then
-	mount -t cramfs /dev/mtdblock3 /mnt/web
+  mount -t cramfs /dev/mtdblock3 /mnt/web
 fi
 
 mount -t squashfs /dev/mtdblock4 /mnt/custom >/dev/null 2>&1
 if [ $? != 0 ];then
-	mount -t cramfs /dev/mtdblock4 /mnt/custom
+  mount -t cramfs /dev/mtdblock4 /mnt/custom
 fi
 
 mount -t jffs2 /dev/mtdblock5 /mnt/mtd
 
 if [ $? -ne 0 ];then
-	echo "Clean up the old data in the 'mtd' partition."
-	/sbin/flash_eraseall -j -q /dev/mtd5
-	mount -t jffs2 /dev/mtdblock5 /mnt/mtd
+  echo "Clean up the old data in the 'mtd' partition."
+  /sbin/flash_eraseall -j -q /dev/mtd5
+  mount -t jffs2 /dev/mtdblock5 /mnt/mtd
 fi
 
 mount -t ramfs  /dev/mem        /var/
@@ -110,18 +109,6 @@ fi
 if [ -f /bin/ipcam_wifi ]; then
   /bin/ipcam_wifi >/dev/null 2>&1
 fi
-#
-#if [ -f /bin/ipcam_mqtt ]; then
-#  /bin/ipcam_mqtt >/dev/null 2>&1
-#fi
-#
-#if [ -f /bin/ipcam_telegram ]; then
-#  /bin/ipcam_telegram >/dev/null 2>&1
-#fi
-#
-#if [ -f /bin/ipcam_yandex ]; then
-#  /bin/ipcam_yandex >/dev/null 2>&1
-#fi
 #
 #########################################################
 
