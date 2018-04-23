@@ -12,9 +12,12 @@ ENTR="0x007B0000"
 
 
 clear
-rm -fv ${ARCH}-x.cramfs.img
+rm -fv ${ARCH}-x.cramfs.img ${ARCH}-x.cramfs
 mkcramfs ./$ARCH ./${ARCH}-x.cramfs && \
-mkimage -A arm -O linux -T ramdisk -n "${ARCH}" -a "${LOAD}" -e "${ENTR}" -d ./${ARCH}-x.cramfs ./${ARCH}-x.cramfs.img && \
+mkimage -A arm -O linux -T standalone -n linux -a "${LOAD}" -e "${ENTR}" -d ./${ARCH}-x.cramfs ./${ARCH}-x.cramfs.img && \
 zip -D -X ${HARD}_${ARCH}_ZFTLAB-${DATE}.bin Install InstallDesc ${ARCH}-x.cramfs.img && \
-mv ${HARD}_${ARCH}_ZFTLAB-${DATE}.bin ../ZFT_Lab/ && \
-rm -fv ${ARCH}-x.cramfs
+mv ${HARD}_${ARCH}_ZFTLAB-${DATE}.bin ../ZFT_Lab/
+echo ""
+file ${ARCH}-x.cramfs ${ARCH}-x.cramfs.orig
+echo ""
+file ${ARCH}-x.cramfs.img*
