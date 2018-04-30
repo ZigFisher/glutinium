@@ -26,5 +26,5 @@ More info for use ipeye on OpenWRT IPCam's you can see [here (Russian)](http://z
 Links
 =====
 
-* [Original sources on GitHub from ipeye](http://ipeye.ru/firmware/client/source/)
+* [Original sources from IPEYE site](http://ipeye.ru/firmware/client/source/)
 
