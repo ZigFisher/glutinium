@@ -22,6 +22,7 @@ define Package/$(PKG_NAME)
 	CATEGORY:=Multimedia
 	TITLE:=Simple RTSP daemon for Hisilicon devices
 	MAINTAINER:=https://github.com/xibeilang524/hi3518_h264/tree/master/rtspok_utf8
+	DEPENDS:=+libpthread
 endef
 
 define Package/$(PKG_NAME)/description
