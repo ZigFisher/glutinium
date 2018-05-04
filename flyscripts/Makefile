@@ -121,6 +121,7 @@ define Package/flyscripts_base/install
 	$(INSTALL_DIR)  $(1)/etc/hotplug.d/usb
 	$(INSTALL_BIN)  ./files/etc/hotplug.d/usb/30-com-* $(1)/etc/hotplug.d/usb/
 	$(INSTALL_BIN)  ./files/etc/hotplug.d/usb/30-gps-* $(1)/etc/hotplug.d/usb/
+	$(INSTALL_BIN)  ./files/etc/hotplug.d/usb/30-logger $(1)/etc/hotplug.d/usb/
 	$(INSTALL_BIN)  ./files/etc/hotplug.d/usb/30-modem-* $(1)/etc/hotplug.d/usb/
 	$(INSTALL_BIN)  ./files/etc/hotplug.d/usb/30-rs485-* $(1)/etc/hotplug.d/usb/
 	$(INSTALL_DIR)  $(1)/lib/netifd/proto
@@ -225,8 +226,6 @@ define Package/flyscripts_zftlab_bricket_base/install
 	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_zftlab_bricket_base $(1)/etc/uci-defaults/
 	$(INSTALL_DIR)  $(1)/etc/hotplug.d/net
 	$(INSTALL_BIN)  ./files/etc/hotplug.d/net/37-vtun $(1)/etc/hotplug.d/net/
-	$(INSTALL_DIR)  $(1)/etc/hotplug.d/usb
-	$(INSTALL_BIN)  ./files/etc/hotplug.d/usb/30-logger $(1)/etc/hotplug.d/usb/
 endef
 
 define Package/flyscripts_zftlab_bricket_flypeek/install

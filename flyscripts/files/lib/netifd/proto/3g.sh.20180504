@@ -4,12 +4,6 @@
 	NOT_INCLUDED=1
 	INCLUDE_ONLY=1
 
-        local gpio=`uci -q get network.$1.gpio`
-        if [ -n "$gpio" ]; then
-          echo "Reset $interface modem on gpio$gpio" | logger -t flyscript
-          echo "0" >/sys/class/gpio/gpio$gpio/value; sleep 3; echo "1" >/sys/class/gpio/gpio$gpio/value; sleep 15
-        fi
-
 	. ../netifd-proto.sh
 	. ./ppp.sh
 	init_proto "$@"

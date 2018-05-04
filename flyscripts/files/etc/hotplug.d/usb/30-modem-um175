@@ -6,25 +6,22 @@ MODEM_PRODID="106c/3714/100"
 SYMLINK="ttyUM175"
 
 
-if [ "${PRODUCT}" = "${MODEM_PRODID}" ];
-  then if [ "${ACTION}" = "add" ];
-    then
-      DEVICE_NAME=$(ls /sys/$DEVPATH/* | grep -e '^ttyACM')
-      if [ -z ${DEVICE_NAME} ];
-        then
-          # logger -t flyscript "Warning DEVICE_NAME is empty"
-          exit 0
-      fi
-      logger -t flyscript "Device name of modem is $DEVICE_NAME"
-      ln -s /dev/$DEVICE_NAME /dev/${SYMLINK}
-      logger -t flyscript "Symlink from /dev/$DEVICE_NAME to /dev/${SYMLINK} created"
-   fi
+if [ "${PRODUCT}" = "${MODEM_PRODID}" ]; then
+  if [ "${ACTION}" = "add" ]; then
+    DEVICE_NAME=$(ls /sys/$DEVPATH/* | grep -e '^ttyACM')
+    if [ -z ${DEVICE_NAME} ]; then
+      logger -t flyscript "Warning DEVICE_NAME is empty"
+      exit 0
+    fi
+    logger -t flyscript "Device name of modem is $DEVICE_NAME"
+    ln -s /dev/$DEVICE_NAME /dev/${SYMLINK}
+    logger -t flyscript "Symlink from /dev/$DEVICE_NAME to /dev/${SYMLINK} created"
+  fi
 fi
 
-if [ "${PRODUCT}" = "${MODEM_PRODID}" ];
-  then if [ "${ACTION}" = "remove" ];
-    then
-      rm /dev/${SYMLINK}
-      logger -t flyscript "Symlink /dev/${SYMLINK} removed"
+if [ "${PRODUCT}" = "${MODEM_PRODID}" ]; then
+  if [ "${ACTION}" = "remove" ]; then
+    rm /dev/${SYMLINK}
+    logger -t flyscript "Symlink /dev/${SYMLINK} removed"
   fi
 fi

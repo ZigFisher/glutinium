@@ -11,7 +11,7 @@ if [ "${PRODUCT}" = "${MPRODID}" ]; then
   case "$ACTION" in
     add)
       if [ -z ${DEVICE} ]; then
-        # logger -t flyscript "Warning, device name is empty..."
+        logger -t flyscript "Warning, device name is empty..."
         exit 0
       else
         logger -t flyscript "Device name of serial converter - ${DEVICE}"

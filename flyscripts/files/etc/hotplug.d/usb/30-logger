@@ -3,4 +3,4 @@
 # HotPlug logger
 #
 
-echo "hotplug usb: action='$ACTION' product='$PRODUCT' type='$TYPE' interface='$INTERFACE' devicename='$DEVICENAME' devname='$DEVNAME' devpath='$DEVPATH'" | logger -t flyscript
+#echo "hotplug usb: action='$ACTION' product='$PRODUCT' type='$TYPE' interface='$INTERFACE' devicename='$DEVICENAME' devname='$DEVNAME' devpath='$DEVPATH'" | logger -t flyscript
