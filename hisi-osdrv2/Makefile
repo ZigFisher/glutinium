@@ -32,7 +32,7 @@ define Package/hisi-osdrv2/Default
 endef
 
 define Package/hisi-osdrv2/Default/description
-	Hisilicon kernel modules, drivers and tools:
+	Hisilicon osdrv2
 endef
 
 
@@ -42,12 +42,12 @@ $(call Package/hisi-osdrv2/Default)
 	CATEGORY:=Multimedia
 	DEPENDS:=+busybox +dropbear
 	TITLE+= (tools)
-	SUBMENU:=hisi-osdrv2
+	SUBMENU:=Hisilicon
 endef
 
 define Package/hisi-osdrv2-tools/description
 $(call Package/hisi-osdrv2/Default/description)
-	This package contains tthe...
+	This package contains the...
 endef
 
 define Package/hisi-osdrv2-libs
@@ -56,7 +56,7 @@ $(call Package/hisi-osdrv2/Default)
 	CATEGORY:=Multimedia
 	TITLE+= (library)
 	DEPENDS:=+busybox +dropbear
-	SUBMENU:=hisi-osdrv2
+	SUBMENU:=Hisilicon
 endef
 
 define Package/hisi-osdrv2-libs/description
@@ -70,7 +70,7 @@ $(call Package/hisi-osdrv2/Default)
 	CATEGORY:=Multimedia
 	TITLE+= (sensors)
 	DEPENDS:=+busybox +dropbear
-	SUBMENU:=hisi-osdrv2
+	SUBMENU:=Hisilicon
 endef
 
 define Package/hisi-osdrv2-sensors/description
