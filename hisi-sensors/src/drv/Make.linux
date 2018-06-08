@@ -1,0 +1,48 @@
+#*******************************************************************************
+#The rule of make Linux kernel module
+#*******************************************************************************
+
+$(TARGET)-objs = $(SRCS:%.c=%.o)
+
+ifneq ($(KERNELRELEASE),)
+    obj-m += $(TARGET).o
+endif
+
+EXTRA_CFLAGS += $(DRV_CFLAGS)
+
+#*******************************************************************************
+#The file need tobe clean, when make clean
+CLEAN_FILE := $(SRCS:%.c=%.o)
+CLEAN_FILE += $(SRCS:%.c=%.o.cmd)
+CLEAN_FILE += $(join $(dir $(SRCS)), $(patsubst %.c, .%.o.cmd, $(notdir $(SRCS))))
+CLEAN_FILE += $(TARGET).mod.c \
+                         $(TARGET).ko.cmd \
+                         $(TARGET).ko \
+                         $(TARGET).o \
+                         $(TARGET).mod.o \
+                         .$(TARGET).ko.cmd \
+                         .$(TARGET).o.cmd \
+                         .$(TARGET).mod.o.cmd
+
+#*******************************************************************************
+.PHONY: default clean
+default:
+	@echo -e "\e[0;32;1m--Compiling '$(TARGET)'... Configs as follow:\e[0;36;1m"
+	@echo ---- CROSS=$(CROSS)
+	@echo ---- HIARCH=$(HIARCH), HICHIP=$(HICHIP), CVER=$(CVER), DBG=$(HIDBG), HI_FPGA=$(HI_FPGA)
+	@echo ---- CPU_TYPE=$(CPU_TYPE)
+	@echo ---- MPP_CFLAGS=$(MPP_CFLAGS)
+	@echo ---- SDK_PATH=$(SDK_PATH) , PARAM_FILE=$(PARAM_FILE)
+	@echo ---- KERNEL_ROOT=$(KERNEL_ROOT)
+	@echo ---- ARCH_ROOT=$(ARCH_ROOT), ARCH_HAL=$(ARCH_HAL)
+	@echo ---- $(EXTRA_CFLAGS)
+	@@echo -e "\e[0m"
+	@$(MAKE) -C $(KERNEL_ROOT) M=$(PWD) V=10 modules -j 24
+	@mkdir -p $(REL_KO) && cp -rf $(TARGET).ko $(REL_KO)
+
+clean:
+	@rm -f $(CLEAN_FILE)
+	@rm -f $(REL_KO)/$(TARGET).ko
+	@rm .tmp_versions  -rf
+	@rm Module.symvers -f
+	@rm modules.order  -f
