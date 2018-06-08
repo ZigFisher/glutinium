@@ -27,12 +27,12 @@ include $(INCLUDE_DIR)/package.mk
 define Package/hisi-osdrv2/Default
 	SECTION:=multimedia
 	CATEGORY:=Multimedia
-	TITLE+= Hisilicon kernel modules, drivers and tools:
+	TITLE+=Hisilicon osdrv2
 	URL:=http://zftlab.org/
 endef
 
 define Package/hisi-osdrv2/Default/description
-	Hisilicon osdrv2
+	Hisilicon kernel modules, drivers and tools
 endef
 
 
