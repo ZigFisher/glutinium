@@ -27,6 +27,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/hisi-osdrv2/Default
 	SECTION:=multimedia
 	CATEGORY:=Multimedia
+	TITLE+= Hisilicon kernel modules, drivers and tools:
 	URL:=http://zftlab.org/
 endef
 
@@ -41,7 +42,7 @@ $(call Package/hisi-osdrv2/Default)
 	CATEGORY:=Multimedia
 	DEPENDS:=+busybox +dropbear
 	TITLE+= (tools)
-	SUBMENU:=Tools
+	SUBMENU:=hisi-osdrv2
 endef
 
 define Package/hisi-osdrv2-tools/description
@@ -55,7 +56,7 @@ $(call Package/hisi-osdrv2/Default)
 	CATEGORY:=Multimedia
 	TITLE+= (library)
 	DEPENDS:=+busybox +dropbear
-	SUBMENU:=Libs
+	SUBMENU:=hisi-osdrv2
 endef
 
 define Package/hisi-osdrv2-libs/description
@@ -69,7 +70,7 @@ $(call Package/hisi-osdrv2/Default)
 	CATEGORY:=Multimedia
 	TITLE+= (sensors)
 	DEPENDS:=+busybox +dropbear
-	SUBMENU:=Sensors
+	SUBMENU:=hisi-osdrv2
 endef
 
 define Package/hisi-osdrv2-sensors/description
