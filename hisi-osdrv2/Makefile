@@ -79,6 +79,8 @@ endef
 define Build/InstallDev
 	$(INSTALL_DIR) $(1)/usr/include/$(PKG_NAME)
 	$(CP) ./include/* $(1)/usr/include/$(PKG_NAME)/
+	$(INSTALL_DIR) $(1)/usr/lib/$(PKG_NAME)/
+	$(CP) ./lib/*.so $(1)/usr/lib/$(PKG_NAME)/
 endef
 
 define Package/$(PKG_NAME)-base/install
