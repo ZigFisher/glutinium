@@ -2,7 +2,7 @@
 hisi-osdrv2
 ===========
 
-Hisilicon kernel modules, drivers and tools
+Hisilicon OSDRV kernel modules, drivers, libs and tools
 
 
 License
