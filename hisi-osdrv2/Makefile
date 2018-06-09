@@ -77,8 +77,8 @@ define Build/Compile
 endef
 
 define Build/InstallDev
-	$(INSTALL_DIR) $(1)/usr/include/$(PKG_NAME)
-	$(CP) ./include/* $(1)/usr/include/$(PKG_NAME)/
+	$(INSTALL_DIR) $(STAGING_DIR)/usr/include/$(PKG_NAME)
+	$(CP) ./include/* $(STAGING_DIR)/usr/include/$(PKG_NAME)/
 	$(INSTALL_DIR) $(STAGING_DIR)/usr/lib
 	$(CP) ./lib/*.so $(STAGING_DIR)/usr/lib/
 endef
