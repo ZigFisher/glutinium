@@ -79,8 +79,8 @@ endef
 define Build/InstallDev
 	$(INSTALL_DIR) $(1)/usr/include/$(PKG_NAME)
 	$(CP) ./include/* $(1)/usr/include/$(PKG_NAME)/
-	$(INSTALL_DIR) $(1)/usr/lib/$(PKG_NAME)/
-	$(CP) ./lib/*.so $(1)/usr/lib/$(PKG_NAME)/
+	$(INSTALL_DIR) $(STAGING_DIR)/usr/lib
+	$(CP) ./lib/*.so $(STAGING_DIR)/usr/lib/
 endef
 
 define Package/$(PKG_NAME)-base/install
@@ -91,6 +91,8 @@ endef
 define Package/$(PKG_NAME)-binary/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(CP) ./binary/hijpg $(1)/usr/bin/
+	$(CP) ./binary/himm $(1)/usr/bin/
+	$(CP) ./binary/rtsp-hisi $(1)/usr/bin/
 endef
 
 define Package/$(PKG_NAME)-kmod/install
