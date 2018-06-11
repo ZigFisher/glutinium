@@ -2,7 +2,11 @@
 hisi-osdrv2
 ===========
 
-Hisilicon OSDRV kernel modules, drivers, libs and tools
+Hisilicon OSDRV-2 kernel modules, drivers, libs and tools
+
+Support HI35_16C_18E_V200 devices with kernel 3.4.35
+
+Based on HI3518V200 MPP from SDK 1.0.4.1
 
 
 License
@@ -19,3 +23,14 @@ script; if not, please visit http://www.gnu.org/copyleft/gpl.html for more infor
 Usage
 =====
 
+More info for use rtsp-hisi on OpenWRT routers you can see [here (Russian)](http://zftlab.org)
+
+
+Links
+=====
+
+* [My Experiments with OpenWrt + Hisilicon and other SoC](https://github.com/ZigFisher/chaos_calmer)
+* [Glutinium - OpenWRT packages for extends functionality](https://github.com/ZigFisher/Glutinium)
+
+* [Best camopenwrt_docker](https://github.com/chertov/camopenwrt_docker)
+* [Сборка OpenWrt в Docker](http://telegra.ph/Sborka-openwrt-v-docker-06-09)

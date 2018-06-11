@@ -1,7 +1,9 @@
-rtsp-hisi
-=========
+hisi-sample
+===========
 
-rtsp-hisi - Simple RTSP daemon for Hisilicon devices
+Some samples for Hisilicon devices. 
+
+TNX, [chertov](https://github.com/chertov/) !
 
 
 License
@@ -24,5 +26,11 @@ More info for use rtsp-hisi on OpenWRT routers you can see [here (Russian)](http
 Links
 =====
 
-* [Original sources on GitHub from xibeilang524](https://github.com/xibeilang524/hi3518_h264/tree/master/rtspok_utf8)
+* [My Experiments with OpenWrt + Hisilicon and other SoC](https://github.com/ZigFisher/chaos_calmer)
+* [Glutinium - OpenWRT packages for extends functionality](https://github.com/ZigFisher/Glutinium)
+
+* [Best camopenwrt_docker](https://github.com/chertov/camopenwrt_docker)
+* [Сборка openwrt в Docker](http://telegra.ph/Sborka-openwrt-v-docker-06-09)
+
+* [Original RTSPd sources on GitHub from xibeilang524](https://github.com/xibeilang524/hi3518_h264/tree/master/rtspok_utf8)
 
