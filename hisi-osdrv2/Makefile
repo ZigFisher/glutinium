@@ -5,7 +5,7 @@
 # See /LICENSE for more information.
 #
 
-# 2018.06.09 
+# 2018.06.09
 # В будущем сделать зависимость от платформы Hisilicon и конкретной версии ядра
 # Включить сборку из исходников himm, некоторых модулей ябра и библиотек сенсоров
 
@@ -68,7 +68,8 @@ $(call Package/$(PKG_NAME)/default)
 	TITLE+= - tool package
 endef
 
-#PKG_BUILD_DIR := $(BUILD_DIR)/$(PKG_NAME)
+define Build/Prepare
+endef
 
 define Build/Configure
 endef
