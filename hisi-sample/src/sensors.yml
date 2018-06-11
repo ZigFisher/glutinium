@@ -1,0 +1,129 @@
+
+base_sensor_config_anchor: &base_sensor_config
+    # Interface mode:
+    #    VI_MODE_BT656                  ITU-R BT.656 YUV4:2:2
+    #    VI_MODE_BT601                  ITU-R BT.601 YUV4:2:2
+    #    VI_MODE_DIGITAL_CAMERA         digatal camera mode
+    #    VI_MODE_BT1120_STANDARD        BT.1120 progressive mode
+    #    VI_MODE_BT1120_INTERLEAVED     BT.1120 interstage mode
+    #    VI_MODE_MIPI                   MIPI mode
+    #    VI_MODE_LVDS
+    #    VI_MODE_HISPI
+    #    VI_MODE_BUTT
+    interface_mode: VI_MODE_DIGITAL_CAMERA
+
+    # 1-, 2-, or 4-channel multiplexed work mode:
+    #    VI_WORK_MODE_1Multiplex   1 Multiplex mode
+    #    VI_WORK_MODE_2Multiplex   2 Multiplex mode
+    #    VI_WORK_MODE_4Multiplex   4 Multiplex mode
+    #    VI_WORK_MODE_BUTT
+    work_mode: VI_WORK_MODE_1Multiplex
+
+    # Component mask - array of VIU_DEV_COMP_MASK_NUM (2) unsigned integers
+    component_mask: [0x3FF00000, 0x0]
+
+    # Input scanning mode (progressive or interlaced)
+    #    VI_SCAN_INTERLACED
+    #    VI_SCAN_PROGRESSIVE
+    #    VI_SCAN_BUTT
+    scan_mode: VI_SCAN_PROGRESSIVE
+
+    # AD channel ID. Typically, the default value -1 is recommended
+    # array of VIU_DEV_AD_CHN_NUM (4) integers
+    ad_channel_id: [-1, -1, -1, -1]
+
+    ### The below members must be configured in BT.601 mode or DC mode and are invalid in other modes
+
+    # Input data sequence (only the YUV format is supported)
+    #   ## The input sequence of the second component(only contains u and v) in BT.1120 mode
+    #   VI_INPUT_DATA_VUVU
+    #   VI_INPUT_DATA_UVUV
+    #
+    #   ## The input sequence for yuv
+    #   VI_INPUT_DATA_UYVY
+    #   VI_INPUT_DATA_VYUY
+    #   VI_INPUT_DATA_YUYV
+    #   VI_INPUT_DATA_YVYU
+    #   VI_DATA_YUV_BUTT
+    data_seq: VI_INPUT_DATA_YUYV
+
+    # Sync timing. This member must be configured in BT.601 mode or DC mode
+    # synchronization information about the BT.601 or DC timing
+    #   enVsync               Attribute of the vertical synchronization signal
+    #       VI_VSYNC_FIELD        Field/toggle mode:a signal reversal means a new frame or a field
+    #       VI_VSYNC_PULSE        Pusle/effective mode:a pusle or an effective signal means a new frame or a field
+    #   enVsyncNeg            Polarity of the vertical synchronization signal
+    #       VI_VSYNC_NEG_HIGH     if VIU_VSYNC_E = VIU_VSYNC_FIELD,then the vertical synchronization signal of even field is high-level,
+    #                             if VIU_VSYNC_E = VIU_VSYNC_PULSE,then the vertical synchronization pulse is positive pulse.
+    #       VI_VSYNC_NEG_LOW      if VIU_VSYNC_E = VIU_VSYNC_FIELD,then the vertical synchronization signal of even field is low-level,
+    #                             if VIU_VSYNC_E = VIU_VSYNC_PULSE,then the vertical synchronization pulse is negative pulse.
+    #   enHsync               Attribute of the horizontal synchronization signal
+    #       VI_HSYNC_VALID_SINGNAL    the horizontal synchronization is valid signal mode
+    #       VI_HSYNC_PULSE            the horizontal synchronization is pulse mode, a new pulse means the beginning of a new line
+    #   enHsyncNeg            Polarity of the horizontal synchronization signal
+    #       VI_HSYNC_NEG_HIGH     if VI_HSYNC_E = VI_HSYNC_VALID_SINGNAL,then the valid horizontal synchronization signal is high-level,
+    #                             if VI_HSYNC_E = VI_HSYNC_PULSE,then the horizontal synchronization pulse is positive pulse
+    #       VI_HSYNC_NEG_LOW      if VI_HSYNC_E = VI_HSYNC_VALID_SINGNAL,then the valid horizontal synchronization signal is low-level,
+    #                             if VI_HSYNC_E = VI_HSYNC_PULSE,then the horizontal synchronization pulse is negative pulse
+    #   enVsyncValid          Attribute of the valid vertical synchronization signal
+    #       VI_VSYNC_NORM_PULSE   the vertical synchronization is pusle mode, a pusle means a new frame or field
+    #       VI_VSYNC_VALID_SINGAL the vertical synchronization is effective mode, a effective signal means a new frame or field
+    #   enVsyncValidNeg       Polarity of the valid vertical synchronization signal
+    #       VI_VSYNC_VALID_NEG_HIGH   if VI_VSYNC_VALID_E = VI_VSYNC_NORM_PULSE,a positive pulse means vertical synchronization pulse,
+    #                                 if VI_VSYNC_VALID_E = VI_VSYNC_VALID_SINGAL,the valid vertical synchronization signal is high-level
+    #       VI_VSYNC_VALID_NEG_LOW    if VI_VSYNC_VALID_E = VI_VSYNC_NORM_PULSE,a negative pulse means vertical synchronization pulse,
+    #                                 if VI_VSYNC_VALID_E = VI_VSYNC_VALID_SINGAL,the valid vertical synchronization signal is low-level
+    #   stTimingBlank   Blank information of the input timing
+    #       hsync_hfb       Horizontal front blanking width
+    #       hsync_act       Horizontal effetive width
+    #       hsync_hhb       Horizontal back blanking width
+    #       vsync0_vhb      Vertical front blanking height of one frame or odd-field frame picture
+    #       vsync0_act      Vertical effetive width of one frame or odd-field frame picture
+    #       vsync0_hhb      Vertical back blanking height of one frame or odd-field frame picture
+    #       vsync1_vhb      Even-field vertical front blanking height when input mode is interlace (invalid when progressive input mode)
+    #       vsync1_act      Even-field vertical effetive width when input mode is interlace (invalid when progressive input mode)
+    #       vsync1_hhb      Even-field vertical back blanking height when input mode is interlace (invalid when progressive input mode)
+    stSynCfg: &base_stSynCfg
+        enVsync:          VI_VSYNC_PULSE
+        enVsyncNeg:       VI_VSYNC_NEG_HIGH
+        enHsync:          VI_HSYNC_VALID_SINGNAL
+        enHsyncNeg:       VI_HSYNC_NEG_HIGH
+        enVsyncValid:     VI_VSYNC_VALID_SINGAL
+        enVsyncValidNeg:  VI_VSYNC_VALID_NEG_HIGH
+        stTimingBlank: &base_stTimingBlank
+            hsync_hfb:  0
+            hsync_act:  1280
+            hsync_hhb:  0
+            vsync0_vhb: 0
+            vsync0_act: 720
+            vsync0_hhb: 0
+            vsync1_vhb: 0
+            vsync1_act: 0
+            vsync1_hhb: 0
+
+    # ISP enable or bypass
+    #   VI_PATH_BYPASS    ISP bypass
+    #   VI_PATH_ISP       ISP enable
+    #   VI_PATH_RAW       Capture raw data, for debug
+    #   VI_PATH_BUTT
+    enDataPath:   VI_PATH_ISP
+
+    # RGB: CSC-709 or CSC-601, PT YUV444 disable; YUV: default yuv CSC coef PT YUV444 enable.
+    #   VI_DATA_TYPE_YUV
+    #   VI_DATA_TYPE_RGB
+    #   VI_DATA_TYPE_BUTT
+    enInputDataType:  VI_DATA_TYPE_RGB
+
+    # Dev capture rect
+    #   [ x, y, width, height ]
+    stDevRect:  [200, 20, 1280, 720]
+
+sensors:
+    DEV_ATTR_IMX222_DC_720P_BASE:
+        <<: *base_sensor_config
+        stSynCfg:
+            <<: *base_stSynCfg
+            stTimingBlank:
+                <<: *base_stTimingBlank
+                hsync_act:  1920
+                vsync0_act: 1080

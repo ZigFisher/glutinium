@@ -24,7 +24,7 @@ extern "C"{
 /******************************************************************************
 * function :  Thumbnail of 1*1080p jpeg
 ******************************************************************************/
-HI_S32 VENC_1080P_JPEG_Thumb(SOC_TYPE socType, SAMPLE_VI_MODE_E sensorType) {
+HI_S32 VENC_1080P_JPEG_Thumb(SOC_TYPE socType, SAMPLE_VI_MODE_E sensorType, const char *img_path) {
     VIDEO_NORM_E gs_enNorm = VIDEO_ENCODING_MODE_NTSC;
     /******************************************
      step  1: init sys variable
@@ -194,7 +194,7 @@ HI_S32 VENC_1080P_JPEG_Thumb(SOC_TYPE socType, SAMPLE_VI_MODE_E sensorType) {
     /******************************************
      step 7: stream venc process -- get stream, then save it to file.
     ******************************************/
-    s32Ret = SAMPLE_COMM_VENC_SnapProcess(VencChn, HI_TRUE, HI_TRUE);
+    s32Ret = SAMPLE_COMM_VENC_SnapProcess(VencChn, img_path, HI_TRUE, HI_FALSE);
     if (HI_SUCCESS != s32Ret) {
         printf("%s: sanp process failed!\n", __FUNCTION__);
     }
@@ -228,18 +228,20 @@ END_VENC_MJPEG_JPEG_0:	//system exit
 
 
 int main(int argc, char *argv[]) {
-    SOC_TYPE socType;
-    HI_S32 s32Ret = initSoc(argc, argv, &socType);
-    if (s32Ret == HI_FAILURE) return EXIT_FAILURE;
+    SOC_TYPE socType = hi3518ev200;
+//    HI_S32 s32Ret = initSoc(argc, argv, &socType);
+//    if (s32Ret == HI_FAILURE) return EXIT_FAILURE;
+    char *image_path = "/tmp/snap.jpg";
+    if (argc >= 2) image_path = argv[2];
 
     SAMPLE_VI_MODE_E sensorType;
-    s32Ret = initSensor(argc, argv, &sensorType);
+    HI_S32 s32Ret = initSensor(argc, argv, &sensorType);
     if (s32Ret == HI_FAILURE) return EXIT_FAILURE;
 
     signal(SIGINT, SAMPLE_VENC_HandleSig);
     signal(SIGTERM, SAMPLE_VENC_HandleSig);
 
-    s32Ret = VENC_1080P_JPEG_Thumb(socType, sensorType);
+    s32Ret = VENC_1080P_JPEG_Thumb(socType, sensorType, image_path);
     if (HI_SUCCESS == s32Ret) return EXIT_SUCCESS;
     printf("program exit abnormally EXIT_FAILURE!\n");
     UnloadSensorLibrary();

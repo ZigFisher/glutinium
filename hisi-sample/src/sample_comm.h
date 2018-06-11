@@ -9,41 +9,51 @@
 #ifndef __SAMPLE_COMM_H__
 #define __SAMPLE_COMM_H__
 
-#include "hi_common.h"
-#include "hi_comm_sys.h"
-#include "hi_comm_vb.h"
-#include "hi_comm_isp.h"
-#include "hi_comm_vi.h"
-#include "hi_comm_vo.h"
-#include "hi_comm_venc.h"
-#include "hi_comm_vpss.h"
-#include "hi_comm_vdec.h"
-#include "hi_comm_region.h"
-#include "hi_comm_adec.h"
-#include "hi_comm_aenc.h"
-#include "hi_comm_ai.h"
-#include "hi_comm_ao.h"
-#include "hi_comm_aio.h"
-#include "hi_defines.h"
+#include <hi_common.h>
+#include <hi_comm_sys.h>
+#include <hi_comm_vb.h>
+#include <hi_comm_isp.h>
+#include <hi_comm_vi.h>
+#include <hi_comm_vo.h>
+#include <hi_comm_venc.h>
+#include <hi_comm_vpss.h>
+#include <hi_comm_vdec.h>
+#include <hi_comm_region.h>
+#include <hi_comm_adec.h>
+#include <hi_comm_aenc.h>
+#include <hi_comm_ai.h>
+#include <hi_comm_ao.h>
+#include <hi_comm_aio.h>
+#include <hi_defines.h>
+#include <hi_mipi.h>
 
-#include "mpi_sys.h"
-#include "mpi_vb.h"
-#include "mpi_vi.h"
-#include "mpi_vo.h"
-#include "mpi_venc.h"
-#include "mpi_vpss.h"
-#include "mpi_vdec.h"
-#include "mpi_region.h"
-#include "mpi_adec.h"
-#include "mpi_aenc.h"
-#include "mpi_ai.h"
-#include "mpi_ao.h"
-#include "mpi_isp.h"
-#include "mpi_ae.h"
-#include "mpi_awb.h"
-#include "mpi_af.h"
-#include "hi_vreg.h"
-#include "hi_sns_ctrl.h"
+
+
+#include <hi_debug.h>
+#include <hi_comm_video.h>
+#include <hi_comm_ive.h>
+#include <hi_comm_vgs.h>
+
+#include <mpi_sys.h>
+#include <mpi_vb.h>
+#include <mpi_vi.h>
+#include <mpi_vo.h>
+#include <mpi_venc.h>
+#include <mpi_vpss.h>
+#include <mpi_vdec.h>
+#include <mpi_region.h>
+#include <mpi_adec.h>
+#include <mpi_aenc.h>
+#include <mpi_ai.h>
+#include <mpi_ao.h>
+#include <mpi_isp.h>
+#include <mpi_ae.h>
+#include <mpi_awb.h>
+#include <mpi_af.h>
+#include <hi_vreg.h>
+#include <hi_sns_ctrl.h>
+
+#include <mpi_ive.h>
 
 
 #ifdef __cplusplus
@@ -53,7 +63,7 @@ extern "C"{
 #endif /* End of #ifdef __cplusplus */
 
 /*******************************************************
-    macro define 
+    macro define
 *******************************************************/
 #define FILE_NAME_LEN               128
 #define ALIGN_UP(x, a)              ((x+a-1)&(~(a-1)))
@@ -88,7 +98,7 @@ extern "C"{
 #define TLV320_FILE "/dev/tlv320aic31"
 
 
-#if (HICHIP == HI3518E_V200) 
+#if (HICHIP == HI3518E_V200)
 #define SAMPLE_VO_DEV_DSD1 0
 #define SAMPLE_VO_DEV_DSD0 SAMPLE_VO_DEV_DSD1
 #else
@@ -118,7 +128,7 @@ do{\
                          printf("---------------press the Enter key to exit!---------------\n");\
                          getchar();\
                      } while (0)
-                     
+
 
 #define SAMPLE_PRT(fmt...)   \
     do {\
@@ -141,14 +151,14 @@ do{\
 #define WIDTH_LCD           240
 #define HEIGHT_LCD          320
 #endif
-        
+
 #ifdef LCD_ILI9342
 #define INTF_LCD            VO_INTF_LCD_6BIT
 #define SYNC_LCD            VO_OUTPUT_320X240_50
 #define WIDTH_LCD           320
 #define HEIGHT_LCD          240
 #endif
-        
+
 #ifdef LCD_OTA5182
 #define INTF_LCD            VO_INTF_LCD_8BIT
 #define SYNC_LCD            VO_OUTPUT_320X240_60
@@ -174,7 +184,7 @@ do{\
 
 
 /*******************************************************
-    enum define 
+    enum define
 *******************************************************/
 
 typedef enum sample_ispcfg_opt_e
@@ -186,7 +196,7 @@ typedef enum sample_ispcfg_opt_e
 }SAMPLE_CFG_OPT_E;
 
 typedef enum sample_vi_mode_e
-{   
+{
     APTINA_AR0130_DC_720P_30FPS = 0,
     APTINA_9M034_DC_720P_30FPS,
     APTINA_AR0230_HISPI_1080P_30FPS,
@@ -220,7 +230,7 @@ typedef struct hithreadArgs_tag {
     SAMPLE_VI_MODE_E enMode;
 } hithreadArgs_t;
 
-typedef enum 
+typedef enum
 {
     VI_DEV_BT656_D1_1MUX = 0,
     VI_DEV_BT656_D1_4MUX,
@@ -245,7 +255,7 @@ typedef enum sample_vo_mode_e
     VO_MODE_2MUX = 1,
     VO_MODE_BUTT
 }SAMPLE_VO_MODE_E;
-    
+
 typedef enum sample_rc_e
 {
     SAMPLE_RC_CBR = 0,
@@ -262,7 +272,7 @@ typedef enum sample_rgn_change_type_e
 
 
 /*******************************************************
-    structure define 
+    structure define
 *******************************************************/
 typedef struct sample_vi_param_s
 {
@@ -282,7 +292,7 @@ typedef struct sample_video_loss_s
 
 typedef struct sample_vi_frame_info_s
 {
-    VB_BLK VbBlk;    
+    VB_BLK VbBlk;
     VIDEO_FRAME_INFO_S stVideoFrame;
     HI_U32 u32FrmSize;
 }SAMPLE_VI_FRAME_INFO_S;
@@ -297,15 +307,15 @@ typedef struct sample_venc_getstream_s
 typedef struct sample_vi_config_s
 {
     SAMPLE_VI_MODE_E enViMode;
-    VIDEO_NORM_E enNorm;           /*DC: VIDEO_ENCODING_MODE_AUTO */    
+    VIDEO_NORM_E enNorm;           /*DC: VIDEO_ENCODING_MODE_AUTO */
     ROTATE_E enRotate;
-    SAMPLE_VI_CHN_SET_E enViChnSet; 
+    SAMPLE_VI_CHN_SET_E enViChnSet;
     WDR_MODE_E  enWDRMode;
 }SAMPLE_VI_CONFIG_S;
 
 
 /*******************************************************
-    function announce  
+    function announce
 *******************************************************/
 HI_S32 SAMPLE_COMM_SYS_GetPicSize(VIDEO_NORM_E enNorm, PIC_SIZE_E enPicSize, SIZE_S *pstSize);
 HI_U32 SAMPLE_COMM_SYS_CalcPicVbBlkSize(VIDEO_NORM_E enNorm, PIC_SIZE_E enPicSize, PIXEL_FORMAT_E enPixFmt, HI_U32 u32AlignWidth);
@@ -343,7 +353,7 @@ HI_S32 SAMPLE_COMM_VI_ChangeCapSize(VI_CHN ViChn, HI_U32 u32CapWidth, HI_U32 u32
 HI_S32 SAMPLE_COMM_VI_StartVi(SAMPLE_VI_CONFIG_S* pstViConfig);
 HI_S32 SAMPLE_COMM_VI_StopVi(SAMPLE_VI_CONFIG_S* pstViConfig);
 HI_S32 SAMPLE_COMM_VI_SwitchResParam( SAMPLE_VI_CONFIG_S* pstViConfig,
-                                               ISP_PUB_ATTR_S *pstPubAttr, 
+                                               ISP_PUB_ATTR_S *pstPubAttr,
                                                RECT_S *pstCapRect );
 
 
@@ -359,14 +369,14 @@ HI_S32 SAMPLE_COMM_VI_FPN_CALIBRATE_CONFIG(const char* fpn_file,    /* fpn file 
 HI_S32 SAMPLE_COMM_VI_CORRECTION_CONFIG(const char* fpn_file,     /* fpn file_name */
                                         ISP_FPN_TYPE_E enFpnType, /* line/frame */
                                         ISP_OP_TYPE_E  enOpType,  /* auto/manual */
-                                        HI_U32 u32Strength,       /* strength */                                       
+                                        HI_U32 u32Strength,       /* strength */
                                         PIXEL_FORMAT_E enPixelFormat);
-	
+
 HI_S32 SAMPLE_COMM_VPSS_MemConfig();
 HI_S32 SAMPLE_COMM_VPSS_Start(HI_S32 s32GrpCnt, SIZE_S *pstSize, HI_S32 s32ChnCnt,VPSS_GRP_ATTR_S *pstVpssGrpAttr);
 HI_S32 SAMPLE_COMM_VPSS_Stop(HI_S32 s32GrpCnt, HI_S32 s32ChnCnt) ;
 HI_S32 SAMPLE_COMM_VPSS_StartGroup(VPSS_GRP VpssGrp, VPSS_GRP_ATTR_S *pstVpssGrpAttr);
-HI_S32 SAMPLE_COMM_VPSS_EnableChn(VPSS_GRP VpssGrp, VPSS_CHN VpssChn, 
+HI_S32 SAMPLE_COMM_VPSS_EnableChn(VPSS_GRP VpssGrp, VPSS_CHN VpssChn,
                                                   VPSS_CHN_ATTR_S *pstVpssChnAttr,
                                                   VPSS_CHN_MODE_S *pstVpssChnMode,
                                                   VPSS_EXT_CHN_ATTR_S *pstVpssExtChnAttr);
@@ -390,7 +400,7 @@ HI_S32 SAMPLE_COMM_VENC_MemConfig(HI_VOID);
 HI_S32 SAMPLE_COMM_VENC_Start(VENC_CHN VencChn, PAYLOAD_TYPE_E enType, VIDEO_NORM_E enNorm, PIC_SIZE_E enSize, SAMPLE_RC_E enRcMode,HI_U32 u32Profile);
 HI_S32 SAMPLE_COMM_VENC_Stop(VENC_CHN VencChn);
 HI_S32 SAMPLE_COMM_VENC_SnapStart(VENC_CHN VencChn, SIZE_S *pstSize, HI_BOOL bSupportDCF);
-HI_S32 SAMPLE_COMM_VENC_SnapProcess(VENC_CHN VencChn, HI_BOOL bSaveJpg, HI_BOOL bSaveThm);
+HI_S32 SAMPLE_COMM_VENC_SnapProcess(VENC_CHN VencChn, const char *img_path, HI_BOOL bSaveJpg, HI_BOOL bSaveThm);
 HI_S32 SAMPLE_COMM_VENC_SnapStop(VENC_CHN VencChn);
 HI_S32 SAMPLE_COMM_VENC_StartGetStream(HI_S32 s32Cnt);
 HI_S32 SAMPLE_COMM_VENC_StopGetStream();

@@ -13,19 +13,6 @@
 #include <unistd.h>
 #include <signal.h>
 
-
-#include "hi_common.h"
-#include "hi_debug.h"
-#include "hi_comm_video.h"
-#include "hi_comm_sys.h"
-#include "hi_comm_ive.h"
-#include "hi_comm_vi.h"
-#include "hi_comm_vo.h"
-#include "hi_comm_vgs.h"
-
-#include "mpi_vb.h"
-#include "mpi_sys.h"
-#include "mpi_ive.h"
 #include "sample_comm.h"
 
 #define VIDEO_WIDTH 352
@@ -83,7 +70,7 @@ typedef struct hiIVE_LINEAR_DATA_S
 }IVE_LINEAR_DATA_S;
 
 
-//free mmz 
+//free mmz
 #define IVE_MMZ_FREE(phy,vir)\
 do{\
 	if ((0 != (phy)) && (NULL != (vir)))\
@@ -119,7 +106,7 @@ HI_S32 SAMPLE_COMM_IVE_IveMpiExit(HI_VOID);
 /******************************************************************************
 * function :VGS Add draw rect job
 ******************************************************************************/
-HI_S32 SAMPLE_COMM_VGS_AddDrawRectJob(VGS_HANDLE VgsHandle, IVE_IMAGE_S *pstSrc, IVE_IMAGE_S *pstDst, 
+HI_S32 SAMPLE_COMM_VGS_AddDrawRectJob(VGS_HANDLE VgsHandle, IVE_IMAGE_S *pstSrc, IVE_IMAGE_S *pstDst,
 	RECT_S *pstRect, HI_U16 u16RectNum);
 /******************************************************************************
 * function : Call vgs to fill rect
@@ -127,7 +114,7 @@ HI_S32 SAMPLE_COMM_VGS_AddDrawRectJob(VGS_HANDLE VgsHandle, IVE_IMAGE_S *pstSrc,
 HI_S32 SAMPLE_COMM_VGS_FillRect(VIDEO_FRAME_INFO_S *pstFrmInfo, SAMPLE_RECT_ARRAY_S *pstRect,HI_U32 u32Color);
 /******************************************************************************
 * function :Read file
-******************************************************************************/                                                
+******************************************************************************/
 HI_S32 SAMPLE_COMM_IVE_ReadFile(IVE_IMAGE_S *pstImg, FILE *pFp);
 /******************************************************************************
 * function :Write file
@@ -174,5 +161,3 @@ HI_S32 SAMPLE_COMM_IVE_CreateImageByCached(IVE_IMAGE_S *pstImg,
 HI_S32 SAMPLE_COMM_DmaImage(VIDEO_FRAME_INFO_S *pstFrameInfo,IVE_DST_IMAGE_S *pstDst,HI_BOOL bInstant);
 
 #endif
-
-

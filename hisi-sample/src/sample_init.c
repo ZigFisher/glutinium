@@ -7,27 +7,32 @@
 
 #include "sample_comm.h"
 
-
 void SAMPLE_VENC_Usage(char *sPrgNm) {
-    printf("Usage : %s <soc_type> <sensor_type>\n", sPrgNm);
-    printf("soc_types:\n");
-    printf("\tHI3516EV200\n");
-    printf("\tHI3518EV200\n");
-    printf("\tHI3518EV201\n");
+//    printf("Usage : %s <soc_type> <sensor_type>\n", sPrgNm);
+#ifdef RTSP_STREAM
+    printf("Usage : %s <sensor_type>\n", sPrgNm);
+    printf("   ex: %s SONY_IMX222_DC_1080P_30FPS\n", sPrgNm);
+#else
+    printf("Usage : %s <sensor_type> (<image_path>)\n", sPrgNm);
+    printf("   ex: %s SONY_IMX222_DC_1080P_30FPS /tmp/awesome_image.jpg\n", sPrgNm);
+    printf("image_path is optional. value by default is /tmp/snap.jpg:\n");
+#endif
+//    printf("soc_types:\n");
+//    printf("    HI3516EV200\n");
+//    printf("    HI3518EV200\n");
+//    printf("    HI3518EV201\n");
     printf("sensor_types:\n");
-    printf("\tAPTINA_AR0130_DC_720P_30FPS\n");
-    printf("\tAPTINA_AR0130_DC_960P_30FPS\n");
-    printf("\tAPTINA_9M034_DC_720P_30FPS\n");
-    printf("\tAPTINA_9M034_DC_960P_30FPS\n");
-    printf("\tSONY_IMX222_DC_1080P_30FPS\n");
-    printf("\tSONY_IMX222_DC_720P_30FPS\n");
-    printf("\tAPTINA_AR0230_HISPI_1080P_30FPS\n");
-    printf("\tPANASONIC_MN34222_MIPI_1080P_30FPS\n");
-    printf("\tOMNIVISION_OV9712_DC_720P_30FPS\n");
-    printf("\tOMNIVISION_OV9732_DC_720P_30FPS\n");
-    printf("\tOMNIVISION_OV9750_MIPI_720P_30FPS\n");
-    printf("\tOMNIVISION_OV9752_MIPI_720P_30FPS\n");
-    printf("\tOMNIVISION_OV2718_MIPI_1080P_25FPS\n");
+    printf("    APTINA_AR0130_DC_720P_30FPS\n");
+    printf("    APTINA_9M034_DC_720P_30FPS\n");
+    printf("    APTINA_AR0230_HISPI_1080P_30FPS\n");
+    printf("    SONY_IMX222_DC_1080P_30FPS\n");
+    printf("    SONY_IMX222_DC_720P_30FPS\n");
+    printf("    PANASONIC_MN34222_MIPI_1080P_30FPS\n");
+    printf("    OMNIVISION_OV9712_DC_720P_30FPS\n");
+    printf("    OMNIVISION_OV9732_DC_720P_30FPS\n");
+    printf("    OMNIVISION_OV9750_MIPI_720P_30FPS\n");
+    printf("    OMNIVISION_OV9752_MIPI_720P_30FPS\n");
+    printf("    OMNIVISION_OV2718_MIPI_1080P_25FPS\n");
 }
 
 HI_S32 initSoc(int argc, char *argv[], SOC_TYPE *socType_ret) {
@@ -48,7 +53,7 @@ HI_S32 initSoc(int argc, char *argv[], SOC_TYPE *socType_ret) {
 
 HI_S32 initSensor(int argc, char *argv[], SAMPLE_VI_MODE_E *sensorType_ret) {
     if (argc < 2) { SAMPLE_VENC_Usage(argv[0]); return HI_FAILURE; }
-    const char *sensorTypeStr = argv[2];
+    const char *sensorTypeStr = argv[1];
     SAMPLE_VI_MODE_E sensorType;
     if (strcmp(sensorTypeStr, "APTINA_9M034_DC_720P_30FPS") == 0) sensorType = APTINA_9M034_DC_720P_30FPS;
     else if (strcmp(sensorTypeStr, "SONY_IMX222_DC_1080P_30FPS") == 0) sensorType = SONY_IMX222_DC_1080P_30FPS;

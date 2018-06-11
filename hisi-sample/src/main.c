@@ -35,12 +35,12 @@ extern int g_s32Quit ;
 extern void * SAMPLE_VENC_1080P_CLASSIC(void *p);
 int main(int argc, char *argv[])
 {
-	SOC_TYPE socType;
-	HI_S32 s32Ret = initSoc(argc, argv, &socType);
-	if (s32Ret == HI_FAILURE) return EXIT_FAILURE;
+	SOC_TYPE socType = hi3518ev200;
+//	HI_S32 s32Ret = initSoc(argc, argv, &socType);
+//	if (s32Ret == HI_FAILURE) return EXIT_FAILURE;
 
 	SAMPLE_VI_MODE_E enMode;
-	s32Ret = initSensor(argc, argv, &enMode);
+    HI_S32 s32Ret = initSensor(argc, argv, &enMode);
 	if (s32Ret == HI_FAILURE) return EXIT_FAILURE;
 
 	signal(SIGINT, SAMPLE_VENC_HandleSig);

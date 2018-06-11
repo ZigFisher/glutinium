@@ -10,22 +10,6 @@
 #include <unistd.h>
 #include <signal.h>
 
-#include "hi_common.h"
-#include "hi_comm_video.h"
-#include "hi_comm_sys.h"
-#include "hi_comm_ive.h"
-#include "hi_comm_vgs.h"
-#include "hi_comm_vi.h"
-#include "hi_comm_vo.h"
-
-#include "mpi_vb.h"
-#include "mpi_sys.h"
-#include "mpi_vi.h"
-#include "mpi_vo.h"
-
-#include "mpi_ive.h"
-#include "mpi_vgs.h"
-
 #include "sample_comm_ive.h"
 
 static HI_BOOL bMpiInit = HI_FALSE;
@@ -68,14 +52,14 @@ static HI_S32 SAMPLE_IVE_MPI_Init(HI_VOID)
         (HI_VOID)HI_MPI_VB_Exit();
         return s32Ret;
     }
-    
+
     s32Ret = HI_MPI_SYS_Init();
     if (HI_SUCCESS != s32Ret)
     {
         SAMPLE_PRT("HI_MPI_SYS_Init fail,Error(%#x)\n",s32Ret);
         (HI_VOID)HI_MPI_VB_Exit();
         return s32Ret;
-    }    
+    }
 
     return HI_SUCCESS;
 }
@@ -87,7 +71,7 @@ HI_VOID SAMPLE_COMM_IVE_CheckIveMpiInit(HI_VOID)
     {
         if (SAMPLE_IVE_MPI_Init())
         {
-           SAMPLE_PRT("Ive mpi init failed!\n");            
+           SAMPLE_PRT("Ive mpi init failed!\n");
             exit(-1);
         }
         bMpiInit = HI_TRUE;
@@ -98,29 +82,29 @@ HI_S32 SAMPLE_COMM_IVE_IveMpiExit(HI_VOID)
 	bMpiInit = HI_FALSE;
 	if (HI_MPI_SYS_Exit())
 	{
-		SAMPLE_PRT("Sys exit failed!\n");  
+		SAMPLE_PRT("Sys exit failed!\n");
 		return HI_FAILURE;
 	}
 
 	if (HI_MPI_VB_Exit())
 	{
-        SAMPLE_PRT("Vb exit failed!\n");        
+        SAMPLE_PRT("Vb exit failed!\n");
         return HI_FAILURE;
     }
-    
+
 	return HI_SUCCESS;
 }
 
-HI_S32 SAMPLE_COMM_VGS_AddDrawRectJob(VGS_HANDLE VgsHandle, IVE_IMAGE_S *pstSrc, IVE_IMAGE_S *pstDst, 
+HI_S32 SAMPLE_COMM_VGS_AddDrawRectJob(VGS_HANDLE VgsHandle, IVE_IMAGE_S *pstSrc, IVE_IMAGE_S *pstDst,
                     RECT_S *pstRect, HI_U16 u16RectNum)
 {
     HI_S32 s32Ret = HI_SUCCESS;
     VGS_TASK_ATTR_S stVgsTask;
     VGS_ADD_COVER_S stVgsCover;
     HI_U16 i;
-	
+
     memset(&stVgsTask, 0, sizeof(VGS_TASK_ATTR_S));
- 
+
     stVgsTask.stImgIn.stVFrame.enPixelFormat = PIXEL_FORMAT_YUV_SEMIPLANAR_420;
     stVgsTask.stImgIn.stVFrame.enCompressMode = COMPRESS_MODE_NONE;
     stVgsTask.stImgIn.stVFrame.enVideoFormat = VIDEO_FORMAT_LINEAR;
@@ -128,11 +112,11 @@ HI_S32 SAMPLE_COMM_VGS_AddDrawRectJob(VGS_HANDLE VgsHandle, IVE_IMAGE_S *pstSrc,
     stVgsTask.stImgIn.stVFrame.u32Width = pstSrc->u16Width;
     stVgsTask.stImgIn.stVFrame.u32Height = pstSrc->u16Height;
     stVgsTask.stImgIn.stVFrame.u32PhyAddr[0] = pstSrc->u32PhyAddr[0];
- 
+
     stVgsTask.stImgIn.stVFrame.u32PhyAddr[1] = pstSrc->u32PhyAddr[1];
     stVgsTask.stImgIn.stVFrame.pVirAddr[0] = pstSrc->pu8VirAddr[0];
     stVgsTask.stImgIn.stVFrame.pVirAddr[1] = pstSrc->pu8VirAddr[1];
-    
+
     stVgsTask.stImgIn.stVFrame.u32Stride[0] = pstSrc->u16Stride[0];
     stVgsTask.stImgIn.stVFrame.u32Stride[1] = pstSrc->u16Stride[1];
     stVgsTask.stImgIn.stVFrame.u64pts = 12;
@@ -149,7 +133,7 @@ HI_S32 SAMPLE_COMM_VGS_AddDrawRectJob(VGS_HANDLE VgsHandle, IVE_IMAGE_S *pstSrc,
     stVgsTask.stImgOut.stVFrame.u32PhyAddr[1] = pstDst->u32PhyAddr[1];
     stVgsTask.stImgOut.stVFrame.pVirAddr[0] = pstDst->pu8VirAddr[0];
     stVgsTask.stImgOut.stVFrame.pVirAddr[1] = pstDst->pu8VirAddr[1];
-    
+
     stVgsTask.stImgOut.stVFrame.u32Stride[0] = pstDst->u16Stride[0];
     stVgsTask.stImgOut.stVFrame.u32Stride[1] = pstDst->u16Stride[1];
     stVgsTask.stImgOut.stVFrame.u64pts = 12;
@@ -163,7 +147,7 @@ HI_S32 SAMPLE_COMM_VGS_AddDrawRectJob(VGS_HANDLE VgsHandle, IVE_IMAGE_S *pstSrc,
         stVgsCover.stDstRect.u32Width = (pstRect[i].u32Width / 2) * 2;
         stVgsCover.stDstRect.u32Height = (pstRect[i].u32Height / 2) * 2;
         stVgsCover.u32Color = 0x0000FF00;
-        if(stVgsCover.stDstRect.s32X + stVgsCover.stDstRect.u32Width < stVgsTask.stImgOut.stVFrame.u32Width 
+        if(stVgsCover.stDstRect.s32X + stVgsCover.stDstRect.u32Width < stVgsTask.stImgOut.stVFrame.u32Width
             && stVgsCover.stDstRect.s32Y + stVgsCover.stDstRect.u32Height < stVgsTask.stImgOut.stVFrame.u32Height)
         {
             s32Ret = HI_MPI_VGS_AddCoverTask(VgsHandle,&stVgsTask,&stVgsCover);
@@ -172,11 +156,11 @@ HI_S32 SAMPLE_COMM_VGS_AddDrawRectJob(VGS_HANDLE VgsHandle, IVE_IMAGE_S *pstSrc,
                 SAMPLE_PRT("HI_MPI_VGS_AddCoverTask fail,Error(%#x)\n",s32Ret);
                 HI_MPI_VGS_CancelJob(VgsHandle);
                 return s32Ret;
-            }    
+            }
         }
-        
+
     }
-   
+
     return s32Ret;
 }
 
@@ -216,7 +200,7 @@ HI_S32 SAMPLE_COMM_VGS_FillRect(VIDEO_FRAME_INFO_S *pstFrmInfo, SAMPLE_RECT_ARRA
             HI_MPI_VGS_CancelJob(VgsHandle);
             return s32Ret;
         }
-        
+
     }
 
     s32Ret = HI_MPI_VGS_EndJob(VgsHandle);
@@ -227,7 +211,7 @@ HI_S32 SAMPLE_COMM_VGS_FillRect(VIDEO_FRAME_INFO_S *pstFrmInfo, SAMPLE_RECT_ARRA
         return s32Ret;
     }
     return s32Ret;
-    
+
 }
 
 HI_S32 SAMPLE_COMM_IVE_ReadFile(IVE_IMAGE_S *pstImg, FILE *pFp)
@@ -239,7 +223,7 @@ HI_S32 SAMPLE_COMM_IVE_ReadFile(IVE_IMAGE_S *pstImg, FILE *pFp)
     HI_U16 loop;
 
 	(HI_VOID)fgetc(pFp);
-	if (feof(pFp)) 
+	if (feof(pFp))
 	{
 		SAMPLE_PRT("end of file!\n");
 		fseek(pFp, 0 , SEEK_SET);
@@ -336,7 +320,7 @@ HI_S32 SAMPLE_COMM_IVE_ReadFile(IVE_IMAGE_S *pstImg, FILE *pFp)
 
 				pU8 += pstImg->u16Stride[0] * 3;
 			}
-			
+
 		}
 		break;
 	case IVE_IMAGE_TYPE_U8C3_PLANAR:
@@ -355,15 +339,15 @@ HI_S32 SAMPLE_COMM_IVE_ReadFile(IVE_IMAGE_S *pstImg, FILE *pFp)
 					pU8 += pstImg->u16Stride[loop];
 				}
 			}
-			
+
 		}
 		break;
 	case IVE_IMAGE_TYPE_S16C1:
 	case IVE_IMAGE_TYPE_U16C1:
 		{
 			pU8 = pstImg->pu8VirAddr[0];
-			for( y = 0; y < height; y++ ) 
-			{ 
+			for( y = 0; y < height; y++ )
+			{
 				if( sizeof(HI_U16) != fread(pU8, width, sizeof(HI_U16), pFp) )
 				{
 					SAMPLE_PRT("Read file fail\n");
@@ -449,7 +433,7 @@ HI_S32 SAMPLE_COMM_IVE_WriteFile(IVE_IMAGE_S *pstImg, FILE *pFp)
 
 				pU8 += pstImg->u16Stride[0];
 			}
-           
+
 			pU8 = pstImg->pu8VirAddr[1];
 			for (y = 0; y < height; y++)
 			{
@@ -477,7 +461,7 @@ HI_S32 SAMPLE_COMM_IVE_WriteFile(IVE_IMAGE_S *pstImg, FILE *pFp)
 
 				pU8 += image->u16Stride[0] * 3;
 			}
-			
+
 		}
 		break;
 	case IVE_IMAGE_TYPE_U8C3_PLANAR:
@@ -496,7 +480,7 @@ HI_S32 SAMPLE_COMM_IVE_WriteFile(IVE_IMAGE_S *pstImg, FILE *pFp)
 					pU8 += image->u16Stride[loop];
 				}
 			}
-			
+
 		}
 		break;
     #endif
@@ -504,8 +488,8 @@ HI_S32 SAMPLE_COMM_IVE_WriteFile(IVE_IMAGE_S *pstImg, FILE *pFp)
 	case  IVE_IMAGE_TYPE_U16C1:
 		{
 			pU8 = pstImg->pu8VirAddr[0];
-			for( y = 0; y < height; y++ ) 
-			{ 
+			for( y = 0; y < height; y++ )
+			{
 				if( sizeof(HI_U16) != fwrite(pU8, width, sizeof(HI_U16), pFp) )
 				{
 					SAMPLE_PRT("Write file fail\n");
@@ -518,10 +502,10 @@ HI_S32 SAMPLE_COMM_IVE_WriteFile(IVE_IMAGE_S *pstImg, FILE *pFp)
 		break;
     case IVE_IMAGE_TYPE_U32C1:
     {
-       
+
         pU8 = pstImg->pu8VirAddr[0];
-        for( y = 0; y < height; y++ ) 
-        { 
+        for( y = 0; y < height; y++ )
+        {
         	if( width != fwrite(pU8, sizeof(HI_U32), width, pFp) )
         	{
         		SAMPLE_PRT("Write file fail\n");
@@ -530,9 +514,9 @@ HI_S32 SAMPLE_COMM_IVE_WriteFile(IVE_IMAGE_S *pstImg, FILE *pFp)
 
         	pU8 += pstImg->u16Stride[0] * 4;
         }
-       break; 
+       break;
     }
-    
+
 	default:
 		break;
 	}
@@ -549,28 +533,28 @@ HI_VOID SAMPLE_COMM_IVE_BlobToRect(IVE_CCBLOB_S *pstBlob, SAMPLE_RECT_ARRAY_S *p
     HI_U16 i,j,k;
     HI_U16 u16Thr= 0;
 	HI_BOOL bValid;
-	
+
     if(pstBlob->u8RegionNum > u16RectMaxNum)
     {
-     
+
 		u16Thr = pstBlob->u16CurAreaThr;
 		do
 		{
 			u16Num = 0;
-			u16Thr += u16AreaThrStep; 
+			u16Thr += u16AreaThrStep;
 			for(i = 0;i < 254;i++)
 			{
 				if(pstBlob->astRegion[i].u32Area > u16Thr)
 				{
 					u16Num++;
 				}
-			}	  
-		}while(u16Num > u16RectMaxNum);  
+			}
+		}while(u16Num > u16RectMaxNum);
 
-    }    
+    }
 
    u16Num = 0;
-   
+
    for(i = 0;i < 254;i++)
     {
         if(pstBlob->astRegion[i].u32Area > u16Thr)
@@ -612,14 +596,14 @@ HI_VOID SAMPLE_COMM_IVE_BlobToRect(IVE_CCBLOB_S *pstBlob, SAMPLE_RECT_ARRAY_S *p
 	pstRect->u16Num = u16Num;
 }
 /*****************************************************************************
-* function : set vpss group attribute. 
+* function : set vpss group attribute.
 *****************************************************************************/
 static HI_VOID	SAMPLE_COMM_IVE_VpssGrpAttr(HI_U32 u32VpssGrpCnt, VPSS_GRP_ATTR_S *pstVpssGrpAttr, SIZE_S *pstSize)
 {
 	HI_U32 i;
 
 	memset(pstVpssGrpAttr, 0, sizeof(VPSS_GRP_ATTR_S));
-	
+
 	for(i=0; i<u32VpssGrpCnt; i++)
 	{
     	pstVpssGrpAttr->enDieMode = VPSS_DIE_MODE_NODIE;
@@ -647,14 +631,14 @@ VPSS_CHN aVpssChn[], HI_S32 s32VpssChnCnt, VPSS_GRP_ATTR_S *pstVpssGrpAttr)
     VPSS_NR_PARAM_U unNrParam = {{0}};
 	VPSS_CHN_MODE_S  stVpssChnMode = {0};
 	VPSS_FRAME_RATE_S stVpssFrmRate = {30, 30};
-		
+
     HI_S32 s32Ret = HI_SUCCESS;
     HI_S32 i, j;
 	HI_U32 u32Depth = 1;
 
 	HI_ASSERT(s32VpssGrpCnt>0);
 	HI_ASSERT(s32VpssChnCnt>0);
-	
+
     /*** Set Vpss Grp Attr ***/
     if(NULL == pstVpssGrpAttr)
     {
@@ -670,7 +654,7 @@ VPSS_CHN aVpssChn[], HI_S32 s32VpssChnCnt, VPSS_GRP_ATTR_S *pstVpssGrpAttr)
     {
         memcpy(&stGrpAttr,pstVpssGrpAttr,sizeof(VPSS_GRP_ATTR_S));
     }
-    
+
 
     for(i=0; i<s32VpssGrpCnt; i++)
     {
@@ -684,21 +668,21 @@ VPSS_CHN aVpssChn[], HI_S32 s32VpssChnCnt, VPSS_GRP_ATTR_S *pstVpssGrpAttr)
         }
 
         //*** set vpss param ***/
-        
+
         s32Ret = HI_MPI_VPSS_GetNRParam(VpssGrp, &unNrParam);
         if (HI_SUCCESS != s32Ret)
         {
             SAMPLE_PRT("HI_MPI_VPSS_GetNRParam failed with errno: %#x!\n", s32Ret);
             return HI_FAILURE;
         }
-        
+
         s32Ret = HI_MPI_VPSS_SetNRParam(VpssGrp, &unNrParam);
         if (HI_SUCCESS != s32Ret)
         {
             SAMPLE_PRT("HI_MPI_VPSS_SetNRParam failed with errno: %#x!\n", s32Ret);
             return HI_FAILURE;
         }
-		
+
 		s32Ret = HI_MPI_VPSS_SetGrpFrameRate(VpssGrp, &stVpssFrmRate);
         if (HI_SUCCESS != s32Ret)
         {
@@ -722,7 +706,7 @@ VPSS_CHN aVpssChn[], HI_S32 s32VpssChnCnt, VPSS_GRP_ATTR_S *pstVpssGrpAttr)
 			{
 				SAMPLE_PRT("HI_MPI_VPSS_SetChnMode failed with errno: %#x\n", s32Ret);
 				return HI_FAILURE;
-			}			
+			}
 
 			s32Ret = HI_MPI_VPSS_SetDepth(VpssGrp, VpssChn, u32Depth);
 			if (HI_SUCCESS != s32Ret)
@@ -730,16 +714,16 @@ VPSS_CHN aVpssChn[], HI_S32 s32VpssChnCnt, VPSS_GRP_ATTR_S *pstVpssGrpAttr)
 				SAMPLE_PRT("HI_MPI_VPSS_SetDepth failed with errno: %#x\n", s32Ret);
 				return HI_FAILURE;
 			}
-			
+
             s32Ret = HI_MPI_VPSS_EnableChn(VpssGrp, VpssChn);
 			if (HI_SUCCESS != s32Ret)
             {
                 SAMPLE_PRT("HI_MPI_VPSS_EnableChn failed with errno: %#x\n", s32Ret);
                 return HI_FAILURE;
-            }			
-			
+            }
+
         }
-        
+
         /*** start vpss group ***/
         s32Ret = HI_MPI_VPSS_StartGrp(VpssGrp);
         if (HI_SUCCESS != s32Ret)
@@ -780,7 +764,7 @@ static HI_S32 SAMPLE_COMM_IVE_StopVpss(HI_S32 s32VpssGrpCnt, HI_S32 s32VpssChnCn
                 return HI_FAILURE;
             }
         }
-    
+
         s32Ret = HI_MPI_VPSS_DestroyGrp(VpssGrp);
         if (s32Ret != HI_SUCCESS)
         {
@@ -807,7 +791,7 @@ HI_S32 SAMPLE_COMM_IVE_BT1120_720P_PreView(SAMPLE_IVE_VI_VO_CONFIG_S *pstViVoCon
     SAMPLE_VO_MODE_E enVoMode = VO_MODE_1MUX;
     PIC_SIZE_E enPicSize = pstViVoConfig->enPicSize;
 	VI_EXT_CHN_ATTR_S stExtChnAttr;
-   
+
     HI_S32 s32Ret = HI_SUCCESS;
     HI_U32 u32BlkSize;
     SIZE_S stSize;
@@ -817,11 +801,11 @@ HI_S32 SAMPLE_COMM_IVE_BT1120_720P_PreView(SAMPLE_IVE_VI_VO_CONFIG_S *pstViVoCon
 	VENC_CHN VencChn = 0;
 	HI_U32 u32ViDepth = 4;
 	VI_CHN_ATTR_S stChnAttr;
-	HI_U32 u32VpssGrpCnt = 1;	
+	HI_U32 u32VpssGrpCnt = 1;
 	VPSS_CHN aVpssChn[2] = {VPSS_CHN0, VPSS_CHN3};
     VPSS_GRP_ATTR_S stVpssGrpAttr;
 	SIZE_S astSize[2];
-	
+
     memset(&stVbConf,0,sizeof(VB_CONF_S));
 
     u32BlkSize = SAMPLE_COMM_SYS_CalcPicVbBlkSize(pstViVoConfig->enNorm, enPicSize,
@@ -837,7 +821,7 @@ HI_S32 SAMPLE_COMM_IVE_BT1120_720P_PreView(SAMPLE_IVE_VI_VO_CONFIG_S *pstViVoCon
 		u32BlkSize = SAMPLE_COMM_SYS_CalcPicVbBlkSize(pstViVoConfig->enNorm,PIC_CIF, SAMPLE_PIXEL_FORMAT, SAMPLE_SYS_ALIGN_WIDTH);
 		stVbConf.astCommPool[1].u32BlkSize = u32BlkSize;
 		stVbConf.astCommPool[1].u32BlkCnt = 3;
-	}    
+	}
     // mpp system init.
     s32Ret = SAMPLE_COMM_SYS_Init(&stVbConf);
     if (HI_SUCCESS != s32Ret)
@@ -888,7 +872,7 @@ HI_S32 SAMPLE_COMM_IVE_BT1120_720P_PreView(SAMPLE_IVE_VI_VO_CONFIG_S *pstViVoCon
 	   stExtChnAttr.s32DstFrameRate = -1;
 	   stExtChnAttr.s32SrcFrameRate = -1;
 	   stExtChnAttr.enCompressMode  = COMPRESS_MODE_NONE;
-	   
+
 	  s32Ret = HI_MPI_VI_SetExtChnAttr(ViExtChn, &stExtChnAttr);
 	  if (HI_SUCCESS != s32Ret)
 	  {
@@ -909,7 +893,7 @@ HI_S32 SAMPLE_COMM_IVE_BT1120_720P_PreView(SAMPLE_IVE_VI_VO_CONFIG_S *pstViVoCon
 	  }
 
 	}
-	//Open vo 
+	//Open vo
 	if (HI_TRUE == bOpenVo)
 	{
 	    s32Ret = SAMPLE_COMM_SYS_GetPicSize(pstViVoConfig->enNorm, enPicSize, &stSize);
@@ -948,7 +932,7 @@ HI_S32 SAMPLE_COMM_IVE_BT1120_720P_PreView(SAMPLE_IVE_VI_VO_CONFIG_S *pstViVoCon
 	    stLayerAttr.bClusterMode = HI_FALSE;
 		stLayerAttr.bDoubleFrame = HI_FALSE;
 		stLayerAttr.enPixFormat = PIXEL_FORMAT_YUV_SEMIPLANAR_420;
-	    memcpy(&stLayerAttr.stImageSize,&stSize,sizeof(stSize)); 
+	    memcpy(&stLayerAttr.stImageSize,&stSize,sizeof(stSize));
 
 		stLayerAttr.u32DispFrmRt = 60 ;
 		stLayerAttr.stDispRect.s32X = 0;
@@ -962,10 +946,10 @@ HI_S32 SAMPLE_COMM_IVE_BT1120_720P_PreView(SAMPLE_IVE_VI_VO_CONFIG_S *pstViVoCon
 	    {
 	        stLayerAttr.stDispRect.u32Width = 720;
 	    	stLayerAttr.stDispRect.u32Height = 576;
-	    }     
+	    }
 	    s32Ret = SAMPLE_COMM_VO_StartLayer(VoLayer, &stLayerAttr, HI_TRUE);
 		if (HI_SUCCESS != s32Ret)
-		{		
+		{
 			SAMPLE_PRT("SAMPLE_COMM_VO_StartLayer fail,VoLayer(%d),Error(%#x)\n",VoLayer,s32Ret);
 			goto END_720P_3;
 		}
@@ -1030,16 +1014,16 @@ END_720P_5:
 	{
 		SAMPLE_COMM_VO_StopChn(VoDev, enVoMode);
 	}
-END_720P_4:   
+END_720P_4:
 	if (HI_TRUE == bOpenVo)
 	{
 		SAMPLE_COMM_VO_StopLayer(VoLayer);
-	}    
+	}
 END_720P_3:
 	if (HI_TRUE == bOpenVo)
 	{
 		SAMPLE_COMM_VO_StopDev(VoDev);
-	}    
+	}
 END_720P_2:
 	if(HI_TRUE == bOpenViExt)
 	{
@@ -1066,8 +1050,8 @@ HI_VOID SAMPLE_COMM_IVE_BT1120_720P_Stop(SAMPLE_IVE_VI_VO_CONFIG_S *pstViVoConfi
 	SAMPLE_VO_MODE_E enVoMode = VO_MODE_1MUX;
 	VI_CHN ViExtChn = 1;
 	VENC_CHN VencChn = 0;
-	HI_U32 u32VpssGrpCnt = 1;		
-	
+	HI_U32 u32VpssGrpCnt = 1;
+
 	if (HI_TRUE == bOpenVpss)
 	{
 		SAMPLE_COMM_IVE_StopVpss(u32VpssGrpCnt,u32VpssChnNum);
@@ -1172,7 +1156,7 @@ HI_S32 SAMPLE_COMM_IVE_CreateImage(IVE_IMAGE_S *pstImg,IVE_IMAGE_TYPE_E enType,H
 	case IVE_IMAGE_TYPE_S16C1:
 	case IVE_IMAGE_TYPE_U16C1:
 		{
-			
+
 			u32Size = pstImg->u16Stride[0] * pstImg->u16Height * sizeof(HI_U16);
 			s32Ret = HI_MPI_SYS_MmzAlloc(&pstImg->u32PhyAddr[0], (void**)&pstImg->pu8VirAddr[0], NULL, HI_NULL, u32Size);
 			if(s32Ret != HI_SUCCESS)
@@ -1192,7 +1176,7 @@ HI_S32 SAMPLE_COMM_IVE_CreateImage(IVE_IMAGE_S *pstImg,IVE_IMAGE_TYPE_E enType,H
 				return s32Ret;
 			}
 			pstImg->pu8VirAddr[1] = pstImg->pu8VirAddr[0] +1;
-			pstImg->pu8VirAddr[2] = pstImg->pu8VirAddr[1] + 1;			
+			pstImg->pu8VirAddr[2] = pstImg->pu8VirAddr[1] + 1;
 			pstImg->u32PhyAddr[1] = pstImg->u32PhyAddr[0] + 1;
 			pstImg->u32PhyAddr[2] = pstImg->u32PhyAddr[1] + 1;
 			pstImg->u16Stride[1] = pstImg->u16Stride[0];
@@ -1216,7 +1200,7 @@ HI_S32 SAMPLE_COMM_IVE_CreateImage(IVE_IMAGE_S *pstImg,IVE_IMAGE_TYPE_E enType,H
 	case IVE_IMAGE_TYPE_S64C1:
 	case IVE_IMAGE_TYPE_U64C1:
 		{
-			
+
 			u32Size = pstImg->u16Stride[0] * pstImg->u16Height * sizeof(HI_U64);
 			s32Ret = HI_MPI_SYS_MmzAlloc(&pstImg->u32PhyAddr[0], (void**)&pstImg->pu8VirAddr[0], NULL, HI_NULL, u32Size);
 			if(s32Ret != HI_SUCCESS)
@@ -1228,7 +1212,7 @@ HI_S32 SAMPLE_COMM_IVE_CreateImage(IVE_IMAGE_S *pstImg,IVE_IMAGE_TYPE_E enType,H
 		break;
 	default:
 		break;
-			
+
 	}
 
 	return HI_SUCCESS;
@@ -1303,7 +1287,7 @@ HI_S32 SAMPLE_COMM_IVE_CreateImageByCached(IVE_IMAGE_S *pstImg,
 	case IVE_IMAGE_TYPE_S16C1:
 	case IVE_IMAGE_TYPE_U16C1:
 		{
-			
+
 			u32Size = pstImg->u16Stride[0] * pstImg->u16Height * sizeof(HI_U16);
 			s32Ret = HI_MPI_SYS_MmzAlloc_Cached(&pstImg->u32PhyAddr[0], (void**)&pstImg->pu8VirAddr[0], NULL, HI_NULL, u32Size);
 			if(s32Ret != HI_SUCCESS)
@@ -1332,7 +1316,7 @@ HI_S32 SAMPLE_COMM_IVE_CreateImageByCached(IVE_IMAGE_S *pstImg,
 	case IVE_IMAGE_TYPE_S64C1:
 	case IVE_IMAGE_TYPE_U64C1:
 		{
-			
+
 			u32Size = pstImg->u16Stride[0] * pstImg->u16Height * sizeof(HI_U64);
 			s32Ret = HI_MPI_SYS_MmzAlloc_Cached(&pstImg->u32PhyAddr[0], (void**)&pstImg->pu8VirAddr[0], NULL, HI_NULL, u32Size);
 			if(s32Ret != HI_SUCCESS)
@@ -1344,7 +1328,7 @@ HI_S32 SAMPLE_COMM_IVE_CreateImageByCached(IVE_IMAGE_S *pstImg,
 		break;
 	default:
 		break;
-			
+
 	}
 
 	return HI_SUCCESS;
@@ -1377,20 +1361,20 @@ HI_S32 SAMPLE_COMM_DmaImage(VIDEO_FRAME_INFO_S *pstFrameInfo,IVE_DST_IMAGE_S *ps
 	stDstData.u16Height  = pstDst->u16Height;
 	stDstData.u16Stride  = pstDst->u16Stride[0];
 
-	s32Ret = HI_MPI_IVE_DMA(&hIveHandle,&stSrcData,&stDstData,&stCtrl,bInstant);	
+	s32Ret = HI_MPI_IVE_DMA(&hIveHandle,&stSrcData,&stDstData,&stCtrl,bInstant);
 	if (HI_SUCCESS != s32Ret)
 	{
         SAMPLE_PRT("HI_MPI_IVE_DMA fail,Error(%#x)\n",s32Ret);
        return s32Ret;
     }
-	
+
 	if (HI_TRUE == bInstant)
 	{
-		s32Ret = HI_MPI_IVE_Query(hIveHandle,&bFinish,bBlock);			
+		s32Ret = HI_MPI_IVE_Query(hIveHandle,&bFinish,bBlock);
 		while(HI_ERR_IVE_QUERY_TIMEOUT == s32Ret)
 		{
-			usleep(100);					
-			s32Ret = HI_MPI_IVE_Query(hIveHandle,&bFinish,bBlock);	
+			usleep(100);
+			s32Ret = HI_MPI_IVE_Query(hIveHandle,&bFinish,bBlock);
 		}
 		if (HI_SUCCESS != s32Ret)
 		{
@@ -1401,5 +1385,3 @@ HI_S32 SAMPLE_COMM_DmaImage(VIDEO_FRAME_INFO_S *pstFrameInfo,IVE_DST_IMAGE_S *ps
 
 	return HI_SUCCESS;
 }
-
-

@@ -1,7 +1,7 @@
 #ifndef     __LOAD_BMP_H__
 #define     __LOAD_BMP_H__
 
-#include "hi_type.h"
+#include <hi_type.h>
 
 #ifdef __cplusplus
 #if __cplusplus
@@ -68,7 +68,7 @@ typedef struct tag_OSD_BITMAPFILEHEADER {
         HI_U16    bfReserved1;
         HI_U16    bfReserved2;
         HI_U32   bfOffBits;
-} OSD_BITMAPFILEHEADER; 
+} OSD_BITMAPFILEHEADER;
 
 typedef struct tag_OSD_RGBQUAD {
         HI_U8    rgbBlue;
@@ -104,4 +104,3 @@ HI_S32 GetBmpInfo(const HI_CHAR *filename, OSD_BITMAPFILEHEADER  *pBmpFileHeader
 #endif /* End of #ifdef __cplusplus */
 
 #endif /* End of #ifndef __LOAD_BMP_H__*/
-

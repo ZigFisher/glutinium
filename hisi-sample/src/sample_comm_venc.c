@@ -670,7 +670,7 @@ HI_S32 SAMPLE_COMM_VENC_SaveJPEG(FILE *fpJpegFile, VENC_STREAM_S *pstStream)
 /******************************************************************************
 * funciton : save snap stream
 ******************************************************************************/
-HI_S32 SAMPLE_COMM_VENC_SaveSnap(VENC_STREAM_S *pstStream, HI_BOOL bSaveJpg, HI_BOOL bSaveThm)
+HI_S32 SAMPLE_COMM_VENC_SaveSnap(VENC_STREAM_S *pstStream, const char *img_path, HI_BOOL bSaveJpg, HI_BOOL bSaveThm)
 {
     char acFile[FILE_NAME_LEN]  = {0};
     char acFile_dcf[FILE_NAME_LEN]  = {0};
@@ -679,10 +679,10 @@ HI_S32 SAMPLE_COMM_VENC_SaveSnap(VENC_STREAM_S *pstStream, HI_BOOL bSaveJpg, HI_
 
     if(!bSaveJpg && !bSaveThm)
     {
-        return HI_SUCCESS;    
+        return HI_SUCCESS;
     }
     
-    sprintf(acFile, "snap.jpg", gs_s32SnapCnt);
+    sprintf(acFile, img_path, gs_s32SnapCnt);
     pFile = fopen(acFile, "wb");
     if (pFile == NULL)
     {
@@ -699,7 +699,7 @@ HI_S32 SAMPLE_COMM_VENC_SaveSnap(VENC_STREAM_S *pstStream, HI_BOOL bSaveJpg, HI_
     
     if(bSaveThm)
     {
-        sprintf(acFile_dcf, "snap_thumbnail.jpg", gs_s32SnapCnt);
+        sprintf(acFile_dcf, "/tmp/snap_thumbnail.jpg", gs_s32SnapCnt);
         s32Ret = SAMPLE_COMM_VENC_Getdcfinfo(acFile, acFile_dcf);
         if (HI_SUCCESS != s32Ret)
         {
@@ -1213,7 +1213,7 @@ HI_S32 SAMPLE_COMM_VENC_SnapStop(VENC_CHN VencChn)
 /******************************************************************************
 * funciton : snap process
 ******************************************************************************/
-HI_S32 SAMPLE_COMM_VENC_SnapProcess(VENC_CHN VencChn, HI_BOOL bSaveJpg, HI_BOOL bSaveThm)
+HI_S32 SAMPLE_COMM_VENC_SnapProcess(VENC_CHN VencChn, const char *img_path, HI_BOOL bSaveJpg, HI_BOOL bSaveThm)
 {
     struct timeval TimeoutVal;
     fd_set read_fds;
@@ -1300,7 +1300,7 @@ HI_S32 SAMPLE_COMM_VENC_SnapProcess(VENC_CHN VencChn, HI_BOOL bSaveJpg, HI_BOOL 
                 return HI_FAILURE;
             }
 
-            s32Ret = SAMPLE_COMM_VENC_SaveSnap(&stStream, bSaveJpg, bSaveThm);
+            s32Ret = SAMPLE_COMM_VENC_SaveSnap(&stStream, img_path, bSaveJpg, bSaveThm);
             if (HI_SUCCESS != s32Ret)
             {
                 SAMPLE_PRT("HI_MPI_VENC_GetStream failed with %#x!\n", s32Ret);

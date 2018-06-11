@@ -26,6 +26,7 @@ extern "C"{
 #include <math.h>
 #include <unistd.h>
 #include <signal.h>
+
 #include "sample_comm.h"
 
 static pthread_t gs_IspPid = 0;
@@ -81,8 +82,8 @@ HI_S32 SAMPLE_COMM_ISP_Init(WDR_MODE_E  enWDRMode, SAMPLE_VI_MODE_E enMode)
     HI_S32 s32Ret;
     ISP_PUB_ATTR_S stPubAttr;
     ALG_LIB_S stLib;
-    
-#if 0   
+
+#if 0
     /* 0. set cmos iniparser file path */
     s32Ret = sensor_set_inifile_path("configs/");
     if (s32Ret != HI_SUCCESS)
@@ -143,7 +144,7 @@ HI_S32 SAMPLE_COMM_ISP_Init(WDR_MODE_E  enWDRMode, SAMPLE_VI_MODE_E enMode)
     /* 6. isp set WDR mode */
     ISP_WDR_MODE_S stWdrMode;
     stWdrMode.enWDRMode  = enWDRMode;
-    s32Ret = HI_MPI_ISP_SetWDRMode(0, &stWdrMode);    
+    s32Ret = HI_MPI_ISP_SetWDRMode(0, &stWdrMode);
     if (HI_SUCCESS != s32Ret)
     {
         printf("start ISP WDR failed!\n");
@@ -154,7 +155,7 @@ HI_S32 SAMPLE_COMM_ISP_Init(WDR_MODE_E  enWDRMode, SAMPLE_VI_MODE_E enMode)
     /* note : different sensor, different ISP_PUB_ATTR_S define.
               if the sensor you used is different, you can change
               ISP_PUB_ATTR_S definition */
-              
+
     switch(enMode)
     {
         case APTINA_9M034_DC_720P_30FPS:
@@ -211,7 +212,7 @@ HI_S32 SAMPLE_COMM_ISP_Init(WDR_MODE_E  enWDRMode, SAMPLE_VI_MODE_E enMode)
             stPubAttr.stWndRect.u32Width    = 1280;
             stPubAttr.stWndRect.u32Height   = 720;
             break;
-            
+
         case OMNIVISION_OV9732_DC_720P_30FPS:
             stPubAttr.enBayer               = BAYER_BGGR;
             stPubAttr.f32FrameRate          = 30;
@@ -239,7 +240,7 @@ HI_S32 SAMPLE_COMM_ISP_Init(WDR_MODE_E  enWDRMode, SAMPLE_VI_MODE_E enMode)
             stPubAttr.stWndRect.u32Width    = 1920;
             stPubAttr.stWndRect.u32Height   = 1080;
             break;
-            
+
         default:
             stPubAttr.enBayer      = BAYER_GRBG;
             stPubAttr.f32FrameRate          = 30;
@@ -381,17 +382,17 @@ HI_S32 SAMPLE_COMM_ISP_ChangeSensorMode(HI_U8 u8Mode)
 {
     ISP_DEV IspDev = 0;
     HI_S32 s32Ret;
-    
+
     ISP_WDR_MODE_S stWDRMode;
     stWDRMode.enWDRMode = u8Mode;
     s32Ret = HI_MPI_ISP_SetWDRMode(IspDev, &stWDRMode);
     if (s32Ret != HI_SUCCESS)
     {
-        printf("%s: HI_MPI_ISP_SetWDRMode failed with %#x!\n", 
+        printf("%s: HI_MPI_ISP_SetWDRMode failed with %#x!\n",
                __FUNCTION__, s32Ret);
         return s32Ret;
     }
-    
+
     return HI_SUCCESS;
 }
 
@@ -409,7 +410,7 @@ HI_VOID SAMPLE_COMM_ISP_Stop()
     {
         return;
     }
-    
+
     HI_MPI_ISP_Exit(IspDev);
     if (gs_IspPid)
     {
@@ -417,7 +418,7 @@ HI_VOID SAMPLE_COMM_ISP_Stop()
         gs_IspPid = 0;
     }
     gbIspInited = HI_FALSE;
-    
+
     /* unregister hisi af lib */
     stLib.s32Id = 0;
     strcpy(stLib.acLibName, HI_AF_LIB_NAME);
@@ -456,7 +457,7 @@ HI_VOID SAMPLE_COMM_ISP_Stop()
                __FUNCTION__, s32Ret);
         return;
     }
-    
+
     return;
 }
 
@@ -465,4 +466,3 @@ HI_VOID SAMPLE_COMM_ISP_Stop()
 }
 #endif
 #endif /* End of #ifdef __cplusplus */
-
