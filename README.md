@@ -61,7 +61,7 @@ Usage
 	
 	cd OpenWRT
 	mkdir glutinium
-	echo "src-git glutinium https://github.com/ZigFisher/Glutinium.git" >./feeds.conf
+	echo "src-git glutinium https://github.com/ZigFisher/Glutinium.git" >./feeds.conf  # if not have it in feeds.conf
 	./scripts/feeds update glutinium       # or ./scripts/feeds update -a
 	./scripts/feeds install i2c-telemetry  # or ./scripts/feeds install -a
 	
