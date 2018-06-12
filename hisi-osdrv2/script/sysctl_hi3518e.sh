@@ -16,22 +16,22 @@ vi_vpss_online_config()
 		himm 0x20120004 0x40001000;			# online, SPI1 CS0; [12]-ive
 		#pri config
 		himm 0x20120058 0x26666401			# each module 4bit£ºvedu       ddrt_md  ive  aio    jpge    tde   vicap  vdp
-		himm 0x2012005c 0x66666103			# each module 4bit£ºsfc_nand   sfc_nor  nfc  sdio1  sdio0   a7    vpss   vgs 
+		himm 0x2012005c 0x66666103			# each module 4bit£ºsfc_nand   sfc_nor  nfc  sdio1  sdio0   a7    vpss   vgs
 		himm 0x20120060 0x66266666			# each module 4bit£ºreserve    reserve  avc  usb    cipher  dma2  dma1   gsf
 		#timeout config                
 		himm 0x20120064 0x00000011			# each module 4bit£ºvedu       ddrt_md  ive  aio    jpge    tde   vicap  vdp
-		himm 0x20120068 0x00000010			# each module 4bit£ºsfc_nand   sfc_nor  nfc  sdio1  sdio0   a7    vpss   vgs 
-		himm 0x2012006c 0x00000000			# each module 4bit£ºreserve    reserve  avc  usb    cipher  dma2  dma1   gsf 
+		himm 0x20120068 0x00000010			# each module 4bit£ºsfc_nand   sfc_nor  nfc  sdio1  sdio0   a7    vpss   vgs
+		himm 0x2012006c 0x00000000			# each module 4bit£ºreserve    reserve  avc  usb    cipher  dma2  dma1   gsf
 	else
 		echo "==============vi_vpss_offline==============";
 		himm 0x20120004 0x1000;		   		# offline, mipi SPI1 CS0; [12]-ive
 		# pri config
 		himm 0x20120058 0x26666400			# each module 4bit£ºvedu       ddrt_md  ive  aio    jpge    tde   vicap  vdp
-		himm 0x2012005c 0x66666123			# each module 4bit£ºsfc_nand   sfc_nor  nfc  sdio1  sdio0   a7    vpss   vgs 
+		himm 0x2012005c 0x66666123			# each module 4bit£ºsfc_nand   sfc_nor  nfc  sdio1  sdio0   a7    vpss   vgs
 		himm 0x20120060 0x66266666			# each module 4bit£ºreserve    reserve  avc  usb    cipher  dma2  dma1   gsf
 		# timeout config              		
 		himm 0x20120064 0x00000011			# each module 4bit£ºvedu       ddrt_md  ive  aio    jpge    tde   vicap  vdp
-		himm 0x20120068 0x00000000			# each module 4bit£ºsfc_nand   sfc_nor  nfc  sdio1  sdio0   a7    vpss   vgs 
+		himm 0x20120068 0x00000000			# each module 4bit£ºsfc_nand   sfc_nor  nfc  sdio1  sdio0   a7    vpss   vgs
 		himm 0x2012006c 0x00000000			# each module 4bit£ºreserve    reserve  avc  usb    cipher  dma2  dma1   gsf
 	fi  
 }
@@ -40,17 +40,17 @@ vi_vpss_online_config()
 mddrc_pri_tmout_setting()
 {
 	#Ð´ÃüÁîÓÅÏÈ¼¶
-	himm 0x201100c0 0x76543210     # ports0         
-	himm 0x201100c4 0x76543210     # ports1         
+	himm 0x201100c0 0x76543210     # ports0
+	himm 0x201100c4 0x76543210     # ports1
 	himm 0x201100c8 0x76543210     # ports2
 	himm 0x201100cc 0x76543210     # ports3
 	himm 0x201100d0 0x76543210     # ports4
 	himm 0x201100d4 0x76543210     # ports5
 	himm 0x201100d8 0x76543210     # ports6
 
-	#¶ÁÃüÁîÓÅÏÈ¼¶                  
-	himm 0x20110100 0x76543210     # ports0         
-	himm 0x20110104 0x76543210     # ports1         
+	#¶ÁÃüÁîÓÅÏÈ¼¶
+	himm 0x20110100 0x76543210     # ports0
+	himm 0x20110104 0x76543210     # ports1
 	himm 0x20110108 0x76543210     # ports2
 	himm 0x2011010c 0x76543210     # ports3
 	himm 0x20110110 0x76543210     # ports4
@@ -58,30 +58,30 @@ mddrc_pri_tmout_setting()
 	himm 0x20110118 0x76543210     # ports6
 
 	#Ð´ÃüÁîtimeout
-	himm 0x20110140 0x08040200     # ports0 
-	himm 0x20110144 0x08040100     # ports1 
-	himm 0x20110148 0x08040200     # ports2 
-	himm 0x2011014c 0x08040200     # ports3 
-	himm 0x20110150 0x08040200     # ports4 
-	himm 0x20110154 0x08040200     # ports5 
-	himm 0x20110158 0x08040200     # ports6 
+	himm 0x20110140 0x08040200     # ports0
+	himm 0x20110144 0x08040100     # ports1
+	himm 0x20110148 0x08040200     # ports2
+	himm 0x2011014c 0x08040200     # ports3
+	himm 0x20110150 0x08040200     # ports4
+	himm 0x20110154 0x08040200     # ports5
+	himm 0x20110158 0x08040200     # ports6
 
-	#¶ÁÃüÁîtimeout                 
-	himm 0x20110180 0x08040200     # ports0 
-	himm 0x20110184 0x08040200     # ports1 
-	himm 0x20110188 0x08040200     # ports2 
-	himm 0x2011018c 0x08040200     # ports3 
-	himm 0x20110190 0x08040200     # ports4 
-	himm 0x20110194 0x08040200     # ports5 
+	#¶ÁÃüÁîtimeout
+	himm 0x20110180 0x08040200     # ports0
+	himm 0x20110184 0x08040200     # ports1
+	himm 0x20110188 0x08040200     # ports2
+	himm 0x2011018c 0x08040200     # ports3
+	himm 0x20110190 0x08040200     # ports4
+	himm 0x20110194 0x08040200     # ports5
 	himm 0x20110198 0x08040200     # ports6
 
 	#map mode
-	himm  0x20110040  0x01001000   # ports0 
-	himm  0x20110044  0x01001000   # ports1 
-	himm  0x20110048  0x01001000   # ports2 
-	himm  0x2011004c  0x01001000   # ports3 
-	himm  0x20110050  0x01001000   # ports4 
-	himm  0x20110054  0x01001000   # ports5 
+	himm  0x20110040  0x01001000   # ports0
+	himm  0x20110044  0x01001000   # ports1
+	himm  0x20110048  0x01001000   # ports2
+	himm  0x2011004c  0x01001000   # ports3
+	himm  0x20110050  0x01001000   # ports4
+	himm  0x20110054  0x01001000   # ports5
 	himm  0x20110058  0x01001000   # ports6
 }
 

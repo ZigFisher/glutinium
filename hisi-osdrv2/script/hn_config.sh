@@ -43,7 +43,7 @@ insert_sns()
 
 			himm 0x2003002c 0x94001;			# sensor unreset, clk 37.125MHz, VI 99MHz
 			
-			insmod extdrv/sensor_spi.ko;
+			insmod sensor_spi.ko;
 			;;
 		ov9712)
 			himm 0x200f0040 0x2;    			# I2C0_SCL
@@ -126,11 +126,11 @@ remove_sns()
 sys_restore()
 {
 	####################################################
-	pinmux_hi3518e.sh -net > /dev/null
-	clkcfg_hi3518e.sh > /dev/null
+	/etc/hisi/pinmux_hi3518e.sh -net > /dev/null
+	/etc/hisi/clkcfg_hi3518e.sh > /dev/null
 
 	# system configuration
-	sysctl_hi3518e.sh $b_arg_online  > /dev/null
+	/etc/hisi/sysctl_hi3518e.sh $b_arg_online  > /dev/null
 	insert_sns;
 }
 
@@ -161,7 +161,7 @@ done
 #######################parse arg end########################
 
 #######################Action###############################
-if [ $b_arg_restore -eq 1 ]; then	
+if [ $b_arg_restore -eq 1 ]; then
 	sys_restore;
 fi
 

@@ -153,8 +153,8 @@ if [ $b_arg_vo -eq 1 ]; then
 			vo_output_mode;       	                  #vo output pin mux
 			bt656_drive_capability;					  #drive capability
 			rmmod adv_7179;              
-			insmod extdrv/adv_7179.ko;                #PAL in default, 
-			#insmod extdrv/adv_7179.ko norm_mode=1;   #NTSC     
+			insmod adv_7179.ko;                #PAL in default, 
+			#insmod adv_7179.ko norm_mode=1;   #NTSC     
 			;;
 		"LCD")
 			echo "============VO TYPE LCD=============";
@@ -164,9 +164,9 @@ if [ $b_arg_vo -eq 1 ]; then
 			himm 0x200f0014 0x00000003		         # 3£ºVO_VS    & 0: GPIO2_1  & 1: RMII_TX_EN & 4: SDIO1_CARD_DETECT
 			himm 0x200f002c 0x00000003		         # 3£ºVO_HS    & 0: GPIO2_7	& 1: EPHY_RST	& 2: BOOT_SEL	& 4: SDIO1_CARD_POWER_EN
 			himm 0x200f001c 0x00000003		         # 3£ºVO_DE    & 0: GPIO2_3	& 1: RMII_TXD1	& 4: SDIO1_CDATA1
-			insmod extdrv/ssp_ili9342h_6bit.ko;      # ili9342 6bit LCD
-			#insmod extdrv/ssp_ili9341v_6bit.ko;     # ili9341 6bit LCD
-			#insmod extdrv/ssp_ota5182.ko;           # ota5182 8bit LCD
+			insmod ssp_ili9342h_6bit.ko;             # ili9342 6bit LCD
+			#insmod ssp_ili9341v_6bit.ko;            # ili9341 6bit LCD
+			#insmod ssp_ota5182.ko;                  # ota5182 8bit LCD
 			;;
 	esac
 fi

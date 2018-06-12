@@ -39,7 +39,7 @@ insert_audio()
 	insmod hi3518e_ao.ko
 	insmod hi3518e_aenc.ko
 	insmod hi3518e_adec.ko
-	#insmod extdrv/tlv_320aic31.ko 
+	#insmod tlv_320aic31.ko
 	echo "insert audio"
 }
 
@@ -97,7 +97,7 @@ insert_sns()
 
 			himm 0x2003002c 0x94001;			# sensor unreset, clk 37.125MHz, VI 99MHz
 			
-			insmod extdrv/sensor_spi.ko;
+			insmod sensor_spi.ko;
 			;;
 		ov9712)
 			himm 0x200f0040 0x2;    			# I2C0_SCL
@@ -198,15 +198,15 @@ insert_isp()
 sys_config()
 {
 	# pinmux configuration
-	#sh ./pinmux_hi3518e.sh -vo BT656 > /dev/null
-	#sh ./pinmux_hi3518e.sh -vo LCD > /dev/null
-	sh ./pinmux_hi3518e.sh -net > /dev/null
+	#sh /etc/hisi/pinmux_hi3518e.sh -vo BT656 > /dev/null
+	#sh /etc/hisi/pinmux_hi3518e.sh -vo LCD > /dev/null
+	sh /etc/hisi/pinmux_hi3518e.sh -net > /dev/null
 	
 	# clock configuration
-	sh clkcfg_hi3518e.sh > /dev/null
+	sh /etc/hisi/clkcfg_hi3518e.sh > /dev/null
 
 	# system configuration
-	sh sysctl_hi3518e.sh $b_arg_online  > /dev/null
+	sh /etc/hisi/sysctl_hi3518e.sh $b_arg_online  > /dev/null
 }
 
 insert_ko()
@@ -242,10 +242,10 @@ insert_ko()
 	insmod hi3518e_jpege.ko
 	insmod hi3518e_ive.ko save_power=0;
 #	insmod hi3518e_ive.ko	
-	insmod extdrv/sensor_i2c.ko
+	insmod sensor_i2c.ko
 	echo "==== Your input Sensor type is $SNS_TYPE ===="
-	insmod extdrv/pwm.ko
-	insmod extdrv/piris.ko
+	insmod pwm.ko
+	insmod piris.ko
 
 	#insert_sns > /dev/null
 	insert_sns
@@ -291,11 +291,11 @@ remove_ko()
 sys_restore()
 {
     ####################################################
-	pinmux_hi3518e.sh -net > /dev/null
-	clkcfg_hi3518e.sh > /dev/null
+	/etc/hisi/pinmux_hi3518e.sh -net > /dev/null
+	/etc/hisi/clkcfg_hi3518e.sh > /dev/null
 
 	# system configuration
-	sysctl_hi3518e.sh $b_arg_online  > /dev/null
+	/etc/hisi/sysctl_hi3518e.sh $b_arg_online  > /dev/null
 	insert_sns;
 }
 
@@ -427,7 +427,7 @@ if [ $b_arg_insmod -eq 1 ]; then
 	insert_ko;
 fi
 
-if [ $b_arg_restore -eq 1 ]; then	
+if [ $b_arg_restore -eq 1 ]; then
 	sys_restore;
 fi
 
