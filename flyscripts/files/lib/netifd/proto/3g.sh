@@ -4,10 +4,11 @@
 	NOT_INCLUDED=1
 	INCLUDE_ONLY=1
 
-        local gpio=`uci -q get network.$1.gpio`
+        local gpio=$(uci -q get network.$1.gpio)
+        local limber=$(uci -q get network.$1.limber)
         if [ -n "$gpio" ]; then
-          echo "Reset $interface modem on gpio$gpio" | logger -t flyscript
-          echo "0" >/sys/class/gpio/gpio$gpio/value; sleep 3; echo "1" >/sys/class/gpio/gpio$gpio/value; sleep 15
+          echo "Reset $interface modem on gpio$gpio with limber=$limber" | logger -t flyscript
+          echo "0" >/sys/class/gpio/gpio$gpio/value; sleep 3; sleep $limber; echo "1" >/sys/class/gpio/gpio$gpio/value; sleep 15
         fi
 
 	. ../netifd-proto.sh
@@ -114,7 +115,7 @@ proto_3g_teardown() {
 	local gpio=`uci -q get network.$interface.gpio`
 	if [ -n "$gpio" ]; then
 	  echo "Reset $interface modem on gpio$gpio" | logger -t flyscript
-	  echo "0" >/sys/class/gpio/gpio$gpio/value; sleep 3; echo "1" >/sys/class/gpio/gpio$gpio/value
+	  echo "0" >/sys/class/gpio/gpio$gpio/value; sleep 3; sleep $limber; echo "1" >/sys/class/gpio/gpio$gpio/value
 	  #echo "0" >/sys/devices/platform/leds-gpio/leds/tp-link\:green\:$gpio/brightness; sleep 3; echo "1" >/sys/devices/platform/leds-gpio/leds/tp-link\:green\:$gpio/brightness
 	fi
 }
