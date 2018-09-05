@@ -4,12 +4,12 @@
 	NOT_INCLUDED=1
 	INCLUDE_ONLY=1
 
-        local gpio=$(uci -q get network.$interface.gpio)
-        local limber=$(uci -q get network.$interface.limber)
-        if [ -n "$gpio" ]; then
-          echo "Reset-1 $interface modem on gpio$gpio with limber=$limber" | logger -t flyscript
-          echo "0" >/sys/class/gpio/gpio$gpio/value; sleep 3; sleep $limber; echo "1" >/sys/class/gpio/gpio$gpio/value; sleep 15
-        fi
+	local gpio=$(uci -q get network.$interface.gpio)
+	if [ -n "$gpio" ]; then
+	  echo "Reset(1) $interface modem on gpio$gpio" | logger -t flyscript
+	  echo "0" >/sys/class/gpio/gpio$gpio/value; sleep 3; echo "1" >/sys/class/gpio/gpio$gpio/value; sleep 15
+	  #echo "0" >/sys/devices/platform/leds-gpio/leds/tp-link\:green\:$gpio/brightness; sleep 3; echo "1" >/sys/devices/platform/leds-gpio/leds/tp-link\:green\:$gpio/brightness
+	fi
 
 	. ../netifd-proto.sh
 	. ./ppp.sh
@@ -113,10 +113,9 @@ proto_3g_setup() {
 proto_3g_teardown() {
 	proto_kill_command "$interface"
 	local gpio=$(uci -q get network.$interface.gpio)
-	local limber=$(uci -q get network.$interface.limber)
 	if [ -n "$gpio" ]; then
-	  echo "Reset-2 $interface modem on gpio$gpio with limber=$limber" | logger -t flyscript
-	  echo "0" >/sys/class/gpio/gpio$gpio/value; sleep 3; sleep $limber; echo "1" >/sys/class/gpio/gpio$gpio/value
+	  echo "Reset(2) $interface modem on gpio$gpio" | logger -t flyscript
+	  echo "0" >/sys/class/gpio/gpio$gpio/value; sleep 3; echo "1" >/sys/class/gpio/gpio$gpio/value
 	  #echo "0" >/sys/devices/platform/leds-gpio/leds/tp-link\:green\:$gpio/brightness; sleep 3; echo "1" >/sys/devices/platform/leds-gpio/leds/tp-link\:green\:$gpio/brightness
 	fi
 }

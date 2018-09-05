@@ -46,7 +46,6 @@ uci -q batch <<-EOF >/dev/null
 	set network.wan1.keepalive='3'
 	set network.wan1.gpio='20'
 	set network.wan1.indicator='1'
-	set network.wan1.limber='2'
 	commit network
 	set network.wan2=interface
 	set network.wan2.proto='3g'
@@ -57,7 +56,6 @@ uci -q batch <<-EOF >/dev/null
 	set network.wan2.keepalive='3'
 	set network.wan2.gpio='17'
 	set network.wan2.indicator='2'
-	set network.wan2.limber='7'
 	commit network
 	set snmpd.default='snmpd'
 	set snmpd.default.community='ukrn'

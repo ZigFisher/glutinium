@@ -46,7 +46,6 @@ uci -q batch <<-EOF >/dev/null
 	set network.wan1.keepalive='3'
 	set network.wan1.gpio='20'
 	set network.wan1.indicator='1'
-	set network.wan1.limber='2'
 	commit network
 	set network.vtun0='interface'
 	set network.vtun0.proto='vtun'
