@@ -7,7 +7,7 @@
         local gpio=$(uci -q get network.$interface.gpio)
         local limber=$(uci -q get network.$interface.limber)
         if [ -n "$gpio" ]; then
-          echo "Reset $interface modem on gpio$gpio with limber=$limber" | logger -t flyscript
+          echo "Reset-1 $interface modem on gpio$gpio with limber=$limber" | logger -t flyscript
           echo "0" >/sys/class/gpio/gpio$gpio/value; sleep 3; sleep $limber; echo "1" >/sys/class/gpio/gpio$gpio/value; sleep 15
         fi
 
@@ -115,7 +115,7 @@ proto_3g_teardown() {
 	local gpio=$(uci -q get network.$interface.gpio)
 	local limber=$(uci -q get network.$interface.limber)
 	if [ -n "$gpio" ]; then
-	  echo "Reset $interface modem on gpio$gpio" | logger -t flyscript
+	  echo "Reset-2 $interface modem on gpio$gpio with limber=$limber" | logger -t flyscript
 	  echo "0" >/sys/class/gpio/gpio$gpio/value; sleep 3; sleep $limber; echo "1" >/sys/class/gpio/gpio$gpio/value
 	  #echo "0" >/sys/devices/platform/leds-gpio/leds/tp-link\:green\:$gpio/brightness; sleep 3; echo "1" >/sys/devices/platform/leds-gpio/leds/tp-link\:green\:$gpio/brightness
 	fi
