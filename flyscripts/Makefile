@@ -130,6 +130,7 @@ define Package/flyscripts_base/install
 	$(INSTALL_DIR)  $(1)/usr/sbin
 	$(INSTALL_BIN)  ./files/usr/sbin/checklink.sh $(1)/usr/sbin/
 	$(INSTALL_BIN)  ./files/usr/sbin/license.sh $(1)/usr/sbin/
+	$(INSTALL_BIN)  ./files/usr/sbin/mobinfo.sh $(1)/usr/sbin/
 	$(INSTALL_BIN)  ./files/usr/sbin/monitor.sh $(1)/usr/sbin/
 endef
 
