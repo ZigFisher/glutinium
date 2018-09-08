@@ -1,10 +1,10 @@
 #!/bin/sh
 #
-# UNKNOWN HUAWEI
+# HUAWEI E171
 #
 MODEM_PRODID="12d1/1001/0"
-FIXED_DEVPATH="/devices/101c0000.ehci/usb1/1-1/1-1:1.0"
-SYMLINK="ttyHUAWEI-1"
+FIXED_DEVPATH="/devices/101c0000.ehci/usb1/1-1/1-1.2/1-1.2:1.0"
+SYMLINK="ttyMODEMx"
 
 
 if [ "${PRODUCT}" = "${MODEM_PRODID}" ]; then

@@ -4,6 +4,13 @@
 	NOT_INCLUDED=1
 	INCLUDE_ONLY=1
 
+	local gpio=$(uci -q get network.$interface.gpio)
+	if [ -n "$gpio" ]; then
+	  echo "Reset(1) $interface modem on gpio$gpio" | logger -t flyscript
+	  echo "0" >/sys/class/gpio/gpio$gpio/value; sleep 3; echo "1" >/sys/class/gpio/gpio$gpio/value; sleep 15
+	  #echo "0" >/sys/devices/platform/leds-gpio/leds/tp-link\:green\:$gpio/brightness; sleep 3; echo "1" >/sys/devices/platform/leds-gpio/leds/tp-link\:green\:$gpio/brightness
+	fi
+
 	. ../netifd-proto.sh
 	. ./ppp.sh
 	init_proto "$@"
@@ -30,14 +37,11 @@ proto_3g_setup() {
 	json_get_var pincode pincode
 	json_get_var dialnumber dialnumber
 
-	sleep 25
-	device="$(readlink -f $device)"
-
-	#[ -n "$dat_device" ] && device=$dat_device
-	#[ -e "$device" ] || {
-	#	proto_set_available "$interface" 0
-	#	return 1
-	#}
+	[ -n "$dat_device" ] && device=$dat_device
+	[ -e "$device" ] || {
+		proto_set_available "$interface" 0
+		return 1
+	}
 
 	case "$service" in
 		cdma|evdo)
@@ -108,7 +112,7 @@ proto_3g_setup() {
 
 proto_3g_teardown() {
 	proto_kill_command "$interface"
-	local gpio="$(uci -q get network.$interface.gpio)"
+	local gpio=$(uci -q get network.$interface.gpio)
 	if [ -n "$gpio" ]; then
 	  echo "Reset(2) $interface modem on gpio$gpio" | logger -t flyscript
 	  echo "0" >/sys/class/gpio/gpio$gpio/value; sleep 3; echo "1" >/sys/class/gpio/gpio$gpio/value
