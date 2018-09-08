@@ -13,7 +13,7 @@ proto_3g_init_config() {
 	no_device=1
 	available=1
 	ppp_generic_init_config
-	proto_config_add_string "device:device"
+	proto_config_add_string "device"
 	proto_config_add_string "apn"
 	proto_config_add_string "service"
 	proto_config_add_string "pincode"
@@ -30,8 +30,15 @@ proto_3g_setup() {
 	json_get_var pincode pincode
 	json_get_var dialnumber dialnumber
 
-	sleep 25
-	device="$(readlink -f $device)"
+	local gpio="$(uci -q get network.$interface.gpio)"
+	if [ -n "$gpio" ]; then
+	  echo "Reset(2) $interface modem on gpio$gpio" | logger -t flyscript
+	  echo "0" >/sys/class/gpio/gpio$gpio/value; sleep 3; echo "1" >/sys/class/gpio/gpio$gpio/value
+	  #echo "0" >/sys/devices/platform/leds-gpio/leds/tp-link\:green\:$gpio/brightness; sleep 3; echo "1" >/sys/devices/platform/leds-gpio/leds/tp-link\:green\:$gpio/brightness
+	  sleep 25 # wait modem ready, optional
+	  device="$(readlink -f $device)"
+	  echo "Use $device for open Internet connection" | logger -t flyscript
+	fi
 
 	#[ -n "$dat_device" ] && device=$dat_device
 	#[ -e "$device" ] || {
@@ -108,12 +115,6 @@ proto_3g_setup() {
 
 proto_3g_teardown() {
 	proto_kill_command "$interface"
-	local gpio="$(uci -q get network.$interface.gpio)"
-	if [ -n "$gpio" ]; then
-	  echo "Reset(2) $interface modem on gpio$gpio" | logger -t flyscript
-	  echo "0" >/sys/class/gpio/gpio$gpio/value; sleep 3; echo "1" >/sys/class/gpio/gpio$gpio/value
-	  #echo "0" >/sys/devices/platform/leds-gpio/leds/tp-link\:green\:$gpio/brightness; sleep 3; echo "1" >/sys/devices/platform/leds-gpio/leds/tp-link\:green\:$gpio/brightness
-	fi
 }
 
 [ -z "NOT_INCLUDED" ] || add_protocol 3g
