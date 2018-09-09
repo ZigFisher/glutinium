@@ -3,6 +3,7 @@
 # HUAWEI E171
 #
 MODEM_PRODID="12d1/1001/0"
+#FIXED_DEVPATH="/devices/101c0000.ehci/usb1/1-1/1-1.6/1-1.6:1.0"
 FIXED_DEVPATH="/devices/101c0000.ehci/usb1/1-1/1-1.2/1-1.2:1.0"
 SYMLINK="ttyMODEMx"
 
