@@ -3,33 +3,31 @@
 # HUAWEI E352
 #
 MODEM_PRODID="12d1/1506/102"
-FIXED_DEVPATH="/devices/101c0000.ehci/usb1/1-1/1-1.2/1-1.2:1.0"
-SYMLINK="ttyMODEM"
+NUMBER="2"
+FIXED_DEVPATH="/devices/101c0000.ehci/usb1/1-1/1-1.${NUMBER}/1-1.${NUMBER}:1.0"
+SYMLINK="ttyMODEM${NUMBER}"
 
 
 if [ "${PRODUCT}" = "${MODEM_PRODID}" ]; then
   if [ "${DEVPATH}" = "${FIXED_DEVPATH}" ]; then
+    #
+    #NUMBER=$(echo ${DEVPATH} | tr '/:.' ' ' | awk '{print $7}')
+    #
     if [ "${ACTION}" = "add" ]; then
       DEVICE_NAME=$(ls /sys/$DEVPATH | grep -e '^ttyUSB')
       if [ -z ${DEVICE_NAME} ]; then
         logger -t flyscript "Warning DEVICE_NAME is empty"
         exit 0
       fi
-      NUMBER=$(echo ${DEVPATH} | tr '/:.' ' ' | awk '{print $7}')
-      logger -t flyscript "Device name of modem is $DEVICE_NAME"
-      ln -s /dev/$DEVICE_NAME /dev/${SYMLINK}${NUMBER}
-      logger -t flyscript "Symlink from /dev/$DEVICE_NAME to /dev/${SYMLINK}${NUMBER} created"
+      ln -s /dev/$DEVICE_NAME /dev/${SYMLINK}
+      logger -t flyscript "Symlink from /dev/$DEVICE_NAME to /dev/${SYMLINK} created"
     fi
-  fi
-fi
-
-
-if [ "${PRODUCT}" = "${MODEM_PRODID}" ]; then
-  if [ "${DEVPATH}" = "${FIXED_DEVPATH}" ]; then
+    #
     if [ "${ACTION}" = "remove" ]; then
-      NUMBER=$(echo ${DEVPATH} | tr '/:.' ' ' | awk '{print $7}')
-      rm -f /dev/${SYMLINK}${NUMBER}
-      logger -t flyscript "Symlink /dev/${SYMLINK}${NUMBER} removed"
+      rm -f /dev/${SYMLINK}
+      logger -t flyscript "Symlink /dev/${SYMLINK} removed"
     fi
+    #
   fi
 fi
+

@@ -5,7 +5,7 @@
 MODEM_PRODID="12d1/1001/0"
 NUMBER="2"
 FIXED_DEVPATH="/devices/101c0000.ehci/usb1/1-1/1-1.${NUMBER}/1-1.${NUMBER}:1.0"
-SYMLINK="ttyMODEM"
+SYMLINK="ttyMODEM${NUMBER}"
 
 
 if [ "${PRODUCT}" = "${MODEM_PRODID}" ]; then
@@ -19,13 +19,13 @@ if [ "${PRODUCT}" = "${MODEM_PRODID}" ]; then
         logger -t flyscript "Warning DEVICE_NAME is empty"
         exit 0
       fi
-      ln -s /dev/$DEVICE_NAME /dev/${SYMLINK}${NUMBER}
-      logger -t flyscript "Symlink from /dev/$DEVICE_NAME to /dev/${SYMLINK}${NUMBER} created"
+      ln -s /dev/$DEVICE_NAME /dev/${SYMLINK}
+      logger -t flyscript "Symlink from /dev/$DEVICE_NAME to /dev/${SYMLINK} created"
     fi
     #
     if [ "${ACTION}" = "remove" ]; then
-      rm -f /dev/${SYMLINK}${NUMBER}
-      logger -t flyscript "Symlink /dev/${SYMLINK}${NUMBER} removed"
+      rm -f /dev/${SYMLINK}
+      logger -t flyscript "Symlink /dev/${SYMLINK} removed"
     fi
     #
   fi

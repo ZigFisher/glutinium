@@ -32,7 +32,7 @@ proto_3g_setup() {
 
 	local gpio="$(uci -q get network.$interface.gpio)"
 	if [ -n "$gpio" ]; then
-	  echo "Reset(2) $interface modem on gpio$gpio" | logger -t flyscript
+	  echo "Reset $interface modem on gpio$gpio" | logger -t flyscript
 	  echo "0" >/sys/class/gpio/gpio$gpio/value; sleep 3; echo "1" >/sys/class/gpio/gpio$gpio/value
 	  #echo "0" >/sys/devices/platform/leds-gpio/leds/tp-link\:green\:$gpio/brightness; sleep 3; echo "1" >/sys/devices/platform/leds-gpio/leds/tp-link\:green\:$gpio/brightness
 	  sleep 25 # wait modem ready, optional
