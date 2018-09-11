@@ -1,0 +1,113 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2008-2011 OpenWrt.org
+
+START=99
+
+SERVICE_USE_PID=0
+
+do_update(){
+  #CALL=bg5hhp-12
+  CALL=$1
+  MAC=$2
+
+  #[ -z $CALL -a -e /etc/openwrt_release ] && CALL=`uci get system.@system[0].hostname`
+  if [ -e /etc/openwrt_release ];then
+    CALL=`uci get system.@system[0].hostname`
+    MAC=`ifconfig eth0 | grep "HWaddr" | awk '{print $5}'`
+  else
+    CALL=`hostname -s`
+    MAC=`ifconfig |grep HWaddr |awk '{print $5}' |head -n 1`
+  fi
+  #[ -e /etc/openwrt_release ] && CALL=`uci get system.@system[0].hostname`
+  #[ -z $CALL ] && CALL=`hostname -s`
+  [ -z $CALL ] && echo "missing CALLSIGN" && exit
+  [ -z $MAC ] && echo "missing mac!"
+
+  echo MyCall: ${CALL}
+  echo MyMAC: ${MAC}
+  
+  REMOTE=https://hamclub.net/openwrt/config/${CALL}.tinyaprs.conf?mac=${MAC}
+  LOCAL=/etc/tinyaprs.conf
+  LOCAL_TEMP=/tmp/.tinyaprs.conf.upd
+
+  rm -f ${LOCAL_TEMP}
+  wget -q  ${REMOTE} -O ${LOCAL_TEMP}
+  if [ $? -ne 0 ];then
+    echo "remote config is not found!"
+    return 1
+  fi
+  MD5_HASH="/usr/sbin/tinyaprs-util md5"
+  MD5_REMOTE=`${MD5_HASH} ${LOCAL_TEMP} |awk '{print $2}'`
+  MD5_LOCAL=empty
+  [ -f $LOCAL ] && MD5_LOCAL=`${MD5_HASH} ${LOCAL} |awk '{print $2}'`
+  echo "L: ${MD5_LOCAL}"
+  echo "R: ${MD5_REMOTE}"
+  if [ "${MD5_LOCAL}" = "${MD5_REMOTE}" ];then
+    echo "Config not changed"
+    return 0
+  fi
+
+  echo "Updating ${LOCAL}..."
+  cp -f ${LOCAL_TEMP} ${LOCAL}
+  [ $? -eq 0 ] || echo "Update ${LOCAL} failed!"
+}
+
+update() {
+  echo "Updating config from network..."
+  i=0
+  while [ $i -le 5 ];do
+    i=$(($i+1))
+    do_update
+    if [ $? -ne 0 ];then
+      echo "Retring $i...";
+      sleep 5
+    else
+      return 0
+    fi
+  done
+  return 1
+}
+
+do_start() {
+	#mkdir -m 0755 -p /var/log/tinyaprs
+	#echo "Starting tinyaprs"
+	if [ -e /etc/tinyaprs.conf ]; then
+		/usr/sbin/tinyaprs -d
+		>&2 echo "TinyAPRS started"
+	else
+		>&2 echo "configuration file missing, TinyAPRS will not start"
+	fi
+}
+
+start() {
+	update
+	do_start
+}
+
+stop() {
+	if [ -e /tmp/tinyaprs.pid ]; then
+		PID=`cat /tmp/tinyaprs.pid`
+		kill $PID > /dev/null 2>&1
+		rm -f /tmp/tinyaprs.pid
+		echo "TinyAPRS stopped"
+	else
+		echo "TinyAPRS is not running"
+	fi
+    return 0
+}
+
+restart() {
+	stop
+	start
+}
+
+#reload(){
+#  update
+#  if [ $? -ne 0 ];then
+#	echo "Update config failed.";
+#  else
+#	stop
+#	do_start
+#	break
+#  fi
+#}

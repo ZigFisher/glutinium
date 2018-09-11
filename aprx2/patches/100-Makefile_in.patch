@@ -1,0 +1,16 @@
+diff -u orig/Makefile.in patch/Makefile.in
+--- orig/Makefile.in	2015-03-15 12:24:35.000000000 +0800
++++ patch/Makefile.in	2015-03-15 12:27:18.000000000 +0800
+@@ -94,10 +94,10 @@
+ 
+ 
+ $(PROGAPRX):	$(OBJSAPRX) VERSION Makefile
+-		$(LD) $(LDFLAGS) -o $@ $(OBJSAPRX) $(LIBS)
++		$(CC) $(CFLAGS) -o $@ $(OBJSAPRX) $(LIBS)
+ 
+ $(PROGSTAT):	$(OBJSSTAT) VERSION Makefile
+-		$(LD) $(LDFLAGS) -o $@ $(OBJSSTAT) $(LIBS)
++		$(CC) $(CFLAGS) -o $@ $(OBJSSTAT) $(LIBS)
+ 
+ .PHONY:		man
+ man:		$(MAN)

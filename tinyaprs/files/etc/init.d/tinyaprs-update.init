@@ -1,0 +1,82 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2008-2011 OpenWrt.org
+# Simple script updates the aprx configuration file
+# by BG5HHP
+#
+
+START=98
+
+SERVICE_USE_PID=0
+
+do_update(){
+  #CALL=bg5hhp-12
+  CALL=$1
+  MAC=$2
+
+  #[ -z $CALL -a -e /etc/openwrt_release ] && CALL=`uci get system.@system[0].hostname`
+  if [ -e /etc/openwrt_release ];then
+    CALL=`uci get system.@system[0].hostname`
+    MAC=`ifconfig eth0 | grep "HWaddr" | awk '{print $5}'`
+  else
+    CALL=`hostname -s`
+    MAC=`ifconfig |grep HWaddr |awk '{print $5}' |head -n 1`
+  fi
+  #[ -e /etc/openwrt_release ] && CALL=`uci get system.@system[0].hostname`
+  #[ -z $CALL ] && CALL=`hostname -s`
+  [ -z $CALL ] && echo "missing CALLSIGN" && exit
+  [ -z $MAC ] && echo "missing mac!"
+
+  echo MyCall: ${CALL}
+  echo MyMAC: ${MAC}
+  
+  REMOTE=https://hamclub.net/openwrt/config/${CALL}.tinyaprs.conf?mac=${MAC}
+  LOCAL=/etc/tinyaprs.conf
+  LOCAL_TEMP=/tmp/.tinyaprs.conf.upd
+
+  rm -f ${LOCAL_TEMP}
+  wget -q  ${REMOTE} -O ${LOCAL_TEMP}
+  if [ $? -ne 0 ];then
+    echo "remote config is not found!"
+    return 1
+  fi
+
+  MD5_REMOTE=`openssl md5 ${LOCAL_TEMP} |awk '{print $2}'`
+  MD5_LOCAL=empty
+  [ -f $LOCAL ] && MD5_LOCAL=`openssl md5 ${LOCAL} |awk '{print $2}'`
+  echo "L: ${MD5_LOCAL}"
+  echo "R: ${MD5_REMOTE}"
+  if [ "${MD5_LOCAL}" = "${MD5_REMOTE}" ]
+  then
+    echo "Config not changed"
+    exit 0
+  fi
+
+  echo "Updating ${LOCAL}..."
+  cp -f ${LOCAL_TEMP} ${LOCAL}
+  [ $? -eq 0 ] || echo "Update failed!"
+}
+
+start() {
+  echo "Updating config from network..."
+  i=0
+  while [ $i -le 5 ];do
+    i=$(($i+1))
+    do_update
+    if [ $? -ne 0 ];then
+      echo "Retring $i...";
+      sleep 5
+    else
+      exit 0
+    fi
+  done
+	
+}
+
+stop() {
+  echo "Stopped"
+}
+
+restart() {
+	stop
+	start
+}
