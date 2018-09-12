@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [ $ACTION == "released" ]; then
+  if [ $BUTTON == "BTN_2" ]; then
+    logger "BTN_2 pressed"
+  fi
+fi
