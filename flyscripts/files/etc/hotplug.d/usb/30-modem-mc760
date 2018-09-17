@@ -4,7 +4,7 @@
 #
 MODEM_PRODID="1410/6000/0"
 FIXED_DEVPATH="/devices/101c0000.ehci/usb1/1-1/1-1.2/1-1.2:1.0"
-SYMLINK="ttyMC760"
+SYMLINK="ttyMODEM1"
 
 
 if [ "${PRODUCT}" = "${MODEM_PRODID}" ]; then
@@ -31,3 +31,5 @@ if [ "${PRODUCT}" = "${MODEM_PRODID}" ]; then
     fi
   fi
 fi
+
+
