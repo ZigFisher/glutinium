@@ -18,6 +18,7 @@ proto_vtun_init_config() {
   no_device=1
   available=1
   proto_config_add_string "server"
+  proto_config_add_string "backup"
   proto_config_add_string "port"
   proto_config_add_string "transport"
   proto_config_add_string "timeout"
@@ -32,9 +33,10 @@ proto_vtun_init_config() {
 
 proto_vtun_setup() {
   local interface="$1"
-  local findip=`find /bin /sbin /usr/bin /usr/sbin -name ip | head -n 1`
+  local findip=$(find /bin /sbin /usr/bin /usr/sbin -name ip | head -n 1)
 
   json_get_var server server
+  json_get_var backup backup
   json_get_var port port
   json_get_var transport transport
   json_get_var timeout timeout
@@ -47,6 +49,11 @@ proto_vtun_setup() {
   json_get_var bridge bridge
 
 
+
+  if [ -z "$backup" ]; then
+    backup="none"
+    # echo "Set backup = $backup" | logger -t vtun.autoset
+  fi
 
   if [ -z "$port" ]; then
     port="5000"
@@ -118,8 +125,8 @@ proto_vtun_setup() {
     echo "  proto $transport;"
     echo "  type $mode;"
     echo "  speed $shaper;"
-    echo "  persist yes;"
-    echo "  keepalive yes;"
+    echo "  persist no;"
+    echo "  keepalive 60:5;"
     echo "  compress no;"
     echo "  encrypt no;"
     echo "  stat no;"
@@ -159,7 +166,11 @@ proto_vtun_setup() {
     mkdir -p /var/lock/vtund
     vtund -n -f /tmp/$interface.conf -s -P $port
   else
-    vtund -n -f /tmp/$interface.conf $name $server -P $port
+    if [ "$backup" = "none" ]; then
+      vtund -n -f /tmp/$interface.conf $name $server -P $port
+    else
+      vtund -n -f /tmp/$interface.conf $name $server -P $port ; vtund -n -f /tmp/$interface.conf $name $backup -P $port
+    fi
   fi
 
   sleep 5
