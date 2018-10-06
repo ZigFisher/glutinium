@@ -7,6 +7,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+
 struct UPSData{
     float IPVolts,IPFaultVolts,OPVolts,IPFreq,BatVolts,Temp;
     int OPCurr;
@@ -27,20 +28,6 @@ int parsedata(char* buf, struct UPSData *d) {
         return -2;
     }
     return 0;
-}
-
-void printdata(struct UPSData *d) {
-    printf("------------------------------------------------\n");
-    printf("Input Voltage:\t%3.1f\nInp.FaultVolts:\t%3.1f\n"
-           "Output Voltage:\t%3.1f\nOutputCurrent%%:\t%d\nInput Freq.:\t%2.2f\n"
-           "BatteryVoltage:\t%2.1f\nTemperatyre:\t%2.1f\nPower Failure:\t%d\n"
-           "Battery Low:\t%d\nBypass Active:\t%d\nUPS Failed:\t%d\n"
-           "UPS typ StdBy:\t%d\n"
-           "Test in Progr.:\t%d\nShutdn Active:\t%d\nBeeper On:\t%d\n",
-           d->IPVolts,d->IPFaultVolts,d->OPVolts,d->OPCurr,d->IPFreq,d->BatVolts,d->Temp,
-           d->PowerFail,d->BatLow,d->BypassActive,d->UPSFailed,d->UPSisSTBY,d->TestActive,
-           d->ShutdownActive,d->BeeperOn);
-    printf("------------------------------------------------\n");
 }
 
 void printjson(struct UPSData *d) {
@@ -64,20 +51,12 @@ void printjson(struct UPSData *d) {
            d->IPVolts,d->IPFaultVolts,d->OPVolts,d->OPCurr,d->IPFreq,d->BatVolts,d->Temp,
            d->PowerFail,d->BatLow,d->BypassActive,d->UPSFailed,d->UPSisSTBY,d->TestActive,
            d->ShutdownActive,d->BeeperOn);
-    printf("------------------------------------------------\n");
 }
 
 int fd;
 char buf[512];
 int main (int argc, char* argv[])
 {
-
-//    char BUF[256] = "(234.8 234.8 196.9 000 50.0 2.22 48.0 00000001";
-//    struct UPSData data;
-//    parsedata(BUF, &data);
-//    printdata(&data);
-//    printjson(&data);
-//    return 0;
 
     int iIn,iOut;
     if (argc>=2)
@@ -102,66 +81,23 @@ int main (int argc, char* argv[])
 
         char Params[64];
 
-        if(argc>=3)
-        {
-            if (!strcmp(argv[2],"status"))
-            {
-                iOut = write(fd, "Q1\r", 3);
-                usleep(800000);
-                if (iOut < 0)  fputs("write() of 4 bytes failed!\n", stderr);
-                iIn=read(fd,buf,250);
+        usleep(1800);
+        iIn=read(fd,buf,250);
+        usleep(1800);
+        iOut = write(fd, "Q1\r", 3);
+        usleep(800000);
+        if (iOut < 0)  fputs("write() of 4 bytes failed!\n", stderr);
+        iIn=read(fd,buf,250);
 
-                strncpy(Params,&buf[38],11);
-                Params[46]=0;
-            }
-            else if (!strcmp(argv[2],"help"))
-            {
-                printf ("help\r\n");
-            }
-            else if (!strcmp(argv[2],"name"))
-            {
-                iOut = write(fd, "I\r", 3);
-                usleep(800000);
-                if (iOut < 0)  fputs("write() of 4 bytes failed!\n", stderr);
-                iIn=read(fd,buf,250);
-                strncpy(Params,&buf[0],60);
+        strncpy(Params,&buf[0],50);
+        Params[50]=' ';
 
-            }
-            else if (!strcmp(argv[2],"stat2"))
-            {
-                iOut = write(fd, "F\r", 3);
-                usleep(800000);
-                if (iOut < 0)  fputs("write() of 4 bytes failed!\n", stderr);
-                iIn=read(fd,buf,250);
-                strncpy(Params,&buf[1],60);
-                Params[20]=0;
-            }
-            else
-            {
-                printf ("WTF ?\r\n");
-            }
-        }
-        else
-        {
-            usleep(1800);
-            iIn=read(fd,buf,250);
-            usleep(1800);
-            iOut = write(fd, "Q1\r", 3);
-            usleep(800000);
-            if (iOut < 0)  fputs("write() of 4 bytes failed!\n", stderr);
-            iIn=read(fd,buf,250);
-
-            strncpy(Params,&buf[0],50);
-            Params[50]=' ';
-        }
         close(fd);
 
-
-
+     // char BUF[256] = "(234.8 234.8 196.9 000 50.0 2.22 48.0 00000001";
         struct UPSData data;
-        printf("%s\r\n",Params);
+     /* printf("%s\r\n",Params); */
         parsedata(Params, &data);
-     /* printdata(&data); */
         printjson(&data);
     }
     else
