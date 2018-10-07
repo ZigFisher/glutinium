@@ -35,7 +35,7 @@ void printjson(struct UPSData *d) {
            "    \"Input_Voltage\": %3.1f,\n"
            "    \"Input_Fault_Voltage\": %3.1f,\n"
            "    \"Output_Voltage\": %3.1f,\n"
-           "    \"Output_Current\": %d,\n"
+           "    \"Output_Load\": %d,\n"
            "    \"Input_Frequency\": %2.2f,\n"
            "    \"Battery_Voltage\": %2.1f,\n"
            "    \"Temperature\": %2.1f,\n"
