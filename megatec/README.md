@@ -26,4 +26,4 @@ Example: ./megatec /dev/ttyUSB0
 Links
 =====
 
-* [Basic sources on Habr from @viacheslav77](https://habr.com/post/397637/)
+* [Basic sources on Habr from @viacheslav77](https://habr.com/post/397637/#comment_19202897)
