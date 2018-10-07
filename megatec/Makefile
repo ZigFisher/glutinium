@@ -21,7 +21,6 @@ define Package/megatec
 	CATEGORY:=Utilities
 	TITLE:=Simple util for Megatec Protocol UPS
 	MAINTAINER:=https://habr.com/post/397637/
-	DEPENDS:=+libstdcpp
 endef
 
 define Package/megatec/description
@@ -34,8 +33,8 @@ define Build/Prepare
 endef
 
 define Build/Compile
-	$(TARGET_CXX) $(TARGET_CXXFLAGS) $(TARGET_LDFLAGS) -std=c++0x \
-		-o $(PKG_BUILD_DIR)/megatec $(PKG_BUILD_DIR)/megatec.cpp
+	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -std=c99 -O -g -D LINUX \
+		-o $(PKG_BUILD_DIR)/megatec $(PKG_BUILD_DIR)/megatec_v3.c
 endef
 
 define Package/megatec/install
