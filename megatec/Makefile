@@ -19,12 +19,12 @@ include $(INCLUDE_DIR)/package.mk
 define Package/megatec
 	SECTION:=utils
 	CATEGORY:=Utilities
-	TITLE:=Simple util for Megatec Protocol UPS
+	TITLE:=Simple utility for Megatec Protocol UPS
 	MAINTAINER:=https://habr.com/post/397637/
 endef
 
 define Package/megatec/description
-	Simple util for Megatec Protocol UPS
+	Simple utility for Megatec Protocol UPS
 	Idea and basic c++ source file get from https://habr.com/post/397637/ (Russian)
 endef
 
