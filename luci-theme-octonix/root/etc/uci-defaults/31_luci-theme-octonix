@@ -1,0 +1,7 @@
+#!/bin/sh
+uci batch <<-EOF
+	set luci.themes.Octonix=/luci-static/octonix
+	set luci.main.mediaurlbase=/luci-static/octonix
+	commit luci
+EOF
+exit 0

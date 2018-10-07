@@ -1,0 +1,20 @@
+/* mobile */
+@media screen and (min-width: 0px) and (max-width: 767px){
+    header .brand{ display: none }
+    header div > ul, .nav{ font-size: 14px }
+    header .pull-right { padding: 0; margin: 9px 7px }
+    footer{ text-align: center }
+}
+
+/* desktop */
+@media screen and (min-width: 768px){
+    body{ padding-top: 80px }
+    .brand img{ margin-bottom: -4px; margin-top: -2px }
+    header .brand{ margin-left: 0; padding: 10px !important }
+    header div > ul.nav{ font-size: 15px; margin-top: 13px }
+    header a{ margin: 0 3px; font-weight: bold }
+    header li ul li a { font-size: 13px; padding: 7px 15px }
+    .menu-dropdown, .dropdown-menu{ margin-top: -4px }
+    header .pull-right { padding: 0; margin-top: 20px }
+    footer{ text-align: right }
+}
