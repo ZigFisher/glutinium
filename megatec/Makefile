@@ -25,6 +25,7 @@ endef
 
 define Package/megatec/description
 	Simple util for Megatec Protocol UPS
+	Idea and basic c++ source file get from https://habr.com/post/397637/ (Russian)
 endef
 
 define Build/Prepare

@@ -1,4 +1,6 @@
 
+/* Idea and basic c++ source file get from https://habr.com/post/397637/ (Russian) */
+
 #include <stdio.h>   /* Стандартные объявления ввода/вывода */
 #include <string>
 #include <iostream>
