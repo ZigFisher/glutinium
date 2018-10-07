@@ -1,0 +1,7 @@
+#!/bin/sh
+uci batch <<-EOF
+	set luci.themes.Openwisp=/luci-static/openwisp
+	set luci.main.mediaurlbase=/luci-static/openwisp
+	commit luci
+EOF
+exit 0
