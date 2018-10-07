@@ -1,0 +1,9 @@
+config zabbix_agentd 'zabbix_agentd'
+	option AllowRoot '1'
+	option ServerActive '192.168.0.100'
+	option EnableRemoteCommands '1'
+	option Hostname system.hostname
+	option Include '/etc/zabbix_agentd.conf.d/'
+	option LogFile '/var/log/zabbix.log'
+	option Server '192.168.0.100'
+	option StartAgents '1'
