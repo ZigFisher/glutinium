@@ -20,7 +20,7 @@ Usage
 
 More info for use megatec utility on OpenWRT routers you can see [here (Russian)](https://zftlab.org/pages/2018093000.html)
 
-./megatec /dev/ttyUSB0
+Example: ./megatec /dev/ttyUSB0
 
 
 Links
