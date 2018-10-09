@@ -1,5 +1,4 @@
-============
 LuCI Octonix
 ============
 
-Based on work Riccardo Bloise <r.bloise@cineca.it>
+This job based on work Riccardo Bloise <r.bloise@cineca.it>
