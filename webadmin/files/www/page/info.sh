@@ -27,7 +27,7 @@ txt "Load average:" "`uptime | awk -F ',' '{print $2","$3","$4}' | awk -F ':' '{
 txt "Total memory:" "`cat /proc/meminfo | grep MemTotal | awk '{print $2 " " $3}'`"
 txt "Free memory:" "`cat /proc/meminfo | grep MemFree | awk '{print $2 " " $3}'`"
 txt "Cached memory:" "`cat /proc/meminfo | grep ^Cached | awk '{print $2 " " $3}'`"
-txt "Buffers:" "`cat /proc/meminfo | grep Buffers | awk '{print $2 " " $3}'`"
+txt "Buffers:" "$(awk '/Buffers/ {print $2,$3}' /proc/meminfo)"
 
 #[ -x /sbin/cpu ] && cmd "CPU usage:" /sbin/cpu
 
