@@ -8,13 +8,13 @@ USE_PROCD=1
 PROG=/usr/sbin/httpd
 
 start_service() {
-        hostname=$(uci_get "system.@system[0].hostname")
+  hostname=$(uci_get "system.@system[0].hostname")
 
-        if [ -s /etc/httpd.conf ] ; then
-            procd_open_instance
-            procd_set_param command "$PROG" -h /www -c /etc/httpd.conf -r "$hostname"
-            procd_close_instance
-        else
-            return 1
-        fi
+  if [ -s /etc/httpd.conf ] ; then
+    procd_open_instance
+    procd_set_param command "$PROG" -h /www -c /etc/httpd.conf -r "$hostname"
+    procd_close_instance
+  else
+    return 1
+  fi
 }
