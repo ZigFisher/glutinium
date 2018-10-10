@@ -17,16 +17,14 @@
     <meta http-equiv="pragma" content="no-cache"/>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="/assets/css/base.css" type="text/css"/>
-    <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="/assets/img/favicon.ico" />
+    <link rel="shortcut icon" type="image/png" href="/assets/img/favicon_mixnet.png" />
     <script src="/assets/js/jquery-1.7.2.min.js" type="text/javascript"></script>
     <title>Octonix test</title>
   </head>
 
   <body>
 
-    <!-- div class="b-base-logo"><img src="/assets/img/octonix.jpg" width="199" height="180" alt="Octonix"/></div -->
-
-    <div class="b-base-logo"><h1>MixNet experimental project</h1></div>
+    <div class="b-base-logo"><img src="/assets/img/logo_mixnet.jpg" width="256" alt="mixnet"/></div>
 
 <table border="0" cellpadding="0" cellspacing="0" align="center">
 
@@ -41,7 +39,7 @@
               <table border="1" bordercolordark="#ffffff" bordercolorlight="#c0c0c0" cellpadding="0" cellspacing="0" align="center">
                 <tr>
                   <td bgcolor="#BAC4DD">&nbsp;Device name&nbsp;</td>
-                  <td bgcolor="#E1EBF0">&nbsp;<input type="text" placeholder="<? echo ${device_name} ?>" name="device_name" id="device_name" class="in" maxlength="40" size="30"/>&nbsp;</td>
+                  <td bgcolor="#E1EBF0">&nbsp;<input type="text" placeholder="<? uci get system.@system[0].hostname ?>" name="system.@system[0].hostname" id="system.@system[0].hostname" class="in" maxlength="40" size="30"/>&nbsp;</td>
                 </tr>
               </table>
             </td>
@@ -69,19 +67,19 @@
               <table border="1" bordercolordark="#ffffff" bordercolorlight="#c0c0c0" cellpadding="0" cellspacing="0" align="center">
                 <tr>
                   <td bgcolor="#BAC4DD">&nbsp;IP address&nbsp;</td>
-                  <td bgcolor="#E1EBF0">&nbsp;<input type="text" placeholder="<? ifconfig eth0 | tr ':' ' ' | awk '/Mask/ {print $3}' ?>" name="lan_ipaddr" id="lan_ipaddr" class="in" maxlength="40" size="30"/>&nbsp;</td>
+                  <td bgcolor="#E1EBF0">&nbsp;<input type="text" placeholder="<? uci get network.lan.ipaddr ?>" name="network.lan.ipaddr" id="network.lan.ipaddr" class="in" maxlength="40" size="30"/>&nbsp;</td>
                 </tr>
                 <tr>
                   <td bgcolor="#BAC4DD">&nbsp;Netmask&nbsp;</td>
-                  <td bgcolor="#E1EBF0">&nbsp;<input type="text" placeholder="<? ifconfig eth0 | tr ':' ' ' | awk '/Mask/ {print $7}' ?>" name="lan_netmask" id="lan_netmask" class="in" maxlength="40" size="30"/>&nbsp;</td>
+                  <td bgcolor="#E1EBF0">&nbsp;<input type="text" placeholder="<? uci get network.lan.netmask ?>" name="network.lan.netmask" id="network.lan.netmask" class="in" maxlength="40" size="30"/>&nbsp;</td>
                 </tr>
                 <tr>
                   <td bgcolor="#BAC4DD">&nbsp;Gateway&nbsp;</td>
-                  <td bgcolor="#E1EBF0">&nbsp;<input type="text" placeholder="<? ip r | awk '/default/ {print $3}' ?>" name="lan_gateway" id="lan_gateway" class="in" maxlength="40" size="30"/>&nbsp;</td>
+                  <td bgcolor="#E1EBF0">&nbsp;<input type="text" placeholder="<? uci get network.lan.gateway ?>" name="network.lan.gateway" id="network.lan.gateway" class="in" maxlength="40" size="30"/>&nbsp;</td>
                 </tr>
                 <tr>
                   <td bgcolor="#BAC4DD">&nbsp;DNS servers&nbsp;</td>
-                  <td bgcolor="#E1EBF0">&nbsp;<input type="text" placeholder="<? awk '{print $2}' /etc/resolv.conf | tr '\n' ' ' ?>" name="lan_dns" id="lan_dns" class="in" maxlength="40" size="30"/>&nbsp;</td>
+                  <td bgcolor="#E1EBF0">&nbsp;<input type="text" placeholder="<? uci get network.lan.dns ?>" name="network.lan.dns" id="network.lan.dns" class="in" maxlength="40" size="30"/>&nbsp;</td>
                 </tr>
               </table>
             </td>
@@ -109,19 +107,19 @@
               <table border="1" bordercolordark="#ffffff" bordercolorlight="#c0c0c0" cellpadding="0" cellspacing="0" align="center">
                 <tr>
                   <td bgcolor="#BAC4DD">&nbsp;Remote server&nbsp;</td>
-                  <td bgcolor="#E1EBF0">&nbsp;<input type="text" placeholder="<? echo ${wifi_ssid} ?>" name="wifi_ssid" id="wifi_ssid" class="in" maxlength="40" size="30"/>&nbsp;</td>
+                  <td bgcolor="#E1EBF0">&nbsp;<input type="text" placeholder="<? uci get openvpn.vpn1.remote ?>" name="openvpn.vpn1.remote" id="openvpn.vpn1.remote" class="in" maxlength="40" size="30"/>&nbsp;</td>
                 </tr>
                 <tr>
                   <td bgcolor="#BAC4DD">&nbsp;Certificate authority&nbsp;</td>
-                  <td bgcolor="#E1EBF0">&nbsp;<input type="text" placeholder="<? echo ${wifi_ssid} ?>" name="wifi_ssid" id="wifi_ssid" class="in" maxlength="40" size="30"/>&nbsp;</td>
+                  <td bgcolor="#E1EBF0">&nbsp;<input type="text" placeholder="<? uci get openvpn.vpn1.ca ?>" name="openvpn.vpn1.ca" id="openvpn.vpn1.ca" class="in" maxlength="40" size="30"/>&nbsp;</td>
                 </tr>
                 <tr>
                   <td bgcolor="#BAC4DD">&nbsp;Local certificate&nbsp;</td>
-                  <td bgcolor="#E1EBF0">&nbsp;<input type="text" placeholder="<? echo ${wifi_ssid} ?>" name="wifi_ssid" id="wifi_ssid" class="in" maxlength="40" size="30"/>&nbsp;</td>
+                  <td bgcolor="#E1EBF0">&nbsp;<input type="text" placeholder="<? uci get openvpn.vpn1.cert ?>" name="openvpn.vpn1.cert" id="openvpn.vpn1.cert" class="in" maxlength="40" size="30"/>&nbsp;</td>
                 </tr>
                 <tr>
                   <td bgcolor="#BAC4DD">&nbsp;Local private key&nbsp;</td>
-                  <td bgcolor="#E1EBF0">&nbsp;<input type="text" placeholder="<? echo ${wifi_type} ?>" name="wifi_pass" id="wifi_pass" class="in" maxlength="40" size="30"/>&nbsp;</td>
+                  <td bgcolor="#E1EBF0">&nbsp;<input type="text" placeholder="<? uci get openvpn.vpn1.key ?>" name="openvpn.vpn1.key" id="openvpn.vpn1.key" class="in" maxlength="40" size="30"/>&nbsp;</td>
                 </tr>
               </table>
             </td>
