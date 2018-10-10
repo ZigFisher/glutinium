@@ -20,7 +20,7 @@ define Package/webadmin
 	CATEGORY:=Administration
 	TITLE:=FlyRouter v.2 WEB administration interface
 	MAINTAINER:=http://flyrouter.net
-	DEPENDS:=haserl
+	DEPENDS:=haserl +haserl
 endef
 
 define Build/Configure
