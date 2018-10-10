@@ -136,7 +136,7 @@ int main (int argc, char* argv[]) {
             gettimeofday(&current, NULL);
             unsigned long long t = 1000 * (current.tv_sec - start.tv_sec) + (current.tv_usec - start.tv_usec) / 1000;
 
-            if (t > 10000) { // если с момента начала ожидания ответа от ups прошло более 10000 мс, то пишем ошибку о таймауте и выходим.
+            if (t > 5000) { // если с момента начала ожидания ответа от ups прошло более 5000 мс, то пишем ошибку о таймауте и выходим.
                 printf(err_str);
                 break;
             }
