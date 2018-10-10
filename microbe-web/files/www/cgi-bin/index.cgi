@@ -17,14 +17,14 @@
     <meta http-equiv="pragma" content="no-cache"/>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="/assets/css/base.css" type="text/css"/>
-    <link rel="shortcut icon" type="image/png" href="/assets/img/favicon_mixnet.png" />
+    <link rel="shortcut icon" type="image/png" href="/assets/img/favicon_<? uci get microbe.webadmin.project ?>.png" />
     <script src="/assets/js/jquery-1.7.2.min.js" type="text/javascript"></script>
     <title>Octonix test</title>
   </head>
 
   <body>
 
-    <div class="b-base-logo"><img src="/assets/img/logo_mixnet.jpg" width="256" alt="mixnet"/></div>
+    <div class="b-base-logo"><img src="/assets/img/logo_<? uci get microbe.webadmin.project ?>.png" width="256" alt="<? uci get microbe.webadmin.project ?>"/></div>
 
 <table border="0" cellpadding="0" cellspacing="0" align="center">
 
