@@ -37,20 +37,10 @@ define Build/Compile
 endef
 
 define Package/$(PKG_NAME)/install
-	$(INSTALL_DIR)  $(1)/etc/init.d
-	$(INSTALL_BIN)  ./files/etc/init.d/httpd $(1)/etc/init.d/
+	$(INSTALL_DIR)  $(1)/etc
+	$(CP) ./files/etc/* $(1)/etc/
 	$(INSTALL_DIR)  $(1)/www
-	$(INSTALL_BIN)  ./files/www/index.html $(1)/www/
-	$(INSTALL_DIR)  $(1)/www/assets/css
-	$(INSTALL_BIN)  ./files/www/assets/css/base.css $(1)/www/assets/css/
-	$(INSTALL_DIR)  $(1)/www/assets/img
-	$(INSTALL_BIN)  ./files/www/assets/img/favicon.ico $(1)/www/assets/img/
-	$(INSTALL_DIR)  $(1)/www/assets/img
-	$(INSTALL_BIN)  ./files/www/assets/img/octonix.jpg $(1)/www/assets/img/
-	$(INSTALL_DIR)  $(1)/www/assets/js
-	$(INSTALL_BIN)  ./files/www/assets/js/jquery-1.7.2.min.js $(1)/www/assets/js/
-	$(INSTALL_DIR)  $(1)/www/cgi-bin
-	$(INSTALL_BIN)  ./files/www/cgi-bin/octonix.cgi $(1)/www/cgi-bin/
+	$(CP) ./files/www/* $(1)/www/
 endef
 
 $(eval $(call BuildPackage,microbe-web))
