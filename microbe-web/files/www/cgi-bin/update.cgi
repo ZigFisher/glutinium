@@ -1,0 +1,36 @@
+#!/usr/bin/haserl
+<?
+  export PATH=/bin:/sbin:/usr/bin:/usr/sbin
+  action=$FORM_action
+  sense=$FORM_sense
+  #
+  echo "Content-type: text/html"
+  echo
+  echo "<html><body>"
+  echo
+  echo "Probe change ${action} to ${sense}" | logger -t microbe-web
+  echo
+  case $action in
+    hostname)
+      uci set system.@system[0].hostname=${sense}
+      uci commit system
+      ;;
+    ipaddr)
+      uci set network.lan.ipaddr=${sense}
+      uci commit network
+      ;;
+    netmask)
+      uci set network.lan.netmask=${sense}
+      uci commit network
+      ;;
+    priority)
+      uci set microbe.webadmin.priority=${sense}
+      uci commit microbe
+      ;;
+  esac
+  echo
+  echo "<script language=javascript>setTimeout('window.location=\"/cgi-bin/index.cgi\"',1000);</script>"
+  echo
+  echo "</body>"
+  echo "</html>"
+?>
