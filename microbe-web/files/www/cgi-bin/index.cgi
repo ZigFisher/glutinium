@@ -14,7 +14,7 @@
         <input type="text" required name="sense" pattern="^[a-zA-Z0-9-]+$" value="<? uci get system.@system[0].hostname ?>" placeholder="DeviceName" size="25">
         <input type="submit" value="Save">
       </form>
-      <p><b><strike><font color="red">Interface Password</font></strike></b>
+      <p><b><font color="red">Interface Password</font></b>
       <form action="/cgi-bin/update.cgi" method="POST" enctype="multipart/form-data">
         <input type=hidden name="action" value="password">
         <input type="password" required name="sense" pattern="^[a-zA-Z0-9]+$" value="<? uci get microbe.webadmin.password ?>" placeholder="You3Pass5Word" size="25">
@@ -44,19 +44,19 @@
         <input type="text" required name="sense" value="<? uci get openvpn.vpn1.remote ?>" placeholder="ovpn.server.net" size="25">
         <input type="submit" value="Save">
       </form>
-      <p><b><strike><font color="red">Certificate authority</font></strike></b>
+      <p><b>Certificate authority</b>
       <form action="/cgi-bin/upload.cgi" method="POST" enctype="multipart/form-data">
         <input type=hidden name="action" value="ca">
         <input type="file" required name="upfile" size="20">
         <input type="submit" value="Upload">
       </form>
-      <p><b><strike><font color="red">Local certificate</font></strike></b>
+      <p><b>Local certificate</b>
       <form action="/cgi-bin/upload.cgi" method="POST" enctype="multipart/form-data">
         <input type=hidden name="action" value="cert">
         <input type="file" required name="upfile" size="20">
         <input type="submit" value="Upload">
       </form>
-      <p><b><strike><font color="red">Local private key</font></strike></b>
+      <p><b>Local private key</b>
       <form action="/cgi-bin/upload.cgi" method="POST" enctype="multipart/form-data">
         <input type=hidden name="action" value="key">
         <input type="file" required name="upfile" size="15">
