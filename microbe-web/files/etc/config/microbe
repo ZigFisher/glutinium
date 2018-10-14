@@ -1,6 +1,12 @@
 config microbe 'webadmin'
         option enable '1'
-        option project 'octonix'
         option port '85'
-        option login 'admin'
+        option home '/www'
+        option project 'octonix'
         option password '1234'
+
+config microbe 'pinger'
+        option enable '1'
+        option priority '3g-wan1'
+        option checked 'facebook.com'
+

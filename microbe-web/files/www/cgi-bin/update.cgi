@@ -24,7 +24,10 @@
       uci set network.lan.netmask=${sense} && uci commit network
       ;;
     priority)
-      uci set microbe.webadmin.priority=${sense} && uci commit microbe
+      uci set microbe.pinger.priority=${sense} && uci commit microbe
+      ;;
+    checked)
+      uci set microbe.pinger.checked=${sense} && uci commit microbe
       ;;
     remote)
       uci set openvpn.vpn1.remote=${sense} && uci commit openvpn
