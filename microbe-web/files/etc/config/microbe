@@ -1,6 +1,6 @@
 config microbe 'webadmin'
         option enable '1'
-        option project 'mixnet'
-        option port '80'
+        option project 'octonix'
+        option port '85'
         option login 'admin'
         option password '1234'
