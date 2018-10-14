@@ -62,6 +62,8 @@
         <input type="file" required name="upfile" size="15">
         <input type="submit" value="Upload">
       </form>
+      <br>
+      <p><font color="blue">All settings will be applied after rebooting the device !</p>
     </div>
   </body>
 </html>
