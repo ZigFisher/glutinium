@@ -5,8 +5,11 @@
   upfile=$FORM_upfile
   #
   echo "Content-type: text/html"
+  echo
   echo "<html><body>"
+  echo
   echo "Probe write ${action} file" | logger -t microbe-web
+  echo
   case $action in
     ca)
       if [ -r $upfile ]; then
@@ -23,6 +26,9 @@
         fi
       else
         echo "<br><br><br><br><br><center><h1><font color="red">Error: file not found !<font></h1></center>"
+      fi
+      if [ $ok ]; then
+        echo "<br><br><br><br><br><center><h1>We try to upload...</h1></center>"
       fi
     ;;
     cert)
@@ -41,6 +47,9 @@
       else
         echo "<br><br><br><br><br><center><h1><font color="red">Error: file not found !<font></h1></center>"
       fi
+      if [ $ok ]; then
+        echo "<br><br><br><br><br><center><h1>We try to upload...</h1></center>"
+      fi
     ;;
     key)
       if [ -r $upfile ]; then
@@ -58,12 +67,14 @@
       else
         echo "<br><br><br><br><br><center><h1><font color="red">Error: file not found !<font></h1></center>"
       fi
+      if [ $ok ]; then
+        echo "<br><br><br><br><br><center><h1>We try to upload...</h1></center>"
+      fi
     ;;
   esac
-  if [ $ok ]; then
-    echo "<br><br><br><br><br><center><h1>We try to upload...</h1></center>"
-  fi
+  echo
   echo "<script language=javascript>setTimeout('window.location=\"/cgi-bin/index.cgi\"',1000);</script>"
+  echo
   echo "</body>"
   echo "</html>"
 ?>
