@@ -11,7 +11,7 @@
       <p><b>Device Name</b>
       <form action="/cgi-bin/update.cgi" method="POST" enctype="multipart/form-data">
         <input type=hidden name="action" value="hostname">
-        <input type="text" required name="sense" pattern="^[a-zA-Z0-9-]+$" value="<? uci get system.@system[0].hostname ?>" placeholder="DeviceName" size="25">
+        <input type="text" required name="sense" pattern="^[a-zA-Z0-9-.]+$" value="<? uci get system.@system[0].hostname ?>" placeholder="DeviceName" size="25">
         <input type="submit" value="Save">
       </form>
       <p><b>Interface Password</b>
@@ -41,13 +41,13 @@
       <p><b><font color="red">Checked Host</font></b>
       <form action="/cgi-bin/update.cgi" method="POST" enctype="multipart/form-data">
         <input type=hidden name="action" value="checked">
-        <input type="text" required name="sense" value="<? uci get microbe.pinger.checked ?>" placeholder="facebook.com" size="25">
+        <input type="text" required name="sense" pattern="^[a-zA-Z0-9-.]+$" value="<? uci get microbe.pinger.checked ?>" placeholder="facebook.com" size="25">
         <input type="submit" value="Save">
       </form>   
       <p><b>OpenVPN Server</b>
       <form action="/cgi-bin/update.cgi" method="POST" enctype="multipart/form-data">
         <input type=hidden name="action" value="remote">
-        <input type="text" required name="sense" value="<? uci get openvpn.vpn1.remote ?>" placeholder="ovpn.server.net" size="25">
+        <input type="text" required name="sense" pattern="^[a-zA-Z0-9-.]+$" value="<? uci get openvpn.vpn1.remote ?>" placeholder="ovpn.server.net" size="25">
         <input type="submit" value="Save">
       </form>
       <p><b>Certificate authority</b>
