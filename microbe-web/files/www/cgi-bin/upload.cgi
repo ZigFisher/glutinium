@@ -14,7 +14,7 @@
     ca)
       if [ -r $upfile ]; then
         fsize="$(wc -c $upfile | awk '{print $1}')"
-        if [ $fsize -gt "5000" ]; then
+        if [ $fsize -gt "1500" ]; then
           echo "<br><br><br><br><br><center><h1><font color="red">Error: file is so big !<font></h1></center>"
         else
           if cp $upfile /etc/openvpn/ca.crt 2>/dev/null; then
@@ -54,7 +54,7 @@
     key)
       if [ -r $upfile ]; then
         fsize="$(wc -c $upfile | awk '{print $1}')"
-        if [ $fsize -gt "5000" ]; then
+        if [ $fsize -gt "1200" ]; then
           echo "<br><br><br><br><br><center><h1><font color="red">Error: file is so big !<font></h1></center>"
         else
           if cp $upfile /etc/openvpn/cert.key 2>/dev/null; then
