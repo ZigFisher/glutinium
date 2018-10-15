@@ -30,4 +30,3 @@ if [ "${PRODUCT}" = "${MODEM_PRODID}" ]; then
     #
   fi
 fi
-
