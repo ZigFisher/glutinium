@@ -32,6 +32,9 @@
     remote)
       uci set openvpn.vpn1.remote=${sense} && uci commit openvpn
       ;;
+    reboot)
+      reboot
+      ;;
   esac
   echo
   echo "<br><br><br><br><br><center><h1>We try to update...</h1></center>"

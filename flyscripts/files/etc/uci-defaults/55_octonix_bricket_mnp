@@ -70,9 +70,9 @@ uci -q batch <<-EOF >/dev/null
 	set openvpn.vpn1='openvpn'
 	set openvpn.vpn1.enabled='1'
 	set openvpn.vpn1.client='1'
-	set openvpn.vpn1.remote='8.8.4.4'
+	set openvpn.vpn1.remote='vpn.radcon.com.ua'
 	set openvpn.vpn1.port='1194'
-	set openvpn.vpn1.proto='tcp-client'
+	set openvpn.vpn1.proto='udp'
 	set openvpn.vpn1.tls_client='1'
 	set openvpn.vpn1.dev='tun1'
 	set openvpn.vpn1.mode='p2p'
@@ -84,13 +84,11 @@ uci -q batch <<-EOF >/dev/null
 	set openvpn.vpn1.ca='/etc/openvpn/ca.crt'
 	set openvpn.vpn1.cert='/etc/openvpn/cert.crt'
 	set openvpn.vpn1.key='/etc/openvpn/cert.key'
-	set openvpn.vpn1.auth_user_pass='/etc/openvpn/password.txt'
 	set openvpn.vpn1.auth_nocache='1'
 	set openvpn.vpn1.script_security='4 system'
-	set openvpn.vpn1.remote_cert_ku='b6'
 	set openvpn.vpn1.auth='SHA1'
-	set openvpn.vpn1.cipher='AES-128-CBC'
 	set openvpn.vpn1.pull='1'
+	set openvpn.vpn1.comp_lzo='yes'
 	commit openvpn
 EOF
 
