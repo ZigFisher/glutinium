@@ -32,13 +32,13 @@
         <input type="text" required name="sense" pattern="\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}" value="<? uci get network.lan.netmask ?>" placeholder="255.255.255.0" size="25">
         <input type="submit" value="Save">
       </form>
-      <p><b><font color="red">Modem Priority</font></b></p>
+      <p><b>Modem Priority</b></p>
       <form action="/cgi-bin/update.cgi" method="POST" enctype="multipart/form-data">
         <input type=hidden name="action" value="priority">
         <input list="modem" required name="sense" value="<? uci get microbe.pinger.priority ?>" placeholder="3g-wanX" size="25"><datalist id="modem"><option>3g-wan1</option><option>3g-wan2</option></datalist>
         <input type="submit" value="Save">
       </form>
-      <p><b><font color="red">Checked Host</font></b></p>
+      <p><b>Checked Host</b></p>
       <form action="/cgi-bin/update.cgi" method="POST" enctype="multipart/form-data">
         <input type=hidden name="action" value="checked">
         <input type="text" required name="sense" pattern="^[a-zA-Z0-9-.]+$" value="<? uci get microbe.pinger.checked ?>" placeholder="facebook.com" size="25">

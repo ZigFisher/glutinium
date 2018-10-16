@@ -94,7 +94,7 @@ uci -q batch <<-EOF >/dev/null
 	commit openvpn
 EOF
 
-rm /etc/hotplug.d/usb/20-usb_mode
+# rm /etc/hotplug.d/usb/20-usb_mode
 # echo "/etc/init.d/usbmode start" >/etc/hotplug.d/usb/20-usb_mode
 
 echo -e "#\n# Reset USBgpio\n(for n in '1' '2' '3' '4' '5' '6' '7' '8'; do usbgpio off $n; done) >/dev/null 2>&1\n" >/etc/rc.local

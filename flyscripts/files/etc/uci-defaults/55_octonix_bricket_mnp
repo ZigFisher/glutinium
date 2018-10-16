@@ -104,7 +104,7 @@ uci -q batch <<-EOF >/dev/null
 	commit firewall
 EOF
 
-rm /etc/hotplug.d/usb/20-usb_mode
+# rm /etc/hotplug.d/usb/20-usb_mode
 # echo "/etc/init.d/usbmode start" >/etc/hotplug.d/usb/20-usb_mode
 
 rm /etc/hotplug.d/iface/12-vtun  # not need if dual modem script running
