@@ -8,5 +8,5 @@ config microbe 'webadmin'
 config microbe 'pinger'
         option enable '1'
         option priority '3g-wan1'
-        option checked 'facebook.com'
+        option checked '8.8.8.8'
 
