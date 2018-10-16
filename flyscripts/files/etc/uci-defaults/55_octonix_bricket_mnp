@@ -91,6 +91,17 @@ uci -q batch <<-EOF >/dev/null
 	set openvpn.vpn1.pull='1'
 	set openvpn.vpn1.comp_lzo='yes'
 	commit openvpn
+	add firewall zone
+	set firewall.@zone[-1].name='vpn1'
+	set firewall.@zone[-1].network='vpn1'
+	set firewall.@zone[-1].input='ACCEPT'
+	set firewall.@zone[-1].output='ACCEPT'
+	set firewall.@zone[-1].forward='ACCEPT'
+	commit firewall
+	add firewall forwarding
+	set firewall.@forwarding[-1].src='lan'
+	set firewall.@forwarding[-1].dest='vpn1'
+	commit firewall
 EOF
 
 rm /etc/hotplug.d/usb/20-usb_mode
