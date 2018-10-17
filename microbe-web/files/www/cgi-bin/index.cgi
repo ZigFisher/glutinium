@@ -32,6 +32,12 @@
         <input type="text" required name="sense" pattern="\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}" value="<? uci get network.lan.netmask ?>" placeholder="255.255.255.0" size="25">
         <input type="submit" value="Save">
       </form>
+      <p><b>SNMP Community</b></p>
+      <form action="/cgi-bin/update.cgi" method="POST" enctype="multipart/form-data">
+        <input type=hidden name="action" value="community">
+        <input type="text" required name="sense" pattern="^[a-zA-Z0-9-_.]+$" value="<? uci get snmp.default.community ?>" placeholder="community" size="25">
+        <input type="submit" value="Save">
+      </form>
       <p><b>Modem Priority</b></p>
       <form action="/cgi-bin/update.cgi" method="POST" enctype="multipart/form-data">
         <input type=hidden name="action" value="priority">

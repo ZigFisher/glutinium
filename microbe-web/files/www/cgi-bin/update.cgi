@@ -23,6 +23,9 @@
     netmask)
       uci set network.lan.netmask=${sense} && uci commit network
       ;;
+    community)
+      uci set snmpd.default.community=${sense} && uci commit snmpd
+      ;;
     priority)
       uci set microbe.pinger.priority=${sense} && uci commit microbe
       ;;
