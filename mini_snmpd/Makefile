@@ -55,13 +55,13 @@ define Package/mini_snmpd/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(CP) $(PKG_INSTALL_DIR)/usr/bin/mini_snmpd $(1)/usr/bin/
 	$(INSTALL_DIR) $(1)/etc/config
-	$(INSTALL_CONF) ./files/mini_snmpd.config $(1)/etc/config/mini_snmpd
+	$(INSTALL_CONF) ./files/mini_snmpd.config $(1)/etc/config/snmpd
 	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) ./files/mini_snmpd.init $(1)/etc/init.d/mini_snmpd
+	$(INSTALL_BIN) ./files/mini_snmpd.init $(1)/etc/init.d/snmpd
 endef
 
 define Package/mini_snmpd/conffiles
-/etc/config/mini_snmpd
+/etc/config/snmpd
 endef
 
 $(eval $(call BuildPackage,mini_snmpd))

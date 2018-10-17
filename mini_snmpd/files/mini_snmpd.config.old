@@ -1,0 +1,18 @@
+
+config mini_snmpd 'default'
+	option enabled 1
+	option ipv6 0
+	option debug 0
+	option auth 0
+	option community 'super'
+	option contact 'Octonix'
+	option location 'World'
+	option listen_interface 'lan'
+	#option udp_port '161'
+	#option tcp_port '161'
+	#option vendor_oid ''
+	option mib_timeout 1
+	list disks '/overlay'
+	list disks '/tmp'
+	list interfaces 'br-lan'
+	list interfaces '3g-wan1'

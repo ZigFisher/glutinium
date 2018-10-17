@@ -58,11 +58,18 @@ uci -q batch <<-EOF >/dev/null
 	set network.wan2.indicator='2'
 	set network.wan2.defaultroute='0'
 	commit network
+	set network.vpn1=interface
+	set network.vpn1.ifname='tun1'
+	set network.vpn1.auto='1'
+	set network.vpn1.proto='none'
+	commit network
 	set snmpd.default='snmpd'
-	set snmpd.default.community='mnp'
+	set snmpd.default.enable='1'
+	set snmpd.default.community='mixnet'
+	set snmpd.default.location='Ukraine'
 	set snmpd.default.contact='Octonix'
-	set snmpd.default.location='World'
-	set snmpd.default.interfaces='br-lan,3g-wan1,3g-wan2'
+	set snmpd.default.interface='br-lan,3g-wan1,3g-wan2,tun1'
+	set snmpd.default.disk='/overlay,/tmp'
 	commit snmpd
 	del openvpn.custom_config
 	del openvpn.sample_server
