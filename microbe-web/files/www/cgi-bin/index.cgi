@@ -35,7 +35,7 @@
       <p><b>SNMP Community</b></p>
       <form action="/cgi-bin/update.cgi" method="POST" enctype="multipart/form-data">
         <input type=hidden name="action" value="community">
-        <input type="text" required name="sense" pattern="^[a-zA-Z0-9-_.]+$" value="<? uci get snmp.default.community ?>" placeholder="community" size="25">
+        <input type="text" required name="sense" pattern="^[a-zA-Z0-9-_.]+$" value="<? uci get snmpd.default.community ?>" placeholder="community" size="25">
         <input type="submit" value="Save">
       </form>
       <form action="/cgi-bin/update.cgi" method="POST" enctype="multipart/form-data">

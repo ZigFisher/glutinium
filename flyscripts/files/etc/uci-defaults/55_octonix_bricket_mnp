@@ -116,6 +116,7 @@ EOF
 
 rm /etc/hotplug.d/iface/12-vtun  # not need if dual modem script running
 rm /etc/hotplug.d/iface/15-vtun  # not need if dual modem script running
+/etc/init.d/dnsmasq disable && /etc/init.d/dnsmasq stop  # disable dnsmasq
 
 echo -e "#\n# Reset USBgpio\n(for n in '1' '2' '3' '4' '5' '6' '7' '8'; do usbgpio off $n; done) >/dev/null 2>&1\n" >/etc/rc.local
 echo -e "#\n# Start dual routing\n/usr/sbin/checklink.sh >/dev/null 2>&1 &\n" >>/etc/rc.local
