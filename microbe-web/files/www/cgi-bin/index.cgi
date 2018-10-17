@@ -40,9 +40,8 @@
       </form>
       <form action="/cgi-bin/update.cgi" method="POST" enctype="multipart/form-data">
         <input type=hidden name="action" value="priority">
-        <select size="4" required multiple name="sense">
+        <select size="3" required multiple name="sense">
           <option disabled>Current: <? uci get microbe.pinger.priority ?></option>
-          <option disabled>-------------------------------------</option>
           <option value="3g-wan1,3g-wan2">Variant-1: 3g-wan1,3g-wan2</option>
           <option value="3g-wan2,3g-wan1">Variant-2: 3g-wan2,3g-wan1</option>
         </select>
