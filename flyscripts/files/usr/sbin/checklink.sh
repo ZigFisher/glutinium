@@ -2,9 +2,9 @@
 #
 # BackUp ver.20170217
 #
-export pinger="8.8.8.8"
-export normal="3g-wan1"
-export backup="3g-wan2"
+export pinger="$(uci get microbe.pinger.checked)"
+export normal="$(uci get microbe.pinger.priority | awk -F ',' '{print $1}')"
+export backup="$(uci get microbe.pinger.priority | awk -F ',' '{print $2}')"
 #
 ( \
   while sleep 5s; do

@@ -7,6 +7,6 @@ config microbe 'webadmin'
 
 config microbe 'pinger'
         option enable '1'
-        option priority '3g-wan1'
+        option priority '3g-wan1,3g-wan2'
         option checked '8.8.8.8'
 

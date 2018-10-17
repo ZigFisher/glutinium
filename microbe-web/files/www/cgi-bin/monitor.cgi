@@ -14,7 +14,7 @@
       <? comgt -d /dev/ttyUSB6 sig 2>&1 | tr ':,' ' ' | awk '/Signal/ {print -113+$3*2,"dBm"}' ?>
       <p><b>Ping Quality</b></p>
       <table>
-        <tr><td><pre><? ping -c 5 -s 1500 -W 1 $(uci get microbe.pinger.checked) -I $(uci get microbe.pinger.priority) ?></pre></td></tr>
+        <tr><td><pre><? ping -c 5 -s 1500 -W 1 $(uci get microbe.pinger.checked) -I $(uci get microbe.pinger.priority | awk -F ',' '{print $1}') ?></pre></td></tr>
       </table>
       <p><b>Network Status</b></p>
       <table>
