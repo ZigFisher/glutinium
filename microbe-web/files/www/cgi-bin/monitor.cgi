@@ -28,7 +28,7 @@
               <input type="text" required name="sense" pattern="^[a-zA-Z0-9-_.]+$" value="<? uci get microbe.pinger.host ?>" placeholder="host or ip" size="25">
             </td>
             <td>
-              <input type="radio" required checked="checked" name="iface" value="none"> none <br>
+              <input type="radio" required checked="checked" name="iface" value="auto"> auto <br>
               <input type="radio" name="iface" value="3g-wan1"> 3g-wan1 <br>
               <input type="radio" name="iface" value="3g-wan2"> 3g-wan2 <br>
             </td>
@@ -47,7 +47,7 @@
               <input type="text" required name="sense" pattern="^[a-zA-Z0-9-_.]+$" value="<? uci get microbe.pinger.host ?>" placeholder="host or ip" size="25">
             </td>
             <td>
-              <input type="radio" required checked="checked" name="iface" value="none"> none <br>
+              <input type="radio" required checked="checked" name="iface" value="auto"> auto <br>
               <input type="radio" name="iface" value="3g-wan1"> 3g-wan1 <br>
               <input type="radio" name="iface" value="3g-wan2"> 3g-wan2 <br>
             </td>

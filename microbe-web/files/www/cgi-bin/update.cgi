@@ -55,14 +55,14 @@
       echo "<script language=javascript>setTimeout('window.location=\"/cgi-bin/index.cgi\"',1000);</script>"
       ;;
     reboot)
-      echo "<br><br><br><br><br><center><h1>We try to reboot...</h1></center>"
+      echo "<br><br><br><br><br><center><h1>We try to reboot...</h1><p>Please wait 60 sec.</p></center>"
+      echo "<script language=javascript>setTimeout('window.location=\"/cgi-bin/index.cgi\"',60000);</script>"
       reboot
-      echo "<script language=javascript>setTimeout('window.location=\"/cgi-bin/index.cgi\"',1000);</script>"
       ;;
     trace)
       echo "<p><b>Trace Route</b></p>"
       echo "<table><tr><td><pre>"
-      if [ ${iface} = "none" ]; then
+      if [ ${iface} = "auto" ]; then
         traceroute ${sense}
       else
         traceroute -i ${iface} ${sense}
@@ -73,7 +73,7 @@
     ping)
       echo "<p><b>Ping Quality</b></p>"
       echo "<table><tr><td><pre>"
-      if [ ${iface} = "none" ]; then
+      if [ ${iface} = "auto" ]; then
         ping -c 15 -s 1500 ${sense}
       else
         ping -c 15 -s 1500 -I ${iface} ${sense}
