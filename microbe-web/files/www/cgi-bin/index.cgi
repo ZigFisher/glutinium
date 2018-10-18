@@ -81,9 +81,11 @@
       <p><font color="blue">All settings will be applied after rebooting the device !</p>
       <form action="/cgi-bin/update.cgi" method="POST" enctype="multipart/form-data">
         <input type=hidden name="action" value="reboot">
-        <!-- input type="submit" value="Reboot Device" -->
         <input type="submit" value="Reboot Device" onclick="return confirm('Do you want to reboot the device ?')">
-      </form></p>
+      </form>
+      <form action="/cgi-bin/monitor.cgi" method="POST" enctype="multipart/form-data">
+        <input type="submit" value="Monitor Tool">
+      </form>
     </div>
   </body>
 </html>
