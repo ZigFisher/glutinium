@@ -17,6 +17,10 @@ script; if not, please visit http://www.gnu.org/copyleft/gpl.html for more infor
 
 Usage
 =====
+	
+	boss@pistacho:~$
+	uci set microbe.webadmin.project=
+	uci commit microbe
 
 More info for use Microbe-WEB on OpenWRT routers you can see [here (Russian)](http://zftlab.org)
 
