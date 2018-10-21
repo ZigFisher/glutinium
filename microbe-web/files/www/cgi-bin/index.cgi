@@ -5,6 +5,9 @@
 ?>
 
 <html>
+  <head>
+    <link rel="shortcut icon" href="/assets/img/favicon_octonix.ico">
+  </head>
   <body>
     <div align=center>
       <img src="/assets/img/logo_<? uci get microbe.webadmin.project ?>.png" width="256">
