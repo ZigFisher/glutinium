@@ -13,6 +13,10 @@
       <img src="/assets/img/logo_<? uci get microbe.webadmin.project ?>.png" width="256">
       <p><b>Uptime Device</b></p>
       <pre><? uptime ?></pre>
+      <p><b>Routing Table</b></p>
+      <table>
+        <tr><td><pre><? route -n ?></pre></td></tr>
+      </table>
       <p><b>Network Status</b></p>
       <table>
         <tr><td><pre><? ifconfig br-lan ?></pre></td></tr>
