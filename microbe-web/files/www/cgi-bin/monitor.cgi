@@ -23,6 +23,7 @@
         <tr><td><pre><? ifconfig 3g-wan1 ?></pre></td></tr>
         <tr><td><pre><? ifconfig 3g-wan2 ?></pre></td></tr>
         <tr><td><pre><? ifconfig tun1 ?></pre></td></tr>
+        <tr><td><pre><? ifconfig eth1 ?></pre></td></tr>
       </table>
       <p><b>Modem Signal</b></p>
       <? comgt -d /dev/ttyUSB6 sig 2>&1 | tr ':,' ' ' | awk '/Signal/ {print -113+$3*2,"dBm"}' ?>
