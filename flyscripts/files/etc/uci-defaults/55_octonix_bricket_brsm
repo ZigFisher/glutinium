@@ -72,6 +72,16 @@ uci -q batch <<-EOF >/dev/null
 	set snmpd.default.interface='br-lan,3g-wan1,3g-wan2'
 	set snmpd.default.disk='/overlay,/tmp'
 	commit snmpd
+	set wireless.radio0.disabled='0'
+	set wireless.@wifi-iface[0].network='lan'
+	set wireless.@wifi-iface[0].mode='ap'
+	set wireless.@wifi-iface[0].ssid='BRSM'
+	set wireless.@wifi-iface[0].encryption='psk2+ccmp'
+	set wireless.@wifi-iface[0].key='1234567890'
+	set wireless.@wifi-iface[0].hidden='0'
+	set wireless.@wifi-iface[0].isolate='0'
+	set wireless.@wifi-iface[0].disabled='1'
+	commit wireless
 EOF
 
 # rm /etc/hotplug.d/usb/20-usb_mode
