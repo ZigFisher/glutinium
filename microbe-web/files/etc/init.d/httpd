@@ -15,10 +15,11 @@ start_service() {
     password=$(uci_get "microbe.webadmin.password")
     port=$(uci_get "microbe.webadmin.port")
     access=$(uci_get "microbe.webadmin.access")
+    brlan=$(uci get network.lan.ipaddr | awk -F '.' '{print $1"."$2"."$3}')
     home=$(uci_get "microbe.webadmin.home")
     #
     mkdir -p /tmp/etc
-    echo -e "#\nA:$access\nD:*\n/cgi-bin:$project:$password\n#\n" >/tmp/etc/httpd.conf
+    echo -e "#\nA:$access\nA:$brlan\nD:*\n/cgi-bin:$project:$password\n#\n" >/tmp/etc/httpd.conf
     #
     if [ -s /tmp/etc/httpd.conf ] ; then
       procd_open_instance
