@@ -1,6 +1,7 @@
 config microbe 'webadmin'
         option enable '1'
         option port '85'
+        option access '192.168.1'
         option home '/www'
         option project 'mixnet'
         option password '1234'
@@ -10,4 +11,16 @@ config microbe 'pinger'
         option priority '3g-wan1,3g-wan2'
         option checked '8.8.8.8'
         option host '192.168.1.1'
+
+config microbe 'rebooter'
+        option enable '0'
+        option checked '8.8.8.8'
+        option count '6'
+
+config microbe 'modules'
+        option ipsec 'no'
+        option openvpn 'no'
+        option wireless 'no'
+
+
 
