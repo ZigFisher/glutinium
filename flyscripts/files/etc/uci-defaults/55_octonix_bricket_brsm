@@ -5,11 +5,7 @@ uci -q batch <<-EOF >/dev/null
 	set system.@system[0].timezone='EET-2EEST,M3.5.0/3,M10.5.0/4'
 	commit system
 	delete dhcp.lan.dhcpv6
-	delete dhcp.lan.ra
-	delete dhcp.lan.start
-	delete dhcp.lan.limit
-	delete dhcp.lan.leasetime
-	set dhcp.lan.ignore='1'
+	set dhcp.lan.leasetime='24h'
 	commit dhcp
 	delete network.globals
 	delete network.wan6
