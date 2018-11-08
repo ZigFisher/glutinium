@@ -18,7 +18,7 @@ script; if not, please visit http://www.gnu.org/copyleft/gpl.html for more infor
 Usage
 =====
 
-More info for use Mercury236 on OpenWRT routers you can see [here (Russian)](http://zftlab.org)
+More info for use Mercury236 on OpenWRT routers you can see [here (Russian)](http://zftlab.org/pages/2018022100.html)
 
 
 Links
