@@ -24,4 +24,4 @@ More info for use Mercury206 on OpenWRT routers you can see [here (Russian)](htt
 Links
 =====
 
-* [Sources on GitHub](https://github.com/ZigFisher/Glutinium//mercury206)
+* [Sources on GitHub](https://github.com/ZigFisher/Glutinium/tree/master/mercury206)

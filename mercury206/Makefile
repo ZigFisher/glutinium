@@ -21,7 +21,7 @@ define Package/$(PKG_NAME)
 	SECTION:=utils
 	CATEGORY:=Utilities
 	TITLE:=Mercury 206 power meter RS485 communication utility
-	MAINTAINER:=https://github.com/ZigFisger/Glutinium/mercury206
+	MAINTAINER:=https://github.com/ZigFisher/Glutinium/
 endef
 
 define Package/$(PKG_NAME)/description
