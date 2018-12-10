@@ -12,9 +12,9 @@
 #include <time.h>
 
 
-#define byte        unsigned char
+#define byte  unsigned char
 #ifndef __uint32_t_defined
-typedef unsigned int        uint32_t;
+typedef unsigned int   uint32_t;
 # define __uint32_t_defined
 #endif
 
@@ -22,14 +22,14 @@ typedef unsigned int        uint32_t;
 #define BSZ     255
 #define UInt16      uint16_t
 
-#define TIME_OUT    50 * 1000   // Mercury inter-command delay (mks)
+#define TIME_OUT    50 * 1000  // Mercury inter-command delay (mks)
 
 #define OPT_DEBUG   "--debug"
 #define OPT_HUMAN   "--human"
 
-#define BAUDRATE    B9600       // 9600 baud
-#define _POSIX_SOURCE   1       // POSIX compliant source
-#define CH_TIME_OUT 2       // Channel timeout (sec)
+#define BAUDRATE       B9600   // 9600 baud
+#define _POSIX_SOURCE  1       // POSIX compliant source
+#define CH_TIME_OUT    2       // Channel timeout (sec)
 
 int debugPrint = 0;
 
@@ -65,7 +65,7 @@ typedef struct
     byte    address[4];
     byte    command;
     UInt16  CRC;
-} GetSerialCmd; // 0x2F - Серийный номер
+} GetSerialCmd;       // 0x2F - serial number
 
 typedef struct
 {
@@ -97,9 +97,9 @@ typedef struct
     UInt16  CRC;
 } Resultf;
 
-typedef enum            // Output formatting
+typedef enum        // output formatting
 {
-    OF_HUMAN = 0,       // human readable
+    OF_HUMAN = 0,   // human readable
     OF_CSV = 1,     // comma-separated values
     OF_JSON = 2     // json
 } OutputFormat;
@@ -119,7 +119,7 @@ void printPackage(byte *data, int size, int isin)
 void exitFailure(const char* msg)
 {
     printf("{\n\t\"Error\": \"%s\",\n\t\"Serial\": -1, \n\t\"Voltage\": -1, \n\t\"Current\": -1, \n\t\"Power\": -1, \
-\n\t\"Frequency\": -1, \n\t\"Energy_1\": -1, \n\t\"Energy_2\": -1, \n\t\"Energy_3\": -1, \n\t\"Energy_4\": -1\n}\n", msg);
+\n\t\"Frequency\": -1, \n\t\"Energy\": -1\n}\n", msg);
     exit(1);
 }
 
@@ -179,7 +179,6 @@ int main(int argc, const char** args) {
     }
 
 
-
     strncpy(dev, args[1], BSZ);
     int address = atoi(args[2]);
     if (address == 0) {
@@ -202,7 +201,7 @@ int main(int argc, const char** args) {
     }
 
     if (debugPrint == 1){
-        printf("ADDRESS device :%d\n\r", address);
+        printf("ADDRESS device: %d\n\n\r", address);
     }
 
     int fd = open(dev, O_RDWR | O_NOCTTY | O_NDELAY);
@@ -237,7 +236,7 @@ int main(int argc, const char** args) {
     if (res >= 0) {
         printPackage((byte*)&serialCmd, sizeof(serialCmd), OUT);
     } else {
-        exitFailure("Failed to write to port.");
+        exitFailure("Failed to write to port");
     }
     ssize_t initsize = nb_read_impl(fd, &initbytes, 11);
     if (initsize > 0) {
@@ -247,6 +246,7 @@ int main(int argc, const char** args) {
     }
 
 // ==========================================================
+
     usleep(TIME_OUT);
 
     GetSerialCmd uCmd = {
@@ -268,6 +268,7 @@ int main(int argc, const char** args) {
     }
 
 // ==========================================================
+
     usleep(TIME_OUT);
 
     GetSerialCmd fCmd = {
@@ -285,10 +286,11 @@ int main(int argc, const char** args) {
     if (fsize > 0) {
         printPackage((byte*)&freqbytes, fsize, IN);
     } else {
-        exitFailure("Failed read from port.");
+        exitFailure("Failed read from port");
     }
 
 // ==========================================================
+
     usleep(TIME_OUT);
 
     GetSerialCmd UCmd = {
@@ -306,13 +308,14 @@ int main(int argc, const char** args) {
     if (fsize > 0) {
         printPackage((byte*)&Ubytes, Usize, IN);
         if (debugPrint) {
-            printf("\n=======================================================\n\n\r");
+            printf("\n========================\n\n\r");
         }
     } else {
-        exitFailure("Failed read from port.");
+        exitFailure("Failed read from port");
     }
 
 // ==========================================================
+
     // Result
     Resultu* result = (Resultu*)ubytes;
     ResultU* resultU = (ResultU*)Ubytes;
@@ -362,15 +365,14 @@ int main(int argc, const char** args) {
         printf("Ток, A           : %.2f\n", i/100.0);
         printf("Мощность, Wt     : %d\n", p);
         printf("Частота, Hz      : %.2f\n", freq/100.0);
-        printf("Показания, кВт*ч : %.2f, %.2f, %.2f, %.2f\n",
-            energy_1/100.0, energy_2/100.0, energy_3/100.0, energy_4/100.0);
+        printf("Показания, кВт*ч : %.2f\n", energy_1/100.0);
     } else {
 //         printf("{\"Serial\": %d, \"Voltage\": %f, \"Current\": %f, \"Power\": %d, \
 // \"Frequency\": %f, \"Energy\": [%d, %d, %d, %d]}", address, u/10.0, i/100.0, p,
 //             freq/100.0, energy_1, energy_2, energy_3, energy_4);
         printf("{\n\t\"Serial\": %d, \n\t\"Voltage\": %.2f, \n\t\"Current\": %.2f, \n\t\"Power\": %d, \
-\n\t\"Frequency\": %.2f, \n\t\"Energy_1\": %.2f, \n\t\"Energy_2\": %.2f, \n\t\"Energy_3\": %.2f, \n\t\"Energy_4\": %.2f\n}\n", address, u/10.0, i/100.0, p,
-            freq/100.0, energy_1/100.0, energy_2/100.0, energy_3/100.0, energy_4/100.0);
+\n\t\"Frequency\": %.2f, \n\t\"Energy\": %.2f\n}\n", address, u/10.0, i/100.0, p,
+            freq/100.0, energy_1/100.0);
     }
 
     close(fd);

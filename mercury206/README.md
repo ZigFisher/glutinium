@@ -4,6 +4,9 @@ mercury206
 Mercury 206 power meter RS485 communication utility
 
 
+Special thanks for helping us create a utility for @SSH from Kazakhstan !
+
+
 License
 =======
 
