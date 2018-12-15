@@ -24,7 +24,6 @@ PKG_BUILD_DEPENDS:=libmodbus
 define Package/$(PKG_NAME)
 	SECTION:=utils
 	CATEGORY:=Utilities
-	SUBMENU:=ZFT Lab.
 	TITLE:=A simple application to send Modbus commands from the CLI
 	MAINTAINER:=https://dev.maestro-wireless.eu/kb/modbus-cli-package/
 	DEPENDS:=+libmodbus
@@ -40,7 +39,7 @@ define Build/Prepare
 endef
 
 define Build/Compile
-	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -O -g -D LINUX \
+	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -O -g -D LINUX -lmodbus \
 		-o $(PKG_BUILD_DIR)/$(PKG_NAME) $(PKG_BUILD_DIR)/modbus-cli.c
 endef
 
