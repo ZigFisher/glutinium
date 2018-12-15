@@ -35,12 +35,12 @@ endef
 
 define Build/Compile
 	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -std=c99 -O -g -D LINUX \
-		-o $(PKG_BUILD_DIR)/mercury206 $(PKG_BUILD_DIR)/mercury206.c
+		-o $(PKG_BUILD_DIR)/$(PKG_NAME) $(PKG_BUILD_DIR)/mercury206.c
 endef
 
 define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/mercury206 $(1)/usr/bin/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/$(PKG_NAME) $(1)/usr/bin/
 endef
 
-$(eval $(call BuildPackage,mercury206))
+$(eval $(call BuildPackage,$(PKG_NAME)))

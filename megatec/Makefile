@@ -16,7 +16,7 @@ PKG_LICENSE_FILES:=LICENSE
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/megatec
+define Package/$(PKG_NAME)
 	SECTION:=utils
 	CATEGORY:=Utilities
 	TITLE:=Simple utility for Megatec Protocol UPS
@@ -35,12 +35,12 @@ endef
 
 define Build/Compile
 	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -O -g -D LINUX \
-		-o $(PKG_BUILD_DIR)/megatec $(PKG_BUILD_DIR)/megatec_v4.c
+		-o $(PKG_BUILD_DIR)/$(PKG_NAME) $(PKG_BUILD_DIR)/megatec_v4.c
 endef
 
 define Package/megatec/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/megatec $(1)/usr/bin/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/$(PKG_NAME) $(1)/usr/bin/
 endef
 
-$(eval $(call BuildPackage,megatec))
+$(eval $(call BuildPackage,$(PKG_NAME)))
