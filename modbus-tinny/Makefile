@@ -25,7 +25,7 @@ define Package/$(PKG_NAME)
 	SECTION:=utils
 	CATEGORY:=Utilities
 	TITLE:=RS485 ModBus tiny multi-sensor module based on atmel attiny85 mcu
-	MAINTAINER:=.
+	MAINTAINER:=https://github.com/cbalint13/tinnymodbus
 	DEPENDS:=+modbus-cli
 endef
 

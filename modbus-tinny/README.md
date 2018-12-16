@@ -24,6 +24,6 @@ More info for use modbus-tinny on OpenWRT routers you can see [here (Russian)](h
 Links
 =====
 
-* [Sources on GitHub](https://github.com/ZigFisher/Glutinium/tree/master/modbus-tinny)
+* [Original idea and project on GitHub](https://github.com/cbalint13/tinnymodbus)
 
 
