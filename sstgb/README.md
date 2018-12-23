@@ -20,8 +20,7 @@ Compile
 
 `sudo apt-get install libcurl4-openssl-dev libjson-c-dev`
 
-`gcc -L/usr/lib/x86_64-linux-gnu/ -I./ -I/usr/include/curl -I/usr/include/json-c \`
-`  -o sstgb sstgb.c telebot.c telebot-core.c telebot-parser.c -ljson-c -lcurl`
+`gcc -L/usr/lib/x86_64-linux-gnu/ -I./ -I/usr/include/curl -I/usr/include/json-c -o sstgb sstgb.c telebot.c telebot-core.c telebot-parser.c -ljson-c -lcurl`
 
 Usage
 =====
