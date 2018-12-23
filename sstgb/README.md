@@ -18,6 +18,8 @@ script; if not, please visit http://www.gnu.org/copyleft/gpl.html for more infor
 Usage
 =====
 
+`Command line interface: sstgb <command> <parameter> [options]`
+
 More info for use sstgb on OpenWRT routers you can see [here (Russian)](http://zftlab.org)
 
 
