@@ -21,13 +21,13 @@ PKG_BUILD_DEPENDS:=libcurl libjson-c
 define Package/$(PKG_NAME)
 	SECTION:=utils
 	CATEGORY:=Utilities
-	TITLE:=Simply Sender TeleGram Bot
+	TITLE:=Simply Sender TeleGram Bot based on telebot
 	MAINTAINER:=Denis G Dugushkin <dentall@mail.ru>
 	DEPENDS:=+libcurl +libjson-c
 endef
 
 define Package/$(PKG_NAME)/description
-  Simply Sender TeleGram Bot
+  Simply Sender TeleGram Bot based on telebot
 endef
 
 define Build/Prepare
@@ -37,8 +37,8 @@ endef
 
 define Build/Compile
 	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -Wall -ljson-c -lcurl \
-		-I$(PKG_BUILD_DIR) -I$(STAGING_DIR)/usr/include -L$(STAGING_DIR)/usr/lib  \
-		-o $(PKG_BUILD_DIR)/$(PKG_NAME) $(PKG_BUILD_DIR)/$(PKG_NAME).c \
+		-I$(PKG_BUILD_DIR) -I$(STAGING_DIR)/usr/include/json-c -I$(PKG_BUILD_DIR) -I$(STAGING_DIR)/usr/include/curl \
+		-L$(STAGING_DIR)/usr/lib -o $(PKG_BUILD_DIR)/$(PKG_NAME) $(PKG_BUILD_DIR)/$(PKG_NAME).c \
 		$(PKG_BUILD_DIR)/telebot.c $(PKG_BUILD_DIR)/telebot-core.c $(PKG_BUILD_DIR)/telebot-parser.c
 endef
 
