@@ -15,6 +15,14 @@ You should have received a copy of the GNU Lesser General Public License along w
 script; if not, please visit http://www.gnu.org/copyleft/gpl.html for more information.
 
 
+Compile
+=======
+
+`sudo apt-get install libcurl4-openssl-dev libjson-c-dev`
+
+`gcc -L/usr/lib/x86_64-linux-gnu/ -I./ -I/usr/include/curl -I/usr/include/json-c \`
+`  -o sstgb sstgb.c telebot.c telebot-core.c telebot-parser.c -ljson-c -lcurl`
+
 Usage
 =====
 
