@@ -42,7 +42,7 @@ CONFIGURE_ARGS += \
 	--without-samplerate \
 	--without-twolame \
 	--with-vorbis \
-	--with-vorbis-prefix="$(STAGING_DIR)/usr" \
+	--with-vorbis-prefix="$(STAGING_DIR)/usr/lib" \
 
 define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/sbin
