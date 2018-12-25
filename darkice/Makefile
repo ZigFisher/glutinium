@@ -25,7 +25,7 @@ define Package/$(PKG_NAME)
 	CATEGORY:=Multimedia
 	SUBMENU:=Streaming
 	TITLE:=DarkIce is a live audio streamer
-	DEPENDS:=+librt +libpthread +libstdcpp
+	DEPENDS:=+libvorbis +libvorbisidec +libogg +librt +libpthread +libstdcpp
 	MAINTAINER:=Artur Wronowski <arteqw@gmail.com>
 endef
 
