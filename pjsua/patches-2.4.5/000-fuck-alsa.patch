@@ -1,0 +1,10 @@
+--- a/aconfigure	2015-08-06 12:15:11.000000000 +0300
++++ b/aconfigure	2018-12-29 23:17:27.850288374 +0300
+@@ -6114,6 +6114,7 @@
+ $as_echo "Checking sound device backend... unix" >&6; }
+ 
+ 		ac_pa_use_oss=1
++		ac_pa_use_alsa=0
+ 
+ 	# Check whether --enable-oss was given.
+ if test "${enable_oss+set}" = set; then :

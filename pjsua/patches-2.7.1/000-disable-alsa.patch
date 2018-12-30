@@ -1,0 +1,21 @@
+--- a/aconfigure	2017-11-01 08:23:36.000000000 +0300
++++ b/aconfigure	2018-12-30 00:30:34.315064655 +0300
+@@ -6361,16 +6361,8 @@
+ $as_echo "Checking sound device backend... null sound" >&6; }
+ 	;;
+   *)
+-		ac_pjmedia_snd=alsa
+-	ac_pa_use_alsa=1
+-
+-	ac_fn_c_check_header_mongrel "$LINENO" "alsa/version.h" "ac_cv_header_alsa_version_h" "$ac_includes_default"
+-if test "x$ac_cv_header_alsa_version_h" = xyes; then :
+-  LIBS="$LIBS -lasound"
+-else
+-  ac_pa_use_alsa=0
+-fi
+-
++		ac_pjmedia_snd=pa_unix
++		ac_pa_use_alsa=0
+ 
+ 	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: Checking sound device backend... unix" >&5
+ $as_echo "Checking sound device backend... unix" >&6; }
