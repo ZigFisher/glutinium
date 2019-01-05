@@ -21,6 +21,9 @@ include $(INCLUDE_DIR)/cmake.mk
 define Package/$(PKG_NAME)
 	SECTION:=multimedia
 	CATEGORY:=Multimedia
+	SECTION:=openipc
+	CATEGORY:=OpenIPC
+	SUBMENU:=Old test
 	TITLE:=Some samples for Hisilicon devices
 	SUBMENU:=Hisilicon OSDRV-2 for HI35_16C_18E_V200 with kernel 3.4.35
 	MAINTAINER:=chertovmv@gmail.com
