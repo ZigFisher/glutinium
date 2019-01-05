@@ -45,7 +45,7 @@ endef
 define Package/$(PKG_NAME)-binary
 $(call Package/$(PKG_NAME)/default)
 	TITLE+= - binary package
-	DEPENDS:=+$(PKG_NAME)-base +$(PKG_NAME)-kmod +$(PKG_NAME)-lib +$(PKG_NAME)-sensor +libpthread
+	DEPENDS:=+$(PKG_NAME)-base
 endef
 
 define Package/$(PKG_NAME)-kmod
@@ -65,7 +65,7 @@ endef
 
 define Package/$(PKG_NAME)-tool
 $(call Package/$(PKG_NAME)/default)
-	TITLE+= - tool package
+	TITLE+= - tool package +$(PKG_NAME)-kmod +$(PKG_NAME)-lib +$(PKG_NAME)-sensor +libpthread
 endef
 
 define Build/Prepare
