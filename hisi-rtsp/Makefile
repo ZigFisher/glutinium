@@ -7,7 +7,7 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=rtsp-hisi
+PKG_NAME:=hisi-rtsp
 PKG_VERSION:=2018-05-01
 PKG_RELEASE:=1
 PKG_MAINTAINER:=Igor Zalatov <flyrouter@gmail.com>
@@ -18,8 +18,9 @@ PKG_LICENSE_FILES:=LICENSE
 include $(INCLUDE_DIR)/package.mk
 
 define Package/$(PKG_NAME)
-	SECTION:=multimedia
-	CATEGORY:=Multimedia
+	SECTION:=openipc
+	CATEGORY:=OpenIPC
+	SUBMENU:=Old test
 	TITLE:=Simple RTSP daemon for Hisilicon devices
 	MAINTAINER:=https://github.com/xibeilang524/hi3518_h264/tree/master/rtspok_utf8
 	DEPENDS:=+libpthread
@@ -38,7 +39,7 @@ endef
 define Build/Compile
 	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -O -g -D LINUX -lpthread -lm -ldl \
 		-Dhi3518e -DHICHIP=0x3518E200 -DSENSOR_TYPE=APTINA_AR0130_DC_720P_30FPS -DHI_RELEASE -DHI_XXXX -DCHIP_ID=CHIP_HI3518E_V200 -DISP_V2 -Dhi3518ev200 -DHI_ACODEC_TYPE_INNER \
-		-o $(PKG_BUILD_DIR)/rtsp-hisi $(PKG_BUILD_DIR)/main.c $(PKG_BUILD_DIR)/ringfifo.c $(PKG_BUILD_DIR)/rtputils.c $(PKG_BUILD_DIR)/rtspservice.c $(PKG_BUILD_DIR)/rtsputils.c \
+		-o $(PKG_BUILD_DIR)/hisi-rtsp $(PKG_BUILD_DIR)/main.c $(PKG_BUILD_DIR)/ringfifo.c $(PKG_BUILD_DIR)/rtputils.c $(PKG_BUILD_DIR)/rtspservice.c $(PKG_BUILD_DIR)/rtsputils.c \
 		$(PKG_BUILD_DIR)/loadbmp.c $(PKG_BUILD_DIR)/sample_comm_audio.c $(PKG_BUILD_DIR)/sample_comm_isp.c $(PKG_BUILD_DIR)/sample_comm_sys.c $(PKG_BUILD_DIR)/sample_comm_ive.c \
 		$(PKG_BUILD_DIR)/sample_comm_venc.c $(PKG_BUILD_DIR)/sample_comm_vi.c $(PKG_BUILD_DIR)/sample_comm_vo.c $(PKG_BUILD_DIR)/sample_comm_vpss.c $(PKG_BUILD_DIR)/sample_venc.c \
 		-I$(PKG_BUILD_DIR)/include/ $(PKG_BUILD_DIR)/lib/libsns_ar0130.a \
@@ -49,7 +50,7 @@ endef
 
 define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/sbin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/rtsp-hisi $(1)/usr/sbin/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/$(PKG_NAME) $(1)/usr/sbin/
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))
