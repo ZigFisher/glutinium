@@ -27,8 +27,7 @@ define Package/$(PKG_NAME)
 	TITLE:=Some samples for Hisilicon devices
 	SUBMENU:=Hisilicon OSDRV-2 for HI35_16C_18E_V200 with kernel 3.4.35
 	MAINTAINER:=chertovmv@gmail.com
-	#DEPENDS:=+hisi-osdrv2-lib +libpthread
-	DEPENDS:=+libpthread
+	DEPENDS:=+hisi-osdrv2-lib +libpthread
 endef
 
 define Package/$(PKG_NAME)/description
