@@ -8,8 +8,8 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=sstgb
-PKG_VERSION:=2018-12-23
-PKG_RELEASE:=0.1
+PKG_VERSION:=1.2
+PKG_RELEASE:=2019-01-05
 PKG_MAINTAINER:=Igor Zalatov <flyrouter@gmail.com>
 
 include $(INCLUDE_DIR)/package.mk

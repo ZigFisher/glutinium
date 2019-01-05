@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <pthread.h>
 #include <stdbool.h>
 #include <string.h>
 #include <unistd.h>
@@ -21,6 +20,7 @@ struct {
     char *comment;
     char *path;
     char *text;
+    char *proxy_addr;
     int isRemove;
     int isWeakConfig;
     int useFileConfig;
@@ -30,11 +30,11 @@ struct {
 void printHelp(void) {
 printf(
 		"-----------------------------------------------------------------------------\n"
-		"| sstgb: simply sender telegram bot                                      v1.1|\n"
+		"| sstgb: simply sender telegram bot                                      v1.2|\n"
 		"-----------------------------------------------------------------------------\n"
 		"\n"
 		"This telegram bot sends text and pictures according to command line paramaters\n"
-		"(c) 2018 Denis G Dugushkin, dentall@mail.ru, phone +7-952-242-42-88\n"
+		"(c) 2018-2019 Denis G Dugushkin, dentall@mail.ru, phone +7-952-242-42-88\n"
 		"\n"
 		"Usage: sstgb <command> <parameter> [options]\n"
 		"\n"
@@ -50,6 +50,7 @@ printf(
 		"--userid <id>            User ID\n"
 		"--fileconfigs            Read bot token and userid from files .token and .userid accordingly\n"
 		"--path                   Working path for --fileconfigs option (last slash required!)\n"
+                "--proxy                  Use libcurl proxy. Examples: socks5://addr.org:8564 or http://addr.org:8564\n"
 		"--comment                Comment for picture/audio/video\n"
 		"--remove                 Remove(!) file after use for --sendpic, --sendvideo, --sendaudio, --senddoc\n"
 		"--weakconfig             Simplified command line parameters pre-check for debug\n"
@@ -81,6 +82,7 @@ void printConfig(void) {
 			"Use file config.........%d\n"
 			"Working path............%s\n"
 			"Use weak config.........%d\n"
+			"Proxy...................%s\n"
 			"\n",
 			sstgbconf.token,
 			sstgbconf.user_id,
@@ -93,7 +95,8 @@ void printConfig(void) {
 			sstgbconf.isRemove,
 			sstgbconf.useFileConfig,
 			sstgbconf.path,
-			sstgbconf.isWeakConfig
+			sstgbconf.isWeakConfig,
+			sstgbconf.proxy_addr
 );
 }
 
@@ -208,6 +211,9 @@ int main(int argc, char *argv[])
 		else if (!strcmp(argv[j],"--comment") && more) {
 					sstgbconf.comment = strdup(argv[++j]);
 		}
+		else if (!strcmp(argv[j],"--proxy") && more) {
+					sstgbconf.proxy_addr = strdup(argv[++j]);
+		}
 		else if (!strcmp(argv[j],"--help")) {
 			printHelp();
 			return 0;
@@ -244,6 +250,13 @@ int main(int argc, char *argv[])
     // Main work routine
     
     telebot_error_e ret;
+
+    if (sstgbconf.proxy_addr != NULL) {
+    	ret = telebot_use_proxy(handle, sstgbconf.proxy_addr);
+    	if (ret != TELEBOT_ERROR_NONE) {
+    		printf("Failed to init proxy: %d \n", ret);
+    	}
+    }
 
     if (sstgbconf.text != NULL) {
     	ret = telebot_send_message(handle, sstgbconf.user_id, sstgbconf.text, "", false, false, 0, "");
@@ -294,6 +307,8 @@ int main(int argc, char *argv[])
 	free(sstgbconf.docfile);
 	free(sstgbconf.path);
 	free(sstgbconf.comment);
+	free(sstgbconf.proxy_addr);
+
 	
     return 0;
 }
