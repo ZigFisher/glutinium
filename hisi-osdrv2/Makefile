@@ -24,7 +24,6 @@ include $(INCLUDE_DIR)/package.mk
 define Package/$(PKG_NAME)/default
 	SECTION:=openipc
 	CATEGORY:=OpenIPC
-	SUBMENU:=Old test
 	MAINTAINER:=Igor Zalatov <flyrouter@gmail.com>
 	TITLE:=Hisilicon OSDRV
 	#SUBMENU:=Hisilicon OSDRV-1 for HI35_16C_18E_V200 with kernel 3.0.8
