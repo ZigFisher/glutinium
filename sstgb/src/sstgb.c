@@ -21,6 +21,7 @@ struct {
     char *path;
     char *text;
     char *proxy_addr;
+    char *proxy_auth;
     int isRemove;
     int isWeakConfig;
     int useFileConfig;
@@ -49,9 +50,10 @@ printf(
 		"--token <token>          Bot token\n"
 		"--userid <id>            User ID\n"
 		"--fileconfigs            Read bot token and userid from files .token and .userid accordingly\n"
-		"--path                   Working path for --fileconfigs option (last slash required!)\n"
-                "--proxy                  Use libcurl proxy. Examples: socks5://addr.org:8564 or http://addr.org:8564\n"
-		"--comment                Comment for picture/audio/video\n"
+		"--path <dir>             Working path for --fileconfigs option (last slash required!)\n"
+                "--proxy <addr>           Use libcurl proxy. Examples: socks5://addr.org:8564 or http://addr.org:8564\n"
+		"--proxyauth <user:pass>  Specify username and password for proxy\n"
+		"--comment <text>         Comment for picture/audio/video\n"
 		"--remove                 Remove(!) file after use for --sendpic, --sendvideo, --sendaudio, --senddoc\n"
 		"--weakconfig             Simplified command line parameters pre-check for debug\n"
 		"\n"
@@ -83,6 +85,7 @@ void printConfig(void) {
 			"Working path............%s\n"
 			"Use weak config.........%d\n"
 			"Proxy...................%s\n"
+			"Proxy authentication....%s\n"
 			"\n",
 			sstgbconf.token,
 			sstgbconf.user_id,
@@ -96,7 +99,8 @@ void printConfig(void) {
 			sstgbconf.useFileConfig,
 			sstgbconf.path,
 			sstgbconf.isWeakConfig,
-			sstgbconf.proxy_addr
+			sstgbconf.proxy_addr,
+			sstgbconf.proxy_auth
 );
 }
 
@@ -214,6 +218,10 @@ int main(int argc, char *argv[])
 		else if (!strcmp(argv[j],"--proxy") && more) {
 					sstgbconf.proxy_addr = strdup(argv[++j]);
 		}
+		else if (!strcmp(argv[j],"--proxyauth") && more) {
+					sstgbconf.proxy_auth = strdup(argv[++j]);
+		}
+
 		else if (!strcmp(argv[j],"--help")) {
 			printHelp();
 			return 0;
@@ -252,7 +260,7 @@ int main(int argc, char *argv[])
     telebot_error_e ret;
 
     if (sstgbconf.proxy_addr != NULL) {
-    	ret = telebot_use_proxy(handle, sstgbconf.proxy_addr);
+    	ret = telebot_use_proxy(handle, sstgbconf.proxy_addr, sstgbconf.proxy_auth);
     	if (ret != TELEBOT_ERROR_NONE) {
     		printf("Failed to init proxy: %d \n", ret);
     	}
@@ -308,7 +316,7 @@ int main(int argc, char *argv[])
 	free(sstgbconf.path);
 	free(sstgbconf.comment);
 	free(sstgbconf.proxy_addr);
-
+	free(sstgbconf.proxy_auth);
 	
     return 0;
 }

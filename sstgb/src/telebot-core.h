@@ -50,9 +50,10 @@ typedef struct telebot_core_handler {
     size_t resp_size; /**< Telegam response size */
     bool busy; /**< Mark another request is in progress */
     char *proxy_addr;
+    char *proxy_auth;
 } telebot_core_handler_t;
 
-telebot_error_e telebot_core_init_proxy(telebot_core_handler_t *core_h, char *addr);
+telebot_error_e telebot_core_init_proxy(telebot_core_handler_t *core_h, char *addr, char *auth);
 
 /**
  * @brief Start function to use telebot core APIs.

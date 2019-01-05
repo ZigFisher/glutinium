@@ -74,8 +74,15 @@ static telebot_error_e telebot_core_curl_perform(telebot_core_handler_t *core_h,
     curl_easy_setopt(curl_h, CURLOPT_URL, URL);
     curl_easy_setopt(curl_h, CURLOPT_WRITEFUNCTION, write_data_cb);
     curl_easy_setopt(curl_h, CURLOPT_WRITEDATA, core_h);
-
+    
+    if (core_h->proxy_addr != NULL) {
     curl_easy_setopt(curl_h, CURLOPT_PROXY, core_h->proxy_addr);
+
+    if (core_h->proxy_auth != NULL) {
+    curl_easy_setopt(curl_h, CURLOPT_PROXYAUTH, CURLAUTH_ANY);
+    curl_easy_setopt(curl_h, CURLOPT_PROXYUSERPWD, core_h->proxy_auth);
+    }
+    }
 
     if (post != NULL)
         curl_easy_setopt(curl_h, CURLOPT_HTTPPOST, post);
@@ -111,13 +118,14 @@ static telebot_error_e telebot_core_curl_perform(telebot_core_handler_t *core_h,
     return TELEBOT_ERROR_NONE;
 }
 
-telebot_error_e telebot_core_init_proxy(telebot_core_handler_t *core_h, char *addr)
+telebot_error_e telebot_core_init_proxy(telebot_core_handler_t *core_h, char *addr, char *auth)
 {
     if ((addr == NULL) || (core_h == NULL)) {
         return TELEBOT_ERROR_INVALID_PARAMETER;
     }
 
     core_h->proxy_addr = strdup(addr);
+    if (auth != NULL) core_h->proxy_auth = strdup(auth);
 
     return TELEBOT_ERROR_NONE;
 }
@@ -139,6 +147,7 @@ telebot_error_e telebot_core_create(telebot_core_handler_t **core_h, char *token
     _core_h->resp_size = 0;
     _core_h->busy = false;
     _core_h->proxy_addr = NULL;
+    _core_h->proxy_auth = NULL;
 
     curl_global_init(CURL_GLOBAL_DEFAULT);
 
@@ -163,9 +172,15 @@ telebot_error_e telebot_core_destroy(telebot_core_handler_t *core_h)
     }
 
     if (core_h->proxy_addr != NULL) {
-        memset(core_h->proxy_addr, 'Z', strlen(core_h->proxy_addr));
+        memset(core_h->proxy_addr, 'M', strlen(core_h->proxy_addr));
         free(core_h->proxy_addr);
         core_h->proxy_addr = NULL;
+    }
+
+    if (core_h->proxy_auth != NULL) {
+        memset(core_h->proxy_auth, 'M', strlen(core_h->proxy_auth));
+        free(core_h->proxy_auth);
+        core_h->proxy_auth = NULL;
     }
 
     if (core_h->resp_data != NULL)
