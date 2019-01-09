@@ -1,0 +1,89 @@
+#
+# Copyright (C) 2006-2018 OpenWrt.org
+# Copyright (C) 2016 Cesnet, z.s.p.o.
+# Copyright (C) 2017 - 2018 Jiri Slachta <jiri@slachta.eu>
+#
+# This is free software, licensed under the GNU General Public License v2.
+# See /LICENSE for more information.
+#
+
+include $(TOPDIR)/rules.mk
+
+PKG_NAME:=pjsua
+PKG_VERSION:=2.4.5
+PKG_RELEASE:=1
+
+PKG_SOURCE:=pjproject-$(PKG_VERSION).tar.bz2
+PKG_SOURCE_URL:=http://www.pjsip.org/release/$(PKG_VERSION)/
+PKG_MD5SUM:=f58b3485977b3a700256203a554b3869
+
+PKG_LICENSE:=GPL-2.0
+PKG_LICENSE_FILES:=COPYING
+PKG_MAINTAINER:=Igor Zalatov <flyrouter@gmail.com>
+
+PKG_BUILD_DIR:=$(BUILD_DIR)/pjproject-$(PKG_VERSION)
+
+PKG_CONFIG_DEPENDS:=CONFIG_SOFT_FLOAT
+
+include $(INCLUDE_DIR)/uclibc++.mk
+include $(INCLUDE_DIR)/package.mk
+
+define Package/$(PKG_NAME)
+	SECTION:=net
+	CATEGORY:=Network
+	SUBMENU:=Telephony
+	TITLE:=Simple SIP client - pjsua
+	URL:=http://www.pjsip.org
+	DEPENDS:=$(CXX_DEPENDS) +librt +libuuid +libpthread
+endef
+
+define Package/$(PKG_NAME)/description
+	Simple SIP client - pjsua
+endef
+
+CONFIGURE_ARGS+= \
+	$(if $(CONFIG_SOFT_FLOAT),--disable-floating-point) \
+	--enable-oss \
+	--enable-sound \
+	--enable-g711-codec \
+	--enable-gsm-codec \
+	--disable-ext-sound \
+	--disable-ffmpeg \
+	--disable-g722-codec \
+	--disable-g7221-codec \
+	--disable-ilbc-codec \
+	--disable-ipp \
+	--disable-l16-codec \
+	--disable-libyuv \
+	--disable-opencore-amr \
+	--disable-openh264 \
+	--disable-resample \
+	--disable-sdl \
+	--disable-silk \
+	--disable-speex-aec \
+	--disable-speex-codec \
+	--disable-v4l2 \
+	--disable-video \
+	--disable-ssl \
+	--without-external-gsm \
+	--without-external-pa
+
+
+TARGET_CFLAGS+=$(TARGET_CPPFLAGS)
+
+define Build/Compile
+	$(MAKE) $(PKG_JOBS) -C $(PKG_BUILD_DIR)
+endef
+
+define Package/$(PKG_NAME)/install
+	# Use it if set option --enable-shared
+	#$(INSTALL_DIR) $(1)/usr/lib
+	#$(CP) $(PKG_BUILD_DIR)/{pjlib,pjlib-util,pjmedia,pjnath,pjsip,third_party}/lib/lib*.so* $(1)/usr/lib/
+	#
+	$(INSTALL_DIR) $(1)/etc
+	$(CP) ./files/pjsua.cfg $(1)/etc/
+	$(INSTALL_DIR) $(1)/usr/bin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/pjsip-apps/bin/$(PKG_NAME)-* $(1)/usr/bin/$(PKG_NAME)
+endef
+
+$(eval $(call BuildPackage,$(PKG_NAME)))

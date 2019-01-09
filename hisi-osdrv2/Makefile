@@ -22,8 +22,8 @@ PKG_LICENSE_FILES:=HISILICON COPYING
 include $(INCLUDE_DIR)/package.mk
 
 define Package/$(PKG_NAME)/default
-	SECTION:=multimedia
-	CATEGORY:=Multimedia
+	SECTION:=openipc
+	CATEGORY:=OpenIPC
 	MAINTAINER:=Igor Zalatov <flyrouter@gmail.com>
 	TITLE:=Hisilicon OSDRV
 	#SUBMENU:=Hisilicon OSDRV-1 for HI35_16C_18E_V200 with kernel 3.0.8
@@ -45,7 +45,6 @@ endef
 define Package/$(PKG_NAME)-binary
 $(call Package/$(PKG_NAME)/default)
 	TITLE+= - binary package
-	DEPENDS:=+$(PKG_NAME)-base +$(PKG_NAME)-kmod +$(PKG_NAME)-lib +$(PKG_NAME)-sensor +libpthread
 endef
 
 define Package/$(PKG_NAME)-kmod
@@ -65,7 +64,8 @@ endef
 
 define Package/$(PKG_NAME)-tool
 $(call Package/$(PKG_NAME)/default)
-	TITLE+= - tool package
+	TITLE+= - tool package 
+	DEPENDS:=+$(PKG_NAME)-base +$(PKG_NAME)-kmod +$(PKG_NAME)-lib +$(PKG_NAME)-sensor +libpthread
 endef
 
 define Build/Prepare

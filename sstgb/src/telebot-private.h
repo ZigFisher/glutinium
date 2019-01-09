@@ -71,14 +71,12 @@
 #define TELEBOT_METHOD_DELETE_MESSAGE               "deleteMessage"
 #define TELEBOT_METHOD_SEND_STICKER                 "sendSticker"
 
-/*
-#ifdef DEBUG
+#ifndef DEBUG
     #define ERR(fmt, args...) printf("[ERROR][%s:%d]" fmt "\n", __func__, __LINE__, ##args)
     #define DBG(fmt, args...) printf("[DEBUG][%s:%d]" fmt "\n", __func__, __LINE__, ##args)
 #else
-*/
     #define ERR(x, ...)
     #define DBG(x, ...)
-//#endif
+#endif
 
 #endif /* __TELEBOT_PRIVATE_H__ */

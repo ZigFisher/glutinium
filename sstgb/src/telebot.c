@@ -69,6 +69,22 @@ static void telebot_free_mask_position(telebot_mask_position_t *mask);
 //static void telebot_free_invoice(telebot_invoice_t *invoice);
 //static void telebot_free_payment(telebot_successful_payment_t *payment);
 
+telebot_error_e telebot_use_proxy(telebot_handler_t handle, char *addr, char *auth)
+{
+    if (addr == NULL)
+        return TELEBOT_ERROR_INVALID_PARAMETER;
+
+    telebot_hdata_t * _handle = (telebot_hdata_t *)handle;
+    if (_handle == NULL)
+        return TELEBOT_ERROR_NOT_SUPPORTED;
+
+    telebot_error_e ret = telebot_core_init_proxy(_handle->core_h, addr, auth);
+    if (ret != TELEBOT_ERROR_NONE)
+        return ret;
+
+    return TELEBOT_ERROR_NONE;
+}
+
 telebot_error_e telebot_create(telebot_handler_t *handle, char *token)
 {
     if ((token == NULL) || (handle == NULL))

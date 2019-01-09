@@ -36,6 +36,8 @@ extern "C" {
  * @{
  */
 
+telebot_error_e telebot_use_proxy(telebot_handler_t handle, char *addr, char *auth);
+
 /**
  * @brief Initial function to use telebot APIs.
  *

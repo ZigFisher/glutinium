@@ -1,0 +1,20 @@
+--- a/aconfigure	2018-12-29 23:22:55.017820728 +0300
++++ b/aconfigure	2018-12-29 23:26:20.199022486 +0300
+@@ -6099,15 +6099,8 @@
+   *)
+ 		ac_pjmedia_snd=pa_unix
+ 	ac_fn_c_check_header_mongrel "$LINENO" "alsa/version.h" "ac_cv_header_alsa_version_h" "$ac_includes_default"
+-if test "x$ac_cv_header_alsa_version_h" = xyes; then :
+-  ac_pa_use_alsa=1
+-
+-			 LIBS="$LIBS -lasound"
+-
+-else
+-  ac_pa_use_alsa=0
+-
+-fi
++		# Disable Alsa in OpenWrt
++		ac_pa_use_alsa=0
+ 
+ 
+ 	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: Checking sound device backend... unix" >&5
