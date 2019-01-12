@@ -12,7 +12,7 @@ export backup="$(uci get microbe.pinger.priority | awk -F ',' '{print $2}')"
     # logger -t routing "Current: ${curent}"
     # Use this string for ETH interfaces. Also use IP GW addresses and "via" in routing rules:
     # ip r replace ${pinger} via ${normal}   
-    if ping -q -c 6 -I 3g-wan1 ${pinger} ; then
+    if ping -q -c 6 -I ${normal} ${pinger} ; then
       [ "${curent}" != ${normal} ] && ip route replace default dev ${normal} && logger -t routing "Now link via normal channel"
       [ "${curent}" != ${normal} ] && kill -s HUP `pidof vtund`
       [ "${curent}" != ${normal} ] && kill -s HUP `pidof openvpn`
