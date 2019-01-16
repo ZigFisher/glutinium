@@ -1,0 +1,1 @@
+hisi-rpc-config
