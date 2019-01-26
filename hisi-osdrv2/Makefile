@@ -30,6 +30,7 @@ define Package/$(PKG_NAME)/default
 	SUBMENU:=Hisilicon OSDRV-2 for HI35_16C_18E_V200 with kernel 3.4.35
 	#SUBMENU:=Hisilicon OSDRV-3 for HI35_16C_18E_V200 with kernel 3.18.20
 	URL:=http://zftlab.org
+	DEPENDS:=+libstdcpp
 	#DEPENDS:=+hisi-sample
 endef
 
