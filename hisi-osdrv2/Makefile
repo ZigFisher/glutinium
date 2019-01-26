@@ -92,7 +92,7 @@ endef
 
 define Package/$(PKG_NAME)-binary/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(CP) ./binary/himm $(1)/usr/bin/
+	$(CP) ./binary/* $(1)/usr/bin/
 endef
 
 define Package/$(PKG_NAME)-kmod/install
@@ -108,6 +108,8 @@ endef
 define Package/$(PKG_NAME)-sensor/install
 	$(INSTALL_DIR) $(1)/usr/lib
 	$(CP) ./sensor/libsns_*.so $(1)/usr/lib/
+	$(INSTALL_DIR) $(1)/etc/sensors
+	$(CP) ./sensor/config/* $(1)/etc/sensors
 endef
 
 define Package/$(PKG_NAME)-tool/install
