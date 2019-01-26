@@ -8,6 +8,7 @@
 ####################Variables Definition##########################
 
 SNS_TYPE=ar0130
+SNS_TYPE=ov9712
 mem_start=0x80000000
 totmem_size=64M
 osmem_size=$(cat /proc/cmdline | sed -nre 's/mem=([^[:space:]]+).*/\1/p')
