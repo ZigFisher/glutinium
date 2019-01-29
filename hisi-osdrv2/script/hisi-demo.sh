@@ -77,22 +77,22 @@ if [ $# -eq 0 ]; then
 else
     if [ $1 -eq 0 ]; then
         echo "normal mode, ir_cut on"
-        ir_cut_enable > /dev/null;
+        ir_cut_enable ;
     fi
 
     if [ $1 -eq 1 ]; then
         echo "ir mode, ir_cut off"
-        ir_cut_disable > /dev/null ;
+        ir_cut_disable ;
     fi
 	
 	if [ $2 -eq 0 ]; then
         echo "enable inner codec, mute off"
-        audio_disable_mute > /dev/null;
+        audio_disable_mute ;
     fi
 	
 	if [ $2 -eq 1 ]; then
         echo "disable inner codec, mute on"
-        audio_enable_mute > /dev/null;
+        audio_enable_mute ;
     fi
 fi
 

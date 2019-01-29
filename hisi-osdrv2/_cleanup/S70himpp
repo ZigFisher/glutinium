@@ -1,0 +1,49 @@
+#!/bin/sh
+#
+# Start himpp....
+#
+
+HIMPP_PREFIX=/usr
+SENSOR_TYPE=$(cat /proc/cmdline | awk -F"sensor=" '{print $2}' | awk -F" " '{ print $1 }')
+SENSOR_TYPE=${SENSOR_TYPE:-ar0130}
+
+OSMEM=$(cat /proc/cmdline | awk -F"mem=" '{print $2}' | awk -F" " '{ print $1 }')
+OSMEM=${OSMEM:-32M}
+TOTALMEM=$(cat /proc/cmdline | awk -F"total=" '{print $2}' | awk -F" " '{ print $1 }')
+TOTALMEM=${TOTALMEM:-64M}
+
+start() {
+    (
+      echo -n "Starting himpp: "
+      cd ${HIMPP_PREFIX}/lib/himpp-ko
+      ./load3518e.sh -i -sensor ${SENSOR_TYPE} -osmem=${OSMEM} -totalmem=${TOTALMEM}
+      [ $? = 0 ] && echo "OK" || echo "FAIL"
+    )
+}
+
+stop() {
+    (
+      echo -n "Stopping himpp: "
+      cd ${HIMPP_PREFIX}/lib/himpp-ko
+      ./load3518e.sh -r -sensor ${SENSOR_TYPE} -osmem=${OSMEM} -totalmem=${TOTALMEM}
+      [ $? = 0 ] && echo "OK" || echo "FAIL"
+    )
+}
+
+case "$1" in
+    start)
+	start
+	;;
+    stop)
+	stop
+	;;
+    restart|reload)
+	stop
+	start
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
+
+exit $?
