@@ -29,7 +29,7 @@ OPTIONS:
     -restore                restore hardware
 
 SENSOR:
-    9m034 ar0130 ar0230 imx222 jxf22 jxh62 mn34222 ov2718 ov9712 ov9732 ov9750 ov9752 sc1135 sc1145 sc2135
+    9m034 ar0130 ar0230 ar0237 imx222 jxf22 jxh62 mn34222 ov2718 ov9712 ov9732 ov9750 ov9752 sc1135 sc1145 sc2135
 
 EXAMPLES:
     online mode:      $0 -a -osmem 40M -totalmem=64M -online
@@ -85,7 +85,6 @@ insert_sns()
 		#
 		devmem 0x2003002c 32 0xb4001;   # sensor unreset, clk 27MHz, VI 99MHz
 		;;
-
 
 	ar0230|ar0237)
 		devmem 0x200f0040 32 0x2;	# I2C0_SCL
