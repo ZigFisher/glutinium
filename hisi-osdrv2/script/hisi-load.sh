@@ -29,7 +29,7 @@ OPTIONS:
     -restore                restore hardware
 
 SENSOR:
-    9m034 ar0130 ar0230 ar0237 imx222 jxf22 jxh62 mn34222 ov2718 ov9712 ov9732 ov9750 ov9752 sc1135 sc1145 sc2135
+    9m034 ar0130 ar0230 ar0237 imx222 jxf22 jxh62 mn34222 ov2718 ov9712 ov9732 ov9750 ov9752 sc1045 sc1135 sc1145 sc2035 sc2045 sc2135
 
 EXAMPLES:
     online mode:      $0 -a -osmem 40M -totalmem=64M -online
@@ -193,11 +193,10 @@ insert_sns()
 		devmem 0x2003002c 32 0x94003;	# clk 24MHz, VI 99MHz
 		;;
 
-	sc1135|sc1145|sc2135)
+	sc1045|sc1135|sc1145|sc2035|sc2045|sc2135)
 		devmem 0x200f0040 32 0x2;	# I2C0_SCL
 		devmem 0x200f0044 32 0x2;	# I2C0_SDA
-		#
-		#cmos pinmux
+		#Cmos pinmux
 		devmem 0x200f007c 32 0x1;	# VI_DATA13
 		devmem 0x200f0080 32 0x1;	# VI_DATA10
 		devmem 0x200f0084 32 0x1;	# VI_DATA12
@@ -248,10 +247,10 @@ sys_config()
   #hisi-pinmux.sh -vo LCD
   #
   # Clock configuration
-  sh hisi-clkcfg.sh
+  hisi-clkcfg.sh
   #
-  # System configuration  
-  sh hisi-sysctl.sh $online_mode
+  # System configuration
+  hisi-sysctl.sh $online_mode
 }
 
 insert_ko()
@@ -336,9 +335,17 @@ remove_ko()
 
 sys_restore()
 {
+  # Pinmux configuration
   hisi-pinmux.sh -net
+  #hisi-pinmux.sh -vo BT656
+  #hisi-pinmux.sh -vo LCD
+  #
+  # Clock configuration
   hisi-clkcfg.sh
+  #
+  # System configuration..
   hisi-sysctl.sh $online_mode
+  #
   insert_sns;
 }
 

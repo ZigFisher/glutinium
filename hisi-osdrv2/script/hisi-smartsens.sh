@@ -41,3 +41,6 @@ detect_sensor_type()
   #   get sensor type from u-boot environment
   #fw_printenv -n sensor_type
 }
+
+detect_sensor_type
+
