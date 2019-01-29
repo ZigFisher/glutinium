@@ -1,18 +1,18 @@
 #!/bin/sh
-# Useage: ./load3518e [ -r|-i|-a ] [ sensor ]
-#         -r : rmmod all modules
-#         -i : insmod all modules
-#    default : rmmod all moules and then insmod them
-#
 
-####################Variables Definition##########################
 
-SNS_TYPE=$(awk -F '=' '$1=="sensor"{print $2}' RS=" " /proc/cmdline)
+#################### Variables Definition ##########################
 
 mem_start=0x80000000
 totmem_size=64M
-osmem_size=$(cat /proc/cmdline | sed -nre 's/mem=([^[:space:]]+).*/\1/p')
+
+osmem_size=$(awk -F '=' '$1=="mem"{print $2}' RS=" " /proc/cmdline)
 osmem_size=${osmem_size:=40M}
+
+SNS_TYPE=$(awk -F '=' '$1=="sensor"{print $2}' RS=" " /proc/cmdline)
+SNS_TYPE=${SNS_TYPE:=ar0130}
+
+####################################################################
 
 usage="\
 Usage: $0 [OPTIONS]
@@ -36,31 +36,35 @@ EXAMPLES:
     offline mode:     $0 -a -osmem 40M -totalmem=64M -offline
 "
 
-##################################################################
+####################################################################
 
 insert_audio()
 {
-	insmod acodec.ko
-	insmod hi3518e_aio.ko
-	insmod hi3518e_ai.ko
-	insmod hi3518e_ao.ko
-	insmod hi3518e_aenc.ko
-	insmod hi3518e_adec.ko
-	#insmod extdrv/tlv_320aic31.ko
-	echo "insert audio"
+  insmod acodec.ko
+  insmod hi3518e_aio.ko
+  insmod hi3518e_ai.ko
+  insmod hi3518e_ao.ko
+  insmod hi3518e_aenc.ko
+  insmod hi3518e_adec.ko
+  #insmod extdrv/tlv_320aic31.ko
+  echo "Insert audio..."
 }
+
+####################################################################
 
 remove_audio()
 {
-	#rmmod tlv_320aic31.ko
-	rmmod hi3518e_adec
-	rmmod hi3518e_aenc
-	rmmod hi3518e_ao
-	rmmod hi3518e_ai
-	rmmod hi3518e_aio
-	rmmod acodec
-	echo "remove audio"
+  #rmmod tlv_320aic31.ko
+  rmmod hi3518e_adec
+  rmmod hi3518e_aenc
+  rmmod hi3518e_ao
+  rmmod hi3518e_ai
+  rmmod hi3518e_aio
+  rmmod acodec
+  echo "Remove audio..."
 }
+
+####################################################################
 
 insert_sns()
 {
@@ -203,135 +207,137 @@ insert_sns()
 	*)
 		echo "Invalid sensor type $SNS_TYPE"
 		exit 1;;
-	esac
+
+        esac
 }
+
+####################################################################
 
 remove_sns()
 {
-	rmmod sensor_spi &> /dev/null
-	rmmod sensor_i2c &> /dev/null
+  rmmod sensor_spi
+  rmmod sensor_i2c
 }
+
+####################################################################
 
 insert_isp()
 {
-    case $SNS_TYPE in
-        ov9750)
-            insmod hi3518e_isp.ko update_pos=1;
-            ;;
-        *)
-            insmod hi3518e_isp.ko update_pos=0;
-            ;;
-    esac
+  case $SNS_TYPE in
+    ov9750)
+      insmod hi3518e_isp.ko update_pos=1;
+      ;;
+    *)
+      insmod hi3518e_isp.ko update_pos=0;
+      ;;
+  esac
 }
+
+####################################################################
 
 sys_config()
 {
-	# pinmux configuration
-	#sh ./pinmux_hi3518e.sh -vo BT656 > /dev/null
-	#sh ./pinmux_hi3518e.sh -vo LCD > /dev/null
-	sh /etc/hisi//pinmux_hi3518e.sh -net > /dev/null
-
-	# Clock configuration
-	sh /etc/hisi/clkcfg_hi3518e.sh > /dev/null
-
-	# System configuration
-	sh /etc/hisi/sysctl_hi3518e.sh $online_mode > /dev/null
+  # Pinmux configuration
+  hisi-pinmux.sh -net
+  #hisi-pinmux.sh -vo BT656
+  #hisi-pinmux.sh -vo LCD
+  #
+  # Clock configuration
+  sh hisi-clkcfg.sh
+  #
+  # System configuration  
+  sh hisi-sysctl.sh $online_mode
 }
 
 insert_ko()
 {
-	# sys config
-	sys_config;
-
-	# driver load
-	local totmem=$((${totmem_size/M/*0x100000}))
-	local osmem=$((${osmem_size/M/*0x100000}))
-	local mmz_start=$(printf "0x%08x" $((mem_start + osmem)))
-	local mmz_size=$(((totmem - osmem)/0x100000))M
-	insmod mmz.ko mmz=anonymous,0,$mmz_start,$mmz_size anony=1 || exit 1
-	insmod hi_media.ko
-	insmod hi3518e_base.ko
-
-	insmod hi3518e_sys.ko vi_vpss_online=$online_mode sensor=$SNS_TYPE
-	if [[ $? -ne 0 ]]; then
-		exit;
-	fi
-
-	insmod hi3518e_tde.ko
-	insmod hi3518e_region.ko
-	insmod hi3518e_vgs.ko
-
-	insert_isp;
-	insmod hi3518e_viu.ko detect_err_frame=10;
-	insmod hi3518e_vpss.ko rfr_frame_comp=1;
-	#insmod hi3518e_vou.ko
-	#insmod hi3518e_vou.ko transparentTransmit=1     # enable transparentTransmit
-	#insmod hifb.ko video="hifb:vram0_size:1620"     # default pal
-
-	insmod hi3518e_rc.ko
-	insmod hi3518e_venc.ko
-	insmod hi3518e_chnl.ko ChnlLowPower=1
-	insmod hi3518e_h264e.ko
-	insmod hi3518e_jpege.ko
-	insmod hi3518e_ive.ko save_power=0;
-	#insmod hi3518e_ive.ko
-	insmod extdrv/sensor_i2c.ko
-	insmod extdrv/pwm.ko
-	insmod extdrv/piris.ko
-
-	#insert_sns > /dev/null
-	insert_sns
-	insert_audio
-
-	insmod hi_mipi.ko
-	echo "Sensor TYPE: $SNS_TYPE"
+  sys_config;
+  #
+  # Driver load
+  local totmem=$((${totmem_size/M/*0x100000}))
+  local osmem=$((${osmem_size/M/*0x100000}))
+  local mmz_start=$(printf "0x%08x" $((mem_start + osmem)))
+  local mmz_size=$(((totmem - osmem)/0x100000))M
+  #
+  insmod mmz.ko mmz=anonymous,0,$mmz_start,$mmz_size anony=1 || exit 1
+  insmod hi_media.ko
+  insmod hi3518e_base.ko
+  insmod hi3518e_sys.ko vi_vpss_online=$online_mode sensor=$SNS_TYPE
+  #
+  if [[ $? -ne 0 ]]; then
+    exit;
+  fi
+  #
+  insmod hi3518e_tde.ko
+  insmod hi3518e_region.ko
+  insmod hi3518e_vgs.ko
+  #
+  insert_isp;
+  #
+  insmod hi3518e_viu.ko detect_err_frame=10;
+  insmod hi3518e_vpss.ko rfr_frame_comp=1;
+  #insmod hi3518e_vou.ko
+  #insmod hi3518e_vou.ko transparentTransmit=1     # enable transparentTransmit
+  #insmod hifb.ko video="hifb:vram0_size:1620"     # default pal
+  insmod hi3518e_rc.ko
+  insmod hi3518e_venc.ko
+  insmod hi3518e_chnl.ko ChnlLowPower=1
+  insmod hi3518e_h264e.ko
+  insmod hi3518e_jpege.ko
+  insmod hi3518e_ive.ko save_power=0;
+  #insmod hi3518e_ive.ko
+  insmod sensor_i2c.ko
+  insmod pwm.ko
+  insmod piris.ko
+  #
+  insert_sns
+  #insert_audio
+  #
+  insmod hi_mipi.ko
+  echo "Sensor TYPE: $SNS_TYPE"
 }
+
+####################################################################
 
 remove_ko()
 {
-	remove_audio
-	remove_sns
-
-	rmmod pwm
-
-	rmmod hi3518e_ive
-
-	rmmod hi3518e_rc
-	rmmod hi3518e_jpege
-	rmmod hi3518e_h264e
-	rmmod hi3518e_chnl
-	rmmod hi3518e_venc
-
-	#rmmod hifb
-	#rmmod hi3518e_vou
-	rmmod hi3518e_vpss
-	rmmod hi3518e_viu
-	rmmod hi_mipi
-
-	rmmod hi3518e_vgs
-	rmmod hi3518e_region
-	rmmod hi3518e_tde
-
-	rmmod piris
-	rmmod hi3518e_isp
-	rmmod hi3518e_sys
-	rmmod hi3518e_base
-	rmmod hi_media
-	rmmod mmz
+  #remove_audio
+  remove_sns
+  #
+  rmmod pwm
+  rmmod hi3518e_ive
+  rmmod hi3518e_rc
+  rmmod hi3518e_jpege
+  rmmod hi3518e_h264e
+  rmmod hi3518e_chnl
+  rmmod hi3518e_venc
+  #rmmod hifb
+  #rmmod hi3518e_vou
+  rmmod hi3518e_vpss
+  rmmod hi3518e_viu
+  rmmod hi_mipi
+  rmmod hi3518e_vgs
+  rmmod hi3518e_region
+  rmmod hi3518e_tde
+  rmmod piris
+  rmmod hi3518e_isp
+  rmmod hi3518e_sys
+  rmmod hi3518e_base
+  rmmod hi_media
+  rmmod mmz
 }
 
-#sys_restore()
-#{
-#################################################################
-#	pinmux_hi3518e.sh -net > /dev/null
-#	clkcfg_hi3518e.sh > /dev/null
-#
-#	# system configuration
-#	sysctl_hi3518e.sh $online_mode > /dev/null
-#	insert_sns;
-#}
+####################################################################
 
-######################parse arg###################################
+sys_restore()
+{
+  hisi-pinmux.sh -net
+  hisi-clkcfg.sh
+  hisi-sysctl.sh $online_mode
+  insert_sns;
+}
+
+###################### Parse Arg ###################################
 f_insmod=no
 f_rmmod=no
 online_mode=1
@@ -339,6 +345,7 @@ f_restore=no
 
 remove_ko
 insert_ko
+####################################################################
 
 
 

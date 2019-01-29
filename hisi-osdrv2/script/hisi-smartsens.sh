@@ -1,3 +1,6 @@
+#!/bin/sh
+
+
 detect_sensor_type()
 {
   local id1 id2 id3 id4
@@ -36,5 +39,5 @@ detect_sensor_type()
 
   # fallback when detect failed
   #   get sensor type from u-boot environment
-  fw_printenv -n sensor_type
+  #fw_printenv -n sensor_type
 }

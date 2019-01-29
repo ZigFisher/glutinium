@@ -86,8 +86,8 @@ define Build/InstallDev
 endef
 
 define Package/$(PKG_NAME)-base/install
-	$(INSTALL_DIR) $(1)/etc/hisi
-	$(INSTALL_BIN) ./script/* $(1)/etc/hisi/
+	$(INSTALL_DIR) $(1)/usr/bin
+	$(CP) ./script/* $(1)/usr/bin/
 endef
 
 define Package/$(PKG_NAME)-binary/install
