@@ -7,8 +7,8 @@
 
 ####################Variables Definition##########################
 
-SNS_TYPE=ar0130
-SNS_TYPE=ov9712
+SNS_TYPE=$(awk -F '=' '$1=="console"{print $2}' RS=" " /proc/cmdline)
+
 mem_start=0x80000000
 totmem_size=64M
 osmem_size=$(cat /proc/cmdline | sed -nre 's/mem=([^[:space:]]+).*/\1/p')
@@ -229,13 +229,13 @@ sys_config()
 	# pinmux configuration
 	#sh ./pinmux_hi3518e.sh -vo BT656 > /dev/null
 	#sh ./pinmux_hi3518e.sh -vo LCD > /dev/null
-	sh ./pinmux_hi3518e.sh -net > /dev/null
+	sh /etc/hisi//pinmux_hi3518e.sh -net > /dev/null
 
-	# clock configuration
-	sh clkcfg_hi3518e.sh > /dev/null
+	# Clock configuration
+	sh /etc/hisi/clkcfg_hi3518e.sh > /dev/null
 
-	# system configuration
-	sh sysctl_hi3518e.sh $online_mode > /dev/null
+	# System configuration
+	sh /etc/hisi/sysctl_hi3518e.sh $online_mode > /dev/null
 }
 
 insert_ko()
