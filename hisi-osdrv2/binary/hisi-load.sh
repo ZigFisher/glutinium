@@ -7,7 +7,7 @@
 
 ####################Variables Definition##########################
 
-SNS_TYPE=$(awk -F '=' '$1=="console"{print $2}' RS=" " /proc/cmdline)
+SNS_TYPE=$(awk -F '=' '$1=="sensor"{print $2}' RS=" " /proc/cmdline)
 
 mem_start=0x80000000
 totmem_size=64M
