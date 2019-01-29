@@ -248,10 +248,10 @@ sys_config()
   #hisi-pinmux.sh -vo LCD
   #
   # Clock configuration
-  sh hisi-clkcfg.sh
+  hisi-clkcfg.sh
   #
-  # System configuration  
-  sh hisi-sysctl.sh $online_mode
+  # System configuration
+  hisi-sysctl.sh $online_mode
 }
 
 insert_ko()
@@ -336,9 +336,17 @@ remove_ko()
 
 sys_restore()
 {
+  # Pinmux configuration
   hisi-pinmux.sh -net
+  #hisi-pinmux.sh -vo BT656
+  #hisi-pinmux.sh -vo LCD
+  #
+  # Clock configuration
   hisi-clkcfg.sh
+  #
+  # System configuration..
   hisi-sysctl.sh $online_mode
+  #
   insert_sns;
 }
 
