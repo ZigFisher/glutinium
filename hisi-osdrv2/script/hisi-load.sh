@@ -29,7 +29,7 @@ OPTIONS:
     -restore                restore hardware
 
 SENSOR:
-    9m034 ar0130 ar0230 ar0237 imx222 jxf22 jxh62 mn34222 ov2718 ov9712 ov9732 ov9750 ov9752 sc1045 sc1135 sc1145 sc2035 sc2045 sc2135
+    9m034 ar0130 ar0230 ar0237 imx222 jxf22 jxh62 mn34222 ov2718 ov9712 ov9732 ov9750 ov9752 sc1045 sc1135 sc1145 sc2035 sc2045 sc2135 sc2235
 
 EXAMPLES:
     online mode:      $0 -a -osmem 40M -totalmem=64M -online
@@ -193,7 +193,23 @@ insert_sns()
 		devmem 0x2003002c 32 0x94003;	# clk 24MHz, VI 99MHz
 		;;
 
-	sc1045|sc1135|sc1145|sc2035|sc2045|sc2135)
+	sc1135|sc1145|sc2135)
+		devmem 0x200f0040 32 0x2;	# I2C0_SCL
+		devmem 0x200f0044 32 0x2;	# I2C0_SDA
+		#Cmos pinmux
+		devmem 0x200f007c 32 0x1;	# VI_DATA13
+		devmem 0x200f0080 32 0x1;	# VI_DATA10
+		devmem 0x200f0084 32 0x1;	# VI_DATA12
+		devmem 0x200f0088 32 0x1;	# VI_DATA11
+		devmem 0x200f008c 32 0x2;	# VI_VS
+		devmem 0x200f0090 32 0x2;	# VI_HS
+		devmem 0x200f0094 32 0x1;	# VI_DATA9
+		#
+		devmem 0x2003002c 32 0xb4001;	# clk 27MHz, VI 99MHz
+		;;
+
+	sc1045|sc2035|sc2045|sc2235)
+		# !!! UNTESTED ABSTRACT !!!
 		devmem 0x200f0040 32 0x2;	# I2C0_SCL
 		devmem 0x200f0044 32 0x2;	# I2C0_SDA
 		#Cmos pinmux
@@ -349,47 +365,43 @@ sys_restore()
   insert_sns;
 }
 
-###################### Parse Arg ###################################
+
+####################################################################
+
+run_minihttp()
+{
+  case $SNS_TYPE in
+
+  ar0130)
+    minihttp /etc/sensors/ar0130_720p_line.ini
+    ;;
+
+  imx222)
+    minihttp /etc/sensors/imx222_1080p_line.ini
+    ;;
+
+  *)
+    echo "You sensor not tested !"
+    echo "Run minihttp with correct .ini file or create new .ini file"
+    echo "Example:  minihttp /etc/sensors/ar0130_720p_line.ini"
+    exit 1
+    ;;
+
+  esac
+}
+
+####################################################################
+
 f_insmod=no
 f_rmmod=no
 online_mode=1
 f_restore=no
 
 remove_ko
+
 insert_ko
+run_minihttp
+
 ####################################################################
 
-
-
-#longopts="-lsensor: -losmem: -ltotalmem: -lonline -loffline -lrestore"
-#shortopts="irah"
-#args=$(getopt -a $longopts -- $shortopts "$@") || exit 1
-#eval set -- "$args"
-#
-#while true; do
-#	case "$1" in
-#	-a)			f_rmmod=yes; f_insmod=yes; shift;;
-#	-i)			f_insmod=yes; shift;;
-#	-r)			f_rmmod=yes; shift;;
-#	--restore)	f_restore=1; shift;;
-#	--online)   online_mode=1; shift;;
-#	--offline)	online_mode=0; shift;;
-#	--sensor)	SNS_TYPE=$2; shift 2;;
-#	--osmem)	osmem_size=$2; shift 2;;
-#	--totalmem)	totmem_size=$2; shift 2;;
-#	-h|--help)	echo "$usage"; exit 0;;
-#	--)			shift; break;;
-#	*)			echo "Invalid argument $1"; exit 1;;
-#	esac
-#done
-#
-#[ $((${osmem_size/M/*0x100000})) -lt $((${totmem_size/M/*0x100000})) ] || {
-#	echo "osmem size is greater than total memory [$osmem_size/$totmem_size]"
-#	exit;
-#}
-#
-#if [ x$f_rmmod = "xyes" ];   then remove_ko; fi
-#if [ x$f_insmod = "xyes" ];  then insert_ko; fi
-#if [ x$f_restore = "xyes" ]; then sys_restore; fi
-#
-## vi: ts=4 sw=4:
+####################################################################
