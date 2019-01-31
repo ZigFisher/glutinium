@@ -28,9 +28,6 @@ OPTIONS:
     -offline                VI/VPSS offline mode
     -restore                restore hardware
 
-SENSOR:
-    9m034 ar0130 ar0230 ar0237 imx222 jxf22 jxh62 mn34222 ov2718 ov9712 ov9732 ov9750 ov9752 sc1045 sc1135 sc1145 sc2035 sc2045 sc2135 sc2235
-
 EXAMPLES:
     online mode:      $0 -a -osmem 40M -totalmem=64M -online
     offline mode:     $0 -a -osmem 40M -totalmem=64M -offline
@@ -269,6 +266,8 @@ sys_config()
   hisi-sysctl.sh $online_mode
 }
 
+####################################################################
+
 insert_ko()
 {
   sys_config;
@@ -315,6 +314,7 @@ insert_ko()
   #
   insmod hi_mipi.ko
   echo "Sensor TYPE: $SNS_TYPE"
+  echo
 }
 
 ####################################################################
@@ -380,6 +380,10 @@ run_minihttp()
     minihttp /etc/sensors/imx222_1080p_line.ini
     ;;
 
+  sc2135)
+    minihttp /etc/sensors/sc2135_1080p_line.ini
+    ;;
+
   *)
     echo "You sensor not tested !"
     echo "Run minihttp with correct .ini file or create new .ini file"
@@ -396,6 +400,35 @@ f_insmod=no
 f_rmmod=no
 online_mode=1
 f_restore=no
+
+local totmem=$((${totmem_size/M/*0x100000}))
+local osmem=$((${osmem_size/M/*0x100000}))
+
+echo
+echo "====================="
+echo
+echo "Sensor table:"
+echo " 9m034"
+echo " ar0130 (ok), ar0230, ar0237"
+echo " imx222 (ok)"
+echo " jxf22, jxh62"
+echo " mn34222"
+echo " ov2718, ov9712, ov9732, ov9750, ov9752"
+echo " sc1045, sc1135, sc1145, sc2035, sc2045, sc2135, sc2235"
+echo
+echo "====================="
+echo
+echo "Current options:"
+echo " - processor: $(awk '/Hardware/ {print $3}' /proc/cpuinfo)"
+echo " - total memory: ${totmem_size}"
+echo " - linux memory: ${osmem_size}"
+echo " - sensor: ${SNS_TYPE}"
+echo " - mem_start: ${mem_start}"
+echo " - mmz_start: $(printf "0x%08x" $((mem_start + osmem)))"
+echo " - mmz_size: $(((totmem - osmem)/0x100000))M"
+echo
+echo "====================="
+echo
 
 remove_ko
 
