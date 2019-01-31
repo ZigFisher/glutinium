@@ -380,13 +380,17 @@ run_minihttp()
     minihttp /etc/sensors/imx222_1080p_line.ini
     ;;
 
+  ov9712)
+    minihttp /etc/sensors/ov9712_720p_line.ini
+    ;;
+
   sc2135)
     minihttp /etc/sensors/sc2135_1080p_line.ini
     ;;
 
   *)
     echo "You sensor not tested !"
-    echo "Run minihttp with correct .ini file or create new .ini file"
+    echo "Run minihttp with correct .ini file or create new"
     echo "Example:  minihttp /etc/sensors/ar0130_720p_line.ini"
     exit 1
     ;;
