@@ -1,4 +1,4 @@
-sstgb
+estgb
 =====
 
 Simply Sender TeleGram Bot based on telebot
@@ -20,14 +20,14 @@ Compile
 
 `sudo apt-get install libcurl4-openssl-dev libjson-c-dev`
 
-`gcc -L/usr/lib/x86_64-linux-gnu/ -I./ -I/usr/include/curl -I/usr/include/json-c -o sstgb sstgb.c telebot.c telebot-core.c telebot-parser.c -ljson-c -lcurl`
+`gcc -L/usr/lib/x86_64-linux-gnu/ -I./ -I/usr/include/curl -I/usr/include/json-c -o estgb estgb.c telebot.c telebot-core.c telebot-parser.c -ljson-c -lcurl`
 
 Usage
 =====
 
-`Command line interface: sstgb <command> <parameter> [options]`
+`Command line interface: estgb <command> <parameter> [options]`
 
-More info for use sstgb on OpenWRT routers you can see [here (Russian)](http://zftlab.org)
+More info for use estgb on OpenWRT routers you can see [here (Russian)](http://zftlab.org)
 
 
 Links

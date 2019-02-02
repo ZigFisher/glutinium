@@ -539,6 +539,55 @@ telebot_error_e telebot_core_send_video(telebot_core_handler_t *core_h,
     return telebot_core_curl_perform(core_h, TELEBOT_METHOD_SEND_VIDEO, post);
 }
 
+telebot_error_e telebot_core_send_animation(telebot_core_handler_t *core_h,
+        long long int chat_id, char *video, bool is_file, int duration, char *caption,
+        bool disable_notification, int reply_to_message_id, char *reply_markup)
+{
+    if ((core_h == NULL) || (core_h->token == NULL) || (video == NULL)) {
+        ERR("Handler, token or document is NULL");
+        return TELEBOT_ERROR_INVALID_PARAMETER;
+    }
+
+    struct curl_httppost *post = NULL;
+    struct curl_httppost *last = NULL;
+
+    char chat_id_str[16];
+    snprintf(chat_id_str, sizeof(chat_id_str), "%lld", chat_id);
+    curl_formadd(&post, &last, CURLFORM_COPYNAME, "chat_id",
+            CURLFORM_COPYCONTENTS, chat_id_str, CURLFORM_END);
+    if (is_file)
+        curl_formadd(&post, &last, CURLFORM_COPYNAME, "animation",
+                CURLFORM_FILE, video, CURLFORM_END);
+    else
+        curl_formadd(&post, &last, CURLFORM_COPYNAME, "animation",
+                CURLFORM_COPYCONTENTS, video, CURLFORM_END);
+    if (duration > 0) {
+        char duration_str[16];
+        snprintf(duration_str, sizeof(duration_str), "%d", duration);
+        curl_formadd(&post, &last, CURLFORM_COPYNAME, "duration",
+                CURLFORM_COPYCONTENTS, duration_str, CURLFORM_END);
+    }
+    if (caption)
+        curl_formadd(&post, &last, CURLFORM_COPYNAME, "caption",
+                CURLFORM_COPYCONTENTS, caption, CURLFORM_END);
+    curl_formadd(&post, &last, CURLFORM_COPYNAME, "disable_notification",
+            CURLFORM_COPYCONTENTS, (disable_notification) ? "true" : "false",
+            CURLFORM_END);
+    if (reply_to_message_id > 0) {
+        char reply_to_message_id_str[16];
+        snprintf(reply_to_message_id_str, sizeof(reply_to_message_id_str), "%d",
+                reply_to_message_id);
+        curl_formadd(&post, &last, CURLFORM_COPYNAME, "reply_to_message_id",
+                CURLFORM_COPYCONTENTS, reply_to_message_id_str, CURLFORM_END);
+    }
+    if (reply_markup)
+        curl_formadd(&post, &last, CURLFORM_COPYNAME, "reply_markup",
+                CURLFORM_COPYCONTENTS, reply_markup, CURLFORM_END);
+
+    return telebot_core_curl_perform(core_h, TELEBOT_METHOD_SEND_ANIMATION, post);
+}
+
+
 telebot_error_e telebot_core_send_voice(telebot_core_handler_t *core_h,
         long long int chat_id, char *voice, bool is_file, int duration,
         bool disable_notification, int reply_to_message_id, char *reply_markup)

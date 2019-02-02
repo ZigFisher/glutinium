@@ -7,7 +7,7 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=sstgb
+PKG_NAME:=estgb
 PKG_VERSION:=1.2
 PKG_RELEASE:=2019-01-05
 PKG_MAINTAINER:=Igor Zalatov <flyrouter@gmail.com>
