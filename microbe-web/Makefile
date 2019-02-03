@@ -10,7 +10,7 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=microbe-web
 PKG_VERSION:=2018-10-10
 PKG_RELEASE:=1
-PKG_MAINTAINER:=ZigFisher
+PKG_MAINTAINER:=Igor Zalatov <flyrouter@gmail.com>
 
 PKG_LICENSE:=GPL-2.0
 PKG_LICENSE_FILES:=LICENSE
@@ -20,7 +20,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/$(PKG_NAME)
 	SECTION:=net
 	CATEGORY:=Network
-	MAINTAINER:=Zig Fisher <flyrouter@gmail.com>
+	MAINTAINER:=Igor Zalatov <flyrouter@gmail.com>
 	TITLE:=Microbe-WEB - a selection of scripts for routers with a small amount of flash memory
 	URL:=https://github.com/ZigFisher/Glutinium/tree/master/microbe-web
 	DEPENDS:=+busybox +haserl
