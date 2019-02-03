@@ -7,10 +7,10 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=wtf
+PKG_NAME:=demo
 PKG_VERSION:=2018-12-23
 PKG_RELEASE:=0.1
-PKG_MAINTAINER:=Igor Zalatov <flyrouter@gmail.com>
+PKG_MAINTAINER:=Igor Zalatov (ZFT Lab.) <flyrouter@gmail.com>
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -19,15 +19,16 @@ PKG_LICENSE_FILES:=LICENSE
 PKG_BUILD_DEPENDS:=busybox
 
 define Package/$(PKG_NAME)
-	SECTION:=utils
-	CATEGORY:=Utilities
-	TITLE:=Simple first WTF example
+	SECTION:=openipc
+	CATEGORY:=OpenIPC
+	SUBMENU:=Testing
+	TITLE:=Simple first DEMO example
 	MAINTAINER:=demo@local.net
 	DEPENDS:=+busybox
 endef
 
 define Package/$(PKG_NAME)/description
-  Simple first WTF example
+  Simple first DEMO example
 endef
 
 define Build/Prepare
