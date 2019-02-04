@@ -32,7 +32,7 @@ define Package/$(PKG_NAME)
 	#SUBMENU:=Chertov
 	TITLE:=Some samples for Hisilicon devices
 	MAINTAINER:=chertovmv@gmail.com
-	DEPENDS:=+libpthread +hisi-osdrv2-kmod +hisi-osdrv2-lib +hisi-osdrv2-script +hisi-osdrv2-sensor
+	DEPENDS:=+libpthread +hisi-osdrv2-base +hisi-osdrv2-kmod +hisi-osdrv2-lib +hisi-osdrv2-sensor
 endef
 
 define Package/$(PKG_NAME)/description
