@@ -1,0 +1,14 @@
+|Sensor |Priority|Type  |MipiAttr|WDR mode           |Resolution|FPS    |Status|Ebo |remark|
+|imx222 |A       |master|parallel|linear             |1080P     |0.51-30|done  |done|      |
+|ar0230 |A       |master|lvds    |linear             |1080P     |0.51-30|done  |done|      |
+|       |        |      |        |sensor-built-in WDR|1080P     |25/30  |done  |done|      |
+|ov2718 |A       |master|mipi    |linear             |1080P     |0.51-30|done  |na  |      |
+|       |        |      |        |sensor-built-in WDR|1080P     |25/30  |done  |na  |      |
+|mn34222|        |master|mipi    |linear             |1080P     |0.51-30|done  |na  |RGBIR |
+|9m034  |A       |master|parallel|linear             |720P      |1.51-30|done  |na  |      |
+|       |        |      |        |sensor-built-in WDR|720P      |25/30  |done  |na  |      |
+|ar0130 |A       |master|parallel|linear             |720P      |0.34-30|done  |done|      |
+|ov9712 |B       |master|parallel|linear             |720P      |6.5-30 |done  |na  |      |
+|ov9732 |        |master|parallel|linear             |720P      |0.37-30|done  |done|      |
+|ov9750 |        |master|mipi    |linear             |720P      |0.45-30|done  |done|      |
+|ov9752 |        |master|mipi    |linear             |720P      |0.45-30|done  |na  |RGBIR |
