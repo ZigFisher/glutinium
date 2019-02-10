@@ -36,7 +36,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/mini_snmpd
   SECTION:=net
   CATEGORY:=Network
-  TITLE:=A tiny SNMP server for embedded systems 
+  TITLE:=A tiny SNMP server for embedded systems
   URL:=http://troglobit.github.io/mini-snmpd.html
 # uncomment if you just want the binary, not the init script
 # openwrt requires init script runtime dependencies be defined for make menuconfig 

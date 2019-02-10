@@ -16,7 +16,8 @@ PKG_LICENSE_FILES:=LICENSE
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/chertov/hi_minihttp.git
-PKG_SOURCE_VERSION:=c0916a4af8193f74fc2ca27b1b1fba997c2b0cae
+#PKG_SOURCE_VERSION:=c0916a4af8193f74fc2ca27b1b1fba997c2b0cae
+PKG_SOURCE_VERSION:=38664777374a3edd0d436e0e5d012f041bdc3bd8
 
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
@@ -44,7 +45,8 @@ define Package/$(PKG_NAME)/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/$(PKG_NAME) $(1)/usr/bin/
 	$(INSTALL_DIR) $(1)/etc
 	#$(CP) $(PKG_BUILD_DIR)/$(PKG_NAME).ini $(1)/etc/
-	$(CP) $(PKG_BUILD_DIR)/config.ini $(1)/etc/minihttp.ini
+	$(INSTALL_CONF) ./files/$(PKG_NAME).ini $(1)/etc/
+
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))

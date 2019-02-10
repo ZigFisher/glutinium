@@ -21,13 +21,13 @@ define Package/$(PKG_NAME)
 	SECTION:=net
 	CATEGORY:=Network
 	MAINTAINER:=Zig Fisher <flyrouter@gmail.com>
-	TITLE:=Microbe - a selection of scripts for routers with a small amount of flash memory
+	TITLE:=Scripts for routers with a small amount of flash memory
 	URL:=https://github.com/ZigFisher/Glutinium/tree/master/microbe
 	DEPENDS:=+busybox
 endef
 
 define Package/$(PKG_NAME)/description
-	Microbe - a selection of scripts for routers with a small amount of flash memory
+	Scripts for routers with a small amount of flash memory
 endef
 
 define Build/Configure

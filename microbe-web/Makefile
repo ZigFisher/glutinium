@@ -21,13 +21,13 @@ define Package/$(PKG_NAME)
 	SECTION:=net
 	CATEGORY:=Network
 	MAINTAINER:=Igor Zalatov <flyrouter@gmail.com>
-	TITLE:=Microbe-WEB - a selection of scripts for routers with a small amount of flash memory
+	TITLE:=Extra small and simple WEB-interface for embedded system
 	URL:=https://github.com/ZigFisher/Glutinium/tree/master/microbe-web
 	DEPENDS:=+busybox +haserl
 endef
 
 define Package/$(PKG_NAME)/description
-	Microbe-WEB - a selection of scripts for routers with a small amount of flash memory
+	Extra small and simple WEB-interface for embedded system
 endef
 
 define Build/Configure
