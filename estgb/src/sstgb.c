@@ -141,7 +141,7 @@ char* zc_unescape(char *input) {
 void printHelp(void) {
 printf(
 				"-----------------------------------------------------------------------------\n"
-				"| sstgb: simply sender telegram bot                                   v1.2.1|\n"
+				"| sstgb: simply sender telegram bot                                    v1.2.1|\n"
 				"-----------------------------------------------------------------------------\n"
 				"\n"
 				"This telegram bot sends text and pictures according to command line paramaters\n"

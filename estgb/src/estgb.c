@@ -1,3 +1,5 @@
+#define _GNU_SOURCE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -18,6 +20,7 @@
 #define PID_FILE "/var/tmp/estgb_lock.pid"
 
 typedef void (*sendfunc_t)(char *filename);
+typedef void (*sendfuncgroup_t)(char **filenames, int count);
 
 struct {
 	char *token;
@@ -39,6 +42,7 @@ struct {
 	int isWildcard;
 	int isSingleton;
 	int isScan;
+	int isPicsMediagroup;
 	int timeRescan;
 	int needUnescape;
 	int useFileConfig;
@@ -49,18 +53,15 @@ struct {
 
 char* concatFilename(char *path, char *filename) {
 	int isSlash = 2;
-	char *result;
-
-	result = (char*) calloc(strlen(path) + strlen(filename) + isSlash,
-			sizeof(char));
+	char *result = NULL;
 
 	if (path[strlen(path)] == '\\')
 		isSlash = 1;
 
 	if (isSlash == 2)
-		sprintf(result, "%s/%s", path, filename);
+		asprintf(&result, "%s/%s", path, filename);
 	else
-		sprintf(result, "%s%s", path, filename);
+		asprintf(&result, "%s%s", path, filename);
 
 	return result;
 }
@@ -82,7 +83,7 @@ int checkMask(const struct dirent *dp) {
 	return (fnmatch(estgbconf.mask, dp->d_name, 0) == 0);
 }
 
-void processWildcard(char *path, sendfunc_t sendfunc) {
+void processWildcard_s(char *path, sendfunc_t sendfunc) {
 	struct dirent **namelist;
 	int n;
 	char *fullname;
@@ -91,6 +92,7 @@ void processWildcard(char *path, sendfunc_t sendfunc) {
 	if (n < 0)
 		printf("Scandir error\n");
 	else {
+
 		while (n--) {
 			fullname = concatFilename(path, namelist[n]->d_name);
 			sendfunc(fullname);
@@ -98,6 +100,32 @@ void processWildcard(char *path, sendfunc_t sendfunc) {
 			free(namelist[n]);
 		}
 		free(namelist);
+	}
+}
+
+void processWildcard_group(char *path, sendfuncgroup_t sendfunc) {
+	struct dirent **namelist;
+	int n, j;
+	char **sendlist;
+
+	n = scandir(path, &namelist, checkMask, alphasort);
+	if (n < 0)
+		printf("Scandir error\n");
+	else {
+
+		sendlist = calloc(n, sizeof(char*));
+
+		j = n;
+		while (n--) {
+			sendlist[n] = concatFilename(path, namelist[n]->d_name);
+		}
+		sendfunc(sendlist, j);
+		while (j--) {
+			free(namelist[j]);
+			free(sendlist[j]);
+		}
+		free(namelist);
+		free(sendlist);
 	}
 }
 
@@ -212,8 +240,8 @@ char* zc_unescape(char *input) {
 
 void printHelp(void) {
 	printf(
-			"-----------------------------------------------------------------------------\n"
-					"| estgb :: enhanced sender telegram bot                               v1.2.2|\n"
+					"-----------------------------------------------------------------------------\n"
+					"| estgb :: enhanced sender telegram bot                               v1.2.5|\n"
 					"-----------------------------------------------------------------------------\n"
 					"\n"
 					"This telegram bot sends text, pictures, video, audio and documents (files)\n"
@@ -251,6 +279,7 @@ void printHelp(void) {
 					"\n"
 					"Options for file processing:\n"
 					"--wildcard      Process <filename> as wildcard instead of single file\n"
+					"--mediagroup    Send multiple pictures as media group (when 2-10 items are exist)\n"
 					"--remove        Remove(!) file after use for --sendpic, --sendvideo, --sendaudio, --senddoc\n"
 					"--force-remove  Force remove(!) file after use even(!) error occured while send operation\n"
 					"\n"
@@ -295,6 +324,7 @@ void printConfig(void) {
 			"Audio filename..........%s\n"
 			"Doc filename............%s\n"
 			"Video as animation......%d\n"
+			"Send >2 pics as group...%d\n"
 			"Comment.................%s\n"
 			"Parse escape sequences..%d\n"
 			"Text to send............%s\n"
@@ -303,19 +333,20 @@ void printConfig(void) {
 			"Working path............%s\n"
 			"Use wildcards...........%d\n"
 			"Use weak config.........%d\n"
-			"Singleton...............%d\n"
+			"Run as singleton........%d\n"
+			"Work as daemon..........%d\n"
 			"Proxy...................%s\n"
 			"Proxy authentication....%s\n"
-			"Work as daemon..........%d\n"
 			"Send rounds.............%d\n"
-			"Sleep between repeat....%d\n"
+			"Time sleep btw rounds...%d\n"
 			"\n", estgbconf.token, estgbconf.user_id, estgbconf.imgfile,
 			estgbconf.videofile, estgbconf.audiofile, estgbconf.docfile,
-			estgbconf.isAnimation, estgbconf.comment, estgbconf.needUnescape,
-			estgbconf.text, estgbconf.isRemove, estgbconf.useFileConfig,
-			estgbconf.path, estgbconf.isWildcard, estgbconf.isWeakConfig,
-			estgbconf.isSingleton, estgbconf.proxy_addr, estgbconf.proxy_auth,
-			estgbconf.isDaemonize, estgbconf.isScan, estgbconf.timeRescan);
+			estgbconf.isAnimation, estgbconf.isPicsMediagroup,
+			estgbconf.comment, estgbconf.needUnescape, estgbconf.text,
+			estgbconf.isRemove, estgbconf.useFileConfig, estgbconf.path,
+			estgbconf.isWildcard, estgbconf.isWeakConfig, estgbconf.isSingleton,
+			estgbconf.isDaemonize, estgbconf.proxy_addr, estgbconf.proxy_auth,
+			estgbconf.isScan, estgbconf.timeRescan);
 }
 
 int readFileConfig(void) {
@@ -401,6 +432,59 @@ void sendPicture(char *filename) {
 	}
 }
 
+void removeFileGroup(char **filenames, int count) {
+	int j = count;
+	while (j--)
+		remove(filenames[j]);
+}
+
+void sendGroup(char **filenames, int count) {
+	estgbconf.ret = telebot_send_mediagroup_photo_files(estgbconf.handle,
+			estgbconf.user_id, filenames, count, false, 0, NULL);
+	if (estgbconf.ret != TELEBOT_ERROR_NONE) {
+		printf("Failed to send media group: %d \n", estgbconf.ret);
+	} else if (estgbconf.isRemove == 1)
+		removeFileGroup(filenames, count);
+	if (estgbconf.isRemove == 2)
+		removeFileGroup(filenames, count);
+}
+
+void sendPicturesGroup(char **filenames, int count) {
+
+	int i, j = 0;
+
+	if (count == 1) {
+		sendPicture(filenames[0]);
+		return;
+	}
+
+	char **sendlist;
+	sendlist = calloc(10, sizeof(char*));
+
+	for (i = 0; i < count; i++) {
+
+		if (!access(filenames[i], R_OK)) {
+			sendlist[j] = strdup(filenames[i]);
+			j++;
+		}
+
+		if (j == 10) {
+			sendGroup(sendlist, j);
+			while (j--)
+				free(sendlist[j]);
+			
+			j = 0;
+		}
+	}
+
+	if (j > 0) {
+		sendGroup(sendlist, j);
+		while (j--)
+			free(sendlist[j]);
+	}
+	free(sendlist);
+}
+
 void sendVideo(char *filename) {
 	if (!access(filename, R_OK)) {
 		if (estgbconf.isAnimation)
@@ -462,38 +546,55 @@ void sendSingle(void) {
 
 void sendMultiple(void) {
 
-	char *imgmask, *vidmask, *audiomask, *docmask;
+	char *imgmask = NULL, *imgdir = NULL;
+	char *vidmask = NULL, *viddir = NULL;
+	char *audiomask = NULL, *auddir = NULL;
+	char *docmask = NULL, *docdir = NULL;
 
 	sendText();
 
 	if (estgbconf.imgfile) {
 		imgmask = strdup(basename(estgbconf.imgfile));
+		imgdir = strdup(estgbconf.imgfile);
+		imgdir = dirname(imgdir);
 		estgbconf.mask = imgmask;
-		processWildcard(dirname(estgbconf.imgfile), sendPicture);
-		free(imgmask);
+		if (estgbconf.isPicsMediagroup)
+		processWildcard_group(imgdir, sendPicturesGroup);
+		else processWildcard_s(imgdir, sendPicture);
 	}
 
 	if (estgbconf.videofile) {
 		vidmask = strdup(basename(estgbconf.videofile));
+		viddir = strdup(estgbconf.videofile);
+		viddir = dirname(viddir);
 		estgbconf.mask = vidmask;
-		processWildcard(dirname(estgbconf.videofile), sendVideo);
-		free(vidmask);
+		processWildcard_s(viddir, sendVideo);
 	}
 
 	if (estgbconf.audiofile) {
 		audiomask = strdup(basename(estgbconf.audiofile));
+		auddir = strdup(estgbconf.audiofile);
+		auddir = dirname(auddir);
 		estgbconf.mask = audiomask;
-		processWildcard(dirname(estgbconf.audiofile), sendAudio);
-		free(audiomask);
+		processWildcard_s(auddir, sendAudio);
 	}
 
 	if (estgbconf.docfile) {
 		docmask = strdup(basename(estgbconf.docfile));
+		docdir = strdup(estgbconf.docfile);
+		docdir = dirname(docdir);
 		estgbconf.mask = docmask;
-		processWildcard(dirname(estgbconf.docfile), sendDocument);
-		free(docmask);
+		processWildcard_s(docdir, sendDocument);
 	}
 
+	free(imgmask);
+	free(vidmask);
+	free(audiomask);
+	free(docmask);
+	free(imgdir);
+	free(viddir);
+	free(auddir);
+	free(docdir);
 	estgbconf.mask = NULL;
 }
 
@@ -511,65 +612,11 @@ void scan(void) {
 		return;
 	}
 
-	char *imgmask = NULL, *imgdir = NULL;
-	char *vidmask = NULL, *viddir = NULL;
-	char *audiomask = NULL, *auddir = NULL;
-	char *docmask = NULL, *docdir = NULL;
-
-	if (estgbconf.imgfile) {
-		imgmask = strdup(basename(estgbconf.imgfile));
-		imgdir = dirname(estgbconf.imgfile);
-	}
-
-	if (estgbconf.videofile) {
-		vidmask = strdup(basename(estgbconf.videofile));
-		viddir = dirname(estgbconf.videofile);
-	}
-
-	if (estgbconf.audiofile) {
-		audiomask = strdup(basename(estgbconf.audiofile));
-		auddir = dirname(estgbconf.audiofile);
-	}
-
-	if (estgbconf.docfile) {
-		docmask = strdup(basename(estgbconf.docfile));
-		docdir = dirname(estgbconf.docfile);
-	}
-
 	while (estgbconf.isScan-- || infinite) {
-		sendText();
-
-		if (estgbconf.imgfile) {
-			estgbconf.mask = imgmask;
-			processWildcard(estgbconf.imgfile, sendPicture);
-		}
-
-		if (estgbconf.videofile) {
-			estgbconf.mask = vidmask;
-			processWildcard(estgbconf.videofile, sendVideo);
-		}
-
-		if (estgbconf.audiofile) {
-			estgbconf.mask = audiomask;
-			processWildcard(estgbconf.audiofile, sendAudio);
-		}
-
-		if (estgbconf.docfile) {
-			estgbconf.mask = docmask;
-			processWildcard(estgbconf.docfile, sendDocument);
-		}
+		sendMultiple();
 		sleep(estgbconf.timeRescan);
 	}
-
-	free(imgmask);
-	free(vidmask);
-	free(audiomask);
-	free(docmask);
-	free(imgdir);
-	free(viddir);
-	free(auddir);
-	free(docdir);
-	estgbconf.mask = NULL;
+	return;
 }
 
 int globalInit(void) {
@@ -594,7 +641,7 @@ int globalInit(void) {
 	}
 
 	if (estgbconf.proxy_addr != NULL) {
-		estgbconf.ret = telebot_use_proxy(estgbconf.handle,
+		estgbconf.ret = telebot_set_proxy(estgbconf.handle,
 				estgbconf.proxy_addr, estgbconf.proxy_auth);
 		if (estgbconf.ret != TELEBOT_ERROR_NONE) {
 			printf("Warning! Failed to init proxy: %d \n", estgbconf.ret);
@@ -624,6 +671,8 @@ int parseCmdLine(int argc, char *argv[]) {
 			estgbconf.isSingleton = 1;
 		} else if (!strcmp(argv[j], "--daemon")) {
 			estgbconf.isDaemonize = 1;
+		} else if (!strcmp(argv[j], "--mediagroup")) {
+			estgbconf.isPicsMediagroup = 1;
 		} else if (!strcmp(argv[j], "--repeat-send") && more) {
 			estgbconf.isScan = atoi(argv[++j]);
 		} else if (!strcmp(argv[j], "--time-sleep") && more) {
