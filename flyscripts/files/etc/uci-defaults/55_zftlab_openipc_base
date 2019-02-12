@@ -14,7 +14,7 @@ uci -q batch <<-EOF >/dev/null
 	delete network.globals
 	delete network.wan6
 	delete network.lan.ip6assign
-	set network.lan.mac=${mac}
+	set network.lan.macaddr=${mac}
 	commit network
 	set network.wan=interface
 	set network.wan.proto='3g'
