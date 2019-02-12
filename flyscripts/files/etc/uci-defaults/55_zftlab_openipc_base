@@ -13,8 +13,13 @@ uci -q batch <<-EOF >/dev/null
 	commit microbe
 	delete network.globals
 	delete network.wan6
+	commit network
 	delete network.lan.ip6assign
 	set network.lan.macaddr=${mac}
+	commit network
+	set network.hilink=interface
+	set network.hilink.ifname='eth1'
+	set network.hilink.proto='dhcp'
 	commit network
 	set network.wan=interface
 	set network.wan.proto='3g'
