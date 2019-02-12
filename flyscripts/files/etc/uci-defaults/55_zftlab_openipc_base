@@ -1,5 +1,8 @@
 #!/bin/sh
 
+local mac
+mac=$(fw_printenv -n ethaddr)
+
 uci -q batch <<-EOF >/dev/null
 	set system.@system[0].hostname='OpenIPC_HI35xx'
 	set system.@system[0].timezone='MSK-3'
@@ -11,6 +14,7 @@ uci -q batch <<-EOF >/dev/null
 	delete network.globals
 	delete network.wan6
 	delete network.lan.ip6assign
+	set network.lan.mac=${mac}
 	commit network
 	set network.wan=interface
 	set network.wan.proto='3g'
