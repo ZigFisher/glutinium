@@ -6,7 +6,7 @@
 mem_start=0x80000000
 
 totmem_size=$(awk -F '=' '$1=="totalmem"{print $2}' RS=" " /proc/cmdline)
-totmem_size=${osmem_size:=64M}
+totmem_size=${totmem_size:=64M}
 
 osmem_size=$(awk -F '=' '$1=="mem"{print $2}' RS=" " /proc/cmdline)
 osmem_size=${osmem_size:=40M}
