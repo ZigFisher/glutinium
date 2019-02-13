@@ -375,25 +375,24 @@ run_minihttp()
   case $SNS_TYPE in
 
   ar0130)
-    minihttp /etc/sensors/ar0130_720p_line.ini
+    minihttp
     ;;
 
   imx222)
-    minihttp /etc/sensors/imx222_1080p_line.ini
+    minihttp
     ;;
 
   ov9712)
-    minihttp /etc/sensors/ov9712_720p_line.ini
+    minihttp
     ;;
 
   sc2135)
-    minihttp /etc/sensors/sc2135_1080p_line.ini
+    minihttp
     ;;
 
   *)
     echo "You sensor not tested !"
-    echo "Run minihttp with correct .ini file or create new"
-    echo "Example:  minihttp /etc/sensors/ar0130_720p_line.ini"
+    echo "Run minihttp with correct /etc/minihttp.ini file"
     exit 1
     ;;
 
