@@ -21,6 +21,7 @@ include $(INCLUDE_DIR)/cmake.mk
 define Package/$(PKG_NAME)
 	SECTION:=openipc
 	CATEGORY:=OpenIPC
+	SUBMENU:=Testing by @SSH
 	TITLE:=First demo hisi-rpc-config
 	MAINTAINER:=Sharshunov Sergey <ssharshunov@github.com>
 	DEPENDS:=+hisi-osdrv2-lib +libmicrohttpd-no-ssl +libxsonrpc
