@@ -20,7 +20,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/$(PKG_NAME)
 	SECTION:=openipc
 	CATEGORY:=OpenIPC
-	SUBMENU:=Testing
+	SUBMENU:=Testing by @FlyRouter
 	TITLE:=Simple RTSP daemon for Hisilicon devices
 	MAINTAINER:=https://github.com/xibeilang524/hi3518_h264/tree/master/rtspok_utf8
 	DEPENDS:=+libpthread
