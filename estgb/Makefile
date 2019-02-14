@@ -40,11 +40,17 @@ define Build/Compile
 		-I$(PKG_BUILD_DIR) -I$(STAGING_DIR)/usr/include/json-c -I$(PKG_BUILD_DIR) -I$(STAGING_DIR)/usr/include/curl \
 		-L$(STAGING_DIR)/usr/lib -o $(PKG_BUILD_DIR)/$(PKG_NAME) $(PKG_BUILD_DIR)/$(PKG_NAME).c \
 		$(PKG_BUILD_DIR)/telebot.c $(PKG_BUILD_DIR)/telebot-core.c $(PKG_BUILD_DIR)/telebot-parser.c
+#
+	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -Wall -ljson-c -lcurl \
+		-I$(PKG_BUILD_DIR) -I$(STAGING_DIR)/usr/include/json-c -I$(PKG_BUILD_DIR) -I$(STAGING_DIR)/usr/include/curl \
+		-L$(STAGING_DIR)/usr/lib -o $(PKG_BUILD_DIR)/sstgb $(PKG_BUILD_DIR)/sstgb.c \
+		$(PKG_BUILD_DIR)/telebot.c $(PKG_BUILD_DIR)/telebot-core.c $(PKG_BUILD_DIR)/telebot-parser.c
 endef
 
 define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/$(PKG_NAME) $(1)/usr/bin/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/sstgb $(1)/usr/bin/
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))
