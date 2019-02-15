@@ -357,7 +357,7 @@ if (telebot_create(&handle, sstgbconf.token) != TELEBOT_ERROR_NONE) {
 telebot_error_e ret;
 
 if (sstgbconf.proxy_addr != NULL) {
-	ret = telebot_use_proxy(handle, sstgbconf.proxy_addr, sstgbconf.proxy_auth);
+	ret = telebot_set_proxy(handle, sstgbconf.proxy_addr, sstgbconf.proxy_auth);
 	if (ret != TELEBOT_ERROR_NONE) {
 		printf("Failed to init proxy: %d \n", ret);
 	}

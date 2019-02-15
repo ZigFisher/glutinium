@@ -241,7 +241,7 @@ char* zc_unescape(char *input) {
 void printHelp(void) {
 	printf(
 					"-----------------------------------------------------------------------------\n"
-					"| estgb :: enhanced sender telegram bot                               v1.2.5|\n"
+					"| estgb :: enhanced sender telegram bot                               v1.2.6|\n"
 					"-----------------------------------------------------------------------------\n"
 					"\n"
 					"This telegram bot sends text, pictures, video, audio and documents (files)\n"
@@ -272,6 +272,7 @@ void printHelp(void) {
 					"--animation       Send video as animation (GIF or H.264/MPEG-4 w/o sound mp4)\n"
 					"--comment <text>  Comment for picture/audio/video\n"
 					"--escape-seq      Process escape sequences (emoji!) for 'comment' and 'text' (C-style)\n"
+					"--mediagroup      Send multiple pictures as media group (when 2-10 items are exist)\n"
 					"\n"
 					"Options for network:\n"
 					"--proxy <addr>           Use libcurl proxy. Examples: socks5://addr.org:8564 or http://addr.org:8564\n"
@@ -279,7 +280,6 @@ void printHelp(void) {
 					"\n"
 					"Options for file processing:\n"
 					"--wildcard      Process <filename> as wildcard instead of single file\n"
-					"--mediagroup    Send multiple pictures as media group (when 2-10 items are exist)\n"
 					"--remove        Remove(!) file after use for --sendpic, --sendvideo, --sendaudio, --senddoc\n"
 					"--force-remove  Force remove(!) file after use even(!) error occured while send operation\n"
 					"\n"
@@ -347,66 +347,6 @@ void printConfig(void) {
 			estgbconf.isWildcard, estgbconf.isWeakConfig, estgbconf.isSingleton,
 			estgbconf.isDaemonize, estgbconf.proxy_addr, estgbconf.proxy_auth,
 			estgbconf.isScan, estgbconf.timeRescan);
-}
-
-int readFileConfig(void) {
-
-	char *tokenfilename, *useridfilename;
-
-	if (estgbconf.path == NULL) {
-		tokenfilename = strdup(FILENAME_TOKEN);
-		useridfilename = strdup(FILENAME_USERID);
-	} else {
-		tokenfilename = concatFilename(estgbconf.path, FILENAME_TOKEN);
-		useridfilename = concatFilename(estgbconf.path, FILENAME_USERID);
-	}
-
-	FILE *fp = fopen(tokenfilename, "r");
-	if (fp == NULL) {
-		printf("Failed to open %s file\n", FILENAME_TOKEN);
-		return -1;
-	}
-
-	estgbconf.token = (char*) calloc(TOKEN_SIZE, sizeof(char));
-	if (fscanf(fp, "%s", estgbconf.token) == 0) {
-		printf("Reading token failed\n");
-		fclose(fp);
-		return -1;
-	}
-	fclose(fp);
-
-	fp = fopen(useridfilename, "r");
-	if (fp == NULL) {
-		printf("Failed to open %s file\n", FILENAME_USERID);
-		return -1;
-	}
-
-	if (fscanf(fp, "%lld", &estgbconf.user_id) == 0) {
-		printf("Reading user ID failed\n");
-		fclose(fp);
-		return -1;
-	}
-
-	free(tokenfilename);
-	free(useridfilename);
-	fclose(fp);
-	return 0;
-}
-
-int checkConfig(void) {
-	if (estgbconf.token == NULL)
-		return 0;
-	if (estgbconf.user_id == 0)
-		return 0;
-	if ((estgbconf.imgfile == NULL) && (estgbconf.text == NULL)
-			&& (estgbconf.videofile == NULL) && (estgbconf.docfile == NULL)
-			&& (estgbconf.audiofile == NULL))
-		return 0;
-	if (!estgbconf.isWeakConfig && (estgbconf.imgfile == NULL)
-			&& (estgbconf.videofile == NULL) && (estgbconf.docfile == NULL)
-			&& (estgbconf.audiofile == NULL) && (!estgbconf.isRemove))
-		return 0;
-	return 1;
 }
 
 void sendText(void) {
@@ -619,6 +559,67 @@ void scan(void) {
 	return;
 }
 
+int readFileConfig(void) {
+
+	char *tokenfilename, *useridfilename;
+
+	if (estgbconf.path == NULL) {
+		tokenfilename = strdup(FILENAME_TOKEN);
+		useridfilename = strdup(FILENAME_USERID);
+	} else {
+		tokenfilename = concatFilename(estgbconf.path, FILENAME_TOKEN);
+		useridfilename = concatFilename(estgbconf.path, FILENAME_USERID);
+	}
+
+	FILE *fp = fopen(tokenfilename, "r");
+	if (fp == NULL) {
+		printf("Failed to open %s file\n", FILENAME_TOKEN);
+		return -1;
+	}
+
+	estgbconf.token = (char*) calloc(TOKEN_SIZE, sizeof(char));
+	if (fscanf(fp, "%s", estgbconf.token) == 0) {
+		printf("Reading token failed\n");
+		fclose(fp);
+		return -1;
+	}
+	fclose(fp);
+
+	fp = fopen(useridfilename, "r");
+	if (fp == NULL) {
+		printf("Failed to open %s file\n", FILENAME_USERID);
+		return -1;
+	}
+
+	if (fscanf(fp, "%lld", &estgbconf.user_id) == 0) {
+		printf("Reading user ID failed\n");
+		fclose(fp);
+		return -1;
+	}
+
+	free(tokenfilename);
+	free(useridfilename);
+	fclose(fp);
+	return 0;
+}
+
+int checkConfig(void) {
+	if (estgbconf.token == NULL)
+		return 0;
+	if (estgbconf.user_id == 0)
+		return 0;
+	if ((estgbconf.imgfile == NULL) && (estgbconf.text == NULL)
+			&& (estgbconf.videofile == NULL) && (estgbconf.docfile == NULL)
+			&& (estgbconf.audiofile == NULL))
+		return 0;
+	
+	if (!estgbconf.isWeakConfig && (estgbconf.imgfile == NULL)
+			&& (estgbconf.videofile == NULL) && (estgbconf.docfile == NULL)
+			&& (estgbconf.audiofile == NULL) && (estgbconf.isRemove != 0))
+		return 0;
+	return 1;
+}
+
 int globalInit(void) {
 	if (estgbconf.useFileConfig) {
 		if (readFileConfig() != 0) {
@@ -626,18 +627,18 @@ int globalInit(void) {
 					"Warning! Failed to read config files. Checking for command line config...\n");
 		}
 	}
-
+	 
 	if (!checkConfig()) {
 		printHelp();
 		printConfig();
 		printf("Configuration error. Nothing to do.\n\n");
-		return 1;
+		return 0;
 	}
 
 	if (telebot_create(&estgbconf.handle, estgbconf.token)
 			!= TELEBOT_ERROR_NONE) {
-		printf("Telebot create failed (bad token?)\n\n");
-		return 1;
+		printf("Error. Telebot create failed (bad token?)\n\n");
+		return 0;
 	}
 
 	if (estgbconf.proxy_addr != NULL) {
@@ -648,7 +649,7 @@ int globalInit(void) {
 		}
 	}
 
-	return 0;
+	return 1;
 }
 
 int parseCmdLine(int argc, char *argv[]) {
@@ -744,7 +745,7 @@ int main(int argc, char *argv[]) {
 
 	}
 
-	if (globalInit())
+	if (!globalInit())
 		goto exit;
 
 	if (estgbconf.isDaemonize)
