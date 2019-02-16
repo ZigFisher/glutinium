@@ -28,6 +28,7 @@ uci -q batch <<-EOF >/dev/null
 	set network.wan.apn='internet'
 	set network.wan.ipv6='0'
 	set network.wan.keepalive='3'
+	set network.wan.disabled='1'
 	commit network
 	set network.vlan=interface
 	set network.vlan.ifname='eth0.490'
