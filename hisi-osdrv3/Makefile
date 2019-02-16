@@ -12,9 +12,9 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=hisi-osdrv2
-PKG_VERSION:=3.4.35
-PKG_RELEASE:=1.0.4.1
+PKG_NAME:=hisi-osdrv3
+PKG_VERSION:=3.18.20
+PKG_RELEASE:=0.1
 
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=HISILICON COPYING
@@ -25,8 +25,8 @@ define Package/$(PKG_NAME)/default
 	SECTION:=openipc
 	CATEGORY:=OpenIPC
 	MAINTAINER:=Igor Zalatov <flyrouter@gmail.com>
-	TITLE:=Hisilicon OSDRV-2
-	SUBMENU:=Hisilicon OSDRV-2 with kernel 3.4.35
+	TITLE:=Hisilicon OSDRV-3
+	SUBMENU:=Hisilicon OSDRV-3 with kernel 3.18.20
 	URL:=http://zftlab.org
 	DEPENDS:=+libstdcpp
 endef
@@ -62,7 +62,7 @@ endef
 
 define Package/$(PKG_NAME)-tool
 $(call Package/$(PKG_NAME)/default)
-	TITLE+= - tool package 
+	TITLE+= - tool package
 	DEPENDS:=+$(PKG_NAME)-base +$(PKG_NAME)-kmod +$(PKG_NAME)-lib +$(PKG_NAME)-sensor +libpthread
 endef
 

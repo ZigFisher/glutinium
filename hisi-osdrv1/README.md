@@ -1,10 +1,10 @@
 
-hisi-osdrv2
+hisi-osdrv1
 ===========
 
-Hisilicon OSDRV-2 kernel modules, drivers, libs and tools
+Hisilicon OSDRV-1 kernel modules, drivers, libs and tools
 
-Support Hisilicon HI35xx SoC based devices with kernel 3.4.35
+Support Hisilicon HI35xx SoC based devices with kernel 3.0.8
 
 
 License
