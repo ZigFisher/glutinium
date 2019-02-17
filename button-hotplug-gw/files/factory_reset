@@ -1,0 +1,27 @@
+#!/bin/sh
+
+factory_reset_notify() {
+    printf "\n\n${0}: Factory Resetting Board...\n\n" >/dev/console
+    logger -s "${0}: Factory Resetting Board..."
+
+    # Turn led on solid (red if possible)
+    local led=
+    for l in user1 user2; do
+        [ -e "/sys/class/leds/${l}/brightness" ] && led="${l}"
+        printf "none" > /sys/class/leds/${l}/trigger 2>/dev/null
+        printf "0" > /sys/class/leds/${l}/brightness 2>/dev/null
+    done
+
+    [ "${led}" ] && {
+        printf "1" > /sys/class/leds/${led}/brightness 2>/dev/null
+    }
+
+    sleep 2
+}
+
+factory_reset() {
+    factory_reset_notify
+    yes 2>/dev/null | /sbin/firstboot
+    sync
+    reboot -f
+}

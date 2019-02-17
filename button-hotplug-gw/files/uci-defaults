@@ -1,0 +1,18 @@
+#!/bin/sh
+
+uci -q show system.@button[0] || {
+	uci add system button
+
+	uci set system.@button[0].button=BTN_0
+	uci set system.@button[0].action=pressed
+	uci set system.@button[0].handler='logger BTN_0 pressed'
+
+	uci add system button
+	uci set system.@button[1].button=BTN_0
+	uci set system.@button[1].action=released
+	uci set system.@button[1].handler='factory_reset'
+	uci set system.@button[1].min=15
+	uci set system.@button[1].max=999
+
+	uci commit
+}

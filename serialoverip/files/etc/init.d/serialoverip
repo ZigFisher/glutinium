@@ -1,0 +1,125 @@
+#!/bin/sh /etc/rc.common
+# (C) 2008 openwrt.org
+
+START=96
+COUNT=0
+
+load_serial() {
+  local type               #specifies serialoverip or ser2net
+	local ip                 #serialoverip only (see ipser)
+	local port
+	local device
+	local baud
+	local data
+	local parity
+	local stop
+	local state              #ser2net only
+	local timeout            #ser2net only
+	local remctl             #ser2net only
+	local ipser              #ser2nets ip
+	
+	local pidfile
+
+	config_get type $1 type  
+	config_get ip $1 ip "none"
+	config_get port $1 port 
+	config_get device $1 device "ttyS1"
+	config_get baud $1 baud "115200"
+	config_get data $1 data "8"
+	config_get parity $1 parity "N"
+	config_get stop $1 stop "1"
+	config_get state $1 state "raw"
+	config_get timeout $1 timeout "0"
+	config_get remctl $1 remctl "OFF"
+ 
+	#serialoverip
+	[ "$type" == "serialoverip" ] && {
+		[ -e /usr/sbin/serialoverip ] && {
+                        let "COUNT += 1"
+			pidfile="/var/run/serialoverip.$COUNT.pid"
+		        echo "Starting a serialoverip"
+                	start-stop-daemon -S -x /usr/sbin/serialoverip \
+                		-p "${pidfile}" -m -b -- \
+				-a ${ip}:${port} -d /dev/${device}:${data}${parity}${stop} -b ${baud}
+		}
+	}
+	
+	#ser2net
+	[ "$type" == "ser2net" ] && {
+		[ -e /usr/sbin/ser2net ] && {
+			[ "$parity" == "O" ] && {
+				parity = "ODD"
+			}
+			[ "$parity" == "E" ] && {
+				parity="EVEN"
+			}
+			[ "$parity" == "N" ] && {
+				parity="NONE"
+			}
+			[ "$stop" == "1" ] && {
+				stop="1STOPBIT"
+			}
+			[ "$stop" == "2" ] && {
+				stop="2STOPBIT"
+			}
+			[ "$data" == "7" ] && {
+				data="7DATABITS"
+			}
+			[ "$data" == "8" ] && {
+				data="8DATABITS"
+			}
+			[ "$ip" != "none" ] && {
+				port="${ipser},$port" 
+				echo $port 
+			}
+			
+			echo "Creating config file for ser2net"
+			[ "$remctl" == "ON" ] && {
+				echo "$port:$state:$timeout:/dev/$device:$baud $parity $stop $data remctl" >> /etc/ser2net.conf
+			}
+			[ "$remctl" == "OFF" ] && { 
+				echo "$port:$state:$timeout:/dev/$device:$baud $parity $stop $data" >> /etc/ser2net.conf
+			}
+		}
+	}
+}
+
+
+start() {
+	
+	config_load serialoverip
+	
+	echo "Clearing ser2net config file"
+ 	: > /etc/ser2net.conf
+ 	
+	config_foreach load_serial serial
+	
+	[ -s /etc/ser2net.conf ] && {
+		echo "starting ser2net" 
+		/usr/sbin/ser2net \
+		-P /var/run/ser2net.pid
+	}
+
+
+
+
+}
+	
+stop() {
+	local pidfile
+	for pidfile in `ls /var/run/serialoverip.*.pid`
+	do
+		echo "stopping $pidfile"
+			
+		start-stop-daemon -K  \
+		-p "${pidfile}" -s INT
+		rm -f "${pidfile}"
+	done
+	pidfile="/var/run/ser2net.pid"
+	[ -e /var/run/ser2net.pid ] && {
+		start-stop-daemon -K \
+		-p "${pidfile}" -s INT
+		rm -f "${pidfile}"
+	} 
+}
+
