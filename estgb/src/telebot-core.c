@@ -79,6 +79,10 @@ static telebot_error_e telebot_core_curl_perform(telebot_core_handler_t *core_h,
     curl_easy_setopt(curl_h, CURLOPT_TIMEOUT, 10 * 60);
     curl_easy_setopt(curl_h, CURLOPT_LOW_SPEED_TIME, 60L);
     curl_easy_setopt(curl_h, CURLOPT_LOW_SPEED_LIMIT, 16L);
+    
+    // Disable SSL check
+    curl_easy_setopt(curl_h, CURLOPT_SSL_VERIFYPEER, 0);
+    curl_easy_setopt(curl_h, CURLOPT_NOBODY, 1);
 
     if (core_h->proxy_addr != NULL) {
         curl_easy_setopt(curl_h, CURLOPT_PROXY, core_h->proxy_addr);
