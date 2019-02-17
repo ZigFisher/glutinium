@@ -28,7 +28,7 @@ define Package/$(PKG_NAME)/default
 	TITLE:=Hisilicon OSDRV-3
 	SUBMENU:=Hisilicon OSDRV-3 with kernel 3.18.20
 	URL:=http://zftlab.org
-	DEPENDS:=+libstdcpp
+	DEPENDS:=@(TARGET_hisilicon_armv5tej_hi3516cv300||TARGET_hisilicon_armv5tej_hi3516ev100) +libstdcpp
 endef
 
 define Package/$(PKG_NAME)/Default/description

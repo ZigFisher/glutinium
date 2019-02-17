@@ -24,7 +24,7 @@ define Package/$(PKG_NAME)
 	#SUBMENU:=Testing
 	TITLE:=I2C read/write tools for hisilicon platform
 	MAINTAINER:=hisilicon
-	DEPENDS:=+hisi-osdrv2-base +hisi-osdrv2-kmod
+	DEPENDS:=@(TARGET_hisilicon_armv5tej) +hisi-osdrv2-base +hisi-osdrv2-kmod
 endef
 
 define Package/$(PKG_NAME)/description

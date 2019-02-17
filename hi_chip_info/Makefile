@@ -31,6 +31,7 @@ define Package/$(PKG_NAME)
 	#SUBMENU:=Chertov
 	TITLE:=Tool for get info from Hisilicon SoC's
 	MAINTAINER:=chertovmv@gmail.com
+	DEPENDS:=@(TARGET_hisilicon_armv5tej)
 endef
 
 define Package/$(PKG_NAME)/description

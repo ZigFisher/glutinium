@@ -28,7 +28,7 @@ define Package/$(PKG_NAME)/default
 	TITLE:=Hisilicon OSDRV-2
 	SUBMENU:=Hisilicon OSDRV-2 with kernel 3.4.35
 	URL:=http://zftlab.org
-	DEPENDS:=+libstdcpp
+	DEPENDS:=@(TARGET_hisilicon_armv5tej_hi3516cv200||TARGET_hisilicon_armv5tej_hi3518ev200||TARGET_hisilicon_armv5tej_hi3518ev201) +libstdcpp
 endef
 
 define Package/$(PKG_NAME)/Default/description
@@ -62,7 +62,7 @@ endef
 
 define Package/$(PKG_NAME)-tool
 $(call Package/$(PKG_NAME)/default)
-	TITLE+= - tool package 
+	TITLE+= - tool package
 	DEPENDS:=+$(PKG_NAME)-base +$(PKG_NAME)-kmod +$(PKG_NAME)-lib +$(PKG_NAME)-sensor +libpthread
 endef
 

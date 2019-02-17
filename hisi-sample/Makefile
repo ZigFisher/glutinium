@@ -15,20 +15,22 @@ PKG_MAINTAINER:=Chertov Maxim <chertovmv@gmail.com>
 PKG_LICENSE:=GPL-2.0
 PKG_LICENSE_FILES:=LICENSE
 
+PKG_BUILD_DEPENDS:=hisi-osdrv2
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/cmake.mk
 
 define Package/$(PKG_NAME)
 	SECTION:=openipc
 	CATEGORY:=OpenIPC
-	SUBMENU:=Testing by @FlyRouter
-	TITLE:=Some samples for Hisilicon devices
+	SUBMENU:=Testing by @mAX
+	TITLE:=Best samples for Hisilicon devices
 	MAINTAINER:=chertovmv@gmail.com
-	DEPENDS:=+hisi-osdrv2-lib +libpthread
+	DEPENDS:=@(TARGET_hisilicon_armv5tej) +libpthread +hisi-osdrv2-base +hisi-osdrv2-kmod +hisi-osdrv2-lib +hisi-osdrv2-sensor +libpthread
 endef
 
 define Package/$(PKG_NAME)/description
-	Some samples for Hisilicon devices
+	Best samples for Hisilicon devices
 endef
 
 define Build/Prepare

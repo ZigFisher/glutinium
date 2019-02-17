@@ -15,6 +15,8 @@ PKG_MAINTAINER:=Igor Zalatov <flyrouter@gmail.com>
 PKG_LICENSE:=GPL-2.0
 PKG_LICENSE_FILES:=LICENSE
 
+PKG_BUILD_DEPENDS:=hisi-osdrv2
+
 include $(INCLUDE_DIR)/package.mk
 
 define Package/$(PKG_NAME)
@@ -23,7 +25,7 @@ define Package/$(PKG_NAME)
 	SUBMENU:=Testing by @FlyRouter
 	TITLE:=Simple RTSP daemon for Hisilicon devices
 	MAINTAINER:=https://github.com/xibeilang524/hi3518_h264/tree/master/rtspok_utf8
-	DEPENDS:=+libpthread
+	DEPENDS:=@(TARGET_hisilicon_armv5tej) +libpthread +hisi-osdrv2-base +hisi-osdrv2-kmod +hisi-osdrv2-lib +hisi-osdrv2-sensor +libpthread
 endef
 
 define Package/$(PKG_NAME)/description
