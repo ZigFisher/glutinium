@@ -21,7 +21,7 @@ include $(INCLUDE_DIR)/cmake.mk
 define Package/$(PKG_NAME)
 	SECTION:=openipc
 	CATEGORY:=OpenIPC
-	SUBMENU:=Hisilicon OSDRV-2 for HI35_16C_18E_V200 with kernel 3.4.35
+	SUBMENU:=Testing by @FlyRouter
 	TITLE:=Some samples for Hisilicon devices
 	MAINTAINER:=chertovmv@gmail.com
 	DEPENDS:=+hisi-osdrv2-lib +libpthread

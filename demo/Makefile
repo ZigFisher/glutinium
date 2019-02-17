@@ -21,13 +21,13 @@ PKG_BUILD_DEPENDS:=busybox
 define Package/$(PKG_NAME)
 	SECTION:=openipc
 	CATEGORY:=OpenIPC
-	TITLE:=Simple first DEMO example
+	TITLE:=Simple DEMO example
 	MAINTAINER:=demo@local.net
 	DEPENDS:=+busybox
 endef
 
 define Package/$(PKG_NAME)/description
-  Simple first DEMO example
+  Simple DEMO example
 endef
 
 define Build/Prepare
