@@ -375,18 +375,22 @@ run_minihttp()
   case $SNS_TYPE in
 
   ar0130)
+    sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/ar0130_720p_line.ini#" /etc/minihttp.ini
     minihttp
     ;;
 
   imx222)
+    sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/imx222_1080p_line.ini#" /etc/minihttp.ini
     minihttp
     ;;
 
   ov9712)
+    sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/ov9712_720p_line.ini#" /etc/minihttp.ini
     minihttp
     ;;
 
   sc2135)
+    sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/sc2135_1080p_line.ini#" /etc/minihttp.ini
     minihttp
     ;;
 
