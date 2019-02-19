@@ -239,7 +239,10 @@ insert_ko()
 	insmod hi3518e_venc.ko 
 	insmod hi3518e_chnl.ko ChnlLowPower=1
 	insmod hi3518e_h264e.ko
+#	insmod hi3518e_h264e.ko OneStreamBuffer=1 H264eMiniBufMode=1       # Add from DBELL
 	insmod hi3518e_jpege.ko
+#	insmod hi3518e_jpege.ko OneStreamBuffer=1 JpegeMiniBufMode=1       # Add from DBELL
+
 	insmod hi3518e_ive.ko save_power=0;
 #	insmod hi3518e_ive.ko	
 	insmod extdrv/sensor_i2c.ko
@@ -251,7 +254,10 @@ insert_ko()
 	insert_sns
 	insert_audio
 
-	insmod hi_mipi.ko
+	insmod hi_rtc.ko      # Add from DBELL
+	insmod io.ko          # Add from DBELL
+	insmod wdt.ko         # Add from DBELL
+	insmod hi_cipher.ko   # Add from DBELL
 	echo "==== Your input Sensor type is $SNS_TYPE ===="
 }
 
