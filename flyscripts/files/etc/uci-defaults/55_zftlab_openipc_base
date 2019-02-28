@@ -38,6 +38,7 @@ uci -q batch <<-EOF >/dev/null
 	set network.vlan.netmask='255.255.255.128'
 	set network.vlan.gateway='172.28.200.1'
 	set network.vlan.dns='77.88.8.8 8.8.4.4'
+	set network.vlan.disabled='1'
 	commit network
 	set network.vpn1=interface
 	set network.vpn1.ifname='tun1'
@@ -55,7 +56,7 @@ uci -q batch <<-EOF >/dev/null
 EOF
 
 
-echo "root:openipc" | chpasswd
+#echo "root:openipc" | chpasswd
 
 echo "#" >/etc/opkg/distfeeds.conf
 
