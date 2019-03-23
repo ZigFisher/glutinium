@@ -9,7 +9,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=mini_snmpd
 PKG_VERSION:=1.4-rc1
-PKG_RELEASE:=3
+PKG_RELEASE:=4
 PKG_MAINTAINER:=Marcin Jurkowski <marcin1j@gmail.com>
 PKG_LICENSE:=GPL-2.0
 PKG_LICENSE_FILES:=COPYING
@@ -41,7 +41,7 @@ define Package/mini_snmpd
 # uncomment if you just want the binary, not the init script
 # openwrt requires init script runtime dependencies be defined for make menuconfig 
 # (e.g busybox sysntpd)
-  DEPENDS:=+jsonfilter +ubus +procd +ubox
+# DEPENDS:=+jsonfilter +ubus +procd +ubox
 endef
 
 CONFIGURE_ARGS+= \
