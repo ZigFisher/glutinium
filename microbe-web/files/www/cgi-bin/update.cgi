@@ -67,7 +67,7 @@
       else
         traceroute -i ${iface} ${sense}
       fi
-      echo "</pre><td><tr><table>"
+      echo "</pre></td></tr></table>"
       echo "<p><form action=\"/cgi-bin/monitor.cgi\" method=\"POST\" enctype=\"multipart/form-data\"><input type=\"submit\" value=\"Monitor Tool\"></form>"
       ;;
     ping)
@@ -78,7 +78,7 @@
       else
         ping -c 15 -s 1500 -I ${iface} ${sense}
       fi
-      echo "</pre><td><tr><table>"
+      echo "</pre></td></tr></table>"
       echo "<p><form action=\"/cgi-bin/monitor.cgi\" method=\"POST\" enctype=\"multipart/form-data\"><input type=\"submit\" value=\"Monitor Tool\"></form>"
       ;;
   esac

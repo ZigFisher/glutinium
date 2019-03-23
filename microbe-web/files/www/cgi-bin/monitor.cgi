@@ -68,7 +68,7 @@
       <br><br><br>
       <form action="/cgi-bin/index.cgi" method="POST" enctype="multipart/form-data">
         <input type="submit" value="Global Settings">
-      </form>   
+      </form>
     </div>
   </body>
 </html>
