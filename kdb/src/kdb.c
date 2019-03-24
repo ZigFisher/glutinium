@@ -130,7 +130,7 @@ char *get_dbfilename()
     if (getenv("KDB"))
         strcpy(db_filename, getenv("KDB"));
     else if(!getuid())
-        strcpy(db_filename, "/etc/kdb");
+        strcpy(db_filename, "./kdb");
     else 
         sprintf(db_filename, "%s/.kdb", getenv("HOME"));
 
