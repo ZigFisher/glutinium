@@ -40,8 +40,8 @@
 #define MAX_LINE_SIZE 1024
 #define READ_BUFFER_LEN (1024*32)
 #define WRITE_BUFFER_LEN READ_BUFFER_LEN
-#define HEADER_LINE "KDB\n"
-#define FOOTER_LINE "KDB END\n"
+#define HEADER_LINE "KDB START\n"
+#define FOOTER_LINE "KDB STOP\n"
 #define true 1
 #define false 0
 #define COUNTS_NAME "kdb_lines_count"
