@@ -22,8 +22,8 @@ PKG_LICENSE_FILES:=HISILICON COPYING
 include $(INCLUDE_DIR)/package.mk
 
 define Package/$(PKG_NAME)/default
-	SECTION:=openipc
-	CATEGORY:=OpenIPC
+	SECTION:=openipc_old
+	CATEGORY:=OpenIPC_old
 	MAINTAINER:=Igor Zalatov <flyrouter@gmail.com>
 	TITLE:=Hisilicon OSDRV-3
 	SUBMENU:=Hisilicon OSDRV-3 with kernel 3.18.20
