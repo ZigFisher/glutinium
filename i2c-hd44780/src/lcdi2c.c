@@ -166,7 +166,7 @@ static long lcdi2c_ioctl(struct file *file,
       lcdsetcursor(data, data->column, data->row);
       break;
     case LCD_IOCTL_GETCHAR:
-      memaddr = (data->column + (data->row * data->organization.columns)) % LCD_BUFFER_SIZE;
+      memaddr = (1 + data->column + (data->row * data->organization.columns)) % LCD_BUFFER_SIZE;  
       ch = data->buffer[memaddr];
       put_user(ch, buffer);
       break;
@@ -373,7 +373,7 @@ static ssize_t lcdi2c_cursorpos(struct device* dev,
     if (count >= 2)
     {
         count = 2;
-        lcdsetcursor(data, buf[0], buf[1]);
+	lcdsetcursor(data, buf[1], buf[0]);
     }
 
     CRIT_END(data);
