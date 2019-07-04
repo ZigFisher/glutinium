@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=minihttp
-PKG_VERSION:=2019-02-24
+PKG_VERSION:=2019-07-02
 PKG_MAINTAINER:=Chertov Maxim <chertovmv@gmail.com>
 
 PKG_LICENSE:=MIT
