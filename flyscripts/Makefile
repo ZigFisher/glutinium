@@ -135,8 +135,8 @@ endef
 
 define Package/flyscripts_base/install
 	$(INSTALL_DIR)  $(1)/etc
-	$(INSTALL_BIN)  ./files/etc/rc.local.example $(1)/etc/
-	$(INSTALL_BIN)  ./files/etc/ser2net.conf $(1)/etc/ser2net_octonix.conf
+	#$(INSTALL_BIN)  ./files/etc/rc.local.example $(1)/etc/
+	#$(INSTALL_BIN)  ./files/etc/ser2net.conf $(1)/etc/ser2net_octonix.conf
 	$(INSTALL_DIR)  $(1)/etc/config
 	$(INSTALL_BIN)  ./files/etc/config/snmpd $(1)/etc/config/
 	$(INSTALL_DIR)  $(1)/etc/hotplug.d/iface
