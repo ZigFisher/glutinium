@@ -47,8 +47,8 @@ define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/$(PKG_NAME) $(1)/usr/bin/
 	$(INSTALL_DIR) $(1)/etc
-	#$(CP) $(PKG_BUILD_DIR)/$(PKG_NAME).ini $(1)/etc/
-	$(INSTALL_CONF) ./files/$(PKG_NAME).ini $(1)/etc/
+	$(CP) $(PKG_BUILD_DIR)/$(PKG_NAME).ini $(1)/etc/
+	#$(INSTALL_CONF) ./files/$(PKG_NAME).ini $(1)/etc/
 
 endef
 
