@@ -381,7 +381,7 @@ run_minihttp()
     ;;
 
   imx222)
-    sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/imx222_1080p_line.ini#" /etc/minihttp.ini
+    sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/imx222_720p_line.ini#" /etc/minihttp.ini
     ircut test
     (while sleep 5; do minihttp; done) &
     ;;
