@@ -9,6 +9,8 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=minihttp
 PKG_VERSION:=2019-02-24
+#PKG_VERSION:=2019-06-29
+#PKG_VERSION:=2019-07-03
 PKG_MAINTAINER:=Chertov Maxim <chertovmv@gmail.com>
 
 PKG_LICENSE:=MIT
@@ -17,6 +19,8 @@ PKG_LICENSE_FILES:=LICENSE
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/chertov/hi_minihttp.git
 PKG_SOURCE_VERSION:=c3237b665ca83fa49652f381139f1709d0c1b645
+#PKG_SOURCE_VERSION:=51a716463e8f9ead4ff7983308407ec784b86288
+#PKG_SOURCE_VERSION:=272cb630a009b40ff73da2a7b4f69af84ead6580
 
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
@@ -43,8 +47,8 @@ define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/$(PKG_NAME) $(1)/usr/bin/
 	$(INSTALL_DIR) $(1)/etc
-	#$(CP) $(PKG_BUILD_DIR)/$(PKG_NAME).ini $(1)/etc/
-	$(INSTALL_CONF) ./files/$(PKG_NAME).ini $(1)/etc/
+	$(CP) $(PKG_BUILD_DIR)/$(PKG_NAME).ini $(1)/etc/
+	#$(INSTALL_CONF) ./files/$(PKG_NAME).ini $(1)/etc/
 
 endef
 
