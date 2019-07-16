@@ -93,7 +93,7 @@ insert_sns()
 		devmem 0x20030104 32 0x1;	# vpss 148.5MHz
 		;;
 
-	imx222)
+	imx222|imx323)
 		devmem 0x200f0040 32 0x1	# SPI0_SCLK
 		devmem 0x200f0044 32 0x1	# SPI0_SDO
 		devmem 0x200f0048 32 0x1	# SPI0_SDI
@@ -380,7 +380,7 @@ run_minihttp()
     (while sleep 5; do minihttp; done) &
     ;;
 
-  imx222)
+  imx222|imx323)
     sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/imx222_720p_line.ini#" /etc/minihttp.ini
     ircut test
     (while sleep 5; do minihttp; done) &
