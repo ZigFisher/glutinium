@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # ZFT Lab. 2018 | http://zftlab.org/pages/2018010700.html
-# Simple Plugin - Telegram
+# Simple Plugin - WebDav
 
 
 IPC=/mnt/mtd/ipcam.conf
@@ -15,8 +15,8 @@ if [ -f ${IPC} ]; then
   #
   export TZ=${time_zone}
   #
-  # Enable Telegram
-  if [ ${telegram_enable} = 1 ]; then
+  # Enable WebDav
+  if [ ${webdav_enable} = 1 ]; then
     if [ -f /bin/curl ]; then
       #
       if [ ${socks5_enable} = 1 ]; then
@@ -28,7 +28,7 @@ if [ -f ${IPC} ]; then
       STAMP="$(date '+%G.%m.%d_%H:%M:%S')"
       PASSW=$(cat /mnt/mtd/Config/Account1 | jsonfilter -e '@.Users[@.Name="admin"].Password')
       curl -s -k --connect-timeout ${curl_timeout} --max-time ${curl_timeout} "http://127.0.0.1/webcapture.jpg?command=snap&channel=1&user=admin&password=${PASSW}" -o ${TMP}/snap.jpg >/dev/null 2>&1
-      curl ${curl_options} --connect-timeout ${curl_timeout} --max-time ${curl_timeout} -X POST https://api.telegram.org/bot${telegram_token}/sendPhoto?chat_id=${telegram_group} -H "Content-Type: multipart/form-data" -F "photo=@${TMP}/snap.jpg" -F "caption=TimeStamp: ${STAMP}" >/dev/null 2>&1
+      curl ${curl_options} --connect-timeout ${curl_timeout} --max-time ${curl_timeout} -u "${webdav_login}:${webdav_password}" -T "${TMP}/snap.jpg" "http://${webdav_server}/~${webdav_login}/${device_tid}/$(date +%Y/%m/%d/%H.%M'.jpg')" >/dev/null 2>&1
     fi
   fi
   #

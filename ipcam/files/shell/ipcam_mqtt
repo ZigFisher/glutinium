@@ -16,22 +16,30 @@ if [ -f ${IPC} ]; then
   # Enable MQTT
   if [ ${mqtt_enable} = 1 ]; then
     if [ -f /bin/curl ]; then
-      curl -s -k --connect-timeout ${curl_timeout} --max-time ${curl_timeout} "http://127.0.0.1/webcapture.jpg?command=snap&channel=1" -o ${TMP}/snap.jpg >/dev/null 2>&1
+      PASSW=$(cat /mnt/mtd/Config/Account1 | jsonfilter -e '@.Users[@.Name="admin"].Password')
+      curl -s -k --connect-timeout ${curl_timeout} --max-time ${curl_timeout} "http://127.0.0.1/webcapture.jpg?command=snap&channel=1&user=admin&password=${PASSW}" -o ${TMP}/snap.jpg >/dev/null 2>&1
+    fi
+    #
+    if [ ${socks5_enable} = 1 ]; then
+      socks5_proxy="--proxy socks5h://${socks5_login}:${socks5_password}@${socks5_server}:${socks5_port}"
+    else
+      socks5_proxy=""
     fi
     #
     if [ -f /bin/mosquitto_pub ]; then
       system_freemem=$(free | awk '/Mem:/ {print $4}' | egrep '^[-+]?[0-9]*\.?[0-9]+$')
       system_uptime=$(cat /proc/uptime | cut -d '.' -f 1 | egrep '^[-+]?[0-9]*\.?[0-9]+$')
       #
-      timeout -t 5  mosquitto_pub -h ${mqtt_server} -p ${mqtt_port} -u ${mqtt_login} -P ${mqtt_password} -t "${mqtt_login}/${device_name}/mac" -m "${device_tid}" -r >/dev/null 2>&1
-      timeout -t 5  mosquitto_pub -h ${mqtt_server} -p ${mqtt_port} -u ${mqtt_login} -P ${mqtt_password} -t "${mqtt_login}/${device_name}/freemem" -m "${system_freemem}" -r >/dev/null 2>&1
-      timeout -t 5  mosquitto_pub -h ${mqtt_server} -p ${mqtt_port} -u ${mqtt_login} -P ${mqtt_password} -t "${mqtt_login}/${device_name}/uptime" -m "${system_uptime}" -r >/dev/null 2>&1
+      timeout -t 5  mosquitto_pub ${socks5_proxy} -h ${mqtt_server} -p ${mqtt_port} -u ${mqtt_login} -P ${mqtt_password} -t "${mqtt_login}/${device_name}/mac" -m "${device_tid}" -r >/dev/null 2>&1
+      timeout -t 5  mosquitto_pub ${socks5_proxy} -h ${mqtt_server} -p ${mqtt_port} -u ${mqtt_login} -P ${mqtt_password} -t "${mqtt_login}/${device_name}/freemem" -m "${system_freemem}" -r >/dev/null 2>&1
+      timeout -t 5  mosquitto_pub ${socks5_proxy} -h ${mqtt_server} -p ${mqtt_port} -u ${mqtt_login} -P ${mqtt_password} -t "${mqtt_login}/${device_name}/uptime" -m "${system_uptime}" -r >/dev/null 2>&1
       #
-      timeout -t 10 mosquitto_pub -h ${mqtt_server} -p ${mqtt_port} -u ${mqtt_login} -P ${mqtt_password} -t "${mqtt_login}/${device_name}/snap" -f ${TMP}/snap.jpg -r >/dev/null 2>&1
+      timeout -t 10 mosquitto_pub ${socks5_proxy} -h ${mqtt_server} -p ${mqtt_port} -u ${mqtt_login} -P ${mqtt_password} -t "${mqtt_login}/${device_name}/snap" -f ${TMP}/snap.jpg -r >/dev/null 2>&1
     fi
   fi
-  #   # DelMe - For debug MQTT only
-      timeout -t 5  mosquitto_pub -h mqtt.flyhub.org -p 1883 -u ipcam@flymon.net -P test2018 -t "ipcam@flymon.net/${device_tid}/ver" -m "${zftlab_version}" -r >/dev/null 2>&1
+     # DelMe - For debug MQTT only
+     timeout -t 5  mosquitto_pub ${socks5_proxy} -h mqtt.flyhub.org -p 1883 -u ipcam@flymon.net -P test2018 -t "ipcam@flymon.net/${device_tid}/ver" -m "${zftlab_version}" -r >/dev/null 2>&1
 fi
 
 exit 0
+
