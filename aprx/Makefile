@@ -30,6 +30,7 @@ define Package/aprx
   CATEGORY:=Network
   TITLE:=APRS RX only I-gate
   URL:=http://ham.zmailer.org/oh2mqk/aprx/
+  DEPENDS:=+libpthread
 endef
 
 define Package/aprx/description
@@ -56,4 +57,4 @@ define Package/aprx/conffiles
 /etc/aprx.conf
 endef
 
-$(eval $(call BuildPackage,aprx))
+$(eval $(call BuildPackage,aprx,+libpthread))
