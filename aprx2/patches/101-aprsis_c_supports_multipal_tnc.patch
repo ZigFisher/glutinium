@@ -1,0 +1,12 @@
+diff -u a/aprsis.c b/aprsis.c
+--- a/aprsis.c	2015-03-23 23:02:39.000000000 +0800
++++ b/aprsis.c	2015-03-23 23:03:09.000000000 +0800
+@@ -535,7 +535,7 @@
+ 	/* Now queue the thing! */
+
+ 	if (AprsIS != NULL)
+-		aprsis_queue_(AprsIS, addr, head.qtype, gwcall, text, textlen);
++		aprsis_queue_(AprsIS, addr, head.qtype, "", text, textlen);
+ }
+
+

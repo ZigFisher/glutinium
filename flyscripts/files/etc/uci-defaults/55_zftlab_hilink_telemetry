@@ -9,11 +9,10 @@ uci -q batch <<-EOF >/dev/null
 	commit dhcp
 	delete network.globals
 	delete network.wan6
+	delete network.wan
 	delete network.lan.ip6assign
-	commit network
-	set network.wan=interface
-	set network.wan.type='bridge'
-	set network.wan.proto='dhcp'
+	delete network.@switch_vlan[1]
+	set network.@switch_vlan[0].ports='3 4 6t'
 	commit network
 	set network.port0='switch_port'
 	set network.port0.device='switch0'
@@ -42,6 +41,9 @@ uci -q batch <<-EOF >/dev/null
 	set network.vtun0.ipaddr='172.19.24.100'
 	commit network
 EOF
+
+/etc/init.d/aprx disable          && /etc/init.d/aprx stop             # disable aprx
+/etc/init.d/zabbix_agentd disable && /etc/init.d/zabbix_agentd stop    # disable zabbix_agentd
 
 echo -e "#\nexit 0\n" >/etc/rc.local
 

@@ -8,16 +8,20 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=aprx
-PKG_REV:=HEAD
-PKG_VERSION:=2.8.2-BG5HHP
-PKG_RELEASE:=
+PKG_VERSION:=2017-09-18
+PKG_MAINTAINER:=Igor Zalatov <flyrouter@gmail.com>
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
-PKG_SOURCE_URL:=https://github.com/shawnchain/aprx/trunk
-#PKG_SOURCE_URL:=https://github.com/shawnchain/aprx/tags/2.8.2
-PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE_VERSION:=$(PKG_REV)
-PKG_SOURCE_PROTO:=svn
+PKG_LICENSE:=MIT
+PKG_LICENSE_FILES:=LICENSE
+
+PKG_SOURCE_PROTO:=git
+#PKG_SOURCE_URL:=https://github.com/shawnchain/aprx.git
+PKG_SOURCE_URL:=https://github.com/PhirePhly/aprx.git
+PKG_SOURCE_VERSION:=13c6e7950210c501f71a0d12bb5c780f37e21b9b
+
+PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION)
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
+PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION)
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -26,12 +30,12 @@ define Package/aprx
   CATEGORY:=Network
   TITLE:=APRS RX only I-gate
   URL:=http://ham.zmailer.org/oh2mqk/aprx/
-  DEPENDS:=+libpthread
 endef
 
 define Package/aprx/description
 	This daemon listens for traffic on the specified serial interfaces.
 	It then forwards appropriate packets to APRS-IS servers.
+	Google Group: https://groups.google.com/forum/#!forum/aprx-software
 endef
 
 CONFIGURE_ARGS += \
@@ -44,20 +48,12 @@ define Package/aprx/install
 	$(INSTALL_CONF) ./files/etc/aprx.conf $(1)/etc/aprx.conf
 	$(INSTALL_CONF) $(PKG_BUILD_DIR)/aprx.conf $(1)/etc/aprx.conf.sample
 	$(INSTALL_DIR) $(1)/usr/sbin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/aprx $(1)/usr/sbin/	
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/aprx $(1)/usr/sbin/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/aprx-stat $(1)/usr/sbin/
-	$(INSTALL_BIN) ./files/etc/update-aprs-config $(1)/usr/sbin/	
 endef
 
 define Package/aprx/conffiles
 /etc/aprx.conf
 endef
 
-define Package/aprx/postinst
-#!/bin/sh
-if [ -e /etc/openwrt_release ]; then
-	/etc/init.d/aprx enable || :
-fi
-endef
-
-$(eval $(call BuildPackage,aprx,+libpthread))
+$(eval $(call BuildPackage,aprx))
