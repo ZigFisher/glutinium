@@ -1,0 +1,48 @@
+#!/bin/sh
+
+uci -q batch <<-EOF >/dev/null
+	set system.@system[0].hostname='Hilink_telemetry'
+	set system.@system[0].timezone='MSK-3'
+	commit system
+	delete dhcp.lan.dhcpv6
+	delete dhcp.lan.ra
+	commit dhcp
+	delete network.globals
+	delete network.wan6
+	delete network.lan.ip6assign
+	commit network
+	set network.wan=interface
+	set network.wan.type='bridge'
+	set network.wan.proto='dhcp'
+	commit network
+	set network.port0='switch_port'
+	set network.port0.device='switch0'
+	set network.port0.port='0'
+	set network.port0.disable='1'
+	set network.port1='switch_port'
+	set network.port1.device='switch0'
+	set network.port1.port='1'
+	set network.port1.disable='1'
+	set network.port2='switch_port'
+	set network.port2.device='switch0'
+	set network.port2.port='2'
+	set network.port2.disable='1'
+	set network.port5='switch_port'
+	set network.port5.device='switch0'
+	set network.port5.port='5'
+	set network.port5.disable='1'
+	commit network
+	set network.vtun0='interface'
+	set network.vtun0.proto='none'
+	set network.vtun0.server='vbox3.flymon.net'
+	set network.vtun0.name='vbox4700'
+	set network.vtun0.password='test2016'
+	set network.vtun0.mode='tun'
+	set network.vtun0.hub='172.19.24.1'
+	set network.vtun0.ipaddr='172.19.24.100'
+	commit network
+EOF
+
+echo -e "#\nexit 0\n" >/etc/rc.local
+
+exit 0

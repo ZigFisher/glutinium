@@ -117,6 +117,11 @@ $(call Package/flyscripts/default)
   TITLE:=Custom project settings
 endef
 
+define Package/flyscripts_zftlab_hilink_telemetry
+$(call Package/flyscripts/default)
+  TITLE:=Custom project settings
+endef
+
 define Package/flyscripts_zftlab_openipc_base
 $(call Package/flyscripts/default)
   TITLE:=Custom project settings
@@ -291,6 +296,13 @@ define Package/flyscripts_zftlab_dir300_telemetry/install
 	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_zftlab_dir300_telemetry $(1)/etc/uci-defaults/
 endef
 
+define Package/flyscripts_zftlab_hilink_telemetry/install
+	$(INSTALL_DIR)  $(1)/etc
+	$(INSTALL_BIN)  ./files/etc/banner__zftlab_hilink_telemetry $(1)/etc/banner
+	$(INSTALL_DIR)  $(1)/etc/uci-defaults
+	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_zftlab_hilink_telemetry $(1)/etc/uci-defaults/
+endef
+
 define Package/flyscripts_zftlab_openipc_base/install
 	$(INSTALL_DIR)  $(1)/etc
 	$(INSTALL_BIN)  ./files/etc/banner__zftlab_openipc_base $(1)/etc/banner
@@ -325,5 +337,6 @@ $(eval $(call BuildPackage,flyscripts_zftlab_bricket_base))
 $(eval $(call BuildPackage,flyscripts_zftlab_bricket_flypeek))
 $(eval $(call BuildPackage,flyscripts_zftlab_bricket_mywifi))
 $(eval $(call BuildPackage,flyscripts_zftlab_dir300_telemetry))
+$(eval $(call BuildPackage,flyscripts_zftlab_hilink_telemetry))
 $(eval $(call BuildPackage,flyscripts_zftlab_openipc_base))
 $(eval $(call BuildPackage,flyscripts_zftlab_white_telemetry))
