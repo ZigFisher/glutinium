@@ -25,7 +25,7 @@
 #define CH_TIME_OUT	2		// Channel timeout (sec)
 #define BSZ		255
 #define PM_ADDRESS	0		// RS485 addess of the power meter
-#define TARRIF_NUM	2		// 2 tariffs supported
+#define TARRIF_NUM	1		// 2 tariffs supported
 #define OPT_DEBUG	"--debug"
 #define OPT_HELP	"--help"
 #define OPT_TEST_RUN	"--testRun"
@@ -907,12 +907,12 @@ int main(int argc, const char** args)
 					exitFailure("Cannot collect reactive power consumption data.");
 
 				// Get power counter from reset, for yesterday and today
-//				if (OK != getW(fd, &o.PR, PP_RESET, 0, 0) ||		// total from reset
-//				    OK != getW(fd, &o.PRT[0], PP_RESET, 0, 0+1) ||	// day tariff from reset
-//				    OK != getW(fd, &o.PRT[1], PP_RESET, 0, 1+1) ||	// night tariff from reset
-//				    OK != getW(fd, &o.PY, PP_YESTERDAY, 0, 0) ||
-//				    OK != getW(fd, &o.PT, PP_TODAY, 0, 0))
-//					exitFailure("Cannot collect power counters data.");
+				if (OK != getW(fd, &o.PR, PP_RESET, 0, 0) ||		// total from reset
+				    OK != getW(fd, &o.PRT[0], PP_RESET, 0, 0+1) ||	// day tariff from reset
+				    OK != getW(fd, &o.PRT[1], PP_RESET, 0, 1+1) ||	// night tariff from reset
+				    OK != getW(fd, &o.PY, PP_YESTERDAY, 0, 0) ||
+				    OK != getW(fd, &o.PT, PP_TODAY, 0, 0))
+					exitFailure("Cannot collect power counters data.");
 
 				if (OK != closeConnection(fd))
 					exitFailure("Power meter connection closing error.");
