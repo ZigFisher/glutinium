@@ -1,7 +1,7 @@
 #!/bin/sh
 
 uci -q batch <<-EOF >/dev/null
-	set system.@system[0].hostname='White_webuser'
+	set system.@system[0].hostname='White_webuser_v02b'
 	set system.@system[0].timezone='MSK-3'
 	commit system
 	delete dhcp.lan.dhcpv6
@@ -38,6 +38,8 @@ uci -q batch <<-EOF >/dev/null
 	set wireless.@wifi-iface[0].ssid='White_webuser'
 	commit wireless
 EOF
+
+/etc/init.d/zabbix_agentd disable && /etc/init.d/zabbix_agentd stop    # disable zabbix_agentd
 
 echo -e "#\nexit 0\n" >/etc/rc.local
 

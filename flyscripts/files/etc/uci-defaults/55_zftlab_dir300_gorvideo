@@ -1,0 +1,39 @@
+#!/bin/sh
+
+uci -q batch <<-EOF >/dev/null
+	set system.@system[0].hostname='Gorvideo'
+	set system.@system[0].timezone='MSK-3'
+	commit system
+	delete dhcp.lan.dhcpv6
+	delete dhcp.lan.ra
+	commit dhcp
+	delete network.globals
+	delete network.wan6
+	delete network.lan.ip6assign
+	commit network
+	set network.wan=interface
+	set network.wan.type='bridge'
+	set network.wan.proto='dhcp'
+	commit network
+	set network.vtun0='interface'
+	set network.vtun0.proto='vtun'
+	set network.vtun0.server='tun.gorvideo.ru'
+	set network.vtun0.name="$(cat /sys/class/net/eth0/address | tr -d ':' | tr 'a-z' 'A-Z')"
+	set network.vtun0.password="$(cat /sys/class/net/eth0/address | tr -d ':' | sha1sum | awk '{print $1}')"
+	set network.vtun0.mode='ether'
+	set network.vtun0.bridge='br-lan'
+	commit network
+	set wireless.radio0.channel='7'
+	set wireless.radio0.disabled='0'
+	set wireless.@wifi-iface[0].ssid='Gorvideo'
+	set wireless.@wifi-iface[0].encryption='psk2+ccmp'
+	set wireless.@wifi-iface[0].key='password'
+	set wireless.@wifi-iface[0].isolate='0'
+	set wireless.@wifi-iface[0].wds='1'
+	set wireless.@wifi-iface[0].disabled='1'
+	commit wireless
+EOF
+
+echo -e "#\nexit 0\n" >/etc/rc.local
+
+exit 0
