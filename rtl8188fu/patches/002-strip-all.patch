@@ -1,0 +1,11 @@
+--- rtl8188fu-2019-10-05/Makefile.orig	2019-10-05 13:55:01.000000000 +0300
++++ rtl8188fu-2019-10-05/Makefile	2019-10-05 13:59:33.000000000 +0300
+@@ -20,7 +20,7 @@
+ EXTRA_CFLAGS += -I$(src)/include
+ EXTRA_CFLAGS += -I$(src)/hal/phydm
+ 
+-EXTRA_LDFLAGS += --strip-debug
++EXTRA_LDFLAGS += --strip-all
+ 
+ CONFIG_AUTOCFG_CP = n
+ 

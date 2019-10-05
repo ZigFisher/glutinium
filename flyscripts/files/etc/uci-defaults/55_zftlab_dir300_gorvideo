@@ -34,6 +34,9 @@ uci -q batch <<-EOF >/dev/null
 	commit wireless
 EOF
 
+/etc/init.d/dnsmasq disable && /etc/init.d/dnsmasq stop                # disable dnsmasq
+/etc/init.d/zabbix_agentd disable && /etc/init.d/zabbix_agentd stop    # disable zabbix_agentd
+
 echo -e "#\nexit 0\n" >/etc/rc.local
 
 exit 0
