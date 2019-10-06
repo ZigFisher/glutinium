@@ -376,32 +376,26 @@ run_minihttp()
 
   ar0130)
     sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/ar0130_720p_line.ini#" /etc/minihttp.ini
-    ircut test
-    (while sleep 5; do minihttp; done) &
+    ;;
+
+  jxf22)
+    sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/jxf22_1080p_line.ini#" /etc/minihttp.ini
     ;;
 
   imx222|imx323)
     sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/imx222_1080p_line.ini#" /etc/minihttp.ini
-    ircut test
-    (while sleep 5; do minihttp; done) &
     ;;
 
   ov9712)
     sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/ov9712_720p_line.ini#" /etc/minihttp.ini
-    ircut test
-    (while sleep 5; do minihttp; done) &
     ;;
 
   sc1135)
     sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/sc1135_720p_line.ini#" /etc/minihttp.ini
-    ircut test
-    (while sleep 5; do minihttp; done) &
     ;;
 
   sc2135)
     sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/sc2135_1080p_line.ini#" /etc/minihttp.ini
-    ircut test
-    (while sleep 5; do minihttp; done) &
     ;;
 
   *)
@@ -411,6 +405,10 @@ run_minihttp()
     ;;
 
   esac
+
+  ircut test
+  minihttp &   # Use it for stopping -  killall -sigint minihttp
+  
 }
 
 ####################################################################
