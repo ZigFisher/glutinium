@@ -16,7 +16,7 @@ uci -q batch <<-EOF >/dev/null
 	set network.wan.proto='dhcp'
 	commit network
 	set network.vtun0='interface'
-	set network.vtun0.proto='vtun'
+	set network.vtun0.proto='none'
 	set network.vtun0.server='my.server.org'
 	set network.vtun0.name="$(cat /sys/class/net/eth0/address | tr -d ':' | tr 'a-z' 'A-Z')"
 	set network.vtun0.password="$(cat /sys/class/net/eth0/address | tr 'a-z' 'A-Z' | sha1sum | awk '{print $1}')"
