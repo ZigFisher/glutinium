@@ -22,7 +22,7 @@ uci -q batch <<-EOF >/dev/null
 	set network.wan1.apn='internet'
 	set network.wan1.ipv6='0'
 	set network.wan1.keepalive='3'
-	set network.wan1.gpio='0'
+	set network.wan1.disabled='1'
 	commit network
 	set network.vtun0='interface'
 	set network.vtun0.proto='none'
