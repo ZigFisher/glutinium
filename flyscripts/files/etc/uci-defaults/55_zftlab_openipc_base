@@ -40,10 +40,14 @@ uci -q batch <<-EOF >/dev/null
 	set network.vlan.dns='77.88.8.8 8.8.4.4'
 	set network.vlan.disabled='1'
 	commit network
-	set network.vpn1=interface
-	set network.vpn1.ifname='tun1'
-	set network.vpn1.auto='1'
-	set network.vpn1.proto='none'
+	set network.vtun0='interface'
+	set network.vtun0.proto='none'
+	set network.vtun0.server='my.server.org'
+	set network.vtun0.name='vbox4700'
+	set network.vtun0.password='test2016'
+	set network.vtun0.mode='tun'
+	set network.vtun0.hub='172.19.24.1'
+	set network.vtun0.ipaddr='172.19.24.100'
 	commit network
 	set snmpd.default='snmpd'
 	set snmpd.default.enable='1'

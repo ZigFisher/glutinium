@@ -37,8 +37,8 @@ uci -q batch <<-EOF >/dev/null
 	set network.wan.proto='dhcp'
 	commit network
 	set network.vtun0='interface'
-	set network.vtun0.proto='vtun'
-	set network.vtun0.server='vbox3.flymon.net'
+	set network.vtun0.proto='none'
+	set network.vtun0.server='my.server.org'
 	set network.vtun0.name='vbox4700'
 	set network.vtun0.password='test2016'
 	set network.vtun0.mode='tun'
