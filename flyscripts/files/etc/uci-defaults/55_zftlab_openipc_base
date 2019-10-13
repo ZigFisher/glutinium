@@ -17,9 +17,14 @@ uci -q batch <<-EOF >/dev/null
 	delete network.lan.ip6assign
 	set network.lan.macaddr=${mac}
 	commit network
+	set network.wifi=interface
+	set network.wifi.ifname='wlan0'
+	set network.wifi.proto='dhcp'
+	commit network
 	set network.hilink=interface
 	set network.hilink.ifname='eth1'
 	set network.hilink.proto='dhcp'
+	set network.hilink.disabled='1'
 	commit network
 	set network.wan=interface
 	set network.wan.proto='3g'

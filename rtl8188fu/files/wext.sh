@@ -166,7 +166,7 @@ config wifi-device  $dev
 
 config wifi-iface
 	option device	$dev
-	option network	lan
+	option network	wifi
 	option mode	sta
 	option ssid	OpenWrt
 	option encryption none
