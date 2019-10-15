@@ -1,0 +1,21 @@
+
+pre. #
+touch /etc/config/uvpn
+uci set uvpn.server=uvpn_client
+uci set uvpn.server.host='my.server.net'
+uci set uvpn.server.port='5001'
+uci set uvpn.server.user='cam_XXX'
+uci set uvpn.server.password='mypass'
+uci set uvpn.device=uvpn_client
+uci set uvpn.device.description='Location, OpenIPC, Board Name, hi3518ev200 + jxf22, WiFi'
+uci set uvpn.device.network='network_1'
+uci set uvpn.device.ip='192.168.2.111'
+uci set uvpn.device.mtu='1500'
+uci set uvpn.keepalive=uvpn_client
+uci set uvpn.keepalive.idle='30'
+uci set uvpn.keepalive.interval='30'
+uci set uvpn.keepalive.count='10'
+uci set uvpn.log=uvpn_client
+uci set uvpn.log.level='3'
+uci set uvpn.log.syslog='1'
+uci commit uvpn
