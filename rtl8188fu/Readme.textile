@@ -1,0 +1,6 @@
+
+h4. Update wext.sh
+
+pre. #
+  # Disable Power Management
+  iwconfig "$device" power off >/dev/null 2>/dev/null
