@@ -128,6 +128,9 @@ enable_wext() {
 		#ifconfig "$device" up
 		iwconfig "$device" channel "$channel" >/dev/null 2>/dev/null
 
+		# Disable Power Management
+		iwconfig "$device" power off >/dev/null 2>/dev/null
+
 		local net_cfg bridge
 		net_cfg="$(find_net_config "$vif")"
 		[ -z "$net_cfg" ] || {
@@ -161,15 +164,17 @@ detect_wext() {
 		[ "$type" = wext ] && return
 		cat <<EOF
 config wifi-device  $dev
-	option type     wext
-	option disabled 0
+	option type 'wext'
+	option hwmode '11g'
+	option channel 'auto'
+	option disabled '0'
 
 config wifi-iface
 	option device	$dev
-	option network	wifi
-	option mode	sta
-	option ssid	OpenWrt
-	option encryption none
+	option network	'wifi'
+	option mode	'sta'
+	option ssid	'OpenWrt'
+	option encryption 'none'
 EOF
 	done
 }

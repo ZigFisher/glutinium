@@ -82,7 +82,7 @@ define Package/$(PKG_NAME)-firmware/install
 	$(INSTALL_DATA) $(PKG_BUILD_DIR)/firmware/rtl8188fufw.bin $(1)/lib/firmware/rtlwifi
 	$(INSTALL_DIR) $(1)/lib/wifi
 	$(INSTALL_DATA) ./files/wext.sh $(1)/lib/wifi
-
+	$(INSTALL_DATA) ./files/wpa_supplicant.sh $(1)/lib/wifi
 endef
 
 $(eval $(call KernelPackage,$(PKG_NAME)))
