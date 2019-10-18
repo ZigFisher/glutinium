@@ -167,7 +167,7 @@ config wifi-device  $dev
 	option type 'wext'
 	option hwmode '11g'
 	option channel 'auto'
-	option disabled '0'
+	option disabled '1'
 
 config wifi-iface
 	option device	$dev
