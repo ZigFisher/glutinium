@@ -407,7 +407,7 @@ run_minihttp()
   esac
 
   ircut test
-  minihttp &   # Use it for stopping -  killall -sigint minihttp
+  sleep 10; minihttp &   # Use it for stopping -  killall -sigint minihttp
   
 }
 
