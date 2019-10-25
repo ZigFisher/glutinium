@@ -312,7 +312,7 @@ insert_ko()
   insmod piris.ko
   #
   insert_sns
-  #insert_audio
+  insert_audio
   #
   insmod hi_mipi.ko
   echo "Sensor TYPE: $SNS_TYPE"
@@ -323,7 +323,7 @@ insert_ko()
 
 remove_ko()
 {
-  #remove_audio
+  remove_audio
   remove_sns
   #
   rmmod pwm
