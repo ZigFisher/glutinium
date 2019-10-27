@@ -31,7 +31,7 @@ vicap_pin_mux_select()
 	himm 0x200f016c 0x00000000 # 0:VIU_DAT3  / 1:GPIO10_3
 	himm 0x200f0170 0x00000000 # 0:VIU_DAT2  / 1:GPIO10_2
 	himm 0x200f0174 0x00000000 # 0:VIU_DAT1  / 1:GPIO10_1
-	himm 0x200f0178 0x00000000 # 0:VIU_DAT0  / 1:GPIO10_0    
+	himm 0x200f0178 0x00000000 # 0:VIU_DAT0  / 1:GPIO10_0
 }
 
 #I2C default setting is I2C
@@ -69,10 +69,10 @@ net_mii_mode()
 	himm 0x200f006C  0x1
 	himm 0x200f0070  0x1
 	himm 0x200f0074  0x1
-	himm 0x200f0078  0x1      
+	himm 0x200f0078  0x1
 }
 
-#RMII    
+#RMII
 net_rmii_mode()
 {
 	himm 0x200f0030  0x1
@@ -94,8 +94,8 @@ net_rmii_mode()
 	himm 0x200f0070  0x1
 	himm 0x200f0074  0x1
 	himm 0x200f0078  0x1
-}      
-      
+}
+
 #BT1120
 vo_bt1120_mode()
 {
@@ -135,7 +135,7 @@ rmii)
     echo "use rmii";
     net_rmii_mode;
 ;;
-*)
+mii)
     echo "use mii";
     net_mii_mode;
 ;;
@@ -146,7 +146,7 @@ gpio_i2c)
     echo "use gpio_i2c";
     gpio_i2c_type_select;
 ;;
-*)
+i2c)
     echo "use i2c";
     i2c_type_select;
 ;;
