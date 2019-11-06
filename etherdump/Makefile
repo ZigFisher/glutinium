@@ -12,7 +12,8 @@ PKG_VERSION:=2.11
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=http://psydev.syw4e.info/new/etherdump/
+#PKG_SOURCE_URL:=http://psydev.syw4e.info/new/etherdump/
+PKG_SOURCE_URL:=http://flyrouter.net/downloads/software/ipcam/archive/
 PKG_MD5SUM:=
 
 include $(INCLUDE_DIR)/package.mk
