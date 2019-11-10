@@ -101,7 +101,32 @@ endef
 
 define Package/$(PKG_NAME)-lib/install
 	$(INSTALL_DIR) $(1)/usr/lib
-	$(CP) ./lib/lib*.so $(1)/usr/lib/
+	$(CP) ./lib/libdnvqe.so $(1)/usr/lib/
+	$(CP) ./lib/lib_hiae.so $(1)/usr/lib/
+	$(CP) ./lib/lib_hiaf.so $(1)/usr/lib/
+	$(CP) ./lib/lib_hiawb.so $(1)/usr/lib/
+	$(CP) ./lib/lib_hidefog.so $(1)/usr/lib/
+	$(CP) ./lib/libisp.so $(1)/usr/lib/
+	$(CP) ./lib/libive.so $(1)/usr/lib/
+	$(CP) ./lib/libmd.so $(1)/usr/lib/
+	$(CP) ./lib/libmpi.so $(1)/usr/lib/
+	$(CP) ./lib/libtde.so $(1)/usr/lib/
+	$(CP) ./lib/libupvqe.so $(1)/usr/lib/
+	$(CP) ./lib/libVoiceEngine.so $(1)/usr/lib/
+	#$(CP) ./lib/lib_cmoscfg.so $(1)/usr/lib/
+	#$(CP) ./lib/libhive_AEC.so $(1)/usr/lib/
+	#$(CP) ./lib/libhive_AGC.so $(1)/usr/lib/
+	#$(CP) ./lib/libhive_ANR.so $(1)/usr/lib/
+	#$(CP) ./lib/libhive_common.so $(1)/usr/lib/
+	#$(CP) ./lib/libhive_EQ.so $(1)/usr/lib/
+	#$(CP) ./lib/libhive_GAIN.so $(1)/usr/lib/
+	#$(CP) ./lib/libhive_HDR.so $(1)/usr/lib/
+	#$(CP) ./lib/libhive_HPF.so $(1)/usr/lib/
+	#$(CP) ./lib/libhive_MBC.so $(1)/usr/lib/
+	#$(CP) ./lib/libhive_RES.so $(1)/usr/lib/
+	#$(CP) ./lib/libhive_RNR.so $(1)/usr/lib/
+	#$(CP) ./lib/lib_iniparser.so $(1)/usr/lib/
+	#$(CP) ./lib/libslice_trans.so $(1)/usr/lib/
 endef
 
 define Package/$(PKG_NAME)-sensor/install
