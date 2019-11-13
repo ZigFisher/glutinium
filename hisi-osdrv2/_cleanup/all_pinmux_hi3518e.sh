@@ -158,15 +158,15 @@ if [ $b_arg_vo -eq 1 ]; then
 			;;
 		"LCD")
 			echo "============VO TYPE LCD=============";
-			spi1_pim_mux;                            #spi1 -> LCD
-			vo_output_mode;                       	 #vo output pin mux
-			lcd_drive_capability; 				     #drive capability
-			himm 0x200f0014 0x00000003		         # 3£ºVO_VS    & 0: GPIO2_1  & 1: RMII_TX_EN & 4: SDIO1_CARD_DETECT
-			himm 0x200f002c 0x00000003		         # 3£ºVO_HS    & 0: GPIO2_7	& 1: EPHY_RST	& 2: BOOT_SEL	& 4: SDIO1_CARD_POWER_EN
-			himm 0x200f001c 0x00000003		         # 3£ºVO_DE    & 0: GPIO2_3	& 1: RMII_TXD1	& 4: SDIO1_CDATA1
-			insmod extdrv/ssp_ili9342h_6bit.ko;      # ili9342 6bit LCD
-			#insmod extdrv/ssp_ili9341v_6bit.ko;     # ili9341 6bit LCD
-			#insmod extdrv/ssp_ota5182.ko;           # ota5182 8bit LCD
+			spi1_pim_mux;				#spi1 -> LCD
+			vo_output_mode;				#vo output pin mux
+			lcd_drive_capability;			#drive capability
+			himm 0x200f0014 0x00000003		# 3£ºVO_VS    & 0: GPIO2_1  & 1: RMII_TX_EN & 4: SDIO1_CARD_DETECT
+			himm 0x200f002c 0x00000003		# 3£ºVO_HS    & 0: GPIO2_7	& 1: EPHY_RST	& 2: BOOT_SEL	& 4: SDIO1_CARD_POWER_EN
+			himm 0x200f001c 0x00000003		# 3£ºVO_DE    & 0: GPIO2_3	& 1: RMII_TXD1	& 4: SDIO1_CDATA1
+			insmod extdrv/ssp_ili9342h_6bit.ko;	# ili9342 6bit LCD
+			#insmod extdrv/ssp_ili9341v_6bit.ko;	# ili9341 6bit LCD
+			#insmod extdrv/ssp_ota5182.ko;		# ota5182 8bit LCD
 			;;
 	esac
 fi
@@ -177,7 +177,7 @@ if [ $b_arg_net -eq 1 ]; then
 fi
 
 # When external audio codec be used,you must open only one of the i2s_pin_mux(i2s0,i2s1 or i2s2).
-# If you has some problem on it ,you can refer to tlv320aic31_readme.txt include in audio sample. 
+# If you has some problem on it ,you can refer to tlv320aic31_readme.txt include in audio sample.
 i2s_pin_mux()
 {
 	# pin_mux with GPIO1 
@@ -204,9 +204,15 @@ i2s_pin_mux()
 	#himm 0x200f00e4 0x3;		    # i2s_bclk_tx
 }
 
+uart_pin_mux()
+{
+	himm 0x200f00c0 0x3;		    # uart1_rx
+	himm 0x200f00c8 0x3;		    # uart1_tx
+}
 
 #i2c0_pin_mux;
 #i2c2_pin_mux
 vicap_pin_mux;
 #i2s_pin_mux;
 #vo_bt656_mode;
+uart_pin_mux;
