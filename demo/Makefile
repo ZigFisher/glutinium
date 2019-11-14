@@ -21,6 +21,7 @@ PKG_BUILD_DEPENDS:=busybox
 define Package/$(PKG_NAME)
 	SECTION:=openipc
 	CATEGORY:=OpenIPC
+	SUBMENU:=Other
 	TITLE:=Simple DEMO example
 	MAINTAINER:=demo@local.net
 	DEPENDS:=+busybox

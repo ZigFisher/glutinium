@@ -22,10 +22,10 @@ include $(INCLUDE_DIR)/package.mk
 define Package/$(PKG_NAME)
 	SECTION:=openipc
 	CATEGORY:=OpenIPC
-	SUBMENU:=Testing by @FlyRouter
+	SUBMENU:=Unused
 	TITLE:=Simple RTSP daemon for Hisilicon devices
 	MAINTAINER:=https://github.com/xibeilang524/hi3518_h264/tree/master/rtspok_utf8
-	DEPENDS:=@(TARGET_hisilicon_armv5tej) +libpthread +hisi-osdrv2-base +hisi-osdrv2-kmod +hisi-osdrv2-lib +hisi-osdrv2-sensor
+	DEPENDS:=@(TARGET_hi35xx) +libpthread +hisi-osdrv2-base +hisi-osdrv2-kmod +hisi-osdrv2-lib +hisi-osdrv2-sensor
 endef
 
 define Package/$(PKG_NAME)/description

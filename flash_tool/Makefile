@@ -28,10 +28,10 @@ include $(INCLUDE_DIR)/cmake.mk
 define Package/$(PKG_NAME)
 	SECTION:=openipc
 	CATEGORY:=OpenIPC
-	#SUBMENU:=Chertov
+	SUBMENU:=Tools
 	TITLE:=Tool for correct work with FLASH chip on Hisilicon SoC's
 	MAINTAINER:=chertovmv@gmail.com
-	DEPENDS:=@(TARGET_hisilicon_armv5tej)
+	DEPENDS:=@(TARGET_hi35xx)
 endef
 
 define Package/$(PKG_NAME)/description

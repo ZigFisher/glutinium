@@ -20,6 +20,7 @@ PKG_LICENSE_FILES:=LICENSE
 define Package/$(PKG_NAME)
 	SECTION:=openipc
 	CATEGORY:=OpenIPC
+	SUBMENU:=VPN
 	TITLE:=µVPN - miniature private network
 	MAINTAINER:=uvpn@openipc.org
 endef

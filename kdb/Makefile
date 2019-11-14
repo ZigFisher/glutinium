@@ -21,7 +21,7 @@ PKG_LICENSE_FILES:=LICENSE
 define Package/$(PKG_NAME)
 	SECTION:=openipc
 	CATEGORY:=OpenIPC
-	SUBMENU:=Testing by @FlyRouter
+	SUBMENU:=Other
 	TITLE:=Simple variables manager
 	MAINTAINER:=vlad@crimeainfo.com
 #	DEPENDS:=+busybox

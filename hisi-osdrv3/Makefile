@@ -26,9 +26,9 @@ define Package/$(PKG_NAME)/default
 	CATEGORY:=OpenIPC
 	MAINTAINER:=Igor Zalatov <flyrouter@gmail.com>
 	TITLE:=Hisilicon OSDRV-3
-	SUBMENU:=Hisilicon OSDRV-3 with kernel 3.18.20
+	SUBMENU:=HiSilicon related
 	URL:=http://zftlab.org
-	DEPENDS:=@(TARGET_hisilicon_armv5tej_hi3516cv300||TARGET_hisilicon_armv5tej_hi3516ev100) +libstdcpp
+	DEPENDS:=@(TARGET_hi35xx_16cv300||TARGET_hi35xx_16ev100) +libstdcpp
 endef
 
 define Package/$(PKG_NAME)/Default/description

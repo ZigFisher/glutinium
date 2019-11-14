@@ -21,10 +21,10 @@ PKG_LICENSE_FILES:=LICENSE
 define Package/$(PKG_NAME)
 	SECTION:=openipc
 	CATEGORY:=OpenIPC
-	#SUBMENU:=Testing
+	SUBMENU:=Tools
 	TITLE:=I2C read/write tools for hisilicon platform
 	MAINTAINER:=hisilicon
-	DEPENDS:=@(TARGET_hisilicon_armv5tej) +hisi-osdrv2-base +hisi-osdrv2-kmod
+	DEPENDS:=@(TARGET_hi35xx) +hisi-osdrv2-base +hisi-osdrv2-kmod
 endef
 
 define Package/$(PKG_NAME)/description
