@@ -69,7 +69,7 @@ insert_sns()
 {
 	case $SNS_TYPE in
 
-	9m034|ar0130|jxf22)
+	9m034|ar0130|jxf22|jxf23)
 		devmem 0x200f0040 32 0x2;	# I2C0_SCL
 		devmem 0x200f0044 32 0x2;	# I2C0_SDA
 		#
@@ -382,6 +382,10 @@ run_minihttp()
     sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/jxf22_1080p_line.ini#" /etc/minihttp.ini
     ;;
 
+  jxf23)
+    sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/jxf23_1080p_line.ini#" /etc/minihttp.ini
+    ;;
+
   imx222|imx323)
     sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/imx222_1080p_line.ini#" /etc/minihttp.ini
     ;;
@@ -431,8 +435,8 @@ echo
 echo "Sensor table:"
 echo " 9m034"
 echo " ar0130 (ok), ar0230, ar0237"
-echo " imx222 (ok)"
-echo " jxf22, jxh62"
+echo " imx222 (ok), imx323 (ok)"
+echo " jxf22 (ok), jxf23 (ok), jxh62"
 echo " mn34222"
 echo " ov2718, ov9712, ov9732, ov9750, ov9752"
 echo " sc1045, sc1135, sc1145, sc2035, sc2045, sc2135, sc2235"
@@ -455,7 +459,5 @@ remove_ko
 
 insert_ko
 run_minihttp
-
-####################################################################
 
 ####################################################################
