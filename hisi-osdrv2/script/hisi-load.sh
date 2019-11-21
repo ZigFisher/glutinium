@@ -416,7 +416,7 @@ run_minihttp()
 
   ircut test
   sleep 10; minihttp &   # Use it for stopping -  killall -sigint minihttp
-  
+
 }
 
 ####################################################################
