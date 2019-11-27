@@ -1,8 +1,9 @@
 #!/bin/sh
 
 uci -q batch <<-EOF >/dev/null
-	set system.@system[0].hostname='Gorvideo'
-	set system.@system[0].timezone='MSK-3'
+	set system.@system[0].hostname='Gorvideo_XX'
+	set system.@system[0].timezone='<+07>-7'
+	set system.@system[0].zonename='Asia/Krasnoyarsk'
 	commit system
 	delete dhcp.lan.dhcpv6
 	delete dhcp.lan.ra
