@@ -25,7 +25,7 @@ define Package/$(PKG_NAME)
 	SUBMENU:=Unused
 	TITLE:=Simple RTSP daemon for Hisilicon devices
 	MAINTAINER:=https://github.com/xibeilang524/hi3518_h264/tree/master/rtspok_utf8
-	DEPENDS:=@(TARGET_hi35xx) +libpthread +hisi-osdrv2-base +hisi-osdrv2-kmod +hisi-osdrv2-lib +hisi-osdrv2-sensor
+	DEPENDS:=@(TARGET_hi35xx) +libpthread +hisi-osdrv2-base +hisi-osdrv2-kmod +hisi-osdrv2-lib
 endef
 
 define Package/$(PKG_NAME)/description

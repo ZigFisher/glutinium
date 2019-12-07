@@ -26,7 +26,7 @@ define Package/$(PKG_NAME)
 	SUBMENU:=Unused
 	TITLE:=Best samples for Hisilicon devices
 	MAINTAINER:=chertovmv@gmail.com
-	DEPENDS:=@(TARGET_hi35xx) +libpthread +hisi-osdrv2-base +hisi-osdrv2-kmod +hisi-osdrv2-lib +hisi-osdrv2-sensor
+	DEPENDS:=@(TARGET_hi35xx) +libpthread +hisi-osdrv2-base +hisi-osdrv2-kmod +hisi-osdrv2-lib
 endef
 
 define Package/$(PKG_NAME)/description

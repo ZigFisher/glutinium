@@ -28,7 +28,7 @@ define Package/$(PKG_NAME)/default
 	TITLE:=Hisilicon OSDRV-2
 	SUBMENU:=HiSilicon related
 	URL:=http://zftlab.org
-	DEPENDS:=@(TARGET_hi35xx_16cv200||TARGET_hi35xx_18ev200||TARGET_hi35xx_18ev201) +libstdcpp
+	DEPENDS:=@(TARGET_hi35xx_16cv200||TARGET_hi35xx_18ev200||TARGET_hi35xx_18ev201)
 endef
 
 define Package/$(PKG_NAME)/Default/description
@@ -58,6 +58,7 @@ endef
 define Package/$(PKG_NAME)-sensor
 $(call Package/$(PKG_NAME)/default)
 	TITLE+= - sensor package
+	DEPENDS:=+libstdcpp
 endef
 
 define Package/$(PKG_NAME)-tool
