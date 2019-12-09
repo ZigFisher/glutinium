@@ -39,7 +39,7 @@ endef
 
 define Build/Compile
 	$(TARGET_CC) $(TARGET_CFLAGS) -Wall -fPIC -O2 -lm -shared -I$(STAGING_DIR)/usr/include/hisi-osdrv2 \
-		-o $(PKG_BUILD_DIR)/libsns_jxf23.so $(PKG_BUILD_DIR)/f23_cmos.c $(PKG_BUILD_DIR)/f23_sensor_ctl.c
+		-o $(PKG_BUILD_DIR)/libsns_jxf23.so $(PKG_BUILD_DIR)/jxf23_cmos.c $(PKG_BUILD_DIR)/jxf23_sensor_ctl.c
 endef
 
 define Package/$(PKG_NAME)/install
