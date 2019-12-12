@@ -43,6 +43,8 @@ define Build/Compile
 endef
 
 define Package/$(PKG_NAME)/install
+	$(INSTALL_DIR) $(1)/etc/sensors
+	$(INSTALL_DATA) ./src/ar0130_720p_line.ini $(1)/etc/sensors/
 	$(INSTALL_DIR) $(1)/usr/lib
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/*.so $(1)/usr/lib/
 endef
