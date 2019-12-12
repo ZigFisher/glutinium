@@ -42,22 +42,22 @@ endef
 
 define Package/$(PKG_NAME)-binary
 $(call Package/$(PKG_NAME)/default)
-	TITLE+= - binary package
+	TITLE+= - binary program package
 endef
 
 define Package/$(PKG_NAME)-kmod
 $(call Package/$(PKG_NAME)/default)
-	TITLE+= - kmod package
+	TITLE+= - binary kmod package
 endef
 
 define Package/$(PKG_NAME)-lib
 $(call Package/$(PKG_NAME)/default)
-	TITLE+= - lib package
+	TITLE+= - binary lib package
 endef
 
 define Package/$(PKG_NAME)-sensor
 $(call Package/$(PKG_NAME)/default)
-	TITLE+= - sensor package
+	TITLE+= - binary sensor package
 	DEPENDS:=+libstdcpp
 endef
 
@@ -132,14 +132,14 @@ endef
 
 define Package/$(PKG_NAME)-sensor/install
 	$(INSTALL_DIR) $(1)/usr/lib
-	$(CP) ./sensor/libsns_ar0130.so $(1)/usr/lib/
-	$(CP) ./sensor/libsns_imx222.so $(1)/usr/lib/
+	#$(CP) ./sensor/libsns_ar0130.so $(1)/usr/lib/
+	#$(CP) ./sensor/libsns_imx222.so $(1)/usr/lib/
 	$(CP) ./sensor/libsns_imx323.so $(1)/usr/lib/
 	$(CP) ./sensor/libsns_jxf22.so $(1)/usr/lib/
-	$(CP) ./sensor/libsns_jxf23.so $(1)/usr/lib/
-	$(CP) ./sensor/libsns_ov9732.so $(1)/usr/lib/
-	$(CP) ./sensor/libsns_sc1135.so $(1)/usr/lib/
-	$(CP) ./sensor/libsns_sc2135.so $(1)/usr/lib/
+	#$(CP) ./sensor/libsns_jxf23.so $(1)/usr/lib/
+	#$(CP) ./sensor/libsns_ov9732.so $(1)/usr/lib/
+	#$(CP) ./sensor/libsns_sc1135.so $(1)/usr/lib/
+	#$(CP) ./sensor/libsns_sc2135.so $(1)/usr/lib/
 	$(INSTALL_DIR) $(1)/etc/sensors
 	$(CP) ./sensor/config/* $(1)/etc/sensors
 endef
