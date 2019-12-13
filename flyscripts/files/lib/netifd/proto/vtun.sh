@@ -136,7 +136,7 @@ proto_vtun_setup() {
   for multiname in `echo $name`; do
     echo "$multiname {"
     echo "  password $password;"
-    echo "  device $multiname;"
+    #echo "  device $multiname;"
     echo "  up {"
     if [ "$mode" = "tun" ]; then
       echo "    ip \"link set %% up multicast off mtu 1500\";"
