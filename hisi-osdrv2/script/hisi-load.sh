@@ -14,6 +14,11 @@ osmem_size=${osmem_size:=40M}
 SNS_TYPE=$(awk -F '=' '$1=="sensor"{print $2}' RS=" " /proc/cmdline)
 SNS_TYPE=${SNS_TYPE:=ar0130}
 
+if [[ ${SNS_TYPE} = "none" ]]; then
+  echo "Hisilicon video system initialization disabled" | logger
+  exit 0
+fi
+
 ####################################################################
 
 usage="\
