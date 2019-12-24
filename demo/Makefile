@@ -33,7 +33,7 @@ endef
 
 define Build/Prepare
 	$(INSTALL_DIR) $(PKG_BUILD_DIR)
-	$(INSTALL_DATA) ./src/$(PKG_NAME).c $(PKG_BUILD_DIR)/
+	$(INSTALL_DATA) ./src/* $(PKG_BUILD_DIR)/
 endef
 
 define Build/Compile
