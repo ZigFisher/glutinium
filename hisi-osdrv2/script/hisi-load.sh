@@ -3,6 +3,8 @@
 
 #################### Variables Definition ##########################
 
+ircut test
+
 mem_start=0x80000000
 
 totmem_size=$(awk -F '=' '$1=="totalmem"{print $2}' RS=" " /proc/cmdline)
@@ -296,12 +298,12 @@ insert_ko()
   #
   insmod hi3518e_tde.ko
   insmod hi3518e_region.ko
-  insmod hi3518e_vgs.ko
+  insmod hi3518e_vgs.ko                            # maybe disable it ?
   #
   insert_isp;
   #
   insmod hi3518e_viu.ko detect_err_frame=10;
-  insmod hi3518e_vpss.ko rfr_frame_comp=1;
+  insmod hi3518e_vpss.ko rfr_frame_comp=1;         # TestOption: bOneBufferforLowDelay=1
   #insmod hi3518e_vou.ko
   #insmod hi3518e_vou.ko transparentTransmit=1     # enable transparentTransmit
   #insmod hifb.ko video="hifb:vram0_size:1620"     # default pal
@@ -313,8 +315,8 @@ insert_ko()
   insmod hi3518e_ive.ko save_power=0;
   #insmod hi3518e_ive.ko
   insmod sensor_i2c.ko
-  insmod pwm.ko
-  insmod piris.ko
+  insmod pwm.ko                                   # maybe disable it ?
+  insmod piris.ko                                 # maybe disable it ?
   #
   insert_sns
   insert_audio
@@ -411,6 +413,10 @@ run_minihttp()
     sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/sc2135_1080p_line.ini#" /etc/minihttp.ini
     ;;
 
+  sc2235)
+    sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/sc2235_1080p_line.ini#" /etc/minihttp.ini
+    ;;
+
   *)
     echo "You sensor not tested !"
     echo "Run minihttp with correct /etc/minihttp.ini file"
@@ -419,7 +425,6 @@ run_minihttp()
 
   esac
 
-  ircut test
   sleep 10; minihttp &   # Use it for stopping -  killall -sigint minihttp
 
 }
