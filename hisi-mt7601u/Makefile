@@ -87,7 +87,7 @@ define Build/Compile
 #	$(MAKE_OPTS) \
 #	RTDEBUG=$(CONFIG_PACKAGE_MT7601_DEBUG)
 #	modules
-	$(MAKE) $(MT7601U_MAKE_OPTS) -C $(PKG_BUILD_DIR) LINUX_DIR=$(LINUX_DIR) KERNEL_CROSS=$(KERNEL_CROSS) ARCH=$(LINUX_KARCH) RTDEBUG=$(CONFIG_PACKAGE_MT7601_DEBUG)
+	$(MAKE) $(MT7601U_MAKE_OPTS) -C $(PKG_BUILD_DIR) LINUX_DIR=$(LINUX_DIR) KERNEL_CROSS=$(KERNEL_CROSS) ARCH=$(LINUX_KARCH) RTDEBUG=$(CONFIG_PACKAGE_MT7601_DEBUG) -Wunused-variable
 endef
 
 define KernelPackage/mt7601u-hisi/install
@@ -95,7 +95,9 @@ define KernelPackage/mt7601u-hisi/install
 	$(INSTALL_DIR) $(1)/lib/modules/$(LINUX_VERSION)
 	$(INSTALL_DIR) $(1)/lib/wifi
 	$(CP) $(PKG_BUILD_DIR)/RT2870STA.dat $(1)/etc/Wireless/RT2870STA/
-	$(INSTALL_DATA) ./files/lib/wifi/wext.sh $(1)/lib/wifi
+	$(INSTALL_DATA) ./files/wext.sh $(1)/lib/wifi
+	$(INSTALL_DATA) ./files/wpa_supplicant.sh $(1)/lib/wifi
+
 endef
 
 $(eval $(call KernelPackage,mt7601u-hisi))
