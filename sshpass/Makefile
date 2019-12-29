@@ -11,30 +11,33 @@ PKG_NAME:=sshpass
 PKG_VERSION:=1.5
 PKG_RELEASE:=1
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=@SF/vtun
-PKG_MD5SUM:=d3d8bc4d58886498a1c338670eab9315
-
 include $(INCLUDE_DIR)/package.mk
 
-define Package/sshpass
+define Package/$(PKG_NAME)
   SECTION:=utils
   CATEGORY:=Utilities
   TITLE:=sshpass
   URL:=Non-interactive SSH authenticator
 endef
 
-define Package/sshpass/description
+define Package/$(PKG_NAME)/description
        Sshpass is a tool for non-interactivly performing password authentication with SSH's
 endef
 
-define Build/Compile
-	$(call Build/Compile/Default,sshpass)
+define Build/Prepare
+	$(INSTALL_DIR) $(PKG_BUILD_DIR)
+	$(CP) ./src/* $(PKG_BUILD_DIR)/
 endef
+
+#define Build/Configure
+#	$(call Build/Configure/Default, \
+#	)
+#endef
 
 define Package/sshpass/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/sshpass $(1)/usr/bin/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/$(PKG_NAME) $(1)/usr/bin/
 endef
 
-$(eval $(call BuildPackage,sshpass))
+$(eval $(call BuildPackage,$(PKG_NAME)))
+
