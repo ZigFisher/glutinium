@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/kernel.mk
 
-PKG_NAME:=rtl8188fu
+PKG_NAME:=hi35xx-rtl8188fu
 
 PKG_SOURCE_PROTO:=git
 #PKG_SOURCE_URL:=https://github.com/ulli-kroll/rtl8188fu.git
@@ -39,25 +39,25 @@ define KernelPackage/$(PKG_NAME)
 $(call Package/$(PKG_NAME)/Default)
   SUBMENU:=Wireless Drivers
   DEPENDS:=@USB_SUPPORT +@DRIVER_WEXT_SUPPORT +kmod-usb-core
-  TITLE:=Driver for Realtek RTL8188FU
+  TITLE:=Driver for RTL8188FU wireless adapters (HI35xx)
   FILES:=$(PKG_BUILD_DIR)/$(PKG_NAME).$(LINUX_KMOD_SUFFIX)
   VERSION:=$(LINUX_VERSION)+$(PKG_VERSION)-$(PKG_RELEASE)
   AUTOLOAD:=$(call AutoLoad,21,rtl8188fu)
 endef
 
 define KernelPackage/$(PKG_NAME)/description
-Driver for Realtek RTL8188FU
+  Driver for RTL8188FU wireless adapters (HI35xx)
 endef
 
 define Package/$(PKG_NAME)-firmware
 $(call Package/$(PKG_NAME)/Default)
   SECTION:=firmware
   CATEGORY:=Firmware
-  TITLE:=Firmware for Realtek RTL8188FU
+  TITLE:=Firmware for RTL8188EU wireless adapters (HI35xx)
 endef
 
 define Package/$(PKG_NAME)-firmware/description
-Firmware for Realtek RTL8188FU
+  Firmware for RTL8188EU wireless adapters (HI35xx)
 endef
 
 MAKE_RTL8188FU_ARGS:= \

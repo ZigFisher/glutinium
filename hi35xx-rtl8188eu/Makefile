@@ -24,16 +24,16 @@ PKG_LICENSE_FILES:=LICENSE
 
 include $(INCLUDE_DIR)/package.mk
 
-define KernelPackage/hi35xx-rtl8188eu
+define KernelPackage/$(PKG_NAME)
 	SUBMENU:=Wireless Drivers
-	TITLE:=Driver for Realtek RTL8188EU (for HI35xx)
+	TITLE:=Driver for RTL8188EU wireless adapters (HI35xx)
 	FILES:=$(PKG_BUILD_DIR)/$(PKG_NAME).$(LINUX_KMOD_SUFFIX)
 	AUTOLOAD:=$(call AutoLoad,21,rtl8188eu)
 	DEPENDS:=@USB_SUPPORT +@DRIVER_WEXT_SUPPORT +kmod-usb-core
 endef
 
-define KernelPackage/hi35xx-rtl8188eu/description
-	Driver for Realtek RTL8188EU (for HI35xx)
+define KernelPackage/$(PKG_NAME)/description
+	Driver for RTL8188EU wireless adapters (HI35xx)
 endef
 
 MAKE_OPTS:= \
@@ -48,4 +48,4 @@ define Build/Compile
 		modules
 endef
 
-$(eval $(call KernelPackage,hi35xx-rtl8188eu))
+$(eval $(call KernelPackage,$(PKG_NAME)))

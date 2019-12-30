@@ -30,7 +30,7 @@ WMENU:=Wireless Drivers
 
 define KernelPackage/$(PKG_NAME)
 	SUBMENU:=Wireless Drivers
-	TITLE:=Driver for MT7601U wireless adapters
+	TITLE:=Driver for MT7601U wireless adapters (HI35xx)
 	FILES:=$(PKG_BUILD_DIR)/os/linux/mt7601Usta.$(LINUX_KMOD_SUFFIX)
 	#DEPENDS:=+wireless-tools +hostapd-common-old @USB_SUPPORT
 	DEPENDS:=@USB_SUPPORT +@DRIVER_WEXT_SUPPORT +kmod-usb-core
@@ -53,7 +53,7 @@ define KernelPackage/$(PKG_NAME)/config
 endef
 
 define KernelPackage/$(PKG_NAME)/description
-  This package contains a driver for usb wireless adapters based on the Mediatek MT7601U
+  Driver for MT7601U wireless adapters (HI35xx)
 endef
 
 ifneq ($(CONFIG_BIG_ENDIAN),)
