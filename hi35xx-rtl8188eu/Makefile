@@ -1,0 +1,51 @@
+#
+# Copyright (C) 2014 Bruno Randolf <br1@einfach.org>
+#
+# This is free software, licensed under the GNU General Public License v2.
+# See /LICENSE for more information.
+#
+
+include $(TOPDIR)/rules.mk
+include $(INCLUDE_DIR)/kernel.mk
+
+PKG_NAME:=hi35xx-rtl8188eu
+PKG_VERSION:=2019-12-29
+PKG_RELEASE:=1
+
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
+PKG_SOURCE_URL:=https://github.com/lwfinger/rtl8188eu.git
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
+PKG_SOURCE_VERSION:=4930848febecd66a1c4b0737954a3c98984e9ea6
+
+PKG_MAINTAINER:=Igor Zalatov (ZFT Lab.) <flyrouter@gmail.com>
+PKG_LICENSE:=GPL-2.0
+PKG_LICENSE_FILES:=LICENSE
+
+include $(INCLUDE_DIR)/package.mk
+
+define KernelPackage/hi35xx-rtl8188eu
+	SUBMENU:=Wireless Drivers
+	TITLE:=Driver for Realtek RTL8188EU (for HI35xx)
+	FILES:=$(PKG_BUILD_DIR)/$(PKG_NAME).$(LINUX_KMOD_SUFFIX)
+	AUTOLOAD:=$(call AutoLoad,21,rtl8188eu)
+	DEPENDS:=@USB_SUPPORT +@DRIVER_WEXT_SUPPORT +kmod-usb-core
+endef
+
+define KernelPackage/hi35xx-rtl8188eu/description
+	Driver for Realtek RTL8188EU (for HI35xx)
+endef
+
+MAKE_OPTS:= \
+	ARCH="$(LINUX_KARCH)" \
+	CROSS_COMPILE="$(TARGET_CROSS)" \
+	SUBDIRS="$(PKG_BUILD_DIR)" \
+	KSRC="$(LINUX_DIR)"
+
+define Build/Compile
+	$(MAKE) -C "$(LINUX_DIR)" \
+		$(MAKE_OPTS) \
+		modules
+endef
+
+$(eval $(call KernelPackage,hi35xx-rtl8188eu))
