@@ -1,0 +1,23 @@
+--- a/chips/mt7601.c
++++ b/chips/mt7601.c
+@@ -2243,7 +2243,7 @@ VOID MT7601_InitPAModeTable(
+ VOID MT7601_InitTemperatureCompensation(
+ 	IN PRTMP_ADAPTER			pAd)
+ {
+-	UINT32 Value = 0;
++	UINT16 Value = 0;
+ 
+ 	pAd->chipCap.TemperatureMode = TEMPERATURE_MODE_NORMAL;
+ 	pAd->chipCap.CurrentTemperature = 0;
+--- a/common/cmm_data_usb.c
++++ b/common/cmm_data_usb.c
+@@ -1320,6 +1320,9 @@ if (0) {
+ #ifdef RLT_MAC
+ 	NdisMoveMemory((VOID *)&pRxBlk->hw_rx_info[0], (VOID *)pRxFceInfo, sizeof(RXFCE_INFO));
+ 	pRxBlk->pRxFceInfo = (RXFCE_INFO *)&pRxBlk->hw_rx_info[0];
++#ifdef RT_BIG_ENDIAN
++	RTMPDescriptorEndianChange((PUCHAR)pRxBlk->pRxFceInfo, TYPE_RXINFO);
++#endif /* RT_BIG_ENDIAN */	
+ #endif /* RLT_MAC */
+ 
+ 	NdisMoveMemory(&pRxBlk->hw_rx_info[RXINFO_OFFSET], pRxInfo, RXINFO_SIZE);

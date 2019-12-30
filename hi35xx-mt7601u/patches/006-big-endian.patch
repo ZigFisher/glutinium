@@ -1,0 +1,10 @@
+--- a/os/linux/config.mk
++++ b/os/linux/config.mk
+@@ -851,6 +851,7 @@ endif
+ 
+ #################################################
+ 
++WFLAGS += $(ENDIANOPTS)
+ 
+ ifeq ($(PLATFORM),5VT)
+ #WFLAGS += -DCONFIG_5VT_ENHANCE

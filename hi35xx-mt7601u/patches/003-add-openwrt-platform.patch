@@ -1,0 +1,16 @@
+--- a/Makefile	2013-09-12 07:27:14.000000000 +0200
++++ b/Makefile	2014-09-19 11:14:25.676989006 +0200
+@@ -197,11 +197,11 @@
+ 
+ ifeq ($(PLATFORM),PC)
+ # Linux 2.6
+-LINUX_SRC = /lib/modules/$(shell uname -r)/build
++LINUX_SRC = $(LINUX_DIR)
+ # Linux 2.4 Change to your local setting
+ #LINUX_SRC = /usr/src/linux-2.4
+ LINUX_SRC_MODULE = /lib/modules/$(shell uname -r)/kernel/drivers/net/wireless/
+-CROSS_COMPILE = 
++CROSS_COMPILE = $(KERNEL_CROSS)
+ endif
+ 
+ ifeq ($(PLATFORM),INTELP6)

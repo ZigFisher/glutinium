@@ -1,0 +1,109 @@
+diff -urEZbwB DPO_MT7601U_LinuxSTA_3.0.0.4_20130913/common/rtusb_dev_id.c src/common/rtusb_dev_id.c
+--- DPO_MT7601U_LinuxSTA_3.0.0.4_20130913/common/rtusb_dev_id.c	2013-09-12 09:27:14.000000000 +0400
++++ src/common/rtusb_dev_id.c	2019-11-06 14:13:51.469435922 +0300
+@@ -42,6 +42,9 @@
+ #ifdef MT7601U
+ 	{USB_DEVICE(0x148f,0x6370)}, /* Ralink 6370 */
+ 	{USB_DEVICE(0x148f,0x7601)}, /* MT 6370 */
++    {USB_DEVICE(0x148f,0x760b)}, /* 360 wifi */
++    {USB_DEVICE(0x2a5f,0x1000)}, /* Tencent wifi QQ */
++    {USB_DEVICE(0x2955,0x1003)}, /* nuomi wifi */
+ #endif /* MT7601U */
+ 	{ }/* Terminating entry */
+ };
+diff -urEZbwB DPO_MT7601U_LinuxSTA_3.0.0.4_20130913/os/linux/config.mk src/os/linux/config.mk
+--- DPO_MT7601U_LinuxSTA_3.0.0.4_20130913/os/linux/config.mk	2013-09-12 10:05:55.000000000 +0400
++++ src/os/linux/config.mk	2019-11-06 14:13:51.497435490 +0300
+@@ -954,6 +954,11 @@
+ EXTRA_CFLAGS := $(WFLAGS) -I$(RT28xx_DIR)/include
+ endif
+ 
++ifeq ($(PLATFORM),HI3518C)
++EXTRA_CFLAGS := -D__KERNEL__ -DMODULE=1 -I$(LINUX_SRC)/include -Wall -Wstrict-prototypes -Wno-trigraphs -O2 -fno-strict-aliasing -fno-common -fomit-frame-pointer -fno-pic -pipe -finline-limit=100000 $(WFLAGS)
++export EXTRA_CFLAGS
++endif
++
+ ifeq ($(PLATFORM),ST)
+ #WFLAGS += -DST
+ WFLAGS += -DST
+
+diff -urEZbwB DPO_MT7601U_LinuxSTA_3.0.0.4_20130913/sta/rtmp_data.c src/sta/rtmp_data.c
+--- DPO_MT7601U_LinuxSTA_3.0.0.4_20130913/sta/rtmp_data.c	2013-09-12 09:27:14.000000000 +0400
++++ src/sta/rtmp_data.c	2019-11-06 14:13:51.505435367 +0300
+@@ -1593,15 +1593,15 @@
+ 		INC_COUNTER64(pAd->WlanCounters.ReceivedFragmentCount);
+ #endif /* STATS_COUNT_SUPPORT */
+ 
+-		if (pRxWI->RxWIMPDUByteCnt < 14)
++		if (MONITOR_ON(pAd))
+ 		{
+-			Status = NDIS_STATUS_FAILURE;
++			STA_MonPktSend(pAd, &RxBlk);
+ 			continue;
+ 		}
+ 
+-		if (MONITOR_ON(pAd))
++		if (pRxWI->RxWIMPDUByteCnt < 14)
+ 		{
+-			STA_MonPktSend(pAd, &RxBlk);
++			Status = NDIS_STATUS_FAILURE;
+ 			continue;
+ 		}
+ 
+diff -urEZbwB DPO_MT7601U_LinuxSTA_3.0.0.4_20130913/sta/sta_cfg.c src/sta/sta_cfg.c
+--- DPO_MT7601U_LinuxSTA_3.0.0.4_20130913/sta/sta_cfg.c	2013-09-12 09:27:14.000000000 +0400
++++ src/sta/sta_cfg.c	2019-11-06 14:13:51.509435305 +0300
+@@ -931,7 +931,8 @@
+ 		/* disable all periodic state machine */
+ 		pAd->StaCfg.bAutoReconnect = FALSE;
+ 		/* reset all mlme state machine */
+-		RTMP_MLME_RESET_STATE_MACHINE(pAd);
++		//RTMP_MLME_RESET_STATE_MACHINE(pAd);
++		MlmeRestartStateMachine(pAd);
+ 		DBGPRINT(RT_DEBUG_TRACE, ("fOP_STATUS_MEDIA_STATE_CONNECTED \n"));
+ 		if (pAd->CommonCfg.CentralChannel == 0)
+ 		{
+@@ -6001,10 +6002,24 @@
+     if (ChannelSanity(pAd, chan) == TRUE)
+     {
+ 	pAd->CommonCfg.Channel = chan;
++
+ 		/* Save the channel on MlmeAux for CntlOidRTBssidProc used. */
+ 		pAd->MlmeAux.Channel = pAd->CommonCfg.Channel;
+ 		/*save connect info*/
+ 		pAd->StaCfg.ConnectinfoChannel = pAd->CommonCfg.Channel;	
++
++        /* switch to the channel */ 
++        if (MONITOR_ON(pAd)) {
++            UCHAR rf_channel, rf_bw;
++            INT ext_ch;
++            /* 20MHz */
++            rf_bw = BW_20;
++            ext_ch = EXTCHA_NONE;
++            rf_channel = pAd->CommonCfg.Channel;
++
++            AsicSetChannel(pAd, rf_channel, rf_bw, ext_ch, FALSE);
++        }
++
+ 	DBGPRINT(RT_DEBUG_ERROR, ("==>rt_ioctl_siwfreq::SIOCSIWFREQ(Channel=%d)\n", pAd->CommonCfg.Channel));
+     }
+     else
+@@ -8275,15 +8290,15 @@
+ 			break;
+ 
+ 		case CMD_RTPRIV_IOCTL_MAC:
+-			RTMPIoctlMAC(pAd, pRequest);
++			//RTMPIoctlMAC(pAd, pRequest);
+ 			break;
+ 
+ 		case CMD_RTPRIV_IOCTL_E2P:
+-			RTMPIoctlE2PROM(pAd, pRequest);
++			//RTMPIoctlE2PROM(pAd, pRequest);
+ 			break;
+ 
+ 		case CMD_RTPRIV_IOCTL_RF:
+-			RTMPIoctlRF(pAd, pRequest);
++			//RTMPIoctlRF(pAd, pRequest);
+ 			break;
+ 
+ 		case CMD_RTPRIV_IOCTL_BBP:

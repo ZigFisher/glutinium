@@ -1,0 +1,11 @@
+--- a/include/mac_ral/rtmp_mac.h
++++ b/include/mac_ral/rtmp_mac.h
+@@ -1203,7 +1203,7 @@ typedef	union _LG_FBK_CFG0_STRUC {
+ 	struct {
+ 	    UINT32       OFDMMCS7FBK:4;
+ 	    UINT32       OFDMMCS6FBK:4;
+-	    UINT32       OFDMMCS5FBK:4
++	    UINT32       OFDMMCS5FBK:4;
+ 	    UINT32       OFDMMCS4FBK:4;
+ 	    UINT32       OFDMMCS3FBK:4;
+ 	    UINT32       OFDMMCS2FBK:4;

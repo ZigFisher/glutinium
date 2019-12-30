@@ -1,0 +1,14 @@
+--- a/os/linux/config.mk
++++ b/os/linux/config.mk
+@@ -290,7 +290,11 @@ endif
+ # config for STA mode
+ 
+ ifeq ($(RT28xx_MODE),STA)
++ifeq ($(RTDEBUG),)
+ WFLAGS += -DCONFIG_STA_SUPPORT -DSCAN_SUPPORT
++else
++WFLAGS += -DCONFIG_STA_SUPPORT -DSCAN_SUPPORT -DDBG
++endif
+ 
+ ifeq ($(HAS_XLINK),y)
+ WFLAGS += -DXLINK_SUPPORT

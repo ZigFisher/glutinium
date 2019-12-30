@@ -1,0 +1,258 @@
+See this message for details
+    http://www.spinics.net/lists/linux-wireless/msg126291.html
+
+Patch url: https://github.com/porjo/mt7601/blob/master/DPO_MT7601U_LinuxSTA_3.0.0.4_20130913-Linux-3.17.0-v2.patch
+
+
+diff -ur a/common/crypt_aes.c b/common/crypt_aes.c
+--- a/common/crypt_aes.c	2013-09-12 07:27:14.000000000 +0200
++++ b/common/crypt_aes.c	2014-08-29 22:51:56.252033992 +0200
+@@ -1456,7 +1456,7 @@
+ /*    if ((pResult = (UINT8 *) kmalloc(sizeof(UINT8)*PlainTextLength, GFP_ATOMIC)) == NULL) {
+ */
+     if (pResult == NULL) {
+-    	DBGPRINT(RT_DEBUG_ERROR, ("AES_Key_Wrap: allocate %d bytes memory failure.\n", sizeof(UINT8)*PlainTextLength));
++    	DBGPRINT(RT_DEBUG_ERROR, ("AES_Key_Wrap: allocate %d bytes memory failure.\n", (UINT)(sizeof(UINT8)*PlainTextLength)));
+         return -2;
+     } /* End of if */
+ 
+@@ -1551,7 +1551,7 @@
+ /*    if ((pResult = (UINT8 *) kmalloc(sizeof(UINT8)*PlainLength, GFP_ATOMIC)) == NULL) {
+ */
+     if (pResult == NULL) {
+-    	DBGPRINT(RT_DEBUG_ERROR, ("AES_Key_Unwrap: allocate %d bytes memory failure.\n", sizeof(UINT8)*PlainLength));
++    	DBGPRINT(RT_DEBUG_ERROR, ("AES_Key_Unwrap: allocate %d bytes memory failure.\n", (UINT)(sizeof(UINT8)*PlainLength)));
+         return -2;
+     } /* End of if */
+ 
+diff -ur a/common/mlme.c b/common/mlme.c
+--- a/common/mlme.c	2013-09-12 07:27:14.000000000 +0200
++++ b/common/mlme.c	2014-08-28 20:54:24.000000000 +0200
+@@ -541,8 +541,8 @@
+ #endif /* RALINK_ATE */
+ 		/* for performace enchanement */
+ 		NdisZeroMemory(&pAd->RalinkCounters,
+-						(UINT32)&pAd->RalinkCounters.OneSecEnd -
+-						(UINT32)&pAd->RalinkCounters.OneSecStart);
++						(ULONG)&pAd->RalinkCounters.OneSecEnd -
++						(ULONG)&pAd->RalinkCounters.OneSecStart);
+ 
+ 	return;
+ }
+diff -ur a/common/rtmp_init_inf.c b/common/rtmp_init_inf.c
+--- a/common/rtmp_init_inf.c	2013-09-17 11:16:36.000000000 +0200
++++ b/common/rtmp_init_inf.c	2014-08-29 20:57:04.000000000 +0200
+@@ -665,7 +665,9 @@
+ 	{
+ 	UINT32 reg = 0;
+ 	RTMP_IO_READ32(pAd, 0x1300, &reg);  /* clear garbage interrupts*/
++#ifdef DBG
+ 	printk("0x1300 = %08x\n", reg);
++#endif /* DBG */
+ 	}
+ 
+ 	{
+diff -ur a/common/rtusb_bulk.c b/common/rtusb_bulk.c
+--- a/common/rtusb_bulk.c	2013-09-12 07:27:14.000000000 +0200
++++ b/common/rtusb_bulk.c	2014-08-29 20:57:43.000000000 +0200
+@@ -1585,7 +1585,9 @@
+ 
+ 	if (pCmdRspEventContext->IRPPending == TRUE)
+ 	{
++#ifdef DBG
+ 		printk("unlink cmd rsp urb\n");
++#endif /* DBG */
+ 		RTUSB_UNLINK_URB(pCmdRspEventContext->pUrb);
+ 		pCmdRspEventContext->IRPPending = FALSE;
+ 		pCmdRspEventContext->InUse = FALSE;
+diff -ur a/common/spectrum.c b/common/spectrum.c
+--- a/common/spectrum.c	2013-09-12 07:27:14.000000000 +0200
++++ b/common/spectrum.c	2014-08-29 23:03:23.250333353 +0200
+@@ -1969,7 +1969,7 @@
+ /*	if ((pMeasureReportInfo = kmalloc(sizeof(MEASURE_RPI_REPORT), GFP_ATOMIC)) == NULL)*/
+ 	if (pMeasureReportInfo == NULL)
+ 	{
+-		DBGPRINT(RT_DEBUG_ERROR, ("%s unable to alloc memory for measure report buffer (size=%d).\n", __FUNCTION__, sizeof(MEASURE_RPI_REPORT)));
++		DBGPRINT(RT_DEBUG_ERROR, ("%s unable to alloc memory for measure report buffer (size=%d).\n", __FUNCTION__, (UINT)sizeof(MEASURE_RPI_REPORT)));
+ 		return;
+ 	}
+ 
+diff -ur a/include/os/rt_linux.h b/include/os/rt_linux.h
+--- a/include/os/rt_linux.h	2013-09-12 07:27:14.000000000 +0200
++++ b/include/os/rt_linux.h	2014-08-28 20:54:24.000000000 +0200
+@@ -879,12 +879,19 @@
+ 		(RTPKT_TO_OSPKT(_pkt)->len)
+ #define SET_OS_PKT_LEN(_pkt, _len)	\
+ 		(RTPKT_TO_OSPKT(_pkt)->len) = (_len)
+-		
++
++#ifdef NET_SKBUFF_DATA_USES_OFFSET
++#define GET_OS_PKT_DATATAIL(_pkt) \
++        (RTPKT_TO_OSPKT(_pkt)->head + (ULONG)RTPKT_TO_OSPKT(_pkt)->tail)
++#define SET_OS_PKT_DATATAIL(_pkt, _start, _len)	\
++		((RTPKT_TO_OSPKT(_pkt))->tail) = (ULONG)_start - (ULONG)(RTPKT_TO_OSPKT(_pkt)->head) + (_len)
++#else
+ #define GET_OS_PKT_DATATAIL(_pkt) \
+-		(RTPKT_TO_OSPKT(_pkt)->tail)
++        (RTPKT_TO_OSPKT(_pkt)->tail)
+ #define SET_OS_PKT_DATATAIL(_pkt, _start, _len)	\
+ 		((RTPKT_TO_OSPKT(_pkt))->tail) = (PUCHAR)((_start) + (_len))
+-		
++#endif
++
+ #define GET_OS_PKT_HEAD(_pkt) \
+ 		(RTPKT_TO_OSPKT(_pkt)->head)
+ 
+diff -ur a/os/linux/config.mk b/os/linux/config.mk
+--- a/os/linux/config.mk	2013-09-12 08:05:55.000000000 +0200
++++ b/os/linux/config.mk	2014-08-28 20:54:24.000000000 +0200
+@@ -150,7 +150,7 @@
+ HAS_BGFP_OPEN_SUPPORT=n
+ 
+ # Support HOSTAPD function
+-HAS_HOSTAPD_SUPPORT=n
++HAS_HOSTAPD_SUPPORT=y
+ 
+ #Support GreenAP function
+ HAS_GREENAP_SUPPORT=n
+@@ -290,7 +290,7 @@
+ # config for STA mode
+ 
+ ifeq ($(RT28xx_MODE),STA)
+-WFLAGS += -DCONFIG_STA_SUPPORT -DSCAN_SUPPORT -DDBG
++WFLAGS += -DCONFIG_STA_SUPPORT -DSCAN_SUPPORT
+ 
+ ifeq ($(HAS_XLINK),y)
+ WFLAGS += -DXLINK_SUPPORT
+@@ -1054,11 +1054,16 @@
+ export CFLAGS
+ endif
+ 
++GCCVERSION = $(shell $(KERNEL_CROSS)gcc -dumpversion)
++
+ ifeq ($(PLATFORM),PC)
+     ifneq (,$(findstring 2.4,$(LINUX_SRC)))
+ 	# Linux 2.4
+ 	CFLAGS := -D__KERNEL__ -I$(LINUX_SRC)/include -O2 -fomit-frame-pointer -fno-strict-aliasing -fno-common -pipe -mpreferred-stack-boundary=2 -march=i686 -DMODULE -DMODVERSIONS -include $(LINUX_SRC)/include/linux/modversions.h $(WFLAGS)
+ 	export CFLAGS
++    else ifneq (,$(findstring 4.9,$(GCCVERSION)))
++	# GCC 4.9
++        EXTRA_CFLAGS := -Wno-error=date-time $(WFLAGS)
+     else
+ 	# Linux 2.6
+ 	EXTRA_CFLAGS := $(WFLAGS) 
+diff -ur a/os/linux/rt_linux.c b/os/linux/rt_linux.c
+--- a/os/linux/rt_linux.c	2013-09-12 07:27:14.000000000 +0200
++++ b/os/linux/rt_linux.c	2014-08-28 20:54:24.000000000 +0200
+@@ -494,9 +494,11 @@
+ 		MEM_DBG_PKT_ALLOC_INC(skb);
+ 
+ 		skb_reserve(skb, 2);
+-		NdisMoveMemory(skb->tail, pHeader802_3, HdrLen);
++
++		NdisMoveMemory(GET_OS_PKT_DATATAIL(skb), pHeader802_3, HdrLen);
+ 		skb_put(skb, HdrLen);
+-		NdisMoveMemory(skb->tail, pData, DataSize);
++		NdisMoveMemory(GET_OS_PKT_DATATAIL(skb), pData, DataSize);
++
+ 		skb_put(skb, DataSize);
+ 		skb->dev = pNetDev;	/*get_netdev_from_bssid(pAd, FromWhichBSSID); */
+ 		pPacket = OSPKT_TO_RTPKT(skb);
+@@ -647,7 +649,7 @@
+ 		pClonedPkt->dev = pRxPkt->dev;
+ 		pClonedPkt->data = pData;
+ 		pClonedPkt->len = DataSize;
+-		pClonedPkt->tail = pClonedPkt->data + pClonedPkt->len;
++		SET_OS_PKT_DATATAIL(pClonedPkt, pClonedPkt->data, pClonedPkt->len);
+ 		ASSERT(DataSize < 1530);
+ 	}
+ 	return pClonedPkt;
+@@ -692,7 +694,7 @@
+ 	pOSPkt->dev = pNetDev;
+ 	pOSPkt->data = pData;
+ 	pOSPkt->len = DataSize;
+-	pOSPkt->tail = pOSPkt->data + pOSPkt->len;
++	SET_OS_PKT_DATATAIL(pOSPkt, pOSPkt->data, pOSPkt->len);
+ 
+ 	/* copy 802.3 header */
+ 
+@@ -1117,6 +1119,11 @@
+ 		pOSFSInfo->fsuid = current->fsuid;
+ 		pOSFSInfo->fsgid = current->fsgid;
+ 		current->fsuid = current->fsgid = 0;
++
++#elif LINUX_VERSION_CODE >= KERNEL_VERSION(3,15,10)
++      pOSFSInfo->fsuid = current_fsuid().val;
++      pOSFSInfo->fsgid = current_fsgid().val;
++
+ #else
+ 		pOSFSInfo->fsuid = current_fsuid();
+ 		pOSFSInfo->fsgid = current_fsgid();
+diff -ur a/os/linux/rt_main_dev.c b/os/linux/rt_main_dev.c
+--- a/os/linux/rt_main_dev.c	2013-09-12 07:27:14.000000000 +0200
++++ b/os/linux/rt_main_dev.c	2014-08-29 21:14:46.000000000 +0200
+@@ -746,7 +746,9 @@
+ 	/* Unregister network device */
+ 	if (net_dev != NULL)
+ 	{
++#ifdef DBG
+ 		printk("RtmpOSNetDevDetach(): RtmpOSNetDeviceDetach(), dev->name=%s!\n", net_dev->name);
++#endif /* DBG */
+ 		RtmpOSNetDevDetach(net_dev);
+ 	}
+ 
+diff -ur a/os/linux/rt_profile.c b/os/linux/rt_profile.c
+--- a/os/linux/rt_profile.c	2013-09-12 07:27:14.000000000 +0200
++++ b/os/linux/rt_profile.c	2014-08-29 23:23:18.033710839 +0200
+@@ -396,7 +396,7 @@
+ 
+     if (pRxBlk->DataSize + sizeof(wlan_ng_prism2_header) > RX_BUFFER_AGGRESIZE)
+     {
+-        DBGPRINT(RT_DEBUG_ERROR, ("%s : Size is too large! (%d)\n", __FUNCTION__, pRxBlk->DataSize + sizeof(wlan_ng_prism2_header)));
++        DBGPRINT(RT_DEBUG_ERROR, ("%s : Size is too large! (%d)\n", __FUNCTION__, pRxBlk->DataSize + (UINT)sizeof(wlan_ng_prism2_header)));
+ 		goto err_free_sk_buff;
+     }
+ 
+diff -ur a/os/linux/usb_main_dev.c b/os/linux/usb_main_dev.c
+--- a/os/linux/usb_main_dev.c	2013-09-12 07:27:14.000000000 +0200
++++ b/os/linux/usb_main_dev.c	2014-08-29 21:12:35.000000000 +0200
+@@ -516,7 +516,9 @@
+ /* Init driver module */
+ INT __init rtusb_init(void)
+ {
++#ifdef DBG
+ 	printk("rtusb init %s --->\n", RTMP_DRV_NAME);
++#endif /* DBG */
+ 	return usb_register(&rtusb_driver);
+ }
+ 
+@@ -524,7 +526,9 @@
+ VOID __exit rtusb_exit(void)
+ {
+ 	usb_deregister(&rtusb_driver);	
++#ifdef DBG
+ 	printk("<--- rtusb exit\n");
++#endif /* DBG */
+ }
+ 
+ module_init(rtusb_init);
+diff -ur a/sta/sta_cfg.c b/sta/sta_cfg.c
+--- a/sta/sta_cfg.c	2013-09-12 07:27:14.000000000 +0200
++++ b/sta/sta_cfg.c	2014-08-28 20:54:24.000000000 +0200
+@@ -8274,6 +8274,7 @@
+ 			RTMPIoctlGetSiteSurvey(pAd, pRequest);
+ 			break;
+ 
++#ifdef DBG
+ 		case CMD_RTPRIV_IOCTL_MAC:
+ 			RTMPIoctlMAC(pAd, pRequest);
+ 			break;
+@@ -8285,6 +8286,7 @@
+ 		case CMD_RTPRIV_IOCTL_RF:
+ 			RTMPIoctlRF(pAd, pRequest);
+ 			break;
++#endif /* DBG */
+ 
+ 		case CMD_RTPRIV_IOCTL_BBP:
+ 			RTMPIoctlBbp(pAd, pRequest, pData, Data);
+
