@@ -35,7 +35,7 @@ define Package/$(PKG_NAME)
 	SUBMENU:=Multimedia
 	TITLE:=Best samples for Hisilicon devices
 	MAINTAINER:=chertovmv@gmail.com
-	DEPENDS:=@(TARGET_hi35xx) +libpthread +hisi-osdrv2-base +hisi-osdrv2-kmod +hisi-osdrv2-lib
+	DEPENDS:=@(TARGET_hi35xx) +libpthread +hisi-osdrv2-base +hisi-osdrv2-kmod +hisi-osdrv2-lib +libevent2 +lame-lib
 endef
 
 define Package/$(PKG_NAME)/description
