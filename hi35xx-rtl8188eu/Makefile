@@ -37,7 +37,7 @@ endef
 define KernelPackage/$(PKG_NAME)
 $(call Package/$(PKG_NAME)/Default)
 	SUBMENU:=Wireless Drivers
-	DEPENDS:=hi35xx-rtl8188eu-firmware +@USB_SUPPORT +@DRIVER_WEXT_SUPPORT +kmod-usb-core +wireless-tools +hostapd-common-old
+	DEPENDS:=@USB_SUPPORT +@DRIVER_WEXT_SUPPORT +kmod-usb-core +wireless-tools +hostapd-common-old
 	TITLE:=Driver for RTL8188EU wireless adapters (HI35xx)
 	FILES:=$(PKG_BUILD_DIR)/$(PKG_NAME).$(LINUX_KMOD_SUFFIX)
 	VERSION:=$(LINUX_VERSION)+$(PKG_VERSION)-$(PKG_RELEASE)

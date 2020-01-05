@@ -4,3 +4,9 @@ h4. Update wext.sh
 pre. #
   # Disable Power Management
   iwconfig "$device" power off >/dev/null 2>/dev/null
+
+---
+
+* https://github.com/art567/mt7601usta
+* https://github.com/olivluca/mt7601-openwrt
+
