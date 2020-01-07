@@ -114,7 +114,10 @@ define Package/$(PKG_NAME)-lib/install
 	$(CP) ./lib/libtde.so $(1)/usr/lib/
 	$(CP) ./lib/libupvqe.so $(1)/usr/lib/
 	$(CP) ./lib/libVoiceEngine.so $(1)/usr/lib/
-	#$(CP) ./lib/lib_cmoscfg.so $(1)/usr/lib/
+#
+	$(CP) ./lib/lib_cmoscfg.so $(1)/usr/lib/
+	$(CP) ./lib/lib_iniparser.so $(1)/usr/lib/
+#
 	#$(CP) ./lib/libhive_AEC.so $(1)/usr/lib/
 	#$(CP) ./lib/libhive_AGC.so $(1)/usr/lib/
 	#$(CP) ./lib/libhive_ANR.so $(1)/usr/lib/
@@ -126,7 +129,6 @@ define Package/$(PKG_NAME)-lib/install
 	#$(CP) ./lib/libhive_MBC.so $(1)/usr/lib/
 	#$(CP) ./lib/libhive_RES.so $(1)/usr/lib/
 	#$(CP) ./lib/libhive_RNR.so $(1)/usr/lib/
-	#$(CP) ./lib/lib_iniparser.so $(1)/usr/lib/
 	#$(CP) ./lib/libslice_trans.so $(1)/usr/lib/
 endef
 
