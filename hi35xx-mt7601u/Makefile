@@ -30,7 +30,7 @@ include $(INCLUDE_DIR)/package.mk
 
 define KernelPackage/$(PKG_NAME)
 	SUBMENU:=Wireless Drivers
-	DEPENDS:=@USB_SUPPORT +@DRIVER_WEXT_SUPPORT +kmod-usb-core +wireless-tools +hostapd-common-old
+	DEPENDS:=+@USB_SUPPORT +@DRIVER_WEXT_SUPPORT +kmod-usb-core +wireless-tools +hostapd-common-old
 	TITLE:=Driver for MT7601U wireless adapters (HI35xx)
 	FILES:=$(PKG_BUILD_DIR)/$(PKG_NAME).$(LINUX_KMOD_SUFFIX)
 	VERSION:=$(LINUX_VERSION)+$(PKG_VERSION)-$(PKG_RELEASE)
