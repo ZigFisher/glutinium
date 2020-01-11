@@ -21,9 +21,9 @@ extern "C"{
 
 #define JXF23_ID 23
 
-/**************************************************************************** 
-* local variables                                                            
-* 
+/****************************************************************************
+* local variables
+*
 ****************************************************************************/
 extern const unsigned int sensor_i2c_addr;
 extern unsigned int sensor_addr_byte;
@@ -51,20 +51,20 @@ ISP_SNS_REGS_INFO_S g_stPreSnsRegsInfo = {0};
 static HI_S32 cmos_get_ae_default(AE_SENSOR_DEFAULT_S *pstAeSnsDft)
 {
 	if (HI_NULL == pstAeSnsDft)
-	{        
+	{
 		printf("null pointer when get ae default value!\n");
-		return -1;    
+		return -1;
 	}
-	pstAeSnsDft->u32LinesPer500ms = VMAX_720P30_LINEAR * 30 / 2;    
+	pstAeSnsDft->u32LinesPer500ms = VMAX_720P30_LINEAR * 30 / 2;
 	pstAeSnsDft->u32FullLinesStd = gu32FullLinesStd;
 	pstAeSnsDft->u32FlickerFreq = 0;
 	pstAeSnsDft->au8HistThresh[0] = 0xd;
 	pstAeSnsDft->au8HistThresh[1] = 0x28;
-	pstAeSnsDft->au8HistThresh[2] = 0x60;    
+	pstAeSnsDft->au8HistThresh[2] = 0x60;
 	pstAeSnsDft->au8HistThresh[3] = 0x80;
 	pstAeSnsDft->u8AeCompensation = 0x38;
 	pstAeSnsDft->stIntTimeAccu.enAccuType = AE_ACCURACY_LINEAR;
-	pstAeSnsDft->stIntTimeAccu.f32Accuracy = 1;    
+	pstAeSnsDft->stIntTimeAccu.f32Accuracy = 1;
 	pstAeSnsDft->stIntTimeAccu.f32Offset = 0;
 	pstAeSnsDft->u32MaxIntTime = gu32FullLinesStd - 2;
 	pstAeSnsDft->u32MinIntTime = 2;
@@ -73,7 +73,7 @@ static HI_S32 cmos_get_ae_default(AE_SENSOR_DEFAULT_S *pstAeSnsDft)
 	pstAeSnsDft->stAgainAccu.enAccuType = AE_ACCURACY_TABLE;
 	pstAeSnsDft->stAgainAccu.f32Accuracy = 1;
 	pstAeSnsDft->u32MaxAgain = 8196;
-	pstAeSnsDft->u32MinAgain = 1024;    
+	pstAeSnsDft->u32MinAgain = 1024;
 	pstAeSnsDft->u32MaxAgainTarget = pstAeSnsDft->u32MaxAgain;
 	pstAeSnsDft->u32MinAgainTarget = pstAeSnsDft->u32MinAgain;
 	pstAeSnsDft->stDgainAccu.enAccuType = AE_ACCURACY_LINEAR;
@@ -93,15 +93,15 @@ static HI_VOID cmos_fps_set(HI_FLOAT f32Fps, AE_SENSOR_DEFAULT_S *pstAeSnsDft)
 {
 	if ((f32Fps <= 30) && (f32Fps >= 0.5))
 	{
-		if(SENSOR_720P_30FPS_MODE == gu8SensorImageMode)        
+		if(SENSOR_720P_30FPS_MODE == gu8SensorImageMode)
 		{
 			gu32FullLinesStd = VMAX_720P30_LINEAR * 30 / f32Fps;
 		}
-		if(SENSOR_960P_30FPS_MODE == gu8SensorImageMode)        
+		if(SENSOR_960P_30FPS_MODE == gu8SensorImageMode)
 		{
 			gu32FullLinesStd = VMAX_960P30_LINEAR * 30 / f32Fps;
 		}
-		if(SENSOR_1080P_30FPS_MODE == gu8SensorImageMode)        
+		if(SENSOR_1080P_30FPS_MODE == gu8SensorImageMode)
 		{
 			gu32FullLinesStd = VMAX_1080P30_LINEAR * 30 / f32Fps;
 		}
@@ -120,14 +120,14 @@ static HI_VOID cmos_fps_set(HI_FLOAT f32Fps, AE_SENSOR_DEFAULT_S *pstAeSnsDft)
 
 static HI_VOID cmos_slow_framerate_set(HI_U32 u32FullLines, AE_SENSOR_DEFAULT_S *pstAeSnsDft)
 {
-	gu32FullLines = u32FullLines;        
-	g_stSnsRegsInfo.astI2cData[3].u32Data = (gu32FullLines >> 8) & 0xff;    
-	g_stSnsRegsInfo.astI2cData[4].u32Data = gu32FullLines & 0xff;        
+	gu32FullLines = u32FullLines;
+	g_stSnsRegsInfo.astI2cData[3].u32Data = (gu32FullLines >> 8) & 0xff;
+	g_stSnsRegsInfo.astI2cData[4].u32Data = gu32FullLines & 0xff;
 	pstAeSnsDft->u32MaxIntTime = gu32FullLines - 2;
 	return;
 }
 
-/* while isp notify ae to update sensor regs, ae call these funcs. */static 
+/* while isp notify ae to update sensor regs, ae call these funcs. */static
 HI_VOID cmos_inttime_update(HI_U32 u32IntTime)
 {
 	g_stSnsRegsInfo.astI2cData[0].u32Data = (u32IntTime >> 8) & 0xFF;
@@ -157,12 +157,12 @@ static HI_VOID cmos_again_calc_table(HI_U32 *pu32AgainLin, HI_U32 *pu32AgainDb)
 			*pu32AgainDb = i - 1;
 			break;
 		}
-	}    
+	}
 	return;
 }
 
 static HI_VOID cmos_gains_update(HI_U32 u32Again, HI_U32 u32Dgain)
-{      
+{
 	g_stSnsRegsInfo.astI2cData[2].u32Data = (u32Again << 4) | ((u32Dgain - 16) & 0xf);
 	return;
 }
@@ -220,12 +220,12 @@ static HI_S32 cmos_get_awb_default(AWB_SENSOR_DEFAULT_S *pstAwbSnsDft)
 		return -1;
 	}
 	memset(pstAwbSnsDft, 0, sizeof(AWB_SENSOR_DEFAULT_S));
-	pstAwbSnsDft->u16WbRefTemp = 5000;    
+	pstAwbSnsDft->u16WbRefTemp = 5000;
 	pstAwbSnsDft->au16GainOffset[0] = 400;
 	pstAwbSnsDft->au16GainOffset[1] = 0x100;
 	pstAwbSnsDft->au16GainOffset[2] = 0x100;
 	pstAwbSnsDft->au16GainOffset[3] = 0x1b9;
-	pstAwbSnsDft->as32WbPara[0] = 168;        
+	pstAwbSnsDft->as32WbPara[0] = 168;
 	pstAwbSnsDft->as32WbPara[1] = -66;
 	pstAwbSnsDft->as32WbPara[2] = -154;
 	pstAwbSnsDft->as32WbPara[3] = 178500;
@@ -246,7 +246,7 @@ HI_S32 cmos_init_awb_exp_function(AWB_SENSOR_EXP_FUNC_S *pstExpFuncs)
 }
 
 #define DMNR_CALIB_CARVE_NUM_H42 5
-float g_coef_calib_h42[DMNR_CALIB_CARVE_NUM_H42][4] = 
+float g_coef_calib_h42[DMNR_CALIB_CARVE_NUM_H42][4] =
 {
 	{100.000000f, 2.000000f, 0.040110f, 8.391255f, },
 	{800.000000f, 2.903090f, 0.047486f, 9.635272f, },
@@ -254,7 +254,7 @@ float g_coef_calib_h42[DMNR_CALIB_CARVE_NUM_H42][4] =
 	{5500.000000f, 3.740363f, 0.063797f, 17.750826f, },
 	{6194.000000f, 3.791971f, 0.062829f, 17.908888f, },
 };
-static ISP_NR_ISO_PARA_TABLE_S g_stNrIsoParaTab[HI_ISP_NR_ISO_LEVEL_MAX] = 
+static ISP_NR_ISO_PARA_TABLE_S g_stNrIsoParaTab[HI_ISP_NR_ISO_LEVEL_MAX] =
 {
 	//u16Threshold//u8varStrength//u8fixStrength//u8LowFreqSlope
 	{1500,       160,             256-256,            0 },  //100    //                      //
@@ -310,18 +310,15 @@ static ISP_CMOS_RGBSHARPEN_S g_stIspRgbSharpen =
 	{59,  59,  59,  59,  59,  59,  59,   59,  101,  0,   0,    0,   0,    0,    0,      0},/*overshootAmt*/
 	{117, 117, 117, 108, 108, 108, 122,  122, 139,  0,   0,    0,   0,    0,    0,     0},/*undershootAmt*/
 };
-static ISP_CMOS_UVNR_S g_stIspUVNR = 
+static ISP_CMOS_UVNR_S g_stIspUVNR =
 {
-	/*中值滤波切换到UVNR的ISO阈值*/
-	/*UVNR切换到中值滤波的ISO阈值*/
-	/*0.0   -> disable，(0.0, 1.0]  -> weak，(1.0, 2.0]  -> normal，(2.0, 10.0) -> strong*/
-	/*高斯滤波器的标准差*/
+	/*0.0   -> disable (0.0, 1.0]  -> weak (1.0, 2.0]  -> normal (2.0, 10.0) -> strong*/
 	//{100,	200,	400,	800,	1600,	3200,	6400,	12800,	25600,	51200,	102400,	204800,	409600,	819200,	1638400,	3276800};
 	{1,	    2,       4,      5,      7,      48,     32,     16,     16,     16,      16,     16,     16,     16,     16,        16},      /*UVNRThreshold*/
 	{0,		0,		0,		0,		0,		0,		0,		0,		0,		1,			1,		2,		2,		2,		2,		2},  /*Coring_lutLimit*/
 	{0,		0,		0,		16,		34,		34,		34,		34,		34,		34,		34,		34,		34,		34,		34,			34}  /*UVNR_blendRatio*/
 };
-static ISP_CMOS_DPC_S g_stCmosDpc = 
+static ISP_CMOS_DPC_S g_stCmosDpc =
 {
 	//1,/*IR_channel*/
 	//1,/*IR_position*/
@@ -377,8 +374,8 @@ HI_U32 cmos_get_isp_black_level(ISP_CMOS_BLACK_LEVEL_S *pstBlackLevel)
 	pstBlackLevel->au16BlackLevel[1] = 64;
 	pstBlackLevel->au16BlackLevel[2] = 64;
 	pstBlackLevel->au16BlackLevel[3] = 64;
-	return 0;  
-	
+	return 0;
+
 }
 
 HI_VOID cmos_set_pixel_detect(HI_BOOL bEnable)
@@ -393,11 +390,11 @@ HI_VOID cmos_set_pixel_detect(HI_BOOL bEnable)
 	{
 		return;
 	}
-	
+
 	u32FullLines_5Fps = (u32FullLines_5Fps > FULL_LINES_MAX) ? FULL_LINES_MAX : u32FullLines_5Fps;
 */
 	if (bEnable) /* setup for ISP pixel calibration mode */
-	{        
+	{
 		sensor_write_register(0x22, 0x94);
 		sensor_write_register(0x23, 0x11);
 		sensor_write_register(0x01, 0x92);
@@ -417,7 +414,7 @@ HI_VOID cmos_set_pixel_detect(HI_BOOL bEnable)
 HI_VOID cmos_set_wdr_mode(HI_U8 u8Mode)
 {
 	bInit = HI_FALSE;
-	
+
 	switch(u8Mode)
 	{
 		case WDR_MODE_NONE:
@@ -441,7 +438,7 @@ HI_VOID cmos_set_wdr_mode(HI_U8 u8Mode)
 			return;
 		break;
 	}
-	
+
 	return;
 }
 
@@ -453,9 +450,9 @@ HI_U32 cmos_get_sns_regs_info(ISP_SNS_REGS_INFO_S *pstSnsRegsInfo)
 	{
 		g_stSnsRegsInfo.enSnsType = ISP_SNS_I2C_TYPE;
 		g_stSnsRegsInfo.u8Cfg2ValidDelayMax = 2;
-		
+
 		g_stSnsRegsInfo.u32RegNum = 5;
-		
+
 		for (i=0; i<g_stSnsRegsInfo.u32RegNum; i++)
 		{
 			g_stSnsRegsInfo.astI2cData[i].bUpdate = HI_TRUE;
@@ -493,15 +490,15 @@ HI_U32 cmos_get_sns_regs_info(ISP_SNS_REGS_INFO_S *pstSnsRegsInfo)
 			}
 		}
 	}
-	
+
 	if (HI_NULL == pstSnsRegsInfo)
 	{
 		printf("null pointer when get sns reg info!\n");
 		return -1;
 	}
 
-	memcpy(pstSnsRegsInfo, &g_stSnsRegsInfo, sizeof(ISP_SNS_REGS_INFO_S)); 
-	memcpy(&g_stPreSnsRegsInfo, &g_stSnsRegsInfo, sizeof(ISP_SNS_REGS_INFO_S)); 
+	memcpy(pstSnsRegsInfo, &g_stSnsRegsInfo, sizeof(ISP_SNS_REGS_INFO_S));
+	memcpy(&g_stPreSnsRegsInfo, &g_stSnsRegsInfo, sizeof(ISP_SNS_REGS_INFO_S));
 
 	return 0;
 }
@@ -510,7 +507,7 @@ static HI_S32 cmos_set_image_mode(ISP_CMOS_SENSOR_IMAGE_MODE_S *pstSensorImageMo
 {
 	HI_U8 u8SensorImageMode = gu8SensorImageMode;
 
-	bInit = HI_FALSE;	 
+	bInit = HI_FALSE;
 
 	if (HI_NULL == pstSensorImageMode )
 	{
@@ -526,8 +523,8 @@ static HI_S32 cmos_set_image_mode(ISP_CMOS_SENSOR_IMAGE_MODE_S *pstSensorImageMo
 		}
 		else
 		{
-			printf("Not support! Width:%d, Height:%d, Fps:%f, WDRMode:%d\n", 
-				pstSensorImageMode->u16Width, 
+			printf("Not support! Width:%d, Height:%d, Fps:%f, WDRMode:%d\n",
+				pstSensorImageMode->u16Width,
 				pstSensorImageMode->u16Height,
 				pstSensorImageMode->f32Fps,
 				genSensorMode);
@@ -542,8 +539,8 @@ static HI_S32 cmos_set_image_mode(ISP_CMOS_SENSOR_IMAGE_MODE_S *pstSensorImageMo
 		}
 		else
 		{
-			printf("Not support! Width:%d, Height:%d, Fps:%f, WDRMode:%d\n", 
-				pstSensorImageMode->u16Width, 
+			printf("Not support! Width:%d, Height:%d, Fps:%f, WDRMode:%d\n",
+				pstSensorImageMode->u16Width,
 				pstSensorImageMode->u16Height,
 				pstSensorImageMode->f32Fps,
 				genSensorMode);
@@ -558,8 +555,8 @@ static HI_S32 cmos_set_image_mode(ISP_CMOS_SENSOR_IMAGE_MODE_S *pstSensorImageMo
 		}
 		else
 		{
-			printf("Not support! Width:%d, Height:%d, Fps:%f, WDRMode:%d\n", 
-				pstSensorImageMode->u16Width, 
+			printf("Not support! Width:%d, Height:%d, Fps:%f, WDRMode:%d\n",
+				pstSensorImageMode->u16Width,
 				pstSensorImageMode->u16Height,
 				pstSensorImageMode->f32Fps,
 				genSensorMode);
@@ -568,8 +565,8 @@ static HI_S32 cmos_set_image_mode(ISP_CMOS_SENSOR_IMAGE_MODE_S *pstSensorImageMo
 	}
 	else
 	{
-		printf("Not support! Width:%d, Height:%d, Fps:%f, WDRMode:%d\n", 
-			pstSensorImageMode->u16Width, 
+		printf("Not support! Width:%d, Height:%d, Fps:%f, WDRMode:%d\n",
+			pstSensorImageMode->u16Width,
 			pstSensorImageMode->u16Height,
 			pstSensorImageMode->f32Fps,
 			genSensorMode);
@@ -595,20 +592,20 @@ static HI_S32 cmos_set_image_mode(ISP_CMOS_SENSOR_IMAGE_MODE_S *pstSensorImageMo
 	return 0;
 }
 HI_VOID sensor_global_init()
-{	  
+{
 	gu8SensorImageMode = SENSOR_720P_30FPS_MODE;
 	genSensorMode = WDR_MODE_NONE;
 	gu32FullLinesStd = VMAX_720P30_LINEAR;
 	bInit = HI_FALSE;
-	bSensorInit = HI_FALSE; 
+	bSensorInit = HI_FALSE;
 
 	memset(&g_stSnsRegsInfo, 0, sizeof(ISP_SNS_REGS_INFO_S));
-	memset(&g_stPreSnsRegsInfo, 0, sizeof(ISP_SNS_REGS_INFO_S));	  
+	memset(&g_stPreSnsRegsInfo, 0, sizeof(ISP_SNS_REGS_INFO_S));
 }
 
 HI_S32 cmos_init_sensor_exp_function(ISP_SENSOR_EXP_FUNC_S *pstSensorExpFunc)
 {
-	memset(pstSensorExpFunc, 0, sizeof(ISP_SENSOR_EXP_FUNC_S));    
+	memset(pstSensorExpFunc, 0, sizeof(ISP_SENSOR_EXP_FUNC_S));
 	pstSensorExpFunc->pfn_cmos_sensor_init = sensor_init;
 	pstSensorExpFunc->pfn_cmos_sensor_exit = sensor_exit;
 	pstSensorExpFunc->pfn_cmos_sensor_global_init = sensor_global_init;
@@ -623,9 +620,9 @@ HI_S32 cmos_init_sensor_exp_function(ISP_SENSOR_EXP_FUNC_S *pstSensorExpFunc)
 }
 
 /****************************************************************************
- * callback structure														*
+ * callback structure                                                       *
  ****************************************************************************/
- 
+
 int sensor_register_callback(void)
 {
 	ISP_DEV IspDev = 0;
@@ -642,7 +639,7 @@ int sensor_register_callback(void)
 		printf("sensor register callback function failed!\n");
 		return s32Ret;
 	}
-	
+
 	stLib.s32Id = 0;
 	strncpy(stLib.acLibName, HI_AE_LIB_NAME, sizeof(HI_AE_LIB_NAME));
 	cmos_init_ae_exp_function(&stAeRegister.stSnsExp);
@@ -662,7 +659,7 @@ int sensor_register_callback(void)
 		printf("sensor register callback function to awb lib failed!\n");
 		return s32Ret;
 	}
-	
+
 	return 0;
 }
 
@@ -678,7 +675,7 @@ int sensor_unregister_callback(void)
 		printf("sensor unregister callback function failed!\n");
 		return s32Ret;
 	}
-	
+
 	stLib.s32Id = 0;
 	strncpy(stLib.acLibName, HI_AE_LIB_NAME, sizeof(HI_AE_LIB_NAME));
 	s32Ret = HI_MPI_AE_SensorUnRegCallBack(IspDev, &stLib, JXF23_ID);
@@ -696,7 +693,7 @@ int sensor_unregister_callback(void)
 		printf("sensor unregister callback function to awb lib failed!\n");
 		return s32Ret;
 	}
-	
+
 	return 0;
 }
 
@@ -706,4 +703,4 @@ int sensor_unregister_callback(void)
 #endif
 #endif /* End of #ifdef __cplusplus */
 
-#endif /* __MN34222_CMOS_H_ */
+#endif /* __JXF23_CMOS_H_ */

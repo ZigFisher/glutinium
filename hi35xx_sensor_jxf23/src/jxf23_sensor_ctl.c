@@ -277,7 +277,7 @@ void sensor_linear_1080p30_init()
 	sensor_write_register(0x7C,0x0C );
 	sensor_write_register(0x7F,0x57 );
 	sensor_write_register(0x90,0x00 );
-  sensor_write_register(0x8E,0x00 );
+	sensor_write_register(0x8E,0x00 );
 	sensor_write_register(0x8C,0xFF );
 	sensor_write_register(0x8D,0xC7 );
 	sensor_write_register(0x8B,0x01 );
@@ -296,5 +296,3 @@ void sensor_linear_1080p30_init()
 
     return;
 }
-
-

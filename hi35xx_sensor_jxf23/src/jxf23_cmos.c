@@ -312,10 +312,7 @@ static ISP_CMOS_RGBSHARPEN_S g_stIspRgbSharpen =
 };
 static ISP_CMOS_UVNR_S g_stIspUVNR =
 {
-	/*��ֵ�˲��л���UVNR��ISO��ֵ*/
-	/*UVNR�л�����ֵ�˲���ISO��ֵ*/
-	/*0.0   -> disable��(0.0, 1.0]  -> weak��(1.0, 2.0]  -> normal��(2.0, 10.0) -> strong*/
-	/*��˹�˲����ı�׼��*/
+	/*0.0   -> disable (0.0, 1.0]  -> weak (1.0, 2.0]  -> normal (2.0, 10.0) -> strong*/
 	//{100,	200,	400,	800,	1600,	3200,	6400,	12800,	25600,	51200,	102400,	204800,	409600,	819200,	1638400,	3276800};
 	{1,	    2,       4,      5,      7,      48,     32,     16,     16,     16,      16,     16,     16,     16,     16,        16},      /*UVNRThreshold*/
 	{0,		0,		0,		0,		0,		0,		0,		0,		0,		1,			1,		2,		2,		2,		2,		2},  /*Coring_lutLimit*/
@@ -623,7 +620,7 @@ HI_S32 cmos_init_sensor_exp_function(ISP_SENSOR_EXP_FUNC_S *pstSensorExpFunc)
 }
 
 /****************************************************************************
- * callback structure														*
+ * callback structure                                                       *
  ****************************************************************************/
 
 int sensor_register_callback(void)
@@ -706,4 +703,4 @@ int sensor_unregister_callback(void)
 #endif
 #endif /* End of #ifdef __cplusplus */
 
-#endif /* __MN34222_CMOS_H_ */
+#endif /* __JXF23_CMOS_H_ */

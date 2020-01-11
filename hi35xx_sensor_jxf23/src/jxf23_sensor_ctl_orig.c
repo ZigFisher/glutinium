@@ -27,7 +27,7 @@ int sensor_i2c_init(void)
     if(g_fd >= 0)
     {
         return 0;
-    }    
+    }
 #ifdef HI_GPIO_I2C
     int ret;
 
@@ -71,8 +71,8 @@ int sensor_i2c_exit(void)
 
 int sensor_read_register(int addr)
 {
-    // TODO: 
-    
+    // TODO:
+
     return 0;
 }
 
@@ -141,11 +141,11 @@ int sensor_write_register(int addr, int data)
     return 0;
 }
 
-static void delay_ms(int ms) { 
+static void delay_ms(int ms) {
     usleep(ms*1000);
 }
 
-void sensor_prog(int* rom) 
+void sensor_prog(int* rom)
 {
     int i = 0;
     while (1) {
@@ -196,7 +196,7 @@ void sensor_exit()
     return;
 }
 
-void sensor_linear_1080p30_init()             
+void sensor_linear_1080p30_init()
 {  //F23_049_20180403
 	sensor_write_register(0x0E,0x11 );
 	sensor_write_register(0x0F,0x14 );
@@ -287,12 +287,10 @@ void sensor_linear_1080p30_init()
 	sensor_write_register(0x12,0x00 );
 	sensor_write_register(0x48,0x85 );
 	sensor_write_register(0x48,0x05 );
-	
+
     printf("===soi_f23 sensor DVP 1080P30fps linear mode init success!=====\n");
-    
+
     bSensorInit = HI_TRUE;
 
     return;
 }
-
-
