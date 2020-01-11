@@ -215,7 +215,6 @@ insert_sns()
 		;;
 
 	sc1045|sc2035|sc2045|sc2235)
-		# !!! UNTESTED ABSTRACT !!!
 		devmem 0x200f0040 32 0x2;	# I2C0_SCL
 		devmem 0x200f0044 32 0x2;	# I2C0_SDA
 		#Cmos pinmux
@@ -322,6 +321,10 @@ insert_ko()
   insert_audio
   #
   insmod hi_mipi.ko
+  #
+  insmod   hi_rtc.ko
+  #
+
   echo "Sensor TYPE: $SNS_TYPE"
   echo
 }
@@ -425,7 +428,14 @@ run_minihttp()
 
   esac
 
-  sleep 10; minihttp &   # Use it for stopping -  killall -sigint minihttp
+  # Use it for stopping service:  killall -sigint minihttp minihttp2 webrtc
+  sleep 10;
+  minihttp 2>&1 | logger -p daemon.info -t minihttp &
+  #minihttp2 2>&1 | logger -p daemon.info -t minihttp2 &
+  #sleep 5
+  #curl http://127.0.0.1:8888/mode_h264
+  #sleep 3
+  #webrtc -http http://127.0.0.1:8888/h264 2>&1 | logger -p daemon.info -t webrtc &
 
 }
 
