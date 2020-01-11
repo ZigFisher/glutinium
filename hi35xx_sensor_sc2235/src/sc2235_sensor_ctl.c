@@ -4,6 +4,7 @@
 #include <sys/ioctl.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <hi_math.h>
 
 #include "hi_comm_video.h"
 
