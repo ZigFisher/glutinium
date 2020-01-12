@@ -322,7 +322,7 @@ insert_ko()
   #
   insmod hi_mipi.ko
   #
-  insmod   hi_rtc.ko
+  insmod hi_rtc.ko
   #
 
   echo "Sensor TYPE: $SNS_TYPE"
@@ -441,9 +441,9 @@ run_minihttp()
 
 ####################################################################
 
+online_mode=1
 f_insmod=no
 f_rmmod=no
-online_mode=1
 f_restore=no
 
 local totmem=$((${totmem_size/M/*0x100000}))
