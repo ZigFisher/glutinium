@@ -132,6 +132,11 @@ $(call Package/flyscripts/default)
   TITLE:=Custom project settings
 endef
 
+define Package/flyscripts_zftlab_openipc_dbell
+$(call Package/flyscripts/default)
+  TITLE:=Custom project settings
+endef
+
 define Package/flyscripts_zftlab_white_telemetry
 $(call Package/flyscripts/default)
   TITLE:=Custom project settings
@@ -327,6 +332,13 @@ define Package/flyscripts_zftlab_openipc_base/install
 	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_zftlab_openipc_base $(1)/etc/uci-defaults/
 endef
 
+define Package/flyscripts_zftlab_openipc_base/install
+	$(INSTALL_DIR)  $(1)/etc
+	$(INSTALL_BIN)  ./files/etc/banner__zftlab_openipc_dbell $(1)/etc/banner
+	$(INSTALL_DIR)  $(1)/etc/uci-defaults
+	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_zftlab_openipc_dbell $(1)/etc/uci-defaults/
+endef
+
 define Package/flyscripts_zftlab_white_telemetry/install
 	$(INSTALL_DIR)  $(1)/etc
 	$(INSTALL_BIN)  ./files/etc/banner__zftlab_white_telemetry $(1)/etc/banner
@@ -364,5 +376,6 @@ $(eval $(call BuildPackage,flyscripts_zftlab_dir300_gorvideo))
 $(eval $(call BuildPackage,flyscripts_zftlab_dir300_telemetry))
 $(eval $(call BuildPackage,flyscripts_zftlab_hilink_telemetry))
 $(eval $(call BuildPackage,flyscripts_zftlab_openipc_base))
+$(eval $(call BuildPackage,flyscripts_zftlab_openipc_dbell))
 $(eval $(call BuildPackage,flyscripts_zftlab_white_telemetry))
 $(eval $(call BuildPackage,flyscripts_zftlab_white_webuser))
