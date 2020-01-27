@@ -138,6 +138,7 @@ define Package/$(PKG_NAME)-sensor/install
 	#$(CP) ./sensor/libsns_imx222.so $(1)/usr/lib/
 	$(CP) ./sensor/libsns_imx323.so $(1)/usr/lib/
 	$(CP) ./sensor/libsns_jxf22.so $(1)/usr/lib/
+	$(CP) ./sensor/libsns_jxh62.so $(1)/usr/lib/
 	#$(CP) ./sensor/libsns_jxf23.so $(1)/usr/lib/
 	#$(CP) ./sensor/libsns_ov9732.so $(1)/usr/lib/
 	#$(CP) ./sensor/libsns_sc1135.so $(1)/usr/lib/

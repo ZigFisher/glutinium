@@ -119,14 +119,18 @@ insert_sns()
 		insmod extdrv/sensor_spi.ko;
 		;;
 
-	jxh62)
+	not_jxh62)
 		devmem 0x200f0040 32 0x2;       # I2C0_SCL
 		devmem 0x200f0044 32 0x2;       # I2C0_SDA
 		#
 		devmem 0x2003002c 32 0xc4001;   # sensor unreset, clk 24MHz, VI 99MHz
 		;;
 
-	ov9712)
+	ov9712|jxh62)
+		#devmem 0x200f00cc 32 0x3;	# delme
+		#devmem 0x200f00d0 32 0x3;	# delme
+		#devmem 0x200f0050 32 0x2;	# delme
+		#devmem 0x200f0054 32 0x2;	# delme
 		devmem 0x200f0040 32 0x2;	# I2C0_SCL
 		devmem 0x200f0044 32 0x2;	# I2C0_SDA
 		# Cmos pinmux
@@ -396,6 +400,10 @@ run_minihttp()
     sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/jxf23_1080p_line.ini#" /etc/minihttp.ini
     ;;
 
+  jxh62)
+    sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/jxh62_720p_line.ini#" /etc/minihttp.ini
+    ;;
+
   imx222|imx323)
     sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/imx222_1080p_line.ini#" /etc/minihttp.ini
     ;;
@@ -456,9 +464,9 @@ echo "Sensor table:"
 echo " 9m034"
 echo " ar0130 (ok), ar0230, ar0237"
 echo " imx222 (ok), imx323 (ok)"
-echo " jxf22 (ok), jxf23 (ok), jxh62"
+echo " jxf22 (ok), jxf23 (ok), jxh62 (ok)"
 echo " mn34222"
-echo " ov2718, ov9712, ov9732, ov9750, ov9752"
+echo " ov2718, ov9712 (ok), ov9732 (ok), ov9750, ov9752"
 echo " sc1045, sc1135, sc1145, sc2035, sc2045, sc2135, sc2235"
 echo
 echo "====================="
