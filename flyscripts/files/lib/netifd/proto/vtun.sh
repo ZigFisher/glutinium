@@ -143,9 +143,18 @@ proto_vtun_setup() {
       echo "    ip \"-family inet addr add $ipaddr peer $hub dev %%\";"
     fi
     if [ "$mode" = "ether" ]; then
-      echo "    ip \"link set %% up multicast off mtu 1500\";"
-      echo "    program \"brctl addif $bridge %%\";"
-      echo "    program \"iptables -I FORWARD -j ACCEPT -o $bridge -i $bridge\";"
+      if [ "$bridge" = "br-null" ]; then
+        if [ -z "$ipaddr" ]; then
+          echo "    ip \"link set %% up multicast off mtu 1500\";"
+        else
+          echo "    ip \"link set %% up multicast off mtu 1500\";"
+          echo "    ip \"addr add $ipaddr dev %%\";"
+        fi
+      else
+        echo "    ip \"link set %% up multicast off mtu 1500\";"
+        echo "    program \"brctl addif $bridge %%\";"
+        echo "    program \"iptables -I FORWARD -j ACCEPT -o $bridge -i $bridge\";"
+      fi
     fi
     echo "  };"
     echo "  down {"
@@ -153,8 +162,17 @@ proto_vtun_setup() {
       echo "    ip \"link set %% down\";"
     fi
     if [ "$mode" = "ether" ]; then
-      echo "    program \"brctl delif $bridge %%\";"
-      echo "    ip \"link set %% down\";"
+      if [ "$bridge" = "br-null" ]; then
+        if [ -z "$ipaddr" ]; then
+          echo "    ip \"link set %% down\";"
+        else
+          echo "    ip \"addr add $ipaddr dev %%\";"
+          echo "    ip \"link set %% down\";"
+        fi
+      else
+        echo "    program \"brctl delif $bridge %%\";"
+        echo "    ip \"link set %% down\";"
+      fi
     fi
     echo "  };"
     echo "}"
