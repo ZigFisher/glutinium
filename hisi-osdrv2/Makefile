@@ -118,10 +118,11 @@ define Package/$(PKG_NAME)-lib/install
 	$(CP) ./lib/lib_cmoscfg.so $(1)/usr/lib/
 	$(CP) ./lib/lib_iniparser.so $(1)/usr/lib/
 #
-	#$(CP) ./lib/libhive_AEC.so $(1)/usr/lib/
+#       These files are needed for the echo cancellation system - libhive_common.so and libhive_AEC.so
+	$(CP) ./lib/libhive_AEC.so $(1)/usr/lib/
 	#$(CP) ./lib/libhive_AGC.so $(1)/usr/lib/
 	#$(CP) ./lib/libhive_ANR.so $(1)/usr/lib/
-	#$(CP) ./lib/libhive_common.so $(1)/usr/lib/
+	$(CP) ./lib/libhive_common.so $(1)/usr/lib/
 	#$(CP) ./lib/libhive_EQ.so $(1)/usr/lib/
 	#$(CP) ./lib/libhive_GAIN.so $(1)/usr/lib/
 	#$(CP) ./lib/libhive_HDR.so $(1)/usr/lib/
