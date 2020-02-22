@@ -52,7 +52,7 @@ uci -q batch <<-EOF >/dev/null
 	set network.vtun.hostname='openipc'
 	set network.vtun.defaultroute='0'
 	set network.vtun.peerdns='0'
-	commit
+	commit network
 	set network.vtun0='interface'
 	set network.vtun0.proto='none'
 	set network.vtun0.server='my.server.org'
@@ -87,6 +87,10 @@ uci -q batch <<-EOF >/dev/null
 	set snmpd.default.interface='br-lan,3g-wan1,tun1'
 	set snmpd.default.disk='/overlay,/tmp'
 	commit snmpd
+	set ipcam.gpio.ircut1='65'
+	set ipcam.gpio.ircut2='64'
+	set ipcam.gpio.light='47'
+	commit ipcam
 EOF
 
 
