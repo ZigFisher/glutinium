@@ -45,6 +45,14 @@ uci -q batch <<-EOF >/dev/null
 	set network.vlan.dns='77.88.8.8 8.8.4.4'
 	set network.vlan.disabled='1'
 	commit network
+	set network.vtun=interface
+	set network.vtun.ifname='eth0.555'
+	set network.vtun.type='bridge'
+	set network.vtun.proto='dhcp'
+	set network.vtun.hostname='openipc'
+	set network.vtun.defaultroute='0'
+	set network.vtun.peerdns='0'
+	commit
 	set network.vtun0='interface'
 	set network.vtun0.proto='none'
 	set network.vtun0.server='my.server.org'
@@ -53,6 +61,23 @@ uci -q batch <<-EOF >/dev/null
 	set network.vtun0.mode='tun'
 	set network.vtun0.hub='172.19.24.1'
 	set network.vtun0.ipaddr='172.19.24.100'
+	commit network
+	set network.vtun1=interface
+	set network.vtun1.proto='vtun'
+	set network.vtun1.mode='ether'
+	set network.vtun1.bridge='br-vtun'
+	set network.vtun1.server='megacam.server'
+	set network.vtun1.name="$(cat /sys/class/net/eth0/address | tr -d ':' | tr 'a-z' 'A-Z')"
+	set network.vtun1.password="$(cat /sys/class/net/eth0/address | tr 'a-z' 'A-Z' | sha1sum | awk '{print $1}')"
+	commit network
+	set network.vtun2=interface
+	set network.vtun2.proto='vtun'
+	set network.vtun2.mode='ether'
+	set network.vtun2.bridge='br-null'
+	set network.vtun2.server='my.server.org'
+	set network.vtun2.ipaddr='1.2.3.4/24'
+	set network.vtun2.name="$(cat /sys/class/net/eth0/address | tr -d ':' | tr 'a-z' 'A-Z')"
+	set network.vtun2.password="$(cat /sys/class/net/eth0/address | tr 'a-z' 'A-Z' | sha1sum | awk '{print $1}')"
 	commit network
 	set snmpd.default='snmpd'
 	set snmpd.default.enable='1'
