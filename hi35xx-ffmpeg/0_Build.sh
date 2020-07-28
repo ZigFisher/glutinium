@@ -54,27 +54,6 @@ config_mini() {
     --disable-outdevs
 }
 
-config_mimi_dbell() {
-  ARCH=arm
-  CROSS=arm-openwrt-linux-
-  STAGING_DIR=/mnt/raid/OpenWrt/OpenIPC/staging_dir
-  PATH=$PATH:/mnt/raid/OpenWrt/OpenIPC/staging_dir/toolchain-arm_arm926ej-s_gcc-4.8-linaro_uClibc-0.9.33.2_eabi/bin
-  # Size ~ ?
-  ./configure \
-    --enable-cross-compile --cross-prefix=${CROSS} --arch=arm --target-os=linux \
-    --disable-iconv --disable-debug --enable-small \
-    --disable-armv6 --disable-armv6t2 --disable-neon --disable-vfp \
-\
-    --enable-shared --enable-static --enable-pthreads --enable-zlib \
-    --disable-runtime-cpudetect --disable-doc --enable-gpl --enable-version3 \
-    --disable-altivec --disable-amd3dnow --disable-amd3dnowext --disable-mmx --disable-mmxext \
-    --disable-sse --disable-sse2 --disable-sse3 --disable-ssse3 --disable-sse4 --disable-sse42 \
-    --disable-avx --disable-xop --disable-fma3 --disable-fma4 --disable-avx2 \
-    --disable-inline-asm --disable-yasm --disable-mips32r2 --disable-mipsdspr1 \
-    --disable-mipsdspr2 --disable-mipsfpu --disable-dxva2 --disable-lzma --disable-vaapi \
-    --disable-vda --disable-vdpau --disable-outdevs
-}
-
 config_cortex() {
   ARCH=arm
   CROSS=arm-openwrt-linux-
@@ -126,8 +105,8 @@ config_mipsel() {
 }
 
 #config_full
-config_mini
-#config_cortex
+#config_mini
+config_cortex
 #config_mipsel
 make -j$(($(nproc)+1))
   
