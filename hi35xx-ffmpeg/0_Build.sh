@@ -126,8 +126,7 @@ config_mipsel() {
 }
 
 #config_full
-#config_mini
-config_mimi_dbell
+config_mini
 #config_cortex
 #config_mipsel
 make -j$(($(nproc)+1))
