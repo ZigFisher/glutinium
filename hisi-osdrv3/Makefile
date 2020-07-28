@@ -14,7 +14,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=hisi-osdrv3
 PKG_VERSION:=3.18.20
-PKG_RELEASE:=0.1
+PKG_RELEASE:=1.0.4.0
 
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=HISILICON COPYING
@@ -28,7 +28,7 @@ define Package/$(PKG_NAME)/default
 	TITLE:=Hisilicon OSDRV-3
 	SUBMENU:=HiSilicon related
 	URL:=http://zftlab.org
-	DEPENDS:=@(TARGET_hi35xx_16cv300||TARGET_hi35xx_16ev100) +libstdcpp
+	DEPENDS:=@(TARGET_hi35xx_16cv300||TARGET_hi35xx_16ev100)
 endef
 
 define Package/$(PKG_NAME)/Default/description
@@ -57,7 +57,8 @@ endef
 
 define Package/$(PKG_NAME)-sensor
 $(call Package/$(PKG_NAME)/default)
-	TITLE+= - sensor package
+	TITLE+= - binary sensor package
+	DEPENDS:=+libstdcpp
 endef
 
 define Package/$(PKG_NAME)-tool
