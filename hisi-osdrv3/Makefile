@@ -43,6 +43,7 @@ endef
 define Package/$(PKG_NAME)-binary
 $(call Package/$(PKG_NAME)/default)
 	TITLE+= - binary package
+	DEPENDS:=+$(PKG_NAME)-lib +libpthread +libevent2 +lame-lib
 endef
 
 define Package/$(PKG_NAME)-kmod
