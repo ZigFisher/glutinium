@@ -96,6 +96,7 @@ endef
 define Package/$(PKG_NAME)-kmod/install
 	$(INSTALL_DIR) $(1)/lib/modules/$(PKG_VERSION)
 	$(CP) ./kmod/*.ko $(1)/lib/modules/$(PKG_VERSION)
+	$(CP) ./kmod/load_hisilicon $(1)/lib/modules/$(PKG_VERSION)
 endef
 
 define Package/$(PKG_NAME)-lib/install
