@@ -90,7 +90,14 @@ endef
 
 define Package/$(PKG_NAME)-binary/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(CP) ./binary/* $(1)/usr/bin/
+	$(CP) ./binary/bin/* $(1)/usr/bin/
+	$(INSTALL_DIR) $(1)/etc/sensors
+	$(CP) ./binary/etc/sensors/* $(1)/etc/sensors/
+	$(CP) ./binary/etc/minihttp.ini $(1)/etc/
+	$(INSTALL_DIR) $(1)/usr/lib/fonts
+	$(CP) ./binary/lib/fonts/* $(1)/usr/lib/fonts/
+	$(INSTALL_DIR) $(1)/usr/lib/sensors
+	$(CP) ./binary/lib/sensors/* $(1)/usr/lib/sensors/
 endef
 
 define Package/$(PKG_NAME)-kmod/install
