@@ -449,7 +449,7 @@ run_minihttp()
 
 ####################################################################
 
-online_mode=1
+online_mode=0
 f_insmod=no
 f_rmmod=no
 f_restore=no
