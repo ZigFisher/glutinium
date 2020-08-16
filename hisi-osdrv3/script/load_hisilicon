@@ -315,14 +315,22 @@ insert_sns()
 			isp_div=1;                # isp div clk, freq = viu_clk_freq / div
             ;;
 
-	sc2235)
-			# get from hi3516ev100 profile (!!! check viu_frequency and isp_div !!!)
+	sc2235p_i2c_dc)
+			# This was added by ZigFisher
 			bus_type="i2c";
 			pinmux_mode="i2c_dc";
 			sensor_clk_freq=27000000;
 			intf_mode="default";
-			viu_frequency=83300000;   # 198M, viu clock frequency
-			isp_div=1;                # isp div clk, freq = viu_clk_freq / div
+			if [ ${chipid} = "hi3516ev100" ]; then
+				viu_frequency=83300000;               # 83.3M, viu clock frequency
+				isp_div=1;                            # isp div clk, freq = viu_clk_freq / div
+			elif [ ${chipid} = "hi3516cv300" ]; then
+				viu_frequency=198000000;              # 198M, viu clock frequency
+				isp_div=2;                            # isp div clk, freq = viu_clk_freq / div
+			else
+				echo "Wrong chip_id: ${chipid}";
+				exit 1;
+			fi
             ;;
 
         *)

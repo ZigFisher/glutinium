@@ -11,7 +11,7 @@ start_service() {
   if [ $(uci_get "ipcam.video.disabled") = "0" ] ; then
     #
     #sensor=$(uci_get "ipcam.video.sensor")
-    fw_printenv -n sensor
+    echo "Sensor: $(fw_printenv -n sensor)"
     #
     procd_open_instance
     procd_set_param command "$PROG" -i -sensor "$sensor"
