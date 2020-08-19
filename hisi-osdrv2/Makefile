@@ -144,6 +144,7 @@ define Package/$(PKG_NAME)-sensor/install
 	#$(CP) ./sensor/libsns_ov9732.so $(1)/usr/lib/
 	#$(CP) ./sensor/libsns_sc1135.so $(1)/usr/lib/
 	#$(CP) ./sensor/libsns_sc2135.so $(1)/usr/lib/
+	$(CP) ./sensor/libsns_sc2235_a.so $(1)/usr/lib/
 	$(INSTALL_DIR) $(1)/etc/sensors
 	$(CP) ./sensor/config/* $(1)/etc/sensors
 endef
