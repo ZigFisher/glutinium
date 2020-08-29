@@ -52,7 +52,7 @@ insert_audio()
   insmod hi3518e_ao.ko
   insmod hi3518e_aenc.ko
   insmod hi3518e_adec.ko
-  #insmod extdrv/tlv_320aic31.ko
+  #insmod tlv_320aic31.ko
   echo "Insert audio..."
 }
 
@@ -189,6 +189,21 @@ insert_sns()
 		devmem 0x2003002c 32 0x94001;	# clk 37.125MHz, VI 99MHz
 		;;
 
+	gc2003|gc2023|gc2033)
+		devmem 0x200f0040 32 0x2;	# I2C0_SCL
+		devmem 0x200f0044 32 0x2;	# I2C0_SDA
+		# Cmos pinmux
+		devmem 0x200f007c 32 0x1;	# VI_DATA13
+		devmem 0x200f0080 32 0x1;	# VI_DATA10
+		devmem 0x200f0084 32 0x1;	# VI_DATA12
+		devmem 0x200f0088 32 0x1;	# VI_DATA11
+		devmem 0x200f008c 32 0x2;	# VI_VS
+		devmem 0x200f0090 32 0x2;	# VI_HS
+		devmem 0x200f0094 32 0x1;	# VI_DATA9
+		#
+		devmem 0x2003002c 32 0xc4001;	# sensor unreset, clk 24MHz, VI 99MHz
+		;;
+
 	bt1120)
 		devmem 0x200f0008 32 0x4;	# VI_VS
 		devmem 0x200f000c 32 0x4;	# VI_HS
@@ -206,7 +221,7 @@ insert_sns()
 	sc1135|sc1145|sc2135)
 		devmem 0x200f0040 32 0x2;	# I2C0_SCL
 		devmem 0x200f0044 32 0x2;	# I2C0_SDA
-		#Cmos pinmux
+		# Cmos pinmux
 		devmem 0x200f007c 32 0x1;	# VI_DATA13
 		devmem 0x200f0080 32 0x1;	# VI_DATA10
 		devmem 0x200f0084 32 0x1;	# VI_DATA12
@@ -396,6 +411,10 @@ run_minihttp()
     sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/jxf22_1080p_line.ini#" /etc/minihttp.ini
     ;;
 
+  gc2023|gc2033)
+    sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/gc2023_1080p_line.ini#" /etc/minihttp.ini
+    ;;
+
   jxf23)
     sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/jxf23_1080p_line.ini#" /etc/minihttp.ini
     ;;
@@ -483,8 +502,7 @@ echo
 echo "====================="
 echo
 
-remove_ko
-
+#remove_ko
 insert_ko
 run_minihttp
 
