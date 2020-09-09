@@ -101,8 +101,10 @@ define Package/$(PKG_NAME)-binary/install
 	$(CP) ./binary/etc/minihttp.ini $(1)/etc/
 	$(INSTALL_DIR) $(1)/usr/lib/fonts
 	$(CP) ./binary/lib/fonts/* $(1)/usr/lib/fonts/
-	$(INSTALL_DIR) $(1)/usr/lib/sensors
-	$(CP) ./binary/lib/sensors/* $(1)/usr/lib/sensors/
+	#$(INSTALL_DIR) $(1)/usr/lib/sensors
+	#$(CP) ./binary/lib/sensors/* $(1)/usr/lib/sensors/
+	$(INSTALL_DIR) $(1)/usr/lib
+	$(CP) ./binary/lib/sensors/* $(1)/usr/lib/
 endef
 
 define Package/$(PKG_NAME)-kmod/install
