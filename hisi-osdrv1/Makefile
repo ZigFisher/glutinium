@@ -90,8 +90,19 @@ define Package/$(PKG_NAME)-base/install
 endef
 
 define Package/$(PKG_NAME)-binary/install
+	$(INSTALL_DIR) $(1)/etc/init.d
+	$(CP) ./script/ipcam.init $(1)/etc/init.d/ipcam
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(CP) ./binary/* $(1)/usr/bin/
+	$(CP) ./binary/bin/* $(1)/usr/bin/
+	#$(CP) ./script/ircut_demo $(1)/usr/bin/
+	$(CP) ./script/load_hisilicon $(1)/usr/bin/
+	$(INSTALL_DIR) $(1)/etc/sensors
+	$(CP) ./binary/etc/sensors/* $(1)/etc/sensors/
+	$(CP) ./binary/etc/minihttp.ini $(1)/etc/
+	$(INSTALL_DIR) $(1)/usr/lib/fonts
+	$(CP) ./binary/lib/fonts/* $(1)/usr/lib/fonts/
+	$(INSTALL_DIR) $(1)/usr/lib/sensors
+	$(CP) ./binary/lib/sensors/* $(1)/usr/lib/sensors/
 endef
 
 define Package/$(PKG_NAME)-kmod/install
