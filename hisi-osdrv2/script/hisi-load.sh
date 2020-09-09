@@ -119,11 +119,19 @@ insert_sns()
 		insmod extdrv/sensor_spi.ko;
 		;;
 
-	not_jxh62)
-		devmem 0x200f0040 32 0x2;       # I2C0_SCL
-		devmem 0x200f0044 32 0x2;       # I2C0_SDA
+	imx323_i2c)
+		devmem 0x200f0040 32 0x2;	# I2C0_SCL
+		devmem 0x200f0044 32 0x2;	# I2C0_SDA
+		# Cmos pinmux
+		devmem 0x200f007c 32 0x1;	# VI_DATA13
+		devmem 0x200f0080 32 0x1;	# VI_DATA10
+		devmem 0x200f0084 32 0x1;	# VI_DATA12
+		devmem 0x200f0088 32 0x1;	# VI_DATA11
+		devmem 0x200f008c 32 0x2;	# VI_VS
+		devmem 0x200f0090 32 0x2;	# VI_HS
+		devmem 0x200f0094 32 0x1;	# VI_DATA9
 		#
-		devmem 0x2003002c 32 0xc4001;   # sensor unreset, clk 24MHz, VI 99MHz
+		devmem 0x2003002c 32 0x94001;	# clk 37.125MHz, VI 99MHz
 		;;
 
 	ov9712|jxh62)
@@ -142,7 +150,7 @@ insert_sns()
 		devmem 0x200f0090 32 0x2;	# VI_HS
 		devmem 0x200f0094 32 0x1;	# VI_DATA9
 		#
-		devmem 0x2003002c 32 0xc4001;	# clk 24MHz, VI 99MHz
+		devmem 0x2003002c 32 0xc4001;	# sensor unreset, clk 24MHz, VI 99MHz
 		;;
 
 	ov9732)
@@ -425,6 +433,10 @@ run_minihttp()
 
   imx222|imx323)
     sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/imx222_1080p_line.ini#" /etc/minihttp.ini
+    ;;
+
+  imx323_i2c)
+    sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/imx222_i2c_1080p_line.ini#" /etc/minihttp.ini
     ;;
 
   ov9712)

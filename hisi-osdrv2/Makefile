@@ -85,15 +85,24 @@ define Build/InstallDev
 endef
 
 define Package/$(PKG_NAME)-base/install
-	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) ./script/ipcam.init $(1)/etc/init.d/ipcam
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) ./script/hisi-* $(1)/usr/bin/
 endef
 
 define Package/$(PKG_NAME)-binary/install
+	$(INSTALL_DIR) $(1)/etc/init.d
+	$(INSTALL_BIN) ./script/ipcam.init $(1)/etc/init.d/ipcam
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(CP) ./binary/* $(1)/usr/bin/
+	$(INSTALL_BIN) ./binary/bin/* $(1)/usr/bin/
+	#$(CP) ./script/ircut_demo $(1)/usr/bin/
+	$(INSTALL_BIN) ./script/load_hisilicon $(1)/usr/bin/
+	$(INSTALL_DIR) $(1)/etc/sensors
+	$(CP) ./binary/etc/sensors/* $(1)/etc/sensors/
+	$(CP) ./binary/etc/minihttp.ini $(1)/etc/
+	$(INSTALL_DIR) $(1)/usr/lib/fonts
+	$(CP) ./binary/lib/fonts/* $(1)/usr/lib/fonts/
+	$(INSTALL_DIR) $(1)/usr/lib/sensors
+	$(CP) ./binary/lib/sensors/* $(1)/usr/lib/sensors/
 endef
 
 define Package/$(PKG_NAME)-kmod/install
@@ -136,16 +145,7 @@ endef
 
 define Package/$(PKG_NAME)-sensor/install
 	$(INSTALL_DIR) $(1)/usr/lib
-	#$(CP) ./sensor/libsns_ar0130.so $(1)/usr/lib/
-	#$(CP) ./sensor/libsns_imx222.so $(1)/usr/lib/
-	#$(CP) ./sensor/libsns_imx323.so $(1)/usr/lib/
-	#$(CP) ./sensor/libsns_jxf22.so $(1)/usr/lib/
 	$(CP) ./sensor/libsns_jxh62.so $(1)/usr/lib/
-	#$(CP) ./sensor/libsns_jxf23.so $(1)/usr/lib/
-	#$(CP) ./sensor/libsns_ov9732.so $(1)/usr/lib/
-	#$(CP) ./sensor/libsns_sc1135.so $(1)/usr/lib/
-	#$(CP) ./sensor/libsns_sc2135.so $(1)/usr/lib/
-	$(CP) ./sensor/libsns_sc2235_a.so $(1)/usr/lib/libsns_sc2235.so
 	$(INSTALL_DIR) $(1)/etc/sensors
 	$(CP) ./sensor/config/* $(1)/etc/sensors
 endef
