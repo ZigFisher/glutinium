@@ -43,6 +43,7 @@ endef
 define Package/$(PKG_NAME)-binary
 $(call Package/$(PKG_NAME)/default)
 	TITLE+= - binary package
+	DEPENDS:=+$(PKG_NAME)-lib +libpthread +libevent2 +lame-lib
 endef
 
 define Package/$(PKG_NAME)-kmod
@@ -58,6 +59,7 @@ endef
 define Package/$(PKG_NAME)-sensor
 $(call Package/$(PKG_NAME)/default)
 	TITLE+= - sensor package
+	DEPENDS:=+libstdcpp
 endef
 
 define Package/$(PKG_NAME)-tool
