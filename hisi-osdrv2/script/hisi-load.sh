@@ -451,6 +451,10 @@ run_minihttp()
     sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/sc1135_720p_line.ini#" /etc/minihttp.ini
     ;;
 
+  sc2035)
+    sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/sc2035_1080p_line.ini#" /etc/minihttp.ini
+    ;;
+
   sc2135)
     sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/sc2135_1080p_line.ini#" /etc/minihttp.ini
     ;;
