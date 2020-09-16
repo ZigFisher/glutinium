@@ -70,46 +70,46 @@ insert_sns()
     case $SNS_TYPE in
 
         ar0130|9m034)
-            himm 0x20030030 0x5;              # Sensor clock 27 MHz
+            devmem 0x20030030 32 0x5;              # Sensor clock 27 MHz
             insmod ssp_ad9020.ko;
             ;;
 
         icx692)
-            himm 0x200f000c 0x1;              # pinmux SPI0
-            himm 0x200f0010 0x1;              # pinmux SPI0
-            himm 0x200f0014 0x1;              # pinmux SPI0
+            devmem 0x200f000c 32 0x1;              # pinmux SPI0
+            devmem 0x200f0010 32 0x1;              # pinmux SPI0
+            devmem 0x200f0014 32 0x1;              # pinmux SPI0
             insmod ssp_ad9020.ko;
             ;;
 
         mn34031|mn34041)
-            himm 0x200f000c 0x1;              # pinmux SPI0
-            himm 0x200f0010 0x1;              # pinmux SPI0
-            himm 0x200f0014 0x1;              # pinmux SPI0
-            himm 0x20030030 0x5;              # Sensor clock 27MHz
+            devmem 0x200f000c 32 0x1;              # pinmux SPI0
+            devmem 0x200f0010 32 0x1;              # pinmux SPI0
+            devmem 0x200f0014 32 0x1;              # pinmux SPI0
+            devmem 0x20030030 32 0x5;              # Sensor clock 27MHz
             insmod ssp_pana.ko;
             ;;
 
         imx104|imx122|imx138)
-            himm 0x200f000c 0x1;              # pinmux SPI0
-            himm 0x200f0010 0x1;              # pinmux SPI0
-            himm 0x200f0014 0x1;              # pinmux SPI0
-            himm 0x20030030 0x6;              # Sensor clock 37.125 MHz
+            devmem 0x200f000c 32 0x1;              # pinmux SPI0
+            devmem 0x200f0010 32 0x1;              # pinmux SPI0
+            devmem 0x200f0014 32 0x1;              # pinmux SPI0
+            devmem 0x20030030 32 0x6;              # Sensor clock 37.125 MHz
             insmod ssp_sony.ko;
             ;;
 
         ov9712|soih22|ov2710)
-            himm 0x20030030 0x1;              # Sensor clock 24 MHz
+            devmem 0x20030030 32 0x1;              # Sensor clock 24 MHz
             insmod ssp_ad9020.ko;
             ;;
 
         mt9p006)
-            himm 0x20030030 0x1;              # Sensor clock 24 MHz
-            himm 0x2003002c 0x6a;             # VI input associated clock phase reversed
+            devmem 0x20030030 32 0x1;              # Sensor clock 24 MHz
+            devmem 0x2003002c 32 0x6a;             # VI input associated clock phase reversed
             insmod ssp_ad9020.ko;
             ;;
 
         hm1375)
-            himm 0x20030030 0x1;              # Sensor clock 24 MHz
+            devmem 0x20030030 32 0x1;              # Sensor clock 24 MHz
             ;;
 
         *)
