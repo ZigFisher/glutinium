@@ -116,11 +116,11 @@ define Package/$(PKG_NAME)-lib/install
 endef
 
 define Package/$(PKG_NAME)-sensor/install
-	$(INSTALL_DIR) $(1)/usr/lib
-	$(CP) ./sensor/libsns_imx122.so $(1)/usr/lib/
-	$(CP) ./sensor/libsns_ov9712.so $(1)/usr/lib/
+	#$(INSTALL_DIR) $(1)/usr/lib
+	#$(CP) ./sensor/libsns_imx122.so $(1)/usr/lib/
+	#$(CP) ./sensor/libsns_ov9712.so $(1)/usr/lib/
 	$(INSTALL_DIR) $(1)/etc/sensors
-	$(CP) ./sensor/config/* $(1)/etc/sensors
+	#$(CP) ./sensor/config/* $(1)/etc/sensors
 endef
 
 define Package/$(PKG_NAME)-tool/install
