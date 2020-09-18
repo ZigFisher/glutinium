@@ -101,9 +101,9 @@ void sensor_init()
 	sensor_write_register(0x21b, 0xc8);
 	sensor_write_register(0x21c, 0x19);
 	sensor_write_register(0x21d, 0xc2);
-    sensor_write_register(0x246, 0x03);
-    sensor_write_register(0x247, 0x06);
-    sensor_write_register(0x248, 0xc2);
+	sensor_write_register(0x246, 0x03);
+	sensor_write_register(0x247, 0x06);
+	sensor_write_register(0x248, 0xc2);
 	sensor_write_register(0x25c, 0x20);
 	sensor_write_register(0x25D, 0x00);
 	sensor_write_register(0x25E, 0x20);
@@ -157,6 +157,3 @@ void sensor_init()
 	return ; 
 
 }
-
-
-
