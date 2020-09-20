@@ -351,6 +351,8 @@ insert_ko()
 
 	# driver load
 	insmod hi_osal.ko mmz=anonymous,0,$mmz_start,$mmz_size anony=1 || report_error
+	#insmod hi3516cv300_wdt.ko
+	#insmod hi3516cv300_rtc.ko
 	insmod hi3516cv300_base.ko
 
 	insmod hi3516cv300_sys.ko vi_vpss_online=$b_arg_online sensor=$SNS_TYPE mem_total=$mem_total
@@ -374,9 +376,15 @@ insert_ko()
 	insmod hi3516cv300_jpege.ko
 	insmod hi3516cv300_ive.ko save_power=1 ive_clk_frequency=$ive_frequency
 	insmod hi3516cv300_sensor.ko sensor_bus_type=$bus_type sensor_clk_frequency=$sensor_clk_freq sensor_pinmux_mode=$pinmux_mode
+	#insmod hi_adc.ko
+	#insmod hi_gpio.ko
+	#insmod gpioi2c_ex.ko
+	#insmod sha_204.ko
+	#insmod hi_sensor_i2c.ko
+	#insmod hi_ssp_sony.ko
 	insmod hi3516cv300_pwm.ko
-
-	insmod extdrv/hi_piris.ko
+	insmod hi_piris.ko
+	#insmod exfat.ko
 	insert_audio
 
 	insmod hi_mipi.ko

@@ -102,7 +102,7 @@ define Package/$(PKG_NAME)-binary/install
 	$(INSTALL_DIR) $(1)/usr/lib/fonts
 	$(CP) ./binary/lib/fonts/* $(1)/usr/lib/fonts/
 	$(INSTALL_DIR) $(1)/usr/lib/sensors
-	$(CP) ./binary/lib/sensors/* $(1)/usr/lib/sensors/
+	$(CP) ./binary/lib/sensors/*.so $(1)/usr/lib/sensors/
 endef
 
 define Package/$(PKG_NAME)-kmod/install
