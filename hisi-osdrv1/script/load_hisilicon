@@ -235,6 +235,14 @@ remove_ko()
     rmmod mmz
 }
 
+start_minihttp()
+{
+	# Use it for stopping service:  killall -sigint minihttp
+	sleep 1;
+	export SENSOR=$SNS_TYPE
+	minihttp 2>&1 | logger -p daemon.info -t minihttp &
+}
+
 ####################################################################
 
 local totmem=$((${totmem_size/M/*0x100000}))
@@ -268,7 +276,9 @@ echo
 echo "====================="
 echo
 
+killall -sigint minihttp
 remove_ko
 insert_ko
+start_minihttp
 
 ####################################################################
