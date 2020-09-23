@@ -1,0 +1,24 @@
+<%+cbi/valueheader%>
+
+<script type="text/javascript">//<![CDATA[
+        XHR.poll(5, '<%=luci.dispatcher.build_url("admin", "ipcam", "sdcard_status")%>', null,
+                function(x, rv)
+                {
+                        var s = document.getElementById('<%=self.option%>-sdcard-status');
+                        if (s)
+                        {
+				if( rv.sdstring != null && (rv.sdstring != '' ))
+					sdstring = rv.sdstring + 'B';
+				else
+					sdstring = '0.0 bytes';
+
+                                s.value = sdstring;
+                        }
+                }
+        );
+
+//]]></script>
+
+<input type="text" id="<%=self.option%>-sdcard-status" readonly />
+<%+cbi/valuefooter%>
+
