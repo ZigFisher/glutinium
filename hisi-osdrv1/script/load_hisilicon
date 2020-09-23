@@ -12,7 +12,7 @@ osmem_size=$(awk -F '=' '$1=="mem"{print $2}' RS=" " /proc/cmdline)
 osmem_size=${osmem_size:=40M}
 
 SNS_TYPE=$(awk -F '=' '$1=="sensor"{print $2}' RS=" " /proc/cmdline)
-SNS_TYPE=${SNS_TYPE:=ov9712}
+SNS_TYPE=${SNS_TYPE:=ov9712_i2c_dc}
 
 ####################################################################
 
