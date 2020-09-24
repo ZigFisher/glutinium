@@ -1,0 +1,53 @@
+<%+cbi/valueheader%>
+
+<script type="text/javascript">//<![CDATA[
+	function showSdError() {
+		const div = document.createElement('div');
+
+		div.className = 'alert-message error';
+		div.id = 'sdcard-error'
+		div.innerHTML = "Insert SD card to format";
+
+		document.getElementById('content').appendChild(div);
+		setTimeout("hideSdError()", 5000);
+	}
+
+	function hideSdError() {
+		var error_node = document.getElementById('sdcard-error');
+		if(error_node == null)
+			return false;
+		document.getElementById('content').removeChild(error_node);
+	}
+
+	function sdcard_format_f2fs(btn)
+	{
+		var sdpresent = false;
+		hideSdError();
+		XHR.get('<%=luci.dispatcher.build_url("admin", "ipcam", "sdcard_status")%>', sdpresent,
+			function(x, rv)
+			{
+				var sdstatus = document.getElementById("button.format.sdcard-status");
+				if( rv.sdstring == null || (rv.sdstring == '' ))
+				{
+					showSdError();
+				}else{
+					btn.disabled = true;
+					btn.value    = '<%:Formatting...%>';
+					XHR.get('<%=luci.dispatcher.build_url("admin", "ipcam", "sdcard_format_f2fs")%>', null,
+						function()
+						{
+							btn.disabled = false;
+							btn.value    = '<%:f2fs%>';
+						}
+					);
+
+				}
+			}
+		);
+
+		return false;
+	}
+//]]></script>
+<input type="button" class="cbi-button cbi-button-apply" value="<%:f2fs%>" onclick="return sdcard_format_f2fs(this)" />
+
+<%+cbi/valuefooter%>

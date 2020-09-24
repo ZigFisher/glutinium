@@ -19,7 +19,7 @@
 		document.getElementById('content').removeChild(error_node);
 	}
 
-	function sdcard_format(btn)
+	function sdcard_format_vfat(btn)
 	{
 		var sdpresent = false;
 		hideSdError();
@@ -33,11 +33,11 @@
 				}else{
 					btn.disabled = true;
 					btn.value    = '<%:Formatting...%>';
-					XHR.get('<%=luci.dispatcher.build_url("admin", "ipcam", "sdcard_format")%>', null,
+					XHR.get('<%=luci.dispatcher.build_url("admin", "ipcam", "sdcard_format_vfat")%>', null,
 						function()
 						{
 							btn.disabled = false;
-							btn.value    = '<%:Format%>';
+							btn.value    = '<%:vfat%>';
 						}
 					);
 
@@ -48,6 +48,6 @@
 		return false;
 	}
 //]]></script>
-<input type="button" class="cbi-button cbi-button-apply" value="<%:Format%>" onclick="return sdcard_format(this)" />
+<input type="button" class="cbi-button cbi-button-apply" value="<%:vfat%>" onclick="return sdcard_format_vfat(this)" />
 
 <%+cbi/valuefooter%>

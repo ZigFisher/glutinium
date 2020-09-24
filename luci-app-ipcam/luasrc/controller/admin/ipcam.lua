@@ -11,7 +11,9 @@ function index()
 
         entry({"admin", "ipcam", "sdcard_status"}, call("action_sdcard_status"))
 
-        entry({"admin", "ipcam", "sdcard_format"}, call("action_sdcard_format"))
+        entry({"admin", "ipcam", "sdcard_format_f2fs"}, call("action_sdcard_format_f2fs"))
+
+        entry({"admin", "ipcam", "sdcard_format_vfat"}, call("action_sdcard_format_vfat"))
 
         entry({"admin", "ipcam", "test_mail"}, call("action_send_mail"))
 
@@ -34,7 +36,14 @@ function action_sdcard_status()
 end
 
 
-function action_sdcard_format()
+function action_sdcard_format_f2fs()
+        if( sdcard_present() == true ) then
+                os.execute("mkfs.f2fs -l IPCam /dev/mmcblk0")
+                luci.http.status(200, "Formated")
+        end
+end
+
+function action_sdcard_format_vfat()
         if( sdcard_present() == true ) then
                 os.execute("mkfs.vfat -v -n IPCam /dev/mmcblk0")
                 luci.http.status(200, "Formated")

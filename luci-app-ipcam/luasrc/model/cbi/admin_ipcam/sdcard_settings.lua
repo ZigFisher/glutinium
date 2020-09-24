@@ -26,7 +26,10 @@ a.optional = false; a.rmempty = false;
 a = dm:option(Flag, "overwrite", "Over-write when full");
 a.optional = false; a.rmempty = false;
 
-t = dm:option(DummyValue, "_format_sd_card", "Format SD Card")
-t.template = "admin_ipcam/sdcard_format"
+t = dm:option(DummyValue, "_format_sd_card_f2fs", "Format SD Card")
+t.template = "admin_ipcam/sdcard_format_f2fs"
+
+t = dm:option(DummyValue, "_format_sd_card_vfat", "Format SD Card")
+t.template = "admin_ipcam/sdcard_format_vfat"
 
 return m
