@@ -7,7 +7,7 @@
 	    return target.replace(new RegExp(search, 'g'), replacement);
 	};
 
-	function changePath(e) {		
+	function changePath(e) {
 		var path = document.getElementById("currentpath").value;
 		path = path.replace("//", "/");
 		document.getElementById("currentpath").value = path;
@@ -48,10 +48,10 @@
 			if (e.keyCode !== 13) {
 		        return;
 		    } else {
-				parentFolder = obj.value;		    	
+				parentFolder = obj.value;
 		    }
 		}
-		//document.getElementById("currentpath").value = obj.getAttribute("data-path");	
+		//document.getElementById("currentpath").value = obj.getAttribute("data-path");
 		var parentFolder = (document.getElementById("currentpath").value === "/") ? "" : document.getElementById("currentpath").value;
 		var path = ((!isBack) ? parentFolder+"/" : "")+obj.getAttribute("data-path")
 	

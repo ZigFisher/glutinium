@@ -7,7 +7,7 @@ function index()
 
         entry({"admin", "ipcam"}, alias("admin", "ipcam", "settings"), _("IPCam"), 55).index = true
 
-        entry({"admin", "ipcam", "sdcard_settings"}, cbi("admin_ipcam/sdcard_settings"), _("SD Card Settings"), 1)
+        entry({"admin", "ipcam", "sdcard_settings"}, cbi("admin_ipcam/sdcard_settings"), _("SD Card Settings"), 11)
 
         entry({"admin", "ipcam", "sdcard_status"}, call("action_sdcard_status"))
 

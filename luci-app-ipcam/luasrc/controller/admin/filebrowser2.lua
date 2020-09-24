@@ -1,10 +1,10 @@
-module("luci.controller.admin.filebrowser", package.seeall)
+module("luci.controller.admin.filebrowser2", package.seeall)
 
-local root_path = "/"
+local root_path = "/mnt"
 
 function index()
 
-	page = entry({"admin", "ipcam", "filebrowser"}, template("admin_ipcam/filebrowser"), _("File Browser"), 60)
+	page = entry({"admin", "ipcam", "filebrowser"}, template("admin_ipcam/filebrowser"), _("File Browser"), 1)
 	page.i18n = "base"
 	page.dependent = true
 
@@ -29,7 +29,7 @@ function filebrowser_list()
 	local rv = { }
 	local path = root_path..luci.http.formvalue("path"):gsub("%.%.", "")
 
-    rv = scandir(path)	
+    rv = scandir(path)
 
 	if #rv > 0 then
 		luci.http.prepare_content("application/json")
