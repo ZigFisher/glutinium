@@ -22,13 +22,14 @@ end
 
 function sdcard_present()
 	return (os.execute("mount |grep mmcblk0") == 0)
+	# dd if=/dev/zero of=/dev/mmcblk0 bs=4M count=1
 end
 
 
 function action_sdcard_status()
-        local sd_status = ""
+        local sd_status = "detecting..."
         if( sdcard_present() == true ) then
-                sd_status = util.exec("df -h /dev/mmcblk0|grep mmc|awk '{print $4}'")
+                sd_status = util.exec("df -h /dev/mmcblk0|awk '/mmc/ {print $4}'")
         end
         luci.http.prepare_content("application/json")
         luci.http.write_json({ sdstring = sd_status })
