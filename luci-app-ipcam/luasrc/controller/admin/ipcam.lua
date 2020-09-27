@@ -22,7 +22,6 @@ end
 
 function sdcard_present()
 	return (os.execute("mount |grep mmcblk0") == 0)
-	# dd if=/dev/zero of=/dev/mmcblk0 bs=4M count=1
 end
 
 
@@ -39,14 +38,14 @@ end
 
 function action_sdcard_format_f2fs()
         if( sdcard_present() == true ) then
-                os.execute("mkfs.f2fs -l IPCam /dev/mmcblk0")
+                os.execute("echo dd if=/dev/zero of=/dev/mmcblk0 bs=4M count=1 ; mkfs.f2fs -l IPCam /dev/mmcblk0")
                 luci.http.status(200, "Formated")
         end
 end
 
 function action_sdcard_format_vfat()
         if( sdcard_present() == true ) then
-                os.execute("mkfs.vfat -v -n IPCam /dev/mmcblk0")
+                os.execute("echo dd if=/dev/zero of=/dev/mmcblk0 bs=4M count=1 ; mkfs.vfat -v -n IPCam /dev/mmcblk0")
                 luci.http.status(200, "Formated")
         end
 end
