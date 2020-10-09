@@ -167,14 +167,17 @@ config wifi-device  $dev
 	option type 'wext'
 	option hwmode '11g'
 	option channel 'auto'
-	option disabled '1'
+	option disabled '0'
 
 config wifi-iface
 	option device	$dev
 	option network	'wifi'
 	option mode	'sta'
-	option ssid	'OpenWrt'
+	option ssid	'OpenIPC'
 	option encryption 'none'
+	option encryption 'psk2+ccmp'
+	option key 'openipc2020'
+	option disabled '0'
 EOF
 	done
 }
