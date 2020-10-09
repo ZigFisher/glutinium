@@ -17,6 +17,7 @@ start() {
         while=$(uci get i2c_HD44780.@display[0].while)
         read=$(uci get i2c_HD44780.@display[0].read)
         #
+        cd /tmp
         i2c_HD44780 -n $banner -d $device -a $address -f $file -u $while$clock$led$read &
         (sleep 5; echo -e "Octonix for You\nChto zhelaete ?\n" >/tmp/$file) &
 }
