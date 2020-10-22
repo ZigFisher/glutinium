@@ -10,13 +10,14 @@ include $(INCLUDE_DIR)/kernel.mk
 
 
 PKG_NAME:=hi35xx-rtl8188fu
-PKG_VERSION:=2020-01-01
-PKG_RELEASE:=1
+PKG_VERSION:=5.3.0.1
+PKG_RELEASE:=2
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
-PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://github.com/kelebek333/rtl8188fu.git
-PKG_SOURCE_VERSION:=a60758937803680454ed21945216354b25e5f6d5
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
+PKG_SOURCE_URL:=http://flyrouter.net/downloads/software/ipcam/archive/
+#PKG_SOURCE_PROTO:=git
+#PKG_SOURCE_URL:=https://github.com/kelebek333/rtl8188fu.git
+#PKG_SOURCE_VERSION:=a60758937803680454ed21945216354b25e5f6d5
 #PKG_SOURCE_URL:=https://github.com/ulli-kroll/rtl8188fu.git
 #PKG_SOURCE_VERSION:=fab4f5db4580d9a920f99c64dceaa5711589559d
 #PKG_SOURCE_URL:=https://github.com/lutmm/rtl8188fu.git
@@ -41,7 +42,7 @@ endef
 define KernelPackage/$(PKG_NAME)
 $(call Package/$(PKG_NAME)/Default)
 	SUBMENU:=Wireless Drivers
-	DEPENDS:=+@USB_SUPPORT +@DRIVER_WEXT_SUPPORT +kmod-usb-core +wireless-tools +hostapd-common-old
+	DEPENDS:=+@USB_SUPPORT +@DRIVER_WEXT_SUPPORT +kmod-usb-core +wireless-tools +hostapd-common-old +$(PKG_NAME)-firmware
 	TITLE:=Driver for RTL8188FU wireless adapters (HI35xx)
 	FILES:=$(PKG_BUILD_DIR)/$(PKG_NAME).$(LINUX_KMOD_SUFFIX)
 	VERSION:=$(LINUX_VERSION)+$(PKG_VERSION)-$(PKG_RELEASE)
@@ -75,13 +76,13 @@ endef
 define Build/Compile
 	$(MAKE) -C $(PKG_BUILD_DIR) LINUX_DIR=$(LINUX_DIR) \
 		$(MAKE_OPTS) modules
-	$(CP) $(PKG_BUILD_DIR)/rtl8188fu.$(LINUX_KMOD_SUFFIX) \
+	$(CP) $(PKG_BUILD_DIR)/8188fu.$(LINUX_KMOD_SUFFIX) \
 		$(PKG_BUILD_DIR)/$(PKG_NAME).$(LINUX_KMOD_SUFFIX)
 endef
 
 define Package/$(PKG_NAME)-firmware/install
-	$(INSTALL_DIR) $(1)/lib/firmware/rtlwifi
-	$(INSTALL_DATA) $(PKG_BUILD_DIR)/firmware/rtl8188fufw.bin $(1)/lib/firmware/rtlwifi
+	#$(INSTALL_DIR) $(1)/lib/firmware/rtlwifi
+	#$(INSTALL_DATA) $(PKG_BUILD_DIR)/firmware/rtl8188fufw.bin $(1)/lib/firmware/rtlwifi
 	$(INSTALL_DIR) $(1)/lib/wifi
 	$(INSTALL_DATA) ./files/wext.sh $(1)/lib/wifi
 endef
