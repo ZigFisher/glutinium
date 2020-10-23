@@ -10,7 +10,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="/assets/css/base.css" type="text/css"/>
     <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="/assets/img/favicon.ico" />
-    <script src="/assets/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="/assets/js/jquery-3.5.1.min.js" type="text/javascript"></script>
     <title>Octonix test</title>
   </head>
 
