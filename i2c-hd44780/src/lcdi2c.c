@@ -3,7 +3,7 @@
 #define CRIT_BEG(d, error) if(down_interruptible(&d->sem)) return -error
 #define CRIT_END(d) up(&d->sem)
 
-static uint busno = 0;      //I2C Bus number
+static uint busno = 3;      //I2C Bus number
 static uint address = DEFAULT_CHIP_ADDRESS; //Device address
 static uint topo = LCD_DEFAULT_ORGANIZATION;
 static uint cursor = 1;
@@ -44,7 +44,7 @@ module_param(blink, uint, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP);
 module_param(topo, uint, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP);
 module_param(major, int, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP);
 
-MODULE_PARM_DESC(busno, " I2C Bus number, default 0");
+MODULE_PARM_DESC(busno, " I2C Bus number, default 3");
 MODULE_PARM_DESC(address, " LCD I2C Address, default 0x27");
 MODULE_PARM_DESC(pinout, " I2C module pinout configuration, eight "
                          "numbers\n\t\trepresenting following LCD module"
@@ -166,7 +166,7 @@ static long lcdi2c_ioctl(struct file *file,
       lcdsetcursor(data, data->column, data->row);
       break;
     case LCD_IOCTL_GETCHAR:
-      memaddr = (1 + data->column + (data->row * data->organization.columns)) % LCD_BUFFER_SIZE;  
+      memaddr = (data->column + (data->row * data->organization.columns)) % LCD_BUFFER_SIZE;
       ch = data->buffer[memaddr];
       put_user(ch, buffer);
       break;
@@ -373,7 +373,7 @@ static ssize_t lcdi2c_cursorpos(struct device* dev,
     if (count >= 2)
     {
         count = 2;
-	lcdsetcursor(data, buf[1], buf[0]);
+        lcdsetcursor(data, buf[0], buf[1]);
     }
 
     CRIT_END(data);
