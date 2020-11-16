@@ -1,0 +1,22 @@
+#!/bin/sh /etc/rc.common
+#
+# Copyright (C) @FlyRouter
+
+START=98
+
+USE_PROCD=1
+PROG=/usr/bin/load_hisilicon
+
+start_service() {
+  if [ $(uci_get "ipcam.video.disabled") = "0" ] ; then
+    #
+    sensor=$(awk -F '=' '$1=="sensor"{print $2}' RS=" " /proc/cmdline)
+    echo "Sensor: $sensor"
+    #
+    procd_open_instance
+    procd_set_param command "$PROG" -i -sensor "$sensor"
+    procd_close_instance
+  else
+    return 1
+  fi
+}
