@@ -1,0 +1,98 @@
+
+[system]
+; set the value to hardcode sensor configuration, otherwise
+; it will be inferred from SENSOR environment variable
+;sensor_config = /etc/sensors/imx222_1080p_line.ini
+
+; set custom directory for sensor configs
+;sensor_config_dir = /etc/sensors
+
+web_port = 8888
+web_enable_static = false
+
+isp_thread_stack_size = 16384                     ; 16kb = 16*1024
+
+leds_count = 2
+
+[led_0]
+inverted = false
+pin = 62
+
+[led_1]
+inverted = false
+pin = 62
+
+[isp]
+align_width = 64
+max_pool_cnt = 128
+blk_cnt = 5                                       ; set 5 for Hi3518Cv100/Hi3518Ev100/Hi3518Ev200/Hi3516Ev100 and 10+ for Hi3516Cv100/Hi3616Cv200/Hi3516CV300
+
+[image]
+mirror = false
+flip = false                                      ; turn image upside down
+contrast = 50
+hue = 50
+saturation = 50
+luminance = 50
+
+[osd]
+enable = false
+font = /usr/lib/fonts/fonts.bin
+template = Time: %a %e %B %Y, %r
+pos_x = 500
+pos_y = 700
+
+[night_mode]
+enable = false
+ir_sensor_pin = 62
+ir_sensor_pin_invert = false
+check_interval_s = 10                             ; interval to check light sensor state in seconds
+ir_cut_pin1 = 1
+ir_cut_pin2 = 2
+pin_switch_delay_us = 150                         ; switch delay in us on IRcut filter pins. WARNING! a very long delay can damage the IRcut filter!!!
+
+[http_post]
+enable = false
+host = <your host>
+url = /~login/000000000000/%Y/%m/%d/%H.%M.jpg     ; format time like C strftime call
+width = 640                                       ; 1920  1280  640
+height = 360                                      ; 1080   720  360
+qfactor = 95                                      ; [1..99] jpeg quality
+interval = 60                                     ; in seconds
+login = <your login>                              ; basic auth
+password = <yout pass>
+
+[h264_0]
+enable = false
+width = 1920                                      ; 1920  1280  640
+height = 1080                                     ; 1080   720  360
+fps = 25
+bitrate = 4096                                    ; kbits per second
+
+[h264_1]
+enable = false
+width = 640                                       ; 1920  1280  640
+height = 360                                      ; 1080   720  360
+fps = 15
+bitrate = 4096                                    ; kbits per second
+
+[mp4]
+enable = true
+
+[jpeg]
+enable = true
+width = 1920
+height = 1080
+qfactor = 93                                      ; [1..99] jpeg quality
+
+[mjpeg]
+enable = true
+width = 1280
+height = 720
+fps = 25
+bitrate = 8192                                    ; kbits per second
+
+[rtsp]
+enable = true
+port = 554
+tcp = true

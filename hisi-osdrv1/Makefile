@@ -28,7 +28,7 @@ define Package/$(PKG_NAME)/default
 endef
 
 define Package/$(PKG_NAME)/Default/description
-	Hisilicon OSDRV kernel modules, drivers, libs and tools
+	Hisilicon OSDRV kernel modules, drivers and libs
 endef
 
 define Package/$(PKG_NAME)-base
@@ -56,12 +56,6 @@ define Package/$(PKG_NAME)-sensor
 $(call Package/$(PKG_NAME)/default)
 	TITLE+= - sensor package
 	DEPENDS:=+libstdcpp
-endef
-
-define Package/$(PKG_NAME)-tool
-$(call Package/$(PKG_NAME)/default)
-	TITLE+= - tool package 
-	DEPENDS:=+$(PKG_NAME)-base +$(PKG_NAME)-kmod +$(PKG_NAME)-lib +$(PKG_NAME)-sensor +libpthread
 endef
 
 define Build/Prepare
@@ -119,14 +113,8 @@ define Package/$(PKG_NAME)-sensor/install
 	#$(CP) ./sensor/config/* $(1)/etc/sensors
 endef
 
-define Package/$(PKG_NAME)-tool/install
-	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/$(PKG_NAME)-tool/himm $(1)/usr/bin/
-endef
-
 $(eval $(call BuildPackage,$(PKG_NAME)-base))
 $(eval $(call BuildPackage,$(PKG_NAME)-binary))
 $(eval $(call BuildPackage,$(PKG_NAME)-kmod))
 $(eval $(call BuildPackage,$(PKG_NAME)-lib))
 $(eval $(call BuildPackage,$(PKG_NAME)-sensor))
-#$(eval $(call BuildPackage,$(PKG_NAME)-tool))
