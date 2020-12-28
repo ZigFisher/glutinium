@@ -22,28 +22,27 @@ PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)$(PKG_VERSION)
 include $(INCLUDE_DIR)/package.mk
 
 define Package/$(PKG_NAME)
-  SECTION:=utils
-  CATEGORY:=Utilities
-  DEPENDS:=+libncurses
-  TITLE:=Text-based, full featured file manager
-  URL:=http://deco.sourceforge.net/
+	SECTION:=utils
+	CATEGORY:=Utilities
+	DEPENDS:=+libncurses
+	TITLE:=Text-based, full featured file manager
+	URL:=http://deco.sourceforge.net/
 endef
 
 define Package/$(PKG_NAME)/description
-    A clone of Norton Commander for Unix. Text-based, full featured 
-    file manager.
+	A clone of Norton Commander for Unix. Text-based, full featured file manager.
 endef
-  
+
 define Build/Compile
-    $(MAKE) -C $(PKG_BUILD_DIR)
+	$(MAKE) -C $(PKG_BUILD_DIR)
 endef
 
 define Package/$(PKG_NAME)/install
-    $(INSTALL_DIR) $(1)/usr/bin
-    $(INSTALL_BIN) $(PKG_BUILD_DIR)/$(PKG_NAME) $(1)/usr/bin/
-    $(INSTALL_DIR) $(1)/usr/lib/deco
-    $(INSTALL_DATA) $(PKG_BUILD_DIR)/menu $(1)/usr/lib/$(PKG_NAME)/menu
-    $(INSTALL_DATA) $(PKG_BUILD_DIR)/profile $(1)/usr/lib/$(PKG_NAME)/profile
+	$(INSTALL_DIR) $(1)/usr/bin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/$(PKG_NAME) $(1)/usr/bin/
+	$(INSTALL_DIR) $(1)/usr/lib/$(PKG_NAME)
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/menu $(1)/usr/lib/$(PKG_NAME)/menu
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/profile $(1)/usr/lib/$(PKG_NAME)/profile
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))
