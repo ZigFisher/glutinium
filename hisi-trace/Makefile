@@ -13,7 +13,7 @@ PKG_MAINTAINER:=Igor Zalatov <flyrouter@gmail.com>
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/OpenIPC/hisi-trace.git
-PKG_SOURCE_VERSION:=97cdd6ee11724a41fd09aec62b5a19a85f1f164e
+PKG_SOURCE_VERSION:=fe0aff2891a07d47c559282017662797dd53f2e6
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
@@ -29,12 +29,18 @@ define Package/$(PKG_NAME)
 	SECTION:=openipc
 	CATEGORY:=OpenIPC
 	SUBMENU:=Tools
-	TITLE:=HiSilicon trace
+	TITLE:=HiSilicon tracer
+	MAINTAINER:=@areference
+	DEPENDS:=@(TARGET_hi35xx)
+endef
+
+define Package/$(PKG_NAME)/description
+    HiSilicon tracer
 endef
 
 define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/sbin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/hisi-trace $(1)/usr/sbin/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/$(PKG_NAME) $(1)/usr/sbin/
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))
