@@ -8,7 +8,8 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=ipc_chip_info
-PKG_VERSION:=2020-latest
+PKG_VERSION:=2021.01
+PKG_RELEASE:=1
 PKG_MAINTAINER:=Dmitry Ilyin <dima@doty.ru>
 
 PKG_LICENSE:=MIT
@@ -16,11 +17,11 @@ PKG_LICENSE_FILES:=LICENSE
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/OpenIPC/ipc_chip_info.git
-PKG_SOURCE_VERSION:=852d0d49df3f632bcb18b6bebcb8d115a5bad43f
+PKG_SOURCE_VERSION:=763a2749afadfd752a66eb073b8802bd6a5149d1
 
-PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION)
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION)
+PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
+PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/cmake.mk
@@ -30,7 +31,7 @@ define Package/$(PKG_NAME)
 	CATEGORY:=OpenIPC
 	SUBMENU:=Tools
 	TITLE:=New tool for get info from IPCamera SoC's
-	MAINTAINER:=dima@doty.ru
+	MAINTAINER:=Dmitry Ilyin <dima@doty.ru>
 	DEPENDS:=@(TARGET_hi35xx)
 endef
 
