@@ -24,6 +24,12 @@ Usage
 More info for use rtsp-hisi on OpenWRT routers you can see [here (Russian)](http://zftlab.org)
 
 
+Notes
+=====
+
+"DEPENDS: +librt" need only for wpa_supplicant_nl80211 binary package
+
+
 Links
 =====
 

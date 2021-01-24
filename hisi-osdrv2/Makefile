@@ -24,7 +24,7 @@ define Package/$(PKG_NAME)/default
 	TITLE:=Hisilicon OSDRV-2
 	SUBMENU:=HiSilicon related
 	URL:=http://zftlab.org
-	DEPENDS:=@(TARGET_hi35xx_16cv200||TARGET_hi35xx_18ev200||TARGET_hi35xx_18ev201)
+	DEPENDS:=@(TARGET_hi35xx_16cv200||TARGET_hi35xx_18ev200||TARGET_hi35xx_18ev201) +librt
 endef
 
 define Package/$(PKG_NAME)/Default/description
