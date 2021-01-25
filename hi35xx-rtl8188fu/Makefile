@@ -15,6 +15,7 @@ PKG_RELEASE:=2
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=http://flyrouter.net/downloads/software/ipcam/archive/
+#PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 #PKG_SOURCE_PROTO:=git
 #PKG_SOURCE_URL:=https://github.com/kelebek333/rtl8188fu.git
 #PKG_SOURCE_VERSION:=a60758937803680454ed21945216354b25e5f6d5
