@@ -31,7 +31,7 @@ define Package/$(PKG_NAME)
 	SUBMENU:=Tools
 	TITLE:=HiSilicon tracer
 	MAINTAINER:=@areference
-	DEPENDS:=@(TARGET_hi35xx)
+	DEPENDS:=@(TARGET_hi35xx) +libstdcpp
 endef
 
 define Package/$(PKG_NAME)/description
