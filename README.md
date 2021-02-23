@@ -7,9 +7,9 @@ Glutinium - OpenWRT custom packages for extends functionality
 Supporting
 ==========
 
-If you like our work, please consider supporting us on <a href="https://www.paypal.com/donate/?hosted_button_id=C6F7UJLA58MBS">PayPal</a>. Thanks a lot !!!
-
+If you like our work, please consider supporting us on [Opencollective](https://opencollective.com/openipc) or [PayPal](https://www.paypal.com/donate/?hosted_button_id=C6F7UJLA58MBS). Thanks a lot !!!
 <p align="center">
+<a href="https://opencollective.com/openipc" target="_blank"><img src="https://opencollective.com/webpack/donate/button@2x.png?color=blue" width=300 /></a>
 <a href="https://www.paypal.com/donate/?hosted_button_id=C6F7UJLA58MBS"><img src="https://www.paypalobjects.com/en_US/IT/i/btn/btn_donateCC_LG.gif" alt="PayPal donate button" /> </a>
 </p>
 
