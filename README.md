@@ -4,20 +4,14 @@ Glutinium
 Glutinium - OpenWRT custom packages for extends functionality
 
 
-## Supporting
+Supporting
+==========
 
-If you like my work, please consider supporting us on <a href="https://www.paypal.com/donate/?hosted_button_id=C6F7UJLA58MBS">PayPal</a>. Thanks a lot !!!
+If you like our work, please consider supporting us on <a href="https://www.paypal.com/donate/?hosted_button_id=C6F7UJLA58MBS">PayPal</a>. Thanks a lot !!!
 
 <p align="center">
 <a href="https://www.paypal.com/donate/?hosted_button_id=C6F7UJLA58MBS"><img src="https://www.paypalobjects.com/en_US/IT/i/btn/btn_donateCC_LG.gif" alt="PayPal donate button" /> </a>
 </p>
-
-<form action="https://www.paypal.com/donate" method="post" target="_top">
-  <input type="hidden" name="hosted_button_id" value="C6F7UJLA58MBS" />
-  <input type="image" src="https://www.paypalobjects.com/en_US/IT/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
-  <img alt="" border="0" src="https://www.paypal.com/en_IT/i/scr/pixel.gif" width="1" height="1" />
-</form>
-
 
 
 License
