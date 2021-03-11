@@ -74,19 +74,15 @@ insert_sns()
             insmod ssp_ad9020.ko;
             ;;
 
+        hm1375)
+            devmem 0x20030030 32 0x1;              # Sensor clock 24 MHz
+            ;;
+
         icx692)
             devmem 0x200f000c 32 0x1;              # pinmux SPI0
             devmem 0x200f0010 32 0x1;              # pinmux SPI0
             devmem 0x200f0014 32 0x1;              # pinmux SPI0
             insmod ssp_ad9020.ko;
-            ;;
-
-        mn34031|mn34041)
-            devmem 0x200f000c 32 0x1;              # pinmux SPI0
-            devmem 0x200f0010 32 0x1;              # pinmux SPI0
-            devmem 0x200f0014 32 0x1;              # pinmux SPI0
-            devmem 0x20030030 32 0x5;              # Sensor clock 27MHz
-            insmod ssp_pana.ko;
             ;;
 
         imx104|imx122|imx138|imx222|imx222_spi_dc|imx322)
@@ -97,9 +93,12 @@ insert_sns()
             insmod ssp_sony.ko;
             ;;
 
-        ov9712|ov9712_i2c_dc|soih22|ov2710)
-            devmem 0x20030030 32 0x1;              # Sensor clock 24 MHz
-            insmod ssp_ad9020.ko;
+        mn34031|mn34041)
+            devmem 0x200f000c 32 0x1;              # pinmux SPI0
+            devmem 0x200f0010 32 0x1;              # pinmux SPI0
+            devmem 0x200f0014 32 0x1;              # pinmux SPI0
+            devmem 0x20030030 32 0x5;              # Sensor clock 27MHz
+            insmod ssp_pana.ko;
             ;;
 
         mt9p006)
@@ -108,8 +107,14 @@ insert_sns()
             insmod ssp_ad9020.ko;
             ;;
 
-        hm1375)
+        ov9712|ov9712_i2c_dc|soih22|ov2710)
             devmem 0x20030030 32 0x1;              # Sensor clock 24 MHz
+            insmod ssp_ad9020.ko;
+            ;;
+
+        sc2135|sc2135_i2c_dc)
+            devmem 0x20030030 32 0x5;              # Sensor clock 27 MHz
+            insmod ssp_ad9020.ko;
             ;;
 
         *)
