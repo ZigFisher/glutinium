@@ -13,6 +13,7 @@ PKG_RELEASE:=1
 PKG_LICENSE:=GPL-2.0
 
 include $(INCLUDE_DIR)/package.mk
+include $(INCLUDE_DIR)/version.mk
 
 define Package/flyscripts/default
   SECTION:=base
@@ -335,6 +336,8 @@ define Package/flyscripts_zftlab_openipc_base/install
 	$(INSTALL_BIN)  ./files/etc/banner__zftlab_openipc_base $(1)/etc/banner
 	$(INSTALL_DIR)  $(1)/etc/uci-defaults
 	$(INSTALL_BIN)  ./files/etc/uci-defaults/55_zftlab_openipc_base $(1)/etc/uci-defaults/
+	$(VERSION_SED) \
+		$(1)/etc/banner
 endef
 
 define Package/flyscripts_zftlab_openipc_dbell/install
