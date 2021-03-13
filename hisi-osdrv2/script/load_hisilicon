@@ -119,7 +119,7 @@ insert_sns()
 		insmod extdrv/sensor_spi.ko;
 		;;
 
-	imx222_i2c|imx323_i2c)
+	imx222_i2c|imx323_i2c|imx323_i2c_mipi)
 		devmem 0x200f0040 32 0x2;	# I2C0_SCL
 		devmem 0x200f0044 32 0x2;	# I2C0_SDA
 		# Cmos pinmux
