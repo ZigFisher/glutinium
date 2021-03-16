@@ -100,7 +100,7 @@ insert_sns()
 		devmem 0x20030104 32 0x1;	# vpss 148.5MHz
 		;;
 
-	imx222|imx323)
+	imx323_spi_dc)
 		devmem 0x200f0040 32 0x1	# SPI0_SCLK
 		devmem 0x200f0044 32 0x1	# SPI0_SDO
 		devmem 0x200f0048 32 0x1	# SPI0_SDI
@@ -119,7 +119,7 @@ insert_sns()
 		insmod extdrv/sensor_spi.ko;
 		;;
 
-	imx222_i2c|imx323_i2c|imx323_i2c_mipi)
+	imx323_i2c_dc)
 		devmem 0x200f0040 32 0x2;	# I2C0_SCL
 		devmem 0x200f0044 32 0x2;	# I2C0_SDA
 		# Cmos pinmux
@@ -422,77 +422,10 @@ sys_restore()
 
 run_minihttp()
 {
-  case $SNS_TYPE in
-
-  ar0130)
-    sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/ar0130_720p_line.ini#" /etc/minihttp.ini
-    ;;
-
-  jxf22)
-    sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/jxf22_1080p_line.ini#" /etc/minihttp.ini
-    ;;
-
-  gc2023|gc2033)
-    sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/gc2023_1080p_line.ini#" /etc/minihttp.ini
-    ;;
-
-  jxf23)
-    sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/jxf23_1080p_line.ini#" /etc/minihttp.ini
-    ;;
-
-  jxh62)
-    sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/jxh62_720p_line.ini#" /etc/minihttp.ini
-    ;;
-
-  imx222|imx323)
-    sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/imx222_1080p_line.ini#" /etc/minihttp.ini
-    ;;
-
-  imx323_i2c)
-    sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/imx222_i2c_1080p_line.ini#" /etc/minihttp.ini
-    ;;
-
-  ov2735)
-    sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/ov2735_1080p_line.ini#" /etc/minihttp.ini
-    ;;
-
-  ov9712)
-    sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/ov9712_720p_line.ini#" /etc/minihttp.ini
-    ;;
-
-  ov9732)
-    sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/ov9732_720p_line.ini#" /etc/minihttp.ini
-    ;;
-
-  sc1135)
-    sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/sc1135_720p_line.ini#" /etc/minihttp.ini
-    ;;
-
-  sc2035)
-    sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/sc2035_1080p_line.ini#" /etc/minihttp.ini
-    ;;
-
-  sc2135)
-    sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/sc2135_1080p_line.ini#" /etc/minihttp.ini
-    ;;
-
-  sc2235)
-    sed -i "s#sensor_config =.*#sensor_config = /etc/sensors/sc2235_1080p_line.ini#" /etc/minihttp.ini
-    ;;
-
-  *)
-    echo "You sensor not tested !"
-    echo "Run minihttp with correct /etc/minihttp.ini file"
-    exit 1
-    ;;
-
-  esac
-
   # Use it for stopping service:  killall -sigint minihttp
-  sleep 10;
+  sleep 1
   export SENSOR=$SNS_TYPE
   minihttp 2>&1 | logger -p daemon.info -t minihttp &
-
 }
 
 ####################################################################

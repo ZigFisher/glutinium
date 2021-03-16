@@ -243,7 +243,7 @@ remove_ko()
 start_minihttp()
 {
 	# Use it for stopping service:  killall -sigint minihttp
-	sleep 1;
+	sleep 1
 	export SENSOR=$SNS_TYPE
 	minihttp 2>&1 | logger -p daemon.info -t minihttp &
 }
