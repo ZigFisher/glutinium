@@ -79,7 +79,6 @@ insert_sns()
 	9m034|ar0130|jxf22|jxf23)
 		devmem 0x200f0040 32 0x2;	# I2C0_SCL
 		devmem 0x200f0044 32 0x2;	# I2C0_SDA
-		#
 		# Cmos pinmux
 		devmem 0x200f007c 32 0x1;       # VI_DATA13
 		devmem 0x200f0080 32 0x1;       # VI_DATA10
@@ -88,14 +87,12 @@ insert_sns()
 		devmem 0x200f008c 32 0x2;       # VI_VS
 		devmem 0x200f0090 32 0x2;       # VI_HS
 		devmem 0x200f0094 32 0x1;       # VI_DATA9
-		#
 		devmem 0x2003002c 32 0xb4001;   # sensor unreset, clk 27MHz, VI 99MHz
 		;;
 
 	ar0230|ar0237)
 		devmem 0x200f0040 32 0x2;	# I2C0_SCL
 		devmem 0x200f0044 32 0x2;	# I2C0_SDA
-		#
 		devmem 0x2003002c 32 0xb4005;	# clk 27MHz, VI 148.5MHz
 		devmem 0x20030104 32 0x1;	# vpss 148.5MHz
 		;;
@@ -113,10 +110,8 @@ insert_sns()
 		devmem 0x200f008c 32 0x2;	# VI_VS
 		devmem 0x200f0090 32 0x2;	# VI_HS
 		devmem 0x200f0094 32 0x1;	# VI_DATA9
-		#
 		devmem 0x2003002c 32 0x94001;	# clk 37.125MHz, VI 99MHz
-		#
-		insmod extdrv/sensor_spi.ko;
+		insmod sensor_spi.ko;
 		;;
 
 	imx323_i2c_dc)
@@ -130,7 +125,6 @@ insert_sns()
 		devmem 0x200f008c 32 0x2;	# VI_VS
 		devmem 0x200f0090 32 0x2;	# VI_HS
 		devmem 0x200f0094 32 0x1;	# VI_DATA9
-		#
 		devmem 0x2003002c 32 0x94001;	# clk 37.125MHz, VI 99MHz
 		;;
 
@@ -149,14 +143,12 @@ insert_sns()
 		devmem 0x200f008c 32 0x2;	# VI_VS
 		devmem 0x200f0090 32 0x2;	# VI_HS
 		devmem 0x200f0094 32 0x1;	# VI_DATA9
-		#
 		devmem 0x2003002c 32 0xc4001;	# sensor unreset, clk 24MHz, VI 99MHz
 		;;
 
 	ov9732)
 		devmem 0x200f0040 32 0x2;	# I2C0_SCL
 		devmem 0x200f0044 32 0x2;	# I2C0_SDA
-
 		#cmos pinmux
 		devmem 0x200f007c 32 0x1;	# VI_DATA13
 		devmem 0x200f0080 32 0x1;	# VI_DATA10
@@ -165,48 +157,42 @@ insert_sns()
 		devmem 0x200f008c 32 0x2;	# VI_VS
 		devmem 0x200f0090 32 0x2;	# VI_HS
 		devmem 0x200f0094 32 0x1;	# VI_DATA9
-
 		devmem 0x2003002c 32 0xc4001;	# clk 24MHz, VI 99MHz
 		;;
 
 	ov9752)
 		devmem 0x200f0040 32 0x2;	# I2C0_SCL
 		devmem 0x200f0044 32 0x2;	# I2C0_SDA
-
 		devmem 0x2003002c 32 0xc4001;	# clk 24MHz, VI 99MHz
 		;;
 
 	ov9750)
 		devmem 0x200f0040 32 0x2;	# I2C0_SCL
 		devmem 0x200f0044 32 0x2;	# I2C0_SDA
-
 		devmem 0x2003002c 32 0xc4001;	# clk 24MHz, VI 99MHz
 		;;
 
 	ov2718)
 		devmem 0x200f0040 32 0x2;	# I2C0_SCL
 		devmem 0x200f0044 32 0x2;	# I2C0_SDA
-
 		devmem 0x2003002c 32 0xc4001;	# clk 24MHz, VI 99MHz
 		;;
 
 	ov2735)
 		devmem 0x200f0040 32 0x2;	# I2C0_SCL
 		devmem 0x200f0044 32 0x2;	# I2C0_SDA
-
+		#cmos pinmux
 		devmem 0x200f0080 32 0x1;	# VI_DATA10
 		devmem 0x200f0088 32 0x1;	# VI_DATA11
 		devmem 0x200f008c 32 0x2;	# VI_VS
 		devmem 0x200f0090 32 0x2;	# VI_HS
 		devmem 0x200f0094 32 0x1;	# VI_DATA9
-
 		devmem 0x2003002c 32 0xb4001;	# clk 24MHz, VI 99MHz
 		;;
 
 	mn34222)
 		devmem 0x200f0040 32 0x2;	# I2C0_SCL
 		devmem 0x200f0044 32 0x2;	# I2C0_SDA
-
 		devmem 0x2003002c 32 0x94001;	# clk 37.125MHz, VI 99MHz
 		;;
 
@@ -221,7 +207,6 @@ insert_sns()
 		devmem 0x200f008c 32 0x2;	# VI_VS
 		devmem 0x200f0090 32 0x2;	# VI_HS
 		devmem 0x200f0094 32 0x1;	# VI_DATA9
-		#
 		devmem 0x2003002c 32 0xc4001;	# sensor unreset, clk 24MHz, VI 99MHz
 		;;
 
@@ -235,7 +220,6 @@ insert_sns()
 		devmem 0x200f008c 32 0x1;	# VI_DATA15
 		devmem 0x200f0090 32 0x1;	# VI_DATA14
 		devmem 0x200f0094 32 0x1;	# VI_DATA9
-
 		devmem 0x2003002c 32 0x94003;	# clk 24MHz, VI 99MHz
 		;;
 
@@ -250,7 +234,6 @@ insert_sns()
 		devmem 0x200f008c 32 0x2;	# VI_VS
 		devmem 0x200f0090 32 0x2;	# VI_HS
 		devmem 0x200f0094 32 0x1;	# VI_DATA9
-		#
 		devmem 0x2003002c 32 0xb4001;	# clk 27MHz, VI 99MHz
 		;;
 
@@ -265,7 +248,6 @@ insert_sns()
 		devmem 0x200f008c 32 0x2;	# VI_VS
 		devmem 0x200f0090 32 0x2;	# VI_HS
 		devmem 0x200f0094 32 0x1;	# VI_DATA9
-		#
 		devmem 0x2003002c 32 0xb4001;	# clk 27MHz, VI 99MHz
 		;;
 
@@ -332,17 +314,17 @@ insert_ko()
   insmod hi3518e_sys.ko vi_vpss_online=$online_mode sensor=$SNS_TYPE
   #
   if [[ $? -ne 0 ]]; then
-    exit;
+    exit 1
   fi
   #
   insmod hi3518e_tde.ko
   insmod hi3518e_region.ko
   insmod hi3518e_vgs.ko                            # maybe disable it ?
   #
-  insert_isp;
+  insert_isp
   #
-  insmod hi3518e_viu.ko detect_err_frame=10;
-  insmod hi3518e_vpss.ko rfr_frame_comp=1;         # TestOption: bOneBufferforLowDelay=1
+  insmod hi3518e_viu.ko detect_err_frame=10
+  insmod hi3518e_vpss.ko rfr_frame_comp=1          # TestOption: bOneBufferforLowDelay=1
   #insmod hi3518e_vou.ko
   #insmod hi3518e_vou.ko transparentTransmit=1     # enable transparentTransmit
   #insmod hifb.ko video="hifb:vram0_size:1620"     # default pal
@@ -351,7 +333,7 @@ insert_ko()
   insmod hi3518e_chnl.ko ChnlLowPower=1
   insmod hi3518e_h264e.ko
   insmod hi3518e_jpege.ko
-  insmod hi3518e_ive.ko save_power=0;
+  insmod hi3518e_ive.ko save_power=0
   #insmod hi3518e_ive.ko
   insmod sensor_i2c.ko
   insmod pwm.ko                                   # maybe disable it ?
