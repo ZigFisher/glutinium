@@ -6,7 +6,7 @@
 
 
 # SoC detect
-chipid=$(ipc_chip_info --chip_id)
+chipid=$(ipctool --chip_id)
 
 # MMZ config
 mem_start=0x80000000;                             # phy mem start
