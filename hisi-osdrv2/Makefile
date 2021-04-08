@@ -94,7 +94,6 @@ define Package/$(PKG_NAME)-binary/install
 	$(INSTALL_BIN) ./script/load_hisilicon $(1)/usr/bin/
 	$(INSTALL_DIR) $(1)/etc/sensors
 	$(CP) ./binary/etc/sensors/* $(1)/etc/sensors/
-	$(CP) ./binary/etc/minihttp.ini $(1)/etc/
 	$(INSTALL_DIR) $(1)/usr/lib/fonts
 	$(CP) ./binary/lib/fonts/* $(1)/usr/lib/fonts/
 	#$(INSTALL_DIR) $(1)/usr/lib/sensors

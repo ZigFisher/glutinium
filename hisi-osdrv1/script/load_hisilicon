@@ -240,12 +240,12 @@ remove_ko()
     rmmod mmz
 }
 
-start_minihttp()
+start_majestic()
 {
-	# Use it for stopping service:  killall -sigint minihttp
+	# Use it for stopping service:  killall -sigint majestic
 	sleep 1
 	export SENSOR=$SNS_TYPE
-	minihttp 2>&1 | logger -p daemon.info -t minihttp &
+	majestic 2>&1 | logger -p daemon.info -t majestic &
 }
 
 ####################################################################
@@ -281,9 +281,9 @@ echo
 echo "====================="
 echo
 
-killall -sigint minihttp
+killall -sigint majestic
 remove_ko
 insert_ko
-start_minihttp
+start_majestic
 
 ####################################################################

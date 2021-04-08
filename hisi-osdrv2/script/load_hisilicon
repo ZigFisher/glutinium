@@ -402,12 +402,12 @@ sys_restore()
 
 ####################################################################
 
-run_minihttp()
+run_majestic()
 {
-  # Use it for stopping service:  killall -sigint minihttp
+  # Use it for stopping service:  killall -sigint majestic
   sleep 1
   export SENSOR=$SNS_TYPE
-  minihttp 2>&1 | logger -p daemon.info -t minihttp &
+  majestic 2>&1 | logger -p daemon.info -t majestic &
 }
 
 ####################################################################
@@ -448,6 +448,6 @@ echo
 
 #remove_ko
 insert_ko
-run_minihttp
+run_majestic
 
 ####################################################################
