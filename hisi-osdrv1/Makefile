@@ -83,6 +83,7 @@ define Package/$(PKG_NAME)-binary/install
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./script/ipcam.init $(1)/etc/init.d/ipcam
 	#$(CP) ./script/ircut_demo $(1)/usr/bin/
+	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) ./script/load_hisilicon $(1)/usr/bin/
 	$(INSTALL_DIR) $(1)/etc/sensors
 	$(CP) ./binary/etc/sensors/* $(1)/etc/sensors/
