@@ -55,7 +55,7 @@ endef
 define Package/$(PKG_NAME)-majestic
 $(call Package/$(PKG_NAME)/default)
 	TITLE+= - tiny but powerful IPC streaming software
-	>DEPENDS:=+$(PKG_NAME)-lib +lame-lib +libevent2 +libjson-c +libpthread
+	DEPENDS:=+$(PKG_NAME)-lib +lame-lib +libevent2 +libjson-c +libpthread
 endef
 
 define Package/$(PKG_NAME)-sensor
