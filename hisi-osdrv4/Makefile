@@ -52,6 +52,12 @@ $(call Package/$(PKG_NAME)/default)
 	TITLE+= - lib package
 endef
 
+define Package/$(PKG_NAME)-majestic
+$(call Package/$(PKG_NAME)/default)
+	TITLE+= - tiny but powerful IPC streaming software
+	DEPENDS:=+$(PKG_NAME)-lib +lame-lib +libevent2 +libjson-c +libpthread
+endef
+
 define Package/$(PKG_NAME)-sensor
 $(call Package/$(PKG_NAME)/default)
 	TITLE+= - binary sensor package
@@ -104,6 +110,15 @@ define Package/$(PKG_NAME)-lib/install
 	$(CP) ./lib/lib*.so $(1)/usr/lib/
 endef
 
+define Package/$(PKG_NAME)-majestic/install
+	wget -v -O $(DL_DIR)/majestic.hi3516ev300.master.tar.bz2 http://openipc.s3-eu-west-1.amazonaws.com/majestic.hi3516ev300.master.tar.bz2
+	tar -C $(PKG_BUILD_DIR) -xvjf $(DL_DIR)/majestic.hi3516ev300.master.tar.bz2
+	$(INSTALL_DIR) $(1)/etc
+	$(CP) $(PKG_BUILD_DIR)/majestic.yaml $(1)/etc/
+	$(INSTALL_DIR) $(1)/usr/bin
+	$(CP) $(PKG_BUILD_DIR)/majestic $(1)/usr/bin/
+endef
+
 define Package/$(PKG_NAME)-sensor/install
 	$(INSTALL_DIR) $(1)/usr/lib
 	$(CP) ./sensor/libsns_*.so $(1)/usr/lib/
@@ -115,4 +130,5 @@ $(eval $(call BuildPackage,$(PKG_NAME)-base))
 $(eval $(call BuildPackage,$(PKG_NAME)-binary))
 $(eval $(call BuildPackage,$(PKG_NAME)-kmod))
 $(eval $(call BuildPackage,$(PKG_NAME)-lib))
+$(eval $(call BuildPackage,$(PKG_NAME)-majestic))
 $(eval $(call BuildPackage,$(PKG_NAME)-sensor))
