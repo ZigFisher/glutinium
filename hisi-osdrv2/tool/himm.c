@@ -58,7 +58,7 @@ HI_RET himm(int argc , char* argv[])
                 EXIT("Memory Map error.", -1);
             }
             pMem += ulAddr;
-            #else
+            #else        
             pMem = memmap(ulAddr, DEFAULT_MD_LEN);
             #endif
             ulOld = *(U32*)pMem;
@@ -104,3 +104,8 @@ HI_RET himm(int argc , char* argv[])
 }
 #endif
 #endif /* __cplusplus */
+
+
+
+
+

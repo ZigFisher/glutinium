@@ -76,7 +76,7 @@ HI_RET i2c_read(int argc , char* argv[])
 	}
 
 	for (i = 1; i < argc; i++) {
-		if (StrToNumber(argv[i], &tmp)) {
+		if (StrToNumber(argv[i], (OUT U32 *)&tmp)) {
 			print_r_usage();
 			return -1;
 		}
@@ -199,7 +199,7 @@ HI_RET i2c_write(int argc , char* argv[])
 	}
 
 	for (i = 1; i < argc; i++) {
-		if (StrToNumber(argv[i], &tmp)) {
+		if (StrToNumber(argv[i], (OUT U32 *)&tmp)) {
 			print_w_usage();
 			return -1;
 		}
@@ -280,7 +280,7 @@ HI_RET i2c_write(int argc , char* argv[])
 		index++;
 	}
 
-	write(fd, buf, (reg_width + data_width));
+	ret = write(fd, buf, (reg_width + data_width));
 	if(ret < 0)
 	{
 		printf("I2C_WRITE error!\n");

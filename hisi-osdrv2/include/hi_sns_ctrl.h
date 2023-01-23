@@ -36,6 +36,7 @@ int  sensor_write_register_bit(int addr, int data, int mask);
 int  sensor_register_callback(void); 
 int  sensor_unregister_callback(void);
 int  sensor_set_inifile_path(const HI_CHAR *pcPath);
+int  sensor_set_init(ISP_INIT_ATTR_S *pstInitAttr);
 
 #ifdef __cplusplus
 #if __cplusplus

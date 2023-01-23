@@ -14,17 +14,17 @@
 /*--------------------------------------------------------------------------*/
 
 /*
-	
-	
-	
-	
+    
+    
+    
+    
 */
 
 #ifndef _DICTIONARY_H_
 #define _DICTIONARY_H_
 
 /*---------------------------------------------------------------------------
-   								Includes
+                                   Includes
  ---------------------------------------------------------------------------*/
 
 #include <stdio.h>
@@ -42,13 +42,13 @@ extern "C"{
 
 
 /*---------------------------------------------------------------------------
-   								New types
+                                   New types
  ---------------------------------------------------------------------------*/
 
 
 /*-------------------------------------------------------------------------*/
 /**
-  @brief	Dictionary object
+  @brief    Dictionary object
 
   This object contains a list of string/string associations. Each
   association is identified by a unique string key. Looking up values
@@ -63,28 +63,28 @@ extern "C"{
 #define CL_SLINE               4  /** 4,Space Line;                                        example;|\r\n*/
 
 typedef struct _dictionary_ {
-	int				n ;		/** Number of entries in dictionary */
-	int				size ;	/** Storage size of entries*/
-	char 		**	val ;	/** List of string values */
-	char 		**  key ;	/** List of string keys */
-	unsigned	 *	hash ;	/** List of hash values for keys */
+    int                n ;        /** Number of entries in dictionary */
+    int                size ;    /** Storage size of entries*/
+    char         **    val ;    /** List of string values */
+    char         **  key ;    /** List of string keys */
+    unsigned     *    hash ;    /** List of hash values for keys */
 
-	/*2006/03/11 blair add : save comment and space Line*/
-	int             commN;      /** Number of comment in dictionary */
-	int             commSize;   /** Storage size of comment*/
-	char        **  comment;    /** List of string comment and space Line*/
-	unsigned	 *	commHash;	/** List of hash values for keys ,signed the comment line is the key has the comment */
-	unsigned char * commPlace;  /** remember the comment at where the key keyhash signed.
-	                                0,the line has no comment;
-	                                1,no space before comment;
-	                                2,at the key line's right;
-	                                3,Line of commnet or at the key line's behind;
-	                                4,Space Line;*/
+    /*2006/03/11 blair add : save comment and space Line*/
+    int             commN;      /** Number of comment in dictionary */
+    int             commSize;   /** Storage size of comment*/
+    char        **  comment;    /** List of string comment and space Line*/
+    unsigned     *    commHash;    /** List of hash values for keys ,signed the comment line is the key has the comment */
+    unsigned char * commPlace;  /** remember the comment at where the key keyhash signed.
+                                    0,the line has no comment;
+                                    1,no space before comment;
+                                    2,at the key line's right;
+                                    3,Line of commnet or at the key line's behind;
+                                    4,Space Line;*/
 } dictionary ;
 
 
 /*---------------------------------------------------------------------------
-  							Function prototypes
+                              Function prototypes
  ---------------------------------------------------------------------------*/
 void * mem_double(void * ptr, int size);
 /*-------------------------------------------------------------------------*/

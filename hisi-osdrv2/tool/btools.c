@@ -53,7 +53,6 @@ static CMD_SHELL_T gBToolsCmds[] =
     CMD_SHELL_DEF("hivd", CMD_ENABLE, hivd,"video dump")    
     CMD_SHELL_DEF("himdb", CMD_ENABLE, himdb,"video dump")    
     CMD_SHELL_DEF("hiddrs", CMD_ENABLE, hiddrs,"ddr statistic")    
-    CMD_SHELL_DEF("hil2s", CMD_ENABLE, hil2s,"l2 cache statistic")    
     CMD_SHELL_DEF("hiew", CMD_ENABLE, hiew,"extend device write")
     CMD_SHELL_DEF("hier", CMD_ENABLE, hier,"extend device read")
     CMD_SHELL_DEF("i2c_read", CMD_ENABLE, i2c_read,"i2c device read")
@@ -185,7 +184,6 @@ int main(int argc , char* argv[])
     char* pCmdStr = argv[0];
     char* pTmp = NULL;
 
-    /*»•µÙ√¸¡Ó––«∞◊∫*/
 	for (pTmp = pCmdStr; *pTmp != '\0';) 
     {
 		if (*pTmp++ == '/')

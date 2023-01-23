@@ -4,22 +4,23 @@
    @file    iniparser.h
    @author  N. Devillard
    @date    Mar 2000
-   @version 
+   @version
    @brief   Parser for ini files.
 */
 /*--------------------------------------------------------------------------*/
+
 
 #ifndef _INIPARSER_H_
 #define _INIPARSER_H_
 
 /*---------------------------------------------------------------------------
-   								Includes
+                                   Includes
  ---------------------------------------------------------------------------*/
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-/*#include <unistd.h> 
+/*#include <unistd.h>
 */
 /*
  * The following #include is necessary on many Unixes but not Linux.
@@ -278,13 +279,13 @@ dictionary * iniparser_load(const char * ininame);
 
 /*2006/03/11 blair add : save comment and space Line*/
 int iniparser_add_comment(
-    dictionary          *d, 
-    const char          *sec, 
-    const char          *key, 
+    dictionary          *d,
+    const char          *sec,
+    const char          *key,
     const char          *comment,
     const unsigned char place);
 
-    
+
 /*-------------------------------------------------------------------------*/
 /**
   @brief    Free all memory associated to an ini dictionary
@@ -298,8 +299,6 @@ int iniparser_add_comment(
 /*--------------------------------------------------------------------------*/
 void iniparser_freedict(dictionary * d);
 
-int iniparser_sec_getNLowLever(const dictionary * d,const char* UperLever);
-char* iniparser_sec_getLowLever(const dictionary * d,const char* UpLever, int n);
 void iniparser_mem_printf(const dictionary * d);
 
 #ifdef __cplusplus

@@ -177,6 +177,7 @@ typedef struct hiVENC_STREAM_INFO_H264_S
     H264E_REF_TYPE_E      enRefType;                /*Type of encoded frames in advanced frame skipping reference mode*/
     HI_U32 u32UpdateAttrCnt;                        /*Number of times that channel attributes or parameters (including RC parameters) are set*/	
 	HI_U32 u32StartQp;								/*StartQP Value*/
+    HI_BOOL bPSkip;
 }VENC_STREAM_INFO_H264_S;
 
 typedef struct hiVENC_STREAM_INFO_H265_S
@@ -193,6 +194,7 @@ typedef struct hiVENC_STREAM_INFO_H265_S
     H265E_REF_TYPE_E      enRefType;                /*Type of encoded frames in advanced frame skipping reference mode*/
     HI_U32 u32UpdateAttrCnt;                        /*Number of times that channel attributes or parameters (including RC parameters) are set*/
 	HI_U32 u32StartQp;								/*StartQP Value*/
+    HI_BOOL bPSkip;
 }VENC_STREAM_INFO_H265_S;
 
 typedef struct hiVENC_STREAM_INFO_JPEG_S
@@ -433,16 +435,16 @@ typedef struct hiVENC_PARAM_VUI_VIDEO_SIGNAL_S
 
 typedef struct hiVENC_PARAM_VUI_BITSTREAM_RESTRIC_S
 {
-	HI_U8  bitstream_restriction_flag ;            /* default value: n/a. {0,1} */
+	HI_U8  bitstream_restriction_flag ;            /* default value: 0. {0,1} */
 }VENC_PARAM_VUI_BITSTREAM_RESTRIC_S;
 
 
 typedef struct hiVENC_PARAM_H264_VUI_S
 {
-	VENC_PARAM_VUI_ASPECT_RATIO_S       stVuiAspectRatio;
-	VENC_PARAM_VUI_H264_TIME_INFO_S     stVuiTimeInfo;
-	VENC_PARAM_VUI_VIDEO_SIGNAL_S       stVuiVideoSignal;
-  	VENC_PARAM_VUI_BITSTREAM_RESTRIC_S  stVuiBitstreamRestric;	
+	VENC_PARAM_VUI_ASPECT_RATIO_S 	   stVuiAspectRatio; 	/* the param of aspect ratio */		
+	VENC_PARAM_VUI_H264_TIME_INFO_S    stVuiTimeInfo;		/* the param of time info */	
+	VENC_PARAM_VUI_VIDEO_SIGNAL_S      stVuiVideoSignal;	/* the param of video signal */
+    VENC_PARAM_VUI_BITSTREAM_RESTRIC_S stVuiBitstreamRestric;
 }VENC_PARAM_H264_VUI_S;
 
 typedef struct hiVENC_PARAM_H265_TIME_INFO_S
@@ -493,6 +495,15 @@ typedef struct hiVENC_ROI_CFG_S
     RECT_S  stRect;                                /* Region of an ROI*/
 }VENC_ROI_CFG_S;
 
+/* ROI struct */
+typedef struct hiVENC_ROI_CFG_EX_S
+{
+    HI_U32  u32Index;      /* Index of an ROI. The system supports indexes ranging from 0 to 7 */
+    HI_BOOL bEnable[3];    /* Subscript of array   0: I Frame; 1: P/B Frame; 2: VI Frame; other params are the same. */
+    HI_BOOL bAbsQp[3];     /* QP mode of an ROI.HI_FALSE: relative QP.HI_TURE: absolute QP.*/
+    HI_S32  s32Qp[3];      /* QP value. */
+    RECT_S  stRect[3];     /* Region of an ROI*/
+}VENC_ROI_CFG_EX_S;
 
 typedef struct hiVENC_ROIBG_FRAME_RATE_S
 {
@@ -676,6 +687,7 @@ typedef enum hiVENC_MODTYPE_E
     MODTYPE_H264E,                     
     MODTYPE_H265E,
     MODTYPE_JPEGE,
+    MODTYPE_RC,
     MODTYPE_BUTT
 } VENC_MODTYPE_E;
 
@@ -704,19 +716,26 @@ typedef struct hiVENC_PARAM_MOD_JPEGE_S
 
 typedef struct hiVENC_PARAM_MOD_VENC_S
 {
-    HI_U32 u32VencBufferCache;    
+    HI_U32 u32VencBufferCache; 
+    HI_U32 u32JpegClearStreamBuf;
 } VENC_PARAM_MOD_VENC_S;
 
+typedef struct hiVENC_PARAM_MOD_RC_S
+{
+    HI_U32  u32ClrStatAfterSetBr;
+    
+} VENC_PARAM_MOD_RC_S;
 
 typedef struct hiVENC_MODPARAM_S
 {
   VENC_MODTYPE_E enVencModType;
   union
   {
-     VENC_PARAM_MOD_VENC_S stVencModParam;
+     VENC_PARAM_MOD_VENC_S  stVencModParam;
      VENC_PARAM_MOD_H264E_S stH264eModParam;
      VENC_PARAM_MOD_H265E_S stH265eModParam;
      VENC_PARAM_MOD_JPEGE_S stJpegeModParam;  
+     VENC_PARAM_MOD_RC_S    stRcModParam;
   };
 } VENC_PARAM_MOD_S;
 

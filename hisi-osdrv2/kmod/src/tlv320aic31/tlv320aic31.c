@@ -36,7 +36,6 @@
 #include <linux/init.h>
 #include <asm/uaccess.h>
 #include <asm/io.h>
-#include <asm/system.h>
 #ifndef CONFIG_HISI_SNAPSHOT_BOOT
 #include <linux/miscdevice.h>
 #endif
@@ -99,7 +98,7 @@ int tlv320aic31_write(unsigned char chip_addr, unsigned char reg_addr, unsigned 
     buf[0] = reg_addr;
     buf[1] = value;
 
-    ret = i2c_master_send(client, buf, 2);
+    ret = hi_i2c_master_send(client, buf, 2);
     return ret;
 }
 
@@ -111,7 +110,7 @@ int tlv320aic31_read(unsigned char chip_addr, unsigned char reg_addr)
     unsigned char buf[2];
 
     buf[0] = reg_addr;
-    ret = i2c_master_recv(client, buf, 1);
+    ret = hi_i2c_master_recv(client, buf, 1);
     if (ret >= 0)
     {
         ret_data = buf[0];

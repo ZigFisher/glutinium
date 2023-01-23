@@ -14,7 +14,7 @@
   1.Date        : 2009/04/09
     Author      : c55300
     Modification: Created file
-    
+
   2.Date        : 2009/05/04
     Author      : c55300
     Modification: Add ENDIAN and VALUE_BETWEEN.
@@ -22,7 +22,7 @@
   3.Date        : 2009/05/21
     Author      : c55300
     Modification: Add macro of FRACTION operation and CMP.
-    
+
 ******************************************************************************/
 #ifndef __HI_MATH_H__
 #define __HI_MATH_H__
@@ -121,7 +121,7 @@ __inline static HI_BOOL IS_LITTLE_END(void)
     unEndTest.cTest[1] = 0x02;
     unEndTest.cTest[2] = 0x03;
     unEndTest.cTest[3] = 0x04;
-    
+
     return (unEndTest.u32Test > 0x01020304) ? (HI_TRUE) : (HI_FALSE);
 }
 
@@ -134,9 +134,9 @@ __inline static HI_BOOL IS_LITTLE_END(void)
 ** represent fraction in 32 bit. LSB 16 is numerator, MSB 16 is denominator
 ** It is integer if denominator is 0.
 ******************************************************************************/
-#define FRACTION32(de,nu)       ( ((de) << 16) | (nu) ) 
+#define FRACTION32(de,nu)       ( ((de) << 16) | (nu) )
 #define NUMERATOR32(x)          ( (x) & 0xffff)
-#define DENOMINATOR32(x)        ( (x) >> 16 )  
+#define DENOMINATOR32(x)        ( (x) >> 16 )
 
 /******************************************************************************
 ** RGB(r,g,b)    assemble the r,g,b to 24bit color
@@ -186,7 +186,7 @@ __inline static HI_U32 Rgb2Yuv(HI_U32 u32Rgb)
 }
 
 /******************************************************************************
-** GetYCFromRGB(rgb, *y, *cbcr)    convert rgb to yyyy, uvuv, 
+** GetYCFromRGB(rgb, *y, *cbcr)    convert rgb to yyyy, uvuv,
 ******************************************************************************/
 __inline static HI_VOID GetYCFromRGB(HI_U32 rgb, HI_U32 * pY, HI_U32 * pC)
 {
@@ -200,7 +200,7 @@ __inline static HI_VOID GetYCFromRGB(HI_U32 rgb, HI_U32 * pY, HI_U32 * pC)
 
     tmp = cb & 0xFF;
     color_c = (tmp<<24) + (tmp<<8);
-    
+
     tmp = cr & 0xFF;
     color_c = color_c + (tmp<<16) + tmp;
 
@@ -245,18 +245,19 @@ __inline static HI_BOOL FpsControl(FPS_CTRL_S *pFrmCtrl)
         pFrmCtrl->u32FrmKey -= pFrmCtrl->u32Ffps;
         bReturn = HI_TRUE;
     }
-    
+
     return bReturn;
 }
 
 /*******************************************************************************
-** GetSysTimeBySec   
-** GetSysTimeByUsec 
+** GetSysTimeBySec
+** GetSysTimeByUsec
 *******************************************************************************/
 #ifdef __KERNEL__
     #include <linux/ktime.h>
 #else
     #include <sys/time.h>
+    #include <time.h>
 #endif
 __inline static HI_U32 GetSysTimeBySec(void)
 {
@@ -266,7 +267,7 @@ __inline static HI_U32 GetSysTimeBySec(void)
     #else
         gettimeofday(&stTime, NULL);
     #endif
-    return stTime.tv_sec;
+    return (HI_U32)stTime.tv_sec;
 }
 
 __inline static HI_U64 GetSysTimeByUsec(void)
@@ -285,7 +286,7 @@ do { \
 	struct timespec req; \
 	req.tv_sec 	= (usec) / 1000000; \
 	req.tv_nsec = ((usec) % 1000000) * 1000; \
-	nanosleep (&req, NULL); \
+	nanosleep(&req, NULL); \
 } while (0)
 
 #ifndef __KERNEL__
@@ -303,7 +304,7 @@ do { \
  *    __inline static HI_S32 snprintf_s(HI_CHAR* strDest, HI_U32 destMax, HI_U32 count, const HI_CHAR* format, ...);
  *
  * <FUNCTION DESCRIPTION>
- *    The snprintf_s function formats and stores count or fewer characters in 
+ *    The snprintf_s function formats and stores count or fewer characters in
  *    strDest and appends a terminating null. Each argument (if any) is converted
  *    and output according to the corresponding format specification in format.
  *    The formatting is consistent with the printf family of functions; If copying
@@ -311,7 +312,7 @@ do { \
  *
  * <INPUT PARAMETERS>
  *    strDest                 Storage location for the output.
- *    destMax                 The size of the storage location for output. Size 
+ *    destMax                 The size of the storage location for output. Size
  *                            in bytes for snprintf_s.
  *    count                   Maximum number of character to store.
  *    format                  Format-control string.
@@ -322,7 +323,7 @@ do { \
  * <RETURN VALUE>
  *    snprintf_s returns the number of characters stored in strDest, not counting
  *    the terminating null character.
- *    If the storage required to store the data and a terminating null exceeds 
+ *    If the storage required to store the data and a terminating null exceeds
  *    destMax, format will be truncated as the first (destMax-1) characters and a terminating null. return (destMax-1).
  *    If strDest or format is a NULL pointer, or if destMax  is equal
  *    to zero or greater than SECUREC_STRING_MAX_LEN, or if count is greater than (SECUREC_STRING_MAX_LEN - 1), the function return -1.
@@ -333,7 +334,7 @@ __inline static HI_S32 snprintf_s (HI_CHAR* strDest, HI_U32 destMax, HI_U32 coun
 {
 	va_list args;
 	HI_S32 s32Ret;
-	
+
 	if (format == NULL || strDest == NULL || destMax == 0 || destMax > SECUREC_STRING_MAX_LEN || count > (SECUREC_STRING_MAX_LEN - 1))
     {
         if (strDest != NULL && destMax > 0)
@@ -343,7 +344,7 @@ __inline static HI_S32 snprintf_s (HI_CHAR* strDest, HI_U32 destMax, HI_U32 coun
         return -1;
     }
 
-	
+
 	va_start(args, format);
 
     if (destMax > count)
@@ -356,7 +357,7 @@ __inline static HI_S32 snprintf_s (HI_CHAR* strDest, HI_U32 destMax, HI_U32 coun
         s32Ret = vsnprintf(strDest, destMax, format, args);
 		s32Ret = ((s32Ret < 0) || (s32Ret < destMax-1)) ? s32Ret : destMax-1;
 	}
-	
+
 	va_end(args);
 
 	return s32Ret;

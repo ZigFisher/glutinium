@@ -6,6 +6,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/mman.h>
+#include <sys/ioctl.h>
 
 #include "memmap.h"
 #include "hi.h"
@@ -49,11 +50,13 @@ HI_RET hier(int argc , char* argv[])
 	U8* data;
 	U32 len = 0x40;
 	U32 count=0;
+#ifndef BVT_I2C
 	int result;
+#endif
 
 	if (argc < 4)
 	{
-		printf("usage: %s <device address> <register address> <len>. sample: %s 0xA0 0x10 0x40\n", argv[0]);
+		printf("usage: %s <device address> <register address> <len>. sample: %s 0xA0 0x10 0x40\n", argv[0], argv[0]);
 		return -1;
 	}
 
@@ -79,7 +82,7 @@ HI_RET hier(int argc , char* argv[])
 			return -1;
 		}
 	}
-	data = (char*)malloc(len);
+	data = (U8*)malloc(len);
 	if (data == NULL)
     {
 		/*EXIT("I2C open error.", result);*/
@@ -99,10 +102,14 @@ if (result != HI_SUCCESS)
 #else
     fd = open("/dev/hi_i2c", 0);  
 #endif
+	if (fd < 0) {
+		printf ("Open error!\n");
+		return -1;
+	}
 #endif
 
 
-printf("====I2C read:<%#x> <%#x> <%#x>====\r\n", device_addr, reg_addr, len);
+printf("====I2C read:<%#lx> <%#lx> <%#lx>====\r\n", device_addr, reg_addr, len);
 
 while (count < len)
 {
@@ -117,10 +124,15 @@ while (count < len)
 
 #else
 
+	int ret = 0;
 #ifdef HI_GPIO_I2C
 	int value;
 	value = ((device_addr&0xff)<<24) | (((reg_addr+count)&0xff)<<16);        
-	ioctl(fd, GPIO_I2C_READ, &value);        
+	ret = ioctl(fd, GPIO_I2C_READ, &value);        
+	if (ret < 0) {
+		close(fd);
+		return -1;
+	}
 	data[count] = value&0xff;
 #else
 	I2C_DATA_S  i2c_data ;
@@ -128,7 +140,11 @@ while (count < len)
 	i2c_data.reg_addr = reg_addr+count    ;
 	i2c_data.addr_byte_num   = 1  ;
 	i2c_data.data_byte_num   = 1 ;
-	ioctl(fd, CMD_I2C_READ, &i2c_data);
+	ret = ioctl(fd, CMD_I2C_READ, &i2c_data);
+	if (ret < 0) {
+		close(fd);
+		return -1;
+	}
 	data[count] =  i2c_data.data ;
 #endif
 
@@ -157,12 +173,14 @@ HI_RET hiew(int argc , char* argv[])
 	U32 reg_addr;
 	U32 new_data;
 	U8 value;
+#ifndef BVT_I2C    
 	int result;
-
+#endif
+	int ret = 0;
 
 	if (argc < 5)
 	{
-	  printf("usage: %s <device address> <register address> <value>. sample: %s 0xA0 0x10 0x40\n", argv[0]);
+	  printf("usage: %s <device address> <register address> <value>. sample: %s 0xA0 0x10 0x40\n", argv[0], argv[0]);
 		return -1;
 
 	}
@@ -188,7 +206,7 @@ HI_RET hiew(int argc , char* argv[])
 	}
 	value = (U8)new_data;
 
-	printf("====I2C write:<%#x> <%#x> <%#x>====\n", device_addr, reg_addr, new_data);
+	printf("====I2C write:<%#lx> <%#lx> <%#lx>====\n", device_addr, reg_addr, new_data);
 
 #ifndef BVT_I2C    
 	result = HI_UNF_I2C_Open();
@@ -215,17 +233,34 @@ HI_RET hiew(int argc , char* argv[])
 #ifdef HI_GPIO_I2C
 	int tmp;
 	fd = open("/dev/gpioi2c", 0);  
+	if (fd < 0)
+	{
+		printf("Open %s error!\n", "/dev/gpioi2c");
+		return -1;
+	}
 	tmp = ((device_addr&0xff)<<24) | ((reg_addr&0xff)<<16) | (value&0xffff);
-	ioctl(fd, GPIO_I2C_WRITE, &tmp);
+	ret = ioctl(fd, GPIO_I2C_WRITE, &tmp);
+	if (ret < 0) {
+		close(fd);
+		return -1;
+	}
 #else
 	I2C_DATA_S  i2c_data ;
-	fd = open("/dev/hi_i2c", 0);  
+	fd = open("/dev/hi_i2c", 0);
+	if (fd < 0) {
+		printf("Open /dev/hi_i2c error!\n");
+		return -1;
+	}
 	i2c_data.dev_addr = device_addr ; 
 	i2c_data.reg_addr = reg_addr    ; 
 	i2c_data.addr_byte_num = 1  ; 
 	i2c_data.data     = value ; 
 	i2c_data.data_byte_num = 1 ;
-	ioctl(fd, CMD_I2C_WRITE, &i2c_data);
+	ret = ioctl(fd, CMD_I2C_WRITE, &i2c_data);
+	if (ret < 0) {
+		close(fd);
+		return -1;
+	}
 #endif
 	close(fd);
 #endif

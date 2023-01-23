@@ -32,15 +32,15 @@
 #include <linux/hrtimer.h>
 
 #include <asm/uaccess.h>
-#include <asm/system.h>
 #include <asm/io.h>
+#include <linux/slab.h>
 
 #include "piris.h"
 #include "piris_ext.h"
 
 /* Piris use GPIO3_7, GPIO4_0, GPIO4_1, GPIO4_2 */
 /* GPIO3's base address is 0x2017 and GPIO4's 0x2018 */
-#define PIRISI_ADRESS_BASE     0x20170000        
+#define PIRISI_ADRESS_BASE     0x20170000
 
 void __iomem* reg_pirisI_base_va = 0;
 
@@ -83,23 +83,23 @@ DECLARE_COMPLETION(piris_comp);
 int piris_gpio_update(int* pPirisPos)
 {
     unsigned long u32Flags;
-    
+
     spin_lock_irqsave(&p_piris_dev->lock, u32Flags);
 
     p_piris_dev->dest_pos = *pPirisPos;
     /* according to Piris' introduction, it need to be stopped at phase "0" and "2". */
-    //p_piris_dev->dest_pos = (p_piris_dev->dest_pos >> 1) << 1;        
+    //p_piris_dev->dest_pos = (p_piris_dev->dest_pos >> 1) << 1;
 
     p_piris_dev->pps = PIRIS_PPS;
     p_piris_dev->pps = MAX(MIN(p_piris_dev->pps, HZ), 1);
     p_piris_dev->timer.expires = jiffies + HZ / p_piris_dev->pps;
 
     /* whether piris timer already at the kerbel timer pending list */
-    if (p_piris_dev->timer.entry.next != NULL)
-    {
-        spin_unlock_irqrestore(&p_piris_dev->lock, u32Flags);
-        return -1;
-    }
+    //if (p_piris_dev->timer.entry.next != NULL)
+    //{
+    //    spin_unlock_irqrestore(&p_piris_dev->lock, u32Flags);
+    //    return -1;
+    //}
 
     if (!timer_pending(&p_piris_dev->timer))
     {
@@ -119,7 +119,7 @@ int piris_origin_set(PIRIS_DATA_S* pstPirisData)
 {
 	int piris_pos;
 	unsigned long u32Flags;
-	
+
 	int sign, hys_offset;
 	int hys_cnt = 3;	// should be even
 
@@ -133,7 +133,7 @@ int piris_origin_set(PIRIS_DATA_S* pstPirisData)
 
 	/* consider hysteresis effection */
 	sign = (pstPirisData->ZeroIsMax)? 1 : -1;
-	do 
+	do
 	{
 		hys_offset = sign * HYS_STEPS;
 		piris_pos += hys_offset;
@@ -173,7 +173,7 @@ int piris_close_set(PIRIS_DATA_S* pstPirisData)
 {
     int piris_pos;
     unsigned long u32Flags;
-    
+
     piris_pos = pstPirisData->CurPos;
 
     piris_gpio_update(&piris_pos);
@@ -183,7 +183,7 @@ int piris_close_set(PIRIS_DATA_S* pstPirisData)
     wait_for_completion(&piris_comp);
 
     spin_lock_irqsave(&p_piris_dev->lock, u32Flags);
-    
+
     if (pstPirisData->ZeroIsMax == 1)
     {
         p_piris_dev->src_pos  = pstPirisData->TotalStep - 1;
@@ -196,7 +196,7 @@ int piris_close_set(PIRIS_DATA_S* pstPirisData)
     }
 
     spin_unlock_irqrestore(&p_piris_dev->lock, u32Flags);
-    
+
     return 0;
 
 }
@@ -271,10 +271,12 @@ int PIRIS_DRV_Write(unsigned char bits)
 
 static long piris_ioctl(struct file* file, unsigned int cmd, unsigned long arg)
 {
-    int __user* pPirisPos;
-    PIRIS_DATA_S __user* argp;
-    PIRIS_STATUS_E __user* pPirisStatus;
     PIRIS_DEV* pstPirisDev = (PIRIS_DEV*) file->private_data;
+
+    int ret;
+    int PirisPos;
+    PIRIS_DATA_S piris_data;
+    PIRIS_STATUS_E  PirisStatus;
 
     int err = 0;
 
@@ -310,31 +312,45 @@ static long piris_ioctl(struct file* file, unsigned int cmd, unsigned long arg)
     switch (cmd)
     {
         case PIRIS_SET_ACT_ARGS:
-            pPirisPos = (int __user*)arg;
-            piris_gpio_update(pPirisPos);
+            ret = copy_from_user(&PirisPos, arg, sizeof(int));
+            if (ret) {
+                return -EFAULT;
+            }
+            piris_gpio_update(&PirisPos);
             break;
 
         case PIRIS_SET_ORGIN:
-            argp = (PIRIS_DATA_S __user*)arg;
-            piris_origin_set(argp);
+            ret = copy_from_user(&piris_data, arg, sizeof(PIRIS_DATA_S));
+            if (ret) {
+                return -EFAULT;
+            }
+            piris_origin_set(&piris_data);
             break;
 
         case PIRIS_SET_CLOSE:
-            argp = (PIRIS_DATA_S __user*)arg;
-            piris_close_set(argp);
+            ret = copy_from_user(&piris_data, arg, sizeof(PIRIS_DATA_S));
+            if (ret) {
+                return -EFAULT;
+            }
+            piris_close_set(&piris_data);
             break;
 
         case PIRIS_GET_STATUS:
-            pPirisStatus = (PIRIS_STATUS_E __user*)arg;
-
             if (pstPirisDev->dest_pos != pstPirisDev->src_pos)
             {
-                *pPirisStatus = PIRIS_BUSY;
+                PirisStatus = PIRIS_BUSY;
             }
             else
             {
-                *pPirisStatus = PIRIS_IDLE;
+                PirisStatus = PIRIS_IDLE;
             }
+
+            ret = copy_to_user(arg, &PirisStatus, sizeof(PIRIS_STATUS_E));
+            if (ret)
+            {
+                return -EFAULT;
+            }
+
             break;
 
         default:  /* redundant, as cmd was checked against MAXNR */
@@ -446,14 +462,20 @@ static int hi_piris_isp_unregister(void)
 static int __init piris_init(void)
 {
     int ret;
-	if(!reg_pirisI_base_va)
-	{
-    	reg_pirisI_base_va = ioremap_nocache(PIRISI_ADRESS_BASE, 0x10000);
-	}
+
+    reg_pirisI_base_va = ioremap_nocache(PIRISI_ADRESS_BASE, 0x10000);
+    if (NULL == reg_pirisI_base_va)
+    {
+        printk("reg_pirisI_base_va ioremap failed.\n");
+        return -1;
+    }
+
     p_piris_dev = kmalloc(sizeof(PIRIS_DEV), GFP_KERNEL);
 
     if (!p_piris_dev)
     {
+        printk("p_piris_dev kmalloc failed.\n");
+        iounmap(reg_pirisI_base_va);
         return -1;
     }
     memset(p_piris_dev, 0x0, sizeof(PIRIS_DEV));
@@ -471,13 +493,16 @@ static int __init piris_init(void)
 
     ret = misc_register(&gstPirisDev);
 
-    hi_piris_isp_register();
-
     if (ret != 0)
     {
         printk("register piris device failed with %#x!\n", ret);
+        del_timer(&p_piris_dev->timer);
+        kfree(p_piris_dev);
+        iounmap(reg_pirisI_base_va);
         return -1;
     }
+
+    hi_piris_isp_register();
 
     printk(KERN_INFO "load piris.ko ...OK!\n");
     return 0;
@@ -485,12 +510,12 @@ static int __init piris_init(void)
 
 static void __exit piris_exit(void)
 {
+    hi_piris_isp_unregister();
+    misc_deregister(&gstPirisDev);
     del_timer(&p_piris_dev->timer);
     kfree(p_piris_dev);
 
-    misc_deregister(&gstPirisDev);
-
-    hi_piris_isp_unregister();
+    iounmap(reg_pirisI_base_va);
 
     printk(KERN_INFO "unload piris.ko ...OK!\n");
 }

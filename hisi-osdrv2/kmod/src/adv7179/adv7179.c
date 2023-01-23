@@ -53,7 +53,6 @@
 #include "adv7179.h"
 
 #include <asm/io.h>
-#include <asm/system.h>
 #include <linux/miscdevice.h>
 
 #include <linux/i2c.h>
@@ -87,7 +86,7 @@ unsigned char _hi_i2c_read_byte(unsigned char devaddress, unsigned char address)
     unsigned char buf[2];
 
     buf[0] = address;
-    ret = i2c_master_recv(client, buf, 1);
+    ret = hi_i2c_master_recv(client, buf, 1);
     if (ret >= 0)
     {
         ret_data = buf[0];
@@ -104,7 +103,7 @@ int _hi_i2c_write_byte(unsigned char devaddress, unsigned char address, unsigned
     buf[0] = address;
     buf[1] = data;
 
-    ret = i2c_master_send(client, buf, 2);
+    ret = hi_i2c_master_send(client, buf, 2);
     return ret;
 }
 static int i2c_client_init(void)

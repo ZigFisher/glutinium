@@ -78,14 +78,6 @@ HI_VOID* HI_MPI_SYS_MmapCache(HI_U32 u32PhyAddr, HI_U32 u32Size);
 HI_S32 HI_MPI_SYS_Munmap(HI_VOID* pVirAddr, HI_U32 u32Size);
 HI_S32 HI_MPI_SYS_MflushCache(HI_U32 u32PhyAddr, HI_VOID *pVirAddr, HI_U32 u32Size);
 
-
-/*
-** Access the physical address.
-** You can use this function to access memory address or register address.
-*/
-HI_S32 HI_MPI_SYS_SetReg(HI_U32 u32Addr, HI_U32 u32Value);
-HI_S32 HI_MPI_SYS_GetReg(HI_U32 u32Addr, HI_U32* pu32Value);
-
 HI_S32 HI_MPI_SYS_SetMemConf(MPP_CHN_S* pstMppChn, const HI_CHAR* pcMmzName);
 HI_S32 HI_MPI_SYS_GetMemConf(MPP_CHN_S* pstMppChn, HI_CHAR* pcMmzName);
 
@@ -108,6 +100,9 @@ HI_S32 HI_MPI_SYS_GetScaleCoefLevel(SCALE_RANGE_S *pstScaleRange,SCALE_COEFF_LEV
 /* Set/Get local timezone, range: [-86400, 86400] seconds (that is: [-24, 24] hours)  */
 HI_S32 HI_MPI_SYS_SetTimeZone(HI_S32 s32TimeZone);
 HI_S32 HI_MPI_SYS_GetTimeZone(HI_S32 *ps32TimeZone);
+
+HI_S32 HI_MPI_SYS_GetCustomCode(HI_U32 *pu32CustomCode);
+HI_S32 HI_MPI_SYS_GetChipId(HI_U32 *pu32ChipId);
 
 #ifdef __cplusplus
 #if __cplusplus

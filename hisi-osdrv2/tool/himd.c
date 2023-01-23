@@ -66,7 +66,7 @@ HI_RET himd_l(int argc , char* argv[])
 
     if( StrToNumber(argv[1], &ulAddr) == HI_SUCCESS)
     {
-        printf("====dump memory 0x%008lX====\n", ulAddr);
+        printf("====dump memory 0x%08lX====\n", ulAddr);
         #ifdef PC_EMULATOR
         #define SHAREFILE "../shm"
         printf("**** is Emulator, use share file : %s ****\n", SHAREFILE);
@@ -160,6 +160,7 @@ HI_RET himdb(int argc , char* argv[])
     LENGTH_T len = DEFAULT_MD_LEN;
 
     FILENAME_T fn;
+    memset(fn, 0, MAX_FILENAME_LENGTH);
     if (argc >= 3)
     {
         if ( StrToNumber(argv[2], &len) != HI_SUCCESS)
@@ -169,11 +170,21 @@ HI_RET himdb(int argc , char* argv[])
 
         if (argc == 4)
         {
-            strcpy(fn, argv[3]);
+            if (strlen(argv[3]) >= MAX_FILENAME_LENGTH) {
+                printf("filename's length is %d, which should less than %d\n",
+                        strlen(argv[3]), MAX_FILENAME_LENGTH);
+                EXIT("", -1);
+            }
+            strncpy(fn, argv[3], MAX_FILENAME_LENGTH - 1);
         }
         else
         {
-            sprintf(fn, "md_%s-%s", argv[1], argv[2]);
+            if (strlen(argv[1]) + strlen(argv[2]) >= MAX_FILENAME_LENGTH) {
+                printf("filename's length: %d, which should less than %d\n",
+                        strlen(argv[1]) + strlen(argv[2]), MAX_FILENAME_LENGTH);
+                EXIT("", -1);
+            }
+            snprintf(fn, MAX_FILENAME_LENGTH - 1, "md_%s-%s", argv[1], argv[2]);
         }
     }
     else
@@ -181,7 +192,6 @@ HI_RET himdb(int argc , char* argv[])
         printf("usage: %s <address> <len> [filename]. sample: %s 0x80040000 \n", argv[0], argv[0]);
         EXIT("", -1);
     }
-    
 
     if( StrToNumber(argv[1], &ulAddr) == HI_SUCCESS)
     {

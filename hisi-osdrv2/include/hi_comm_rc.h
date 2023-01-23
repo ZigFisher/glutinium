@@ -234,10 +234,10 @@ typedef struct hiVENC_PARAM_H264_AVBR_S
 
     HI_U32  u32MinIQp;              /* the min QP value of I frame */
     HI_U32  u32MaxIQp;              /* the max QP value of I frame */
-    HI_U32  u32MinQp;              /* the min QP value of  frame */
-    HI_U32  u32MaxQp;              /* the max QP value of  frame */
+    HI_U32  u32MinQp;               /* the min QP value of P frame */
+    HI_U32  u32MaxQp;               /* the max QP value of P frame */
     
-    HI_S32  s32MinStillPercent;     /* the min percent of target bitrate for still scene */
+    HI_S32  s32MinStillPercent;     /* the min percent of target bitrate for still scene, [5, 100] */
     HI_U32  u32MaxStillQP;          /* the max QP value of I frame for still scene*/
     HI_U32  u32MinStillPSNR;        /* reserved */
     HI_S32  s32MaxReEncodeTimes;    /* max number of re-encode times [0, 3]*/ 

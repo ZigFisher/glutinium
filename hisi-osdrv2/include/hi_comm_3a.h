@@ -58,7 +58,7 @@ typedef enum hiISP_ALG_MOD_E
     ISP_ALG_NR,
     ISP_ALG_SHARPEN,
     ISP_ALG_SHADING,
-    ISP_ALG_FrameWDR,
+    //ISP_ALG_FrameWDR,
     ISP_ALG_FPN,
     ISP_ALG_DEHAZE,
     ISP_ALG_ACM,

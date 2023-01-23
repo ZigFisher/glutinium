@@ -16,7 +16,7 @@ static struct i2c_board_info hi_info =
 
 static struct i2c_client *sensor_client;
 
-int hi_i2c_read(unsigned char dev_addr, unsigned int reg_addr, 
+int hi_i2c_read(unsigned char dev_addr, unsigned int reg_addr,
                 unsigned int reg_addr_num, unsigned int data_byte_num);
 
 int hi_sensor_i2c_write(unsigned char dev_addr,
@@ -57,7 +57,7 @@ int hi_sensor_i2c_write(unsigned char dev_addr,
 
     while (1)
     {
-        ret = i2c_master_send(client, tmp_buf, idx);
+        ret = hi_i2c_master_send(client, tmp_buf, idx);
         if (ret == idx)
         {
             break;
@@ -66,22 +66,22 @@ int hi_sensor_i2c_write(unsigned char dev_addr,
         {
             u32Tries++;
             if (u32Tries > 5)
-            {               
+            {
                 return -1;
-            }   
+            }
         }
         else
         {
-            printk("[%s %d] i2c_master_send error, ret=%d. \n", __func__, __LINE__,
+            printk("[%s %d] hi_i2c_master_send error, ret=%d. \n", __func__, __LINE__,
                 ret);
             return ret;
         }
     }
-    
-	return 0;   
+
+	return 0;
 }
 
-int hi_i2c_read(unsigned char dev_addr, unsigned int reg_addr, 
+int hi_i2c_read(unsigned char dev_addr, unsigned int reg_addr,
                 unsigned int reg_addr_num, unsigned int data_byte_num)
 {
     unsigned char tmp_buf[8];
@@ -113,10 +113,10 @@ int hi_i2c_read(unsigned char dev_addr, unsigned int reg_addr,
     {
         client->flags &= ~I2C_M_16BIT_DATA;
     }
-	
+
     while (1)
     {
-        ret = i2c_master_recv(client, tmp_buf, idx);;
+        ret = hi_i2c_master_recv(client, tmp_buf, idx);;
         if (ret == idx)
         {
             if (data_byte_num == 2)
@@ -135,7 +135,7 @@ int hi_i2c_read(unsigned char dev_addr, unsigned int reg_addr,
         }
         else
         {
-            printk("[%s %d] i2c_master_recv error, ret=%d. \n", __func__, __LINE__,
+            printk("[%s %d] hi_i2c_master_recv error, ret=%d. \n", __func__, __LINE__,
                 ret);
             break;
         }
@@ -147,7 +147,7 @@ int hi_i2c_read(unsigned char dev_addr, unsigned int reg_addr,
 static int hi_dev_isp_register(void)
 {
     ISP_BUS_CALLBACK_S stBusCb = {0};
-    
+
     stBusCb.pfnISPWriteI2CData = hi_sensor_i2c_write;
     if (CKFN_ISP_RegisterBusCallBack())
     {

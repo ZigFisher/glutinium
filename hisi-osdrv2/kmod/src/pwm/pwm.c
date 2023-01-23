@@ -32,7 +32,6 @@
 #include <linux/workqueue.h>
 
 #include <asm/uaccess.h>
-#include <asm/system.h>
 #include <asm/io.h>
 
 #include "pwm.h"
@@ -86,7 +85,7 @@ void __iomem *reg_pwmI_base_va = 0;
 #define  PWM_WRITE_REG(Addr, Value) ((*(volatile unsigned int *)(Addr)) = (Value))
 #define  PWM_READ_REG(Addr)         (*(volatile unsigned int *)(Addr))
 
-//PWM 
+//PWM
 #define PWM_NUM_MAX         0x04
 #define PWM_ENABLE          0x01
 #define PWM_DISABLE         0x00
@@ -120,13 +119,13 @@ static int PWM_DRV_Disable(unsigned char pwm_num)
         default:
 			break;
 	}
-    
+
 	return 0;
 }
 
 
 int PWM_DRV_Write(unsigned char pwm_num,unsigned short duty, unsigned short period,unsigned char enable)
-{	
+{
 	if(pwm_num >= PWM_NUM_MAX)
 	{
 		printk("The pwm number is big than the max value!\n");
@@ -134,60 +133,60 @@ int PWM_DRV_Write(unsigned char pwm_num,unsigned short duty, unsigned short peri
 	}
 	if(enable)
 	{
-		
+
 		switch(pwm_num)
 		{
 			case 0:
 				PWM_WRITE_REG(PWM0_CTRL_REG,PWM_DISABLE);
-				
+
 				PWM_WRITE_REG(PWM0_CFG_REG0,period);
 				PWM_WRITE_REG(PWM0_CFG_REG1,duty);
 				PWM_WRITE_REG(PWM0_CFG_REG2,10);//pwm output number
-				
+
 				PWM_WRITE_REG(PWM0_CTRL_REG,(1<<2|PWM_ENABLE));// keep the pwm always output;
 				//printk("The PWMI0 state %x\n",PWM_READ_REG(PWM0_STATE_REG));
 				break;
-				
+
 			case 1:
 				PWM_WRITE_REG(PWM1_CTRL_REG,PWM_DISABLE);
-				
+
 				PWM_WRITE_REG(PWM1_CFG_REG0,period);
 				PWM_WRITE_REG(PWM1_CFG_REG1,duty);
 				PWM_WRITE_REG(PWM1_CFG_REG2,10);//pwm output number
-				
+
 				PWM_WRITE_REG(PWM1_CTRL_REG,(1<<2|PWM_ENABLE));// keep the pwm always output;
 				//printk("The PWMI1 state %x\n",PWM_READ_REG(PWM1_STATE_REG));
 				break;
-				
+
 			case 2:
 				PWM_WRITE_REG(PWM2_CTRL_REG,PWM_DISABLE);
-				
+
 				PWM_WRITE_REG(PWM2_CFG_REG0,period);
 				PWM_WRITE_REG(PWM2_CFG_REG1,duty);
 				PWM_WRITE_REG(PWM2_CFG_REG2,10);//pwm output number
-				
+
 				PWM_WRITE_REG(PWM2_CTRL_REG,(1<<2|PWM_ENABLE));// keep the pwm always output;
 				//printk("The PWMI2 state %x\n",PWM_READ_REG(PWM2_STATE_REG));
 				break;
 
             case 3:
 				PWM_WRITE_REG(PWM3_CTRL_REG,PWM_DISABLE);
-				
+
 				PWM_WRITE_REG(PWM3_CFG_REG0,period);
 				PWM_WRITE_REG(PWM3_CFG_REG1,duty);
 				PWM_WRITE_REG(PWM3_CFG_REG2,10);//pwm output number
-				
+
 				PWM_WRITE_REG(PWM3_CTRL_REG,(1<<2|PWM_ENABLE));// keep the pwm always output;
 				//printk("The PWMI3 state %x\n",PWM_READ_REG(PWM3_STATE_REG));
 				break;
 
 			default:
 				PWM_WRITE_REG(PWM0_CTRL_REG,PWM_DISABLE);
-				
+
 				PWM_WRITE_REG(PWM0_CFG_REG0,period);
 				PWM_WRITE_REG(PWM0_CFG_REG1,duty);
 				PWM_WRITE_REG(PWM0_CFG_REG2,10);//pwm output number
-				
+
 				PWM_WRITE_REG(PWM0_CTRL_REG,(1<<2|PWM_ENABLE));// keep the pwm always output;
 				//printk("The PWMII0 state %x\n",PWM_READ_REG(PWM0_STATE_REG));
 				break;
@@ -197,7 +196,7 @@ int PWM_DRV_Write(unsigned char pwm_num,unsigned short duty, unsigned short peri
 	{
 		PWM_DRV_Disable(pwm_num);
 	}
-	
+
 
 	return 0;
 }
@@ -218,21 +217,28 @@ int  PWM_Close(struct inode * inode, struct file * file)
 static long PWM_Ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 {
     PWM_DATA_S __user *argp = (PWM_DATA_S __user*)arg;
-    
-	unsigned char  PwmNum; 
-    unsigned int Duty; 
+
+	unsigned char  PwmNum;
+    unsigned int Duty;
     unsigned int Period;
 	unsigned char  enable;
-    
+
     switch (cmd)
     {
         case PWM_CMD_WRITE:
         {
-            PwmNum  = argp->pwm_num;
-            Duty    = argp->duty;
-            Period  = argp->period;
-           	enable  = argp->enable;
-			
+            PWM_DATA_S pwm_data;
+
+            if (copy_from_user(&pwm_data, argp, sizeof(PWM_DATA_S)))
+            {
+                return -EFAULT;
+            }
+
+            PwmNum  = pwm_data.pwm_num;
+            Duty    = pwm_data.duty;
+            Period  = pwm_data.period;
+            enable  = pwm_data.enable;
+
             PWM_DRV_Write(PwmNum,Duty,Period,enable);
             break;
         }
@@ -295,7 +301,7 @@ static int __init pwm_init(void)
 {
     int     ret;
 
-    reg_pwmI_base_va = (void __iomem*)IO_ADDRESS(PWMI_ADRESS_BASE);
+    reg_pwmI_base_va = (void __iomem*)ioremap_nocache(PWMI_ADRESS_BASE, 0x10000);
 
 #ifdef CONFIG_HISI_SNAPSHOT_BOOT
     snprintf(s_stPwmDevice.devfs_name, sizeof(s_stPwmDevice.devfs_name), DEV_NAME);
@@ -333,6 +339,7 @@ static void __exit pwm_exit(void)
         PWM_DRV_Disable(i);
     }
 
+    iounmap(reg_pwmI_base_va);
     reg_pwmI_base_va = NULL;
 
 #ifdef CONFIG_HISI_SNAPSHOT_BOOT

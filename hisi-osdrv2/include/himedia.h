@@ -4,6 +4,7 @@
 #include <linux/module.h>
 #include <linux/major.h>
 #include <linux/device.h>
+#include <linux/platform_device.h>
 
 #define HIMEDIA_DEVICE_MAJOR  218
 #define HIMEDIA_DYNAMIC_MINOR 255
@@ -14,10 +15,10 @@ struct himedia_ops {
     //pm methos
     int (*pm_prepare)(struct himedia_device *);
     void (*pm_complete)(struct himedia_device *);
-    
+
     int (*pm_suspend)(struct himedia_device *);
     int (*pm_resume)(struct himedia_device *);
-    
+
     int (*pm_freeze)(struct himedia_device *);
     int (*pm_thaw)(struct himedia_device *);
     int (*pm_poweroff)(struct himedia_device *);
@@ -51,17 +52,17 @@ struct himedia_driver{
 struct himedia_device  {
 	struct list_head list;
 
-#define MAX_LEN 32	
+#define MAX_LEN 32
     char devfs_name[MAX_LEN];
-    
-	int minor;
+
+	unsigned int minor;
 
     struct device device;
 
 	struct module *owner;
 
 	const struct file_operations *fops;
-	
+
 	struct himedia_ops *drvops;
 
     /*for internal use*/
@@ -79,5 +80,31 @@ int himedia_unregister(struct himedia_device *pdev);
 #define MODULE_ALIAS_HIMEDIA(minor) \
 	MODULE_ALIAS("himedia-char-major-" __stringify(HIMEDIA_DEVICE_MAJOR) \
 	"-" __stringify(minor))
+
+unsigned long long hi_sched_clock(void);
+int himedia_platform_driver_register(void *drv);
+void himedia_platform_driver_unregister(void *drv);
+void* himedia_platform_get_resource_byname(void *dev, unsigned int type,
+    const char *name);
+void* himedia_platform_get_resource(void *dev, unsigned int type,
+    unsigned int num);
+int himedia_platform_get_irq(void *dev, unsigned int num);
+int himedia_platform_get_irq_byname(void *dev, const char *name);
+
+#define himedia_module_driver(himedia_driver, himedia_drv_register, himedia_drv_unregister, ...) \
+static int __init himedia_driver##_init(void) \
+{ \
+        return himedia_drv_register(&(himedia_driver)); \
+} \
+module_init(himedia_driver##_init); \
+static void __exit himedia_driver##_exit(void) \
+{ \
+        himedia_drv_unregister(&(himedia_driver)); \
+} \
+module_exit(himedia_driver##_exit);
+
+#define himedia_module_platform_driver(platform_driver) \
+        himedia_module_driver(platform_driver, himedia_platform_driver_register, \
+                        himedia_platform_driver_unregister)
 
 #endif /*_LINUX_HIMEDIA_DEVICE_H_*/

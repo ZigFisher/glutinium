@@ -121,6 +121,8 @@ HI_S32 HI_MPI_VI_DISRun(VI_CHN ViChn);
 HI_S32 HI_MPI_VI_DISExit(VI_CHN ViChn);
 HI_S32 HI_MPI_VI_RegisterDISCallback(VI_CHN ViChn, VI_DIS_CALLBACK_S *pstDISCallback);
 HI_S32 HI_MPI_VI_UnRegisterDISCallback(VI_CHN ViChn);
+HI_S32 HI_MPI_VI_SetDISDebug(HI_BOOL bDebug);
+
 
 #ifdef __cplusplus
 #if __cplusplus

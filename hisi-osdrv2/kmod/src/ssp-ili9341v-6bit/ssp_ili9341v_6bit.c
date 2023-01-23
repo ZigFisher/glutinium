@@ -32,7 +32,6 @@
 #include <linux/init.h>
 #include <asm/uaccess.h>
 #include <asm/io.h>
-#include <asm/system.h>
 #include <linux/miscdevice.h>
 #include <linux/delay.h>
 
@@ -431,7 +430,7 @@ void lcd_ili9341_init_vertical_serial(void)
     //ssp_write_dat(0x1C);   //68
     ssp_write_dat(0x12);     //106
 
-    ssp_write_cmd(0xB6);    // Display Function Control 
+    ssp_write_cmd(0xB6);    // Display Function Control
     ssp_write_dat(0x0A);
     ssp_write_dat(0xA2);
 

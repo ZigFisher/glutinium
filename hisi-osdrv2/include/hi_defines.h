@@ -85,6 +85,9 @@ extern "C" {
 #define H264E_MIN_VW_INDEX           0
 #define H264E_MAX_VW_INDEX           3
 
+#define VEDU_NUM                   1
+
+
 /* For RC */
 #define RC_TEXTURE_THR_SIZE          12
 #define RC_RQRATIO_SIZE              8
@@ -153,6 +156,8 @@ extern "C" {
 
 #define VIU_MAX_CHN_NUM              (VIU_MAX_PHYCHN_NUM + VIU_MAX_EXT_CHN_NUM)
 #define VIU_MAX_UFLIST_NUM           (VIU_MAX_CHN_NUM + VIU_MAX_RAWCHN_NUM)
+#define VIU_MAX_RAWLIST_NUM 	     4
+
 
 #define VIU_DEV_MIN_WIDTH       64
 #define VIU_DEV_MIN_HEIGHT      64
@@ -201,7 +206,7 @@ extern "C" {
 #define AO_DEV_MIN_NUM          0
 #define AO_DEV_MAX_NUM          1
 #define AIO_MAX_NUM             1
-#define AIO_MAX_CHN_NUM         16
+#define AIO_MAX_CHN_NUM         2
 #define AENC_MAX_CHN_NUM        32
 #define ADEC_MAX_CHN_NUM        32
 

@@ -148,6 +148,12 @@ typedef struct hiAWB_SENSOR_DEFAULT_S
 
     AWB_AGC_TABLE_S stAgcTbl;
     AWB_CCM_S stCcm;
+
+    HI_U16    u16InitRgain;           /*Init WB gain*/
+    HI_U16    u16InitGgain;	
+    HI_U16    u16InitBgain;	
+
+    HI_U8     u8AWBRunInterval;       /*AWB Run Interval*/	
 } AWB_SENSOR_DEFAULT_S;
 
 typedef struct hiAWB_SENSOR_EXP_FUNC_S

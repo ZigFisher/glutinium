@@ -32,7 +32,6 @@
 #include <linux/workqueue.h>
 
 #include <asm/uaccess.h>
-#include <asm/system.h>
 #include <asm/io.h>
 
 #include "sample_ist.h"
@@ -83,9 +82,9 @@ ISP_SYNC_TASK_NODE_S syncNode[MAX_TEST_NODES] = {
     } };
 
 HI_S32 sync_call_back(HI_U64 u64Data)
-{    
+{
     int data = u64Data;
- 
+
     printk("%d\n", data);
     return 0;
 }
@@ -111,25 +110,25 @@ static long SampleIst_Ioctl(struct file* file, unsigned int cmd, unsigned long a
 {
     int __user* argp = (int __user*)arg;
     int node_index = *argp;
-  
+
     if (node_index >= MAX_TEST_NODES)
     {
         return -1;
     }
-    
+
     switch (cmd)
     {
         case SAMPLE_IST_ADD_NODE:
             hi_isp_sync_task_register(0, &syncNode[node_index]);
         break;
-        
+
         case SAMPLE_IST_DEL_NODE:
             if (HI_FAILURE == hi_isp_sync_task_unregister(0, &syncNode[node_index]))
             {
                 printk("del node err %d\n", node_index);
             }
         break;
-        
+
         default:
         {
             printk("invalid ioctl command!\n");
@@ -168,12 +167,12 @@ static int __init sample_ist_init(void)
         printk("register sample_ist device failed with %#x!\n", ret);
         return -1;
     }
-    
+
     for (i = 0; i < MAX_TEST_NODES; i++)
     {
         hi_isp_sync_task_register(0, &syncNode[i]);
     }
-    
+
 	printk(KERN_INFO "load sample_ist.ko ...OK!\n");
     return 0;
 }
@@ -183,7 +182,7 @@ static void __exit sample_ist_exit(void)
     int i;
 
     misc_deregister(&sample_ist_dev);
-    
+
     for (i = 0; i < MAX_TEST_NODES; i++)
     {
         hi_isp_sync_task_unregister(0, &syncNode[i]);
