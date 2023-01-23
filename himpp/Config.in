@@ -1,0 +1,122 @@
+        comment "Options for Hisilicon SDK"	
+
+	config PACKAGE_HIMPP_V1_PREFIX
+		string "Install prefix"
+		depends on PACKAGE_himpp-v1-base
+		default "/usr"
+		help
+	  		Prefix to install himpp2 on the target file system.
+
+	choice
+		depends on PACKAGE_himpp-v1-base
+		bool "SDK Version"
+		default PACKAGE_HIMPP_HI3518V100_SDK_V1_0_B_0
+	config PACKAGE_HIMPP_HI3518V100_SDK_V1_0_A_0
+		bool "1.0.A.0"
+
+	config PACKAGE_HIMPP_HI3518V100_SDK_V1_0_B_0
+		bool "1.0.B.0"
+
+	endchoice
+	
+	config PACKAGE_HIMPP_HI3518V100_SDK_VERSION
+		string
+		default "1.0.A.0" if PACKAGE_HIMPP_HI3518V100_SDK_V1_0_A_0
+		default "1.0.B.0" if PACKAGE_HIMPP_HI3518V100_SDK_V1_0_B_0
+
+
+	choice
+		bool "Samples Sensor Type"
+		default BR2_PACKAGE_HIMPP_SNS_OMNI_OV9712
+		help
+		  Sensor type for Hi3518
+
+	config PACKAGE_SAMPLES_SNS_APTINA_9M034
+		bool "Aptina 9M034"
+		help
+		  Aptina 9m034
+
+	config PACKAGE_SAMPLES_SNS_APTINA_AR0130
+		bool "Aptina AR0130"
+		help
+		  Aptina AR0130
+
+	config PACKAGE_SAMPLES_SNS_APTINA_AR0330
+		bool "Aptina AR0330"
+		help
+		  Aptina AR0330
+
+	config PACKAGE_SAMPLES_SNS_HIMAX_1375
+		bool "Himax 1375"
+		help
+		  Himax 1375
+
+	config PACKAGE_SAMPLES_SNS_OMNI_OV2710
+		bool "Omni OV2710"
+		help
+		  Omni OV2710
+
+	config PACKAGE_SAMPLES_SNS_OMNI_OV9712
+		bool "Omni OV9712"
+		help
+		  Omni OV9712
+
+	config PACKAGE_SAMPLES_SNS_PANASONIC_MN34031
+		bool "Panasonic MN34031"
+		help
+		  Panasonic MN34031
+
+	config PACKAGE_SAMPLES_SNS_PIXELPLUS_3100K
+		bool "PixelPlus 3100K"
+		help
+		  PixelPlus 3100K
+
+	config PACKAGE_SAMPLES_SNS_SOI_H22
+		bool "SOI H22"
+		help
+		  SOI H22
+
+	config PACKAGE_SAMPLES_SNS_SONY_ICX692
+		bool "Sony ICX692"
+		help
+		  Sony ICX692
+
+	config PACKAGE_SAMPLES_SNS_SONY_IMX104
+		bool "Sony IMX104"
+		help
+		  Sony IMX104
+
+	config PACKAGE_SAMPLES_SNS_SONY_IMX122
+		bool "Sony IMX122"
+		help
+		  Sony IMX122
+
+	config PACKAGE_SAMPLES_SNS_SONY_IMX138
+		bool "Sony IMX138"
+		help
+		  Sony IMX138
+
+	config PACKAGE_SAMPLES_SNS_SONY_IMX236
+		bool "Sony IMX236"
+		help
+		  Sony IMX236
+
+	endchoice
+
+	config PACKAGE_SAMPLES_SNS_TYPE
+		string
+		default APTINA_AR0130_DC_720P_30FPS if PACKAGE_SAMPLES_SNS_APTINA_AR0130
+		default APTINA_AR0330_DC_1080P_30FPS if PACKAGE_SAMPLES_SNS_APTINA_AR0330
+		default APTINA_9M034_DC_720P_30FPS if PACKAGE_SAMPLES_SNS_APTINA_9M034
+		default HIMAX_1375_DC_720P_30FPS if PACKAGE_SAMPLES_SNS_HIMAX_1375
+		default OMNI_OV9712_DC_720P_30FPS if PACKAGE_SAMPLES_SNS_OMNI_OV9712
+		default OMNI_OV2710_DC_1080P_30FPS if PACKAGE_SAMPLES_SNS_OMNI_OV2710
+		default PANASONIC_MN34031_DC_720P_30FPS if PACKAGE_SAMPLES_SNS_PANASONIC_MN34031
+		default PIXELPLUS_3100K_DC_720P_30FPS if PACKAGE_SAMPLES_SNS_PIXELPLUS_3100K
+		default SOI_H22_DC_720P_30FPS if PACKAGE_SAMPLES_SNS_SOI_H22
+		default SONY_ICX692_DC_720P_30FPS if PACKAGE_SAMPLES_SNS_SONY_ICX692
+		default SONY_IMX104_DC_720P_30FPS if PACKAGE_SAMPLES_SNS_SONY_IMX104
+		default SONY_IMX122_DC_1080P_30FPS if PACKAGE_SAMPLES_SNS_SONY_IMX122
+		default SONY_IMX138_DC_720P_30FPS if PACKAGE_SAMPLES_SNS_SONY_IMX138
+		default SONY_IMX236_DC_1080P_30FPS if PACKAGE_SAMPLES_SNS_SONY_IMX236
+

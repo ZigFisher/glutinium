@@ -407,6 +407,8 @@ run_majestic()
   # Use it for stopping service:  killall -sigint majestic
   sleep 1
   export SENSOR=$SNS_TYPE
+  sleep 40
+  ntpd -n -q -p 0.openwrt.pool.ntp.org -p 1.openwrt.pool.ntp.org -p 2.openwrt.pool.ntp.org -p 3.openwrt.pool.ntp.org
   majestic 2>&1 | logger -p daemon.info -t majestic &
 }
 
