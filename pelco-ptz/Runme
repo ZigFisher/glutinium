@@ -1,0 +1,3 @@
+#!/bin/sh
+
+./pelco -p2 -b9600 -a1 in
